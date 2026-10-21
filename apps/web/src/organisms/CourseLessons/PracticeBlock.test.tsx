@@ -154,80 +154,79 @@ describe("Practice blocks", () => {
     expect(wordOrderWords("… een kleine keuken.")).toBeNull();
   });
 
-  it("shows the words of a word-order question as chips in the prompt's order instead of a text field", () => {
-    render(<MantineProvider><OrderField /></MantineProvider>);
+  it("shows the words of a word-order question as chips in the pool, in the prompt's order, instead of a text field", () => {
+    const onChange = vi.fn();
+    render(<MantineProvider><OrderField onChange={onChange} /></MantineProvider>);
     expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
     expect(chipOrder()).toEqual(["koffie", "ik", "altijd", "drink"]);
-    // The first and last words have no move in the direction that would leave the row.
-    expect(screen.getByRole("button", { name: "Move koffie earlier" })).toBeDisabled();
-    expect(screen.getByRole("button", { name: "Move drink later" })).toBeDisabled();
+    expect(within(screen.getByRole("list", { name: "Pieces" })).getAllByRole("button")).toHaveLength(4);
+    expect(within(screen.getByRole("list", { name: "Your sentence" })).queryAllByRole("button")).toHaveLength(0);
+    // Nothing is placed yet, so the question is unanswered.
+    expect(onChange).not.toHaveBeenCalled();
   });
 
-  it("reorders word chips with the move controls and the arrow keys, and each move updates the answer", () => {
+  it("places chips by clicking and reorders them with the arrow keys, and the answer is set only once every word is placed", () => {
     const onChange = vi.fn();
     render(<MantineProvider><OrderField onChange={onChange} /></MantineProvider>);
-    fireEvent.click(screen.getByRole("button", { name: "Move ik later" }));
-    expect(chipOrder()).toEqual(["koffie", "altijd", "ik", "drink"]);
-    expect(onChange).toHaveBeenLastCalledWith("koffie altijd ik drink");
+    for (const word of ["ik", "altijd", "koffie"]) fireEvent.click(screen.getByRole("button", { name: `Add “${word}”` }));
+    // A partial board is still unanswered.
+    expect(onChange).toHaveBeenLastCalledWith("");
+    fireEvent.click(screen.getByRole("button", { name: "Add “drink”" }));
+    expect(chipOrder()).toEqual(["ik", "altijd", "koffie", "drink"]);
+    expect(onChange).toHaveBeenLastCalledWith("ik altijd koffie drink");
     // Focus follows the moved word to its new place.
-    expect(screen.getByRole("button", { name: "ik" })).toHaveFocus();
-    fireEvent.keyDown(screen.getByRole("button", { name: "ik" }), { key: "ArrowLeft" });
-    expect(chipOrder()).toEqual(["koffie", "ik", "altijd", "drink"]);
-    expect(onChange).toHaveBeenLastCalledWith("koffie ik altijd drink");
-    fireEvent.click(screen.getByRole("button", { name: "Move drink earlier" }));
-    expect(onChange).toHaveBeenLastCalledWith("koffie ik drink altijd");
-    expect(onChange).toHaveBeenCalledTimes(3);
+    fireEvent.keyDown(screen.getByRole("button", { name: "Remove “altijd”, place 2" }), { key: "ArrowRight" });
+    expect(onChange).toHaveBeenLastCalledWith("ik koffie altijd drink");
+    expect(screen.getByRole("button", { name: "Remove “altijd”, place 3" })).toHaveFocus();
+    // Removing a word returns it to the pool and clears the answer again.
+    fireEvent.click(screen.getByRole("button", { name: "Remove “drink”, place 4" }));
+    expect(onChange).toHaveBeenLastCalledWith("");
+    expect(screen.getByRole("button", { name: "Add “drink”" })).toBeInTheDocument();
   });
 
-  it("reorders word chips by dragging while keeping the keyboard move controls", () => {
+  it("reorders word chips by dragging within the answer row", () => {
     const onChange = vi.fn();
     render(<MantineProvider><OrderField onChange={onChange} /></MantineProvider>);
+    for (const word of ["koffie", "ik", "altijd", "drink"]) fireEvent.click(screen.getByRole("button", { name: `Add “${word}”` }));
     const transfer = { effectAllowed: "", dropEffect: "", setData: vi.fn() };
-    fireEvent.dragStart(screen.getByRole("button", { name: "ik" }), { dataTransfer: transfer });
-    fireEvent.dragOver(screen.getByRole("button", { name: "drink" }), { dataTransfer: transfer });
-    fireEvent.drop(screen.getByRole("button", { name: "drink" }), { dataTransfer: transfer });
-    expect(chipOrder()).toEqual(["koffie", "altijd", "drink", "ik"]);
+    fireEvent.dragStart(screen.getByRole("button", { name: "Remove “ik”, place 2" }), { dataTransfer: transfer });
+    fireEvent.dragOver(screen.getByRole("button", { name: "Remove “drink”, place 4" }), { dataTransfer: transfer });
+    fireEvent.drop(screen.getByRole("button", { name: "Remove “drink”, place 4" }), { dataTransfer: transfer });
     expect(onChange).toHaveBeenLastCalledWith("koffie altijd drink ik");
-    expect(screen.getByRole("button", { name: "ik" })).toHaveFocus();
-    expect(screen.getByRole("button", { name: "Move ik earlier" })).toBeEnabled();
   });
 
-  it("checks the current order on Enter and shows the author's version under the chips after a miss", () => {
+  it("checks the current order on Enter on a placed word and shows the author's version under the board after a miss", () => {
     const onAdvance = vi.fn();
     render(<MantineProvider><OrderField onAdvance={onAdvance} /></MantineProvider>);
-    // Enter on untouched chips is an empty answer: it moves on without a check.
-    fireEvent.keyDown(screen.getByRole("button", { name: "koffie" }), { key: "Enter" });
-    expect(onAdvance).toHaveBeenCalledTimes(1);
-    expect(screen.queryByText("Author’s version")).not.toBeInTheDocument();
-    fireEvent.click(screen.getByRole("button", { name: "Move koffie later" }));
-    fireEvent.keyDown(screen.getByRole("button", { name: "koffie" }), { key: "Enter" });
+    // Enter on an untouched board's pool word places nothing and checks nothing (the browser clicks the chip).
+    fireEvent.keyDown(screen.getByRole("button", { name: "Add “koffie”" }), { key: "Enter" });
+    expect(onAdvance).not.toHaveBeenCalled();
+    for (const word of ["koffie", "ik", "altijd", "drink"]) fireEvent.click(screen.getByRole("button", { name: `Add “${word}”` }));
+    fireEvent.keyDown(screen.getByRole("button", { name: "Remove “koffie”, place 1" }), { key: "Enter" });
     expect(screen.getByText("Author’s version")).toBeInTheDocument();
     expect(screen.getByText("Ik drink altijd koffie.")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "koffie" })).toHaveFocus();
-    expect(onAdvance).toHaveBeenCalledTimes(1);
+    // A miss stays on the question.
+    expect(onAdvance).not.toHaveBeenCalled();
   });
 
-  it("restores a saved order, and falls back to the prompt's order when the saved answer is not these words", () => {
+  it("restores a saved order, and shows an empty board when the saved answer is not these words", () => {
     const onChange = vi.fn();
     const { unmount } = render(<MantineProvider><OrderField initial="altijd koffie ik drink" onChange={onChange} /></MantineProvider>);
     expect(chipOrder()).toEqual(["altijd", "koffie", "ik", "drink"]);
+    expect(screen.getByRole("button", { name: "Remove “altijd”, place 1" })).toBeInTheDocument();
     expect(onChange).not.toHaveBeenCalled();
     unmount();
     render(<MantineProvider><OrderField initial="wat is dit" onChange={onChange} /></MantineProvider>);
-    expect(chipOrder()).toEqual(["koffie", "ik", "altijd", "drink"]);
+    expect(screen.getAllByRole("button", { name: /^Add / })).toHaveLength(4);
     // The stale answer is cleared, so it does not count as answered.
     expect(onChange).toHaveBeenCalledWith("");
   });
 
   it("moves a word-order question on a match, revealing and focusing the next question", async () => {
     await openPractice(orderDetail());
-    // Four moves turn the prompt's order into "Ik drink altijd koffie".
-    fireEvent.click(await screen.findByRole("button", { name: "Move koffie later" }));
-    fireEvent.click(screen.getByRole("button", { name: "Move koffie later" }));
-    fireEvent.click(screen.getByRole("button", { name: "Move koffie later" }));
-    fireEvent.click(screen.getByRole("button", { name: "Move drink earlier" }));
+    for (const word of ["ik", "drink", "altijd", "koffie"]) fireEvent.click(await screen.findByRole("button", { name: `Add “${word}”` }));
     expect(chipOrder()).toEqual(["ik", "drink", "altijd", "koffie"]);
-    fireEvent.keyDown(screen.getByRole("button", { name: "drink" }), { key: "Enter" });
+    fireEvent.keyDown(screen.getByRole("button", { name: "Remove “drink”, place 2" }), { key: "Enter" });
     expect(screen.getByText("Put in order: koffie / ik / altijd / drink").closest("li")).toHaveAttribute("class", expect.stringMatching(/summaryAccepted/));
     const second = screen.getByLabelText(/^2\. There are two bedrooms\./);
     await waitFor(() => expect(second).toHaveFocus());
@@ -316,6 +315,27 @@ describe("Practice blocks", () => {
     fireEvent.keyDown(second, { key: "Enter" });
     expect(screen.getByRole("button", { name: "Done" })).toHaveFocus();
     expect(within(secondRow).queryByRole("textbox")).not.toBeInTheDocument();
+  });
+
+  it("checks the active answer with Check, offers Next after a miss, and keeps Finish later last in the footer", async () => {
+    const opened = await openPractice(detail());
+    const field = screen.getByLabelText(/^1\. … een kleine keuken\./);
+    const check = within(opened).getByRole("button", { name: "Check" });
+    expect(check).toBeDisabled();
+    fireEvent.change(field, { target: { value: "Daar is" } });
+    fireEvent.click(check);
+    expect(screen.getByText("Er is")).toBeInTheDocument();
+    expect(within(opened).queryByRole("button", { name: "Check" })).not.toBeInTheDocument();
+    const buttons = within(opened).getAllByRole("button").filter((button) => button.closest("form") && !button.closest("[data-answer-field]"));
+    expect(buttons.map((button) => button.getAttribute("aria-label") ?? button.textContent)).toEqual(["Next question", "Skip this question", "Finish later"]);
+    fireEvent.click(within(opened).getByRole("button", { name: "Next question" }));
+    expect(screen.getByLabelText(/^2\. There are two bedrooms\./)).toBeInTheDocument();
+    // A matching answer checked with the button advances without Next.
+    const second = screen.getByLabelText(/^2\. There are two bedrooms\./);
+    fireEvent.change(second, { target: { value: "Er zijn twee slaapkamers." } });
+    fireEvent.click(within(opened).getByRole("button", { name: "Check" }));
+    expect(within(opened).getByRole("button", { name: "Done" })).toBeInTheDocument();
+    expect(within(opened).queryByRole("button", { name: "Finish later" })).not.toBeInTheDocument();
   });
 
   it("skips an empty question without recording an attempt or progress", async () => {
@@ -442,6 +462,7 @@ describe("Practice blocks", () => {
     expect(screen.getByRole("button", { name: "Finish later" })).toBeInTheDocument();
     fireEvent.change(screen.getByLabelText(/^2\. There are two bedrooms\./), { target: { value: "Er zijn twee kamers." } });
     await waitFor(() => expect(JSON.parse(localStorage.getItem(key)!)).toEqual({ version: 1, answers: ["Er is", "Er zijn twee kamers."] }));
+    fireEvent.click(screen.getByRole("button", { name: "Check" }));
     fireEvent.click(screen.getByRole("button", { name: "Done" }));
     await waitFor(() => expect(fetch).toHaveBeenCalledWith(`${blockPath}/progress`, expect.objectContaining({ method: "PUT", body: JSON.stringify({ answered: 2 }) })));
     await waitFor(() => expect(screen.queryByRole("region", { name: "Answer the practice" })).not.toBeInTheDocument());

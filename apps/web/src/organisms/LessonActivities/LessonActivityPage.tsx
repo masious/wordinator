@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type KeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { ArrowLeft } from "lucide-react";
 import {
@@ -130,6 +130,14 @@ export function LessonActivityPage(props: LessonActivityPageProps) {
       : generationTimedOut
         ? <ErrorState title={t("lessonActivities.generationTimedOut")} action={<Button onClick={() => { setOpened(null); void open(); }}>{t("common.retry")}</Button>} />
         : <Surface className={styles.panel}><div role="status"><p>{t("lessonActivities.preparing")}</p><LoadingState label={t("lessonActivities.preparing")} /></div>
+        <div className={styles.preparationSteps}>
+          <details className={styles.preparation}><summary>{t(opened?.status === "generating" ? "lessonActivities.openedStep" : "lessonActivities.openingStep")}</summary>
+            <p>{t("lessonActivities.preparingFor", { activity: t(`lessonActivities.types.${type}`), section: descriptor.sourceLabel })}</p>
+          </details>
+          {opened?.status === "generating" && <details className={styles.preparation}><summary>{t("lessonActivities.generatingStep")}</summary>
+            <p>{t("lessonActivities.waitingForGeneration")}</p>
+          </details>}
+        </div>
         {opened?.status === "generating" && <Button variant="quiet" onClick={() => void status.refetch()}>{t("lessonActivities.checkAgain")}</Button>}</Surface>}
   </main>;
 
@@ -188,7 +196,9 @@ function ActivityItem({ endpoint, runId, item, draftKey, last, advancing, onCont
       {item.options.map((option) => <Button key={option.id} variant={selected === option.id ? "primary" : "secondary"} className={styles.choice}
         aria-pressed={selected === option.id} disabled={locked} onClick={() => setSelected(option.id)}>{option.text}</Button>)}
     </div>}
-    {item.kind === "fill_in" && <TextAreaField label={t("lessonActivities.answerLabel")} value={draft} disabled={locked} onChange={(event) => save(event.currentTarget.value)} autosize minRows={2} />}
+    {item.kind === "fill_in" && <TextAreaField label={t("lessonActivities.answerLabel")} value={draft} disabled={locked} onChange={(event) => save(event.currentTarget.value)}
+      onKeyDown={(event: KeyboardEvent<HTMLTextAreaElement>) => { if (event.key === "Enter" && !event.shiftKey && !event.altKey && !event.ctrlKey && !event.metaKey && !event.nativeEvent.isComposing && input && !attempt.pending) { event.preventDefault(); attempt.check(input); } }}
+      autosize minRows={2} />}
     {item.kind === "word_order" && <WordOrder tokens={item.tokens} order={order} disabled={locked} onChange={setOrder} />}
     {result
       ? <div className={styles.feedback} role="status">

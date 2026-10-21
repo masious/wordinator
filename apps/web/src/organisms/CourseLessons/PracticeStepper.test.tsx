@@ -2,7 +2,7 @@ import { MantineProvider } from "@mantine/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { LessonBlockOf } from "@wordinator/contracts/lesson-document";
 import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "../../i18n";
 import { PracticeStepper } from "./PracticeStepper";
 
@@ -17,6 +17,7 @@ const renderStepper = (answered: Record<string, number>) => render(<MantineProvi
     progress={Object.fromEntries(Object.entries(answered).map(([key, count]) => [key, { done: 0, started: 1, answered: count }]))} />
 </QueryClientProvider></MantineProvider>);
 
+beforeEach(() => localStorage.clear());
 afterEach(cleanup);
 
 describe("PracticeStepper", () => {
@@ -58,5 +59,49 @@ describe("PracticeStepper", () => {
     await waitFor(() => expect(fetchMock).toHaveBeenCalledWith(`/api/groups/${id(90)}/courses/${id(91)}/lessons/${id(92)}/blocks/${id(1)}/progress`,
       expect.objectContaining({ method: "PUT", body: JSON.stringify({ answered: 1 }) })));
     vi.unstubAllGlobals();
+  });
+
+  it("opens the next practice when Done closes a completed answer set", async () => {
+    renderStepper({});
+    const stepper = screen.getByRole("region", { name: "Practices" });
+    fireEvent.click(within(stepper).getByRole("button", { name: "Answer" }));
+    for (const number of [1, 2]) {
+      const field = within(stepper).getByLabelText(new RegExp(`^${number}\\. Prompt 1\\.${number}`));
+      fireEvent.change(field, { target: { value: number === 1 ? "x" : "y" } });
+      if (number === 1) fireEvent.keyDown(field, { key: "Enter" });
+    }
+    // The last answer misses, so Check shows the author's version and Done closes the completed set.
+    fireEvent.click(within(stepper).getByRole("button", { name: "Check" }));
+    fireEvent.click(within(stepper).getByRole("button", { name: "Done" }));
+    expect(within(stepper).getByText("Instruction 2.")).toBeInTheDocument();
+    expect(within(stepper).getByRole("region", { name: "Answer the practice" })).toBeInTheDocument();
+    await waitFor(() => expect(within(stepper).getByLabelText(/^1\. Prompt 2\.1/)).toHaveFocus());
+  });
+
+  it("moves straight to the next practice after the last answer matches", async () => {
+    renderStepper({});
+    const stepper = screen.getByRole("region", { name: "Practices" });
+    fireEvent.click(within(stepper).getByRole("button", { name: "Answer" }));
+    for (const number of [1, 2]) {
+      const field = within(stepper).getByLabelText(new RegExp(`^${number}\\. Prompt 1\\.${number}`));
+      fireEvent.change(field, { target: { value: "x" } });
+      fireEvent.keyDown(field, { key: "Enter" });
+    }
+    expect(within(stepper).getByText("Instruction 2.")).toBeInTheDocument();
+    expect(within(stepper).queryByText("Matches the author’s version")).not.toBeInTheDocument();
+    await waitFor(() => expect(within(stepper).getByLabelText(/^1\. Prompt 2\.1/)).toHaveFocus());
+  });
+
+  it("skips an undone practice to the next undone one without saving or marking it done, and offers no skip on a done or last practice", () => {
+    renderStepper({ [id(2)]: 1 });
+    const stepper = screen.getByRole("region", { name: "Practices" });
+    fireEvent.click(within(stepper).getByRole("button", { name: "Skip this practice" }));
+    // Practice 2 is done, so Skip from practice 1 lands on practice 3; nothing was answered or marked done.
+    expect(within(stepper).getByText("Instruction 3.")).toBeInTheDocument();
+    expect(within(stepper).getByText("1 of 3 done")).toBeInTheDocument();
+    expect(within(stepper).queryByRole("button", { name: "Skip this practice" })).not.toBeInTheDocument();
+    fireEvent.click(within(stepper).getByRole("button", { name: "Previous practice" }));
+    expect(within(stepper).getByText("Instruction 2.")).toBeInTheDocument();
+    expect(within(stepper).queryByRole("button", { name: "Skip this practice" })).not.toBeInTheDocument();
   });
 });

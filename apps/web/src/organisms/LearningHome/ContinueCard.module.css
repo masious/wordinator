@@ -1,4 +1,4 @@
-.card{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--space-6);align-items:center;padding:clamp(var(--space-6),3vw,var(--space-8));color:var(--color-feature-text);background:var(--color-feature-surface);border:var(--ring-hairline);border-color:var(--color-feature-line);border-radius:var(--radius-lg);box-shadow:var(--shadow-card)}
+.card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,7.5rem);gap:var(--space-6);align-items:center;padding:clamp(var(--space-6),3vw,var(--space-8));color:var(--color-feature-text);background:var(--color-feature-surface);border:var(--ring-hairline);border-color:var(--color-feature-line);border-radius:var(--radius-lg);box-shadow:var(--shadow-card)}
 .copy{display:grid;gap:var(--space-3);justify-items:start;min-width:0}
 .top{display:flex;flex-wrap:wrap;gap:var(--space-2);min-height:1.5rem}
 .copy h2{margin:0;font-size:var(--type-section-title);font-weight:var(--weight-bold);letter-spacing:var(--tracking-title);line-height:var(--line-title)}
@@ -9,12 +9,12 @@
 .action{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);justify-self:start;min-height:var(--control-height);padding:0 var(--space-5);color:var(--color-action-text);background:var(--color-action);border-radius:var(--radius-sm);font-size:var(--type-control-label);font-weight:var(--weight-semibold);text-decoration:none;transition:transform var(--motion-standard) var(--ease-physical),background-color var(--motion-standard) var(--ease-physical)}
 .action:hover{transform:translateY(-1px)}
 .action svg{width:1rem}
-.ring{position:relative;display:grid;place-items:center;width:7.5rem;height:7.5rem}
+.ring{position:relative;display:grid;place-items:center;width:100%;max-width:7.5rem;aspect-ratio:1;min-width:0;justify-self:end}
 .ring svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
 .track,.arc{fill:none;stroke-width:3}
 .track{stroke:var(--color-feature-track)}
 .arc{stroke:var(--color-action);stroke-linecap:round;transition:stroke-dashoffset var(--motion-standard) var(--ease-physical)}
 .arc[data-met]{stroke:var(--color-success)}
-.centre{font-size:var(--type-card-title);font-weight:var(--weight-bold);font-variant-numeric:tabular-nums}
-@media(max-width:48em){.card{grid-template-columns:minmax(0,1fr)}.action{justify-self:stretch}}
+.centre{max-width:76%;overflow-wrap:anywhere;text-align:center;font-size:clamp(var(--type-metadata),1.5vw,var(--type-card-title));font-weight:var(--weight-bold);font-variant-numeric:tabular-nums}
+@media(max-width:48em){.card{grid-template-columns:minmax(0,1fr)}.ring{justify-self:start}.action{justify-self:stretch}}
 @media(prefers-reduced-motion:reduce){.arc,.action{transition:none}.action:hover{transform:none}}

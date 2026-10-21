@@ -40,3 +40,12 @@ export function wordOrderFromAnswer(words: readonly string[], answer: string): s
   };
   return arrange(answer, words.map((_, index) => index));
 }
+
+// The same restore as chunk indexes into `words`, for the board that tracks positions: each spelled word takes the first unused index
+// holding that text, so repeated words stay distinct. Null when the answer is not these words.
+export function wordOrderIndexes(words: readonly string[], answer: string): number[] | null {
+  const spelled = wordOrderFromAnswer(words, answer);
+  if (!spelled) return null;
+  const used = new Set<number>();
+  return spelled.map((word) => { const index = words.findIndex((entry, at) => entry === word && !used.has(at)); used.add(index); return index; });
+}

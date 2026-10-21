@@ -20,6 +20,10 @@ export function PracticeStepper({ items, scope, progress, published, archived }:
   const practices = items.map((item) => ({ ...item, practice: practiceFromBlock(item.block, progress) }));
   const done = practices.map(({ practice }) => ownStatus(practice).done);
   const [current, setCurrent] = useState(() => Math.max(0, done.indexOf(false)));
+  const [openNext, setOpenNext] = useState<number | null>(null);
+  const select = (index: number) => { setOpenNext(null); setCurrent(index); };
+  // Skip moves on to the next practice the viewer has not done (else the next one) and saves nothing; the last practice has none to skip to.
+  const skip = () => { const later = done.findIndex((isDone, index) => index > current && !isDone); select(later < 0 ? current + 1 : later); };
   const active = practices[Math.min(current, practices.length - 1)]!;
   const label = (index: number) => {
     const title = practices[index]!.title; const key = title === null ? "stepUntitled" : "step";
@@ -32,16 +36,17 @@ export function PracticeStepper({ items, scope, progress, published, archived }:
         <span className={styles.count}>{t("courses.practice.doneOf", { done: done.filter(Boolean).length, total: practices.length })}</span>
       </p>
       <div className={styles.arrows}>
-        <IconButton tone="quiet" label={t("courses.practice.previous")} disabled={current === 0} onClick={() => setCurrent(current - 1)}><ChevronLeft aria-hidden="true" /></IconButton>
-        <IconButton tone="quiet" label={t("courses.practice.next")} disabled={current === practices.length - 1} onClick={() => setCurrent(current + 1)}><ChevronRight aria-hidden="true" /></IconButton>
+        <IconButton tone="quiet" label={t("courses.practice.previous")} disabled={current === 0} onClick={() => select(current - 1)}><ChevronLeft aria-hidden="true" /></IconButton>
+        <IconButton tone="quiet" label={t("courses.practice.next")} disabled={current === practices.length - 1} onClick={() => select(current + 1)}><ChevronRight aria-hidden="true" /></IconButton>
       </div>
     </header>
-    <QuestionPips label={t("courses.practice.stepperLabel")} current={current} onSelect={setCurrent}
+    <QuestionPips label={t("courses.practice.stepperLabel")} current={current} onSelect={select}
       items={practices.map((item, index) => ({ id: item.block.id, state: done[index] ? "done" as const : "open" as const, label: label(index) }))} />
     <SlidePanel index={current}>
       <div className={styles.body}>
         {active.title && <h3 className={styles.title}>{active.title}</h3>}
-        <PracticeSummary step scope={scope} block={active.practice} published={published} archived={archived} />
+        <PracticeSummary key={active.block.id} step scope={scope} block={active.practice} published={published} archived={archived}
+          autoOpen={openNext === current} onSkip={!done[current] && current < practices.length - 1 ? skip : undefined} onComplete={() => { if (current < practices.length - 1) { setOpenNext(current + 1); setCurrent(current + 1); } }} />
       </div>
     </SlidePanel>
   </section>;

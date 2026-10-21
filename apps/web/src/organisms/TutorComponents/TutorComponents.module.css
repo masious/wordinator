@@ -15,16 +15,6 @@
 .skipRow{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:var(--space-3)}
 .waiting{margin:0;font-size:var(--type-metadata);color:var(--color-foreground-muted)}
 
-/* Word order: hairline pill chips that move between the pool and the answer row. */
-.chipRow{display:flex;flex-wrap:wrap;gap:var(--space-2);min-height:calc(var(--control-height) + var(--space-2) * 2);padding:var(--space-2);margin:0;list-style:none;border:var(--ring-hairline);border-radius:var(--radius-md)}
-.answerChips{background:var(--color-core)}
-.poolChips{border-style:dashed;background:var(--color-wash-subtle)}
-.chipRow li{display:contents}
-.chipButton{min-height:var(--control-height-sm);padding:var(--space-1) var(--space-3);font:var(--weight-medium) var(--type-body)/var(--line-compact) var(--font-sans);color:var(--color-foreground);background:var(--color-control-surface);border:var(--ring-hairline);border-radius:var(--radius-pill);box-shadow:var(--shadow-card);cursor:grab;transition:transform var(--motion-standard) var(--ease-physical),background var(--motion-standard) var(--ease-physical)}
-.chipButton:hover:not(:disabled){transform:translateY(-2px)}
-.chipButton:focus-visible{outline:var(--border-strong);outline-offset:2px}
-.chipButton:disabled{cursor:default;box-shadow:none}
-.rowLabel{margin:0;font-size:var(--type-metadata);color:var(--color-foreground-muted)}
 
 /* De or het: two (or three) large toggle pills per noun. */
 .nouns{display:grid;gap:var(--space-3);margin:0;padding:0;list-style:none}
@@ -79,7 +69,7 @@
 .noteText{font-size:var(--type-metadata);line-height:var(--line-body);color:var(--color-foreground-muted);white-space:pre-wrap;overflow-wrap:anywhere}
 @media(max-width:30em){.feedbackRow{grid-template-columns:minmax(0,1fr);gap:0}}
 @keyframes verdictIn{0%{opacity:0;transform:translateY(var(--space-2)) scale(.6)}60%{opacity:1;transform:scale(1.08)}100%{opacity:1;transform:none}}
-@media(prefers-reduced-motion:reduce){.verdict,.chipButton,.toggle,.option{animation:none;transition:none}}
+@media(prefers-reduced-motion:reduce){.verdict,.toggle,.option{animation:none;transition:none}}
 
 /* Target-language text the tutor marked with [[...]] in a question, option, or translation. */
 .target{font-style:italic;font-weight:var(--weight-semibold);color:var(--color-foreground);background:var(--color-highlight-soft);border-radius:var(--radius-sm);padding:0 var(--space-1);box-decoration-break:clone;-webkit-box-decoration-break:clone}

@@ -9,7 +9,8 @@
 .composer h4{margin:0;font-size:var(--type-body);line-height:var(--line-body)}
 .composer{display:grid;gap:var(--space-2);padding:var(--space-3);background:color-mix(in srgb,var(--color-surface-raised) 92%,var(--color-info-soft));border:var(--ring-hairline);border-radius:var(--radius-md)}
 .help{margin:0;max-width:52ch;font-size:var(--type-metadata);color:var(--color-foreground-muted)}
-.actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:var(--space-2)}
+.actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:var(--space-2)}
+.finishLater{margin-inline-start:auto}
 .answerField{display:grid;gap:var(--space-2);min-width:0}
 .matched textarea,.matched input{border-color:var(--color-success)}
 .blanks{display:grid;gap:var(--space-2);min-width:0;margin:0;padding:0;border:0}
@@ -24,7 +25,7 @@
 @keyframes expandIn{from{opacity:0;transform:translateY(calc(var(--space-1) * -1))}to{opacity:1;transform:none}}
 @keyframes matchPop{0%{transform:scale(0.4) rotate(-20deg);opacity:0}60%{transform:scale(1.2) rotate(0);opacity:1}100%{transform:scale(1)}}
 @media(prefers-reduced-motion:reduce){.match,.matchMark,.checkReference,.expansion,.reveal{animation:none}}
-@media(max-width:40em){.actions>*{flex:1}}
+@media(max-width:40em){.actions>*{flex:1}.finishLater{flex-basis:100%}}
 .summary{gap:var(--space-2)}
 /* Inside the practice stepper, which draws the card. */
 .step{display:grid}
@@ -37,6 +38,7 @@
 .summaryAccepted{color:var(--color-success)}
 .summaryCheck{display:inline-grid;place-items:center;margin-inline-start:var(--space-2);color:var(--color-success);font-weight:var(--weight-bold)}
 .summaryAnswer{flex:none}
+.summaryActions{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2)}
 @media(max-width:30em){.summaryBody{flex-direction:column;align-items:stretch}}
 .position{display:grid;gap:var(--space-2)}
 .positionLabel{margin:0;font-family:var(--font-mono);font-size:var(--type-eyebrow);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-foreground-muted)}
@@ -55,9 +57,3 @@
 .answerShare{display:flex;flex:none}
 .answerShare:empty{display:none}
 .visuallyHidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-/* A word-order question: its words are chips in a wrapping row, each with its move controls at the end; a matched row turns them green. */
-.words{display:flex;flex-wrap:wrap;gap:var(--space-2);margin:0;padding:0;list-style:none}
-.word{display:inline-flex;align-items:center;gap:var(--space-1);padding:var(--space-1);background:var(--color-control-surface);border:var(--ring-hairline);border-radius:var(--radius-pill)}
-.chip{min-height:var(--control-height-sm);padding:0 var(--space-3);font:inherit;font-weight:var(--weight-semibold);color:var(--color-foreground);background:none;border:0;border-radius:var(--radius-pill);cursor:grab}
-.chip:active{cursor:grabbing}
-.matched .word{border-color:var(--color-success)}

@@ -130,6 +130,25 @@ describe("Lesson activity page", () => {
     expect(screen.getByText("Question 2 of 4")).toBeInTheDocument();
   });
 
+  it("checks a multiword tricky grammar answer with Enter and keeps Shift+Enter for a newline", async () => {
+    const answers: Record<string, unknown>[] = [];
+    serve({
+      descriptors: () => descriptorList,
+      open: () => ({ ...readyResponse(), activity: { ...trickyActivity(), payload: { ...trickyActivity().payload, questions: [
+        { id: uuid(305), kind: "fill_in", prompt: "Complete: ___ ik de menukaart?" }, ...trickyActivity().payload.questions.slice(1),
+      ] } } }),
+      answer: (body) => { answers.push(body); return { answerId: uuid(901), itemId: uuid(305), correct: true, reference: null, explanation: null, pronunciation: null }; },
+    });
+    renderPage({ type: "tricky_grammar" });
+    const field = await screen.findByRole("textbox", { name: "Your answer" });
+    fireEvent.change(field, { target: { value: "Wil jij" } });
+    fireEvent.keyDown(field, { key: "Enter", shiftKey: true });
+    expect(answers).toHaveLength(0);
+    fireEvent.keyDown(field, { key: "Enter" });
+    await waitFor(() => expect(answers).toHaveLength(1));
+    expect(answers[0]).toMatchObject({ answer: { kind: "text", text: "Wil jij" } });
+  });
+
   it("orders word tokens by tapping and submits the order as indices", async () => {
     const answers: Record<string, unknown>[] = [];
     serve({
