@@ -5,7 +5,7 @@ import { Check, Dumbbell, Sparkles } from "lucide-react";
 import { useId } from "react";
 import { useTranslation } from "react-i18next";
 import type { TypicalTime } from "@wordinator/contracts/learning";
-import type { ActivityDescriptor, ActivityType } from "@wordinator/contracts/lesson-activities";
+import { lessonActivityFocus, type ActivityDescriptor, type ActivityType } from "@wordinator/contracts/lesson-activities";
 import type { TFunction } from "i18next";
 import { lessonMetricsQueryOptions } from "../../api";
 import { learningClock, useMinuteRefresh } from "../../learningTime";
@@ -101,23 +101,26 @@ export function LessonBoxActions({ lesson, compact = false, courseSlug, lessonSl
   const doneBadge = (done: boolean | undefined) => done ? <>
     {" "}<span className={styles.done} title={t("courses.lessonBox.activityDone")}><Check aria-hidden="true" /><span className={styles.doneText}>{t("courses.lessonBox.activityDone")}</span></span>
   </> : null;
+  // The section the suggestions belong to: dialogue suggestions share their section's heading, so name that section.
+  const sectionLabel = (suggestions.find((entry) => entry.descriptor.sourceKind === "section")?.descriptor.sourceLabel ?? suggestions[0]?.descriptor.sourceLabel.replace(/^Dialogue · /, "")) || null;
   return <div className={styles.actions} data-compact={compact || undefined} role="group" aria-label={t("courses.lessonBox.actions")}>
     <h2 className={styles.actionsHeading}><Sparkles aria-hidden="true" /><span>{t("courses.lessonBox.doMoreWithAi")}</span>
       {completedCount > 0 && <Badge component="span" variant="light" size="sm" aria-label={t("courses.lessonBox.activitiesDoneCount", { count: completedCount })}>{completedCount}</Badge>}</h2>
+    {sectionLabel && <p className={styles.section} title={sectionLabel}>{sectionLabel}</p>}
     <div className={styles.pair}>
       <Link className={styles.action} title={compact ? t("courses.lessonBox.practiseWords") : undefined} to="/words/drill" search={{ source: "course", course: lesson.courseId, direction: "mixed" }}>
         <Dumbbell aria-hidden="true" /><span className={styles.label}>{t("courses.lessonBox.practiseWords")}</span>
       </Link>
-      {suggestions.slice(0, 1).map(({ descriptor, type, done }) => <Link key={`${descriptor.sourceId}:${type}`} className={styles.action}
+      {suggestions.slice(0, 1).map(({ descriptor, type, done }) => <Link key={`${descriptor.sourceId}:${type}`} className={styles.action} data-focus={lessonActivityFocus(type)}
         title={`${activityLabel[type]} · ${descriptor.sourceLabel}`} to="/courses/$courseSlug/lessons/$lessonSlug/activities/$sourceId/$activityType"
         params={{ courseSlug: courseSlug!, lessonSlug: lessonSlug!, sourceId: descriptor.sourceId, activityType: type }}>
         <ActivityGlyph type={type} /><span className={styles.label}>{activityLabel[type]}</span>{doneBadge(done)}
       </Link>)}
     </div>
-    {suggestions.slice(1).map(({ descriptor, type, done }) => <Link key={`${descriptor.sourceId}:${type}`} className={styles.action}
+    {suggestions.slice(1).map(({ descriptor, type, done }) => <Link key={`${descriptor.sourceId}:${type}`} className={styles.action} data-focus={lessonActivityFocus(type)}
       title={`${activityLabel[type]} · ${descriptor.sourceLabel}`} to="/courses/$courseSlug/lessons/$lessonSlug/activities/$sourceId/$activityType"
       params={{ courseSlug: courseSlug!, lessonSlug: lessonSlug!, sourceId: descriptor.sourceId, activityType: type }}>
-      <ActivityGlyph type={type} /><span className={styles.label}>{activityLabel[type]} · {descriptor.sourceLabel}</span>{doneBadge(done)}
+      <ActivityGlyph type={type} /><span className={styles.label}>{activityLabel[type]}{" "}<span className={styles.doneText}>· {descriptor.sourceLabel}</span></span>{doneBadge(done)}
     </Link>)}
   </div>;
 }

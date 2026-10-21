@@ -37,7 +37,9 @@ describe("Lesson box actions", () => {
       "/courses/dutch-foundations/lessons/lesson-title/activities/section-story/story_comprehension",
       "/courses/dutch-foundations/lessons/lesson-title/activities/section-grammar/grammar_explanation",
     ]);
-    // The first suggestion sits beside Practise words; the rest name their section.
+    // The first suggestion sits beside Practise words; the rest keep their section in the accessible name (visually it is the group's one title).
+    expect(within(group).getByText("Story", { selector: "p" })).toHaveAttribute("title", "Story");
+    expect(within(group).getByRole("link", { name: "Grammar explanation · Grammar" })).toHaveTextContent(/^Grammar explanation/);
     expect(within(group).getByRole("link", { name: "Story summary" })).toBeInTheDocument();
     expect(within(group).getByRole("link", { name: "Story comprehension · Story" })).toBeInTheDocument();
     expect(within(group).getByRole("link", { name: "Grammar explanation · Grammar" })).toBeInTheDocument();
@@ -58,6 +60,19 @@ describe("Lesson box actions", () => {
     expect(within(group).getAllByText("Done")).toHaveLength(1);
     // The full label stays discoverable through the title, since the visible label clamps to two lines.
     expect(done).toHaveAttribute("title", "Story summary · Story");
+  });
+
+  it("shows the section label once in the header, on one line with a title, and the links show only the type label", async () => {
+    const long = { ...story, sourceLabel: "Story: Een tafel bij het raam" };
+    const dialogue: ActivityDescriptor = { ...story, sourceId: "dialogue-1", sourceKind: "dialogue", sourceLabel: "Dialogue · Story: Een tafel bij het raam", activityTypes: ["roleplay"] };
+    renderActions([{ descriptor: long, type: "story_summary" }, { descriptor: long, type: "story_comprehension" }, { descriptor: dialogue, type: "roleplay" }]);
+    const group = await screen.findByRole("group", { name: "Lesson actions" });
+    const header = within(group).getAllByText("Story: Een tafel bij het raam", { selector: "p" });
+    expect(header).toHaveLength(1);
+    expect(header[0]).toHaveAttribute("title", "Story: Een tafel bij het raam");
+    const link = within(group).getByRole("link", { name: "Story comprehension · Story: Een tafel bij het raam" });
+    expect(link.querySelector("span")?.firstChild?.textContent).toBe("Story comprehension");
+    expect(link).toHaveAttribute("data-focus", "reading");
   });
 
   it("keeps the Done word for assistive technology in compact mode, where only the check shows", async () => {
