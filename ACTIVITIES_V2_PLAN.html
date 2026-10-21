@@ -898,7 +898,7 @@ REPORT FORMAT (maximum 10 lines, no diffs, no logs):
 <dt>Done when</dt><dd><ul><li>The role-play suite still passes.</li><li>The three test cases pass for each new component.</li></ul></dd>
 <dt>Depends on</dt><dd>T4.1, T3.4 (speech route), T1.2</dd>
 <dt>Parallel-safe</dt><dd>yes, with T4.4 and T4.5 (new files). If <code>HoldToTalk</code> is extracted, <code>RoleplayActivity.tsx</code> is touched, which no other batch-4 task touches.</dd>
-<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Status</dt><dd class="status">Done 2026-10-21 — Roleplay 11 + ReadAloud 5 + SpeakFromEnglish 5 = 21/21</dd>
 <dt>Risk</dt><dd>normal</dd>
 </dl>
 <p class="orch"><strong>Orchestrator note:</strong> whether the <code>HoldToTalk</code> extraction is made is left to the worker by the brief (“only if it removes duplication cleanly”). The worker reports the choice. The orchestrator checks it at the batch review.</p>
@@ -1081,6 +1081,7 @@ REPORT FORMAT (maximum 10 lines, no diffs, no logs):
 <tr><td>T4.4</td><td>2026-10-21</td><td>SummaryActivity 3/3, LessonWords 10/10, LessonBox 7/7</td><td>Done; image header, linked pair hover/focus, display-only WordList (New words | Dutch | English)</td></tr>
 <tr><td>T3.3</td><td>2026-10-21</td><td>lesson-activities.test.ts 80/80; 0 API type errors in lessonActivities</td><td>Done; read_aloud materialized without AI (stable line IDs), speak_from_english English by position</td></tr>
 <tr><td>T3.4</td><td>2026-10-21</td><td>lesson-activities.test.ts 82/82; contracts 30/30</td><td>Done; lineId speech for read_aloud/speak_from_english, narrator for null speaker, lesson_activity usage</td></tr>
+<tr><td>T4.6</td><td>2026-10-21</td><td>Roleplay 11 + ReadAloud 5 + SpeakFromEnglish 5 = 21/21</td><td>Done; shared SpokenLineActivity (read/speak modes), lineId speech, no drafts; no HoldToTalk extraction</td></tr>
 </tbody>
 </table></div>
 </section>
