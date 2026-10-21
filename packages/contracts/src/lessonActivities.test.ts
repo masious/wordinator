@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { emptyLessonDocument, type LessonBlock, type LessonDocument } from "./lessonDocument";
-import { LESSON_ACTIVITY_RECIPE_VERSION, activityRunPatchResponseSchema, LESSON_ACTIVITY_SCHEMA_VERSION, gradeLessonActivityAnswer, lessonActivityFocus, lessonActivityMetricSchema, lessonActivityPayloadSchema, lessonActivityTypeSchema, lessonActivityViewSchema, normalizeLessonSentence, resolveLessonActivitySources, storySpeakingLines, firstImage, toLessonActivityView, verifyLessonActivitySource } from "./lessonActivities";
+import { activitySpeechRequestSchema, LESSON_ACTIVITY_RECIPE_VERSION, activityRunPatchResponseSchema, LESSON_ACTIVITY_SCHEMA_VERSION, gradeLessonActivityAnswer, lessonActivityFocus, lessonActivityMetricSchema, lessonActivityPayloadSchema, lessonActivityTypeSchema, lessonActivityViewSchema, normalizeLessonSentence, resolveLessonActivitySources, storySpeakingLines, firstImage, toLessonActivityView, verifyLessonActivitySource } from "./lessonActivities";
 
 const uid = (n: number) => `00000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 const props = { textColor: "default" as const, backgroundColor: "default" as const };
@@ -334,5 +334,15 @@ describe("lesson activity contracts", () => {
     expect(activityRunPatchResponseSchema.parse({ run, metrics: [{ key: "lesson_grammar", before: 0.25, after: 0.5 }] }).metrics).toEqual([{ key: "lesson_grammar", before: 0.25, after: 0.5 }]);
     expect(activityRunPatchResponseSchema.safeParse({ run, metrics: [{ key: "course_progress", before: 0, after: 1 }] }).success).toBe(false);
     expect(activityRunPatchResponseSchema.safeParse({ run, metrics: [{ key: "lesson_share", before: 0, after: 1.5 }] }).success).toBe(false);
+  });
+});
+
+describe("activity speech request", () => {
+  const runId = uid(1);
+  it("names exactly one of turnId or lineId", () => {
+    expect(activitySpeechRequestSchema.safeParse({ runId, turnId: uid(2) }).success).toBe(true);
+    expect(activitySpeechRequestSchema.safeParse({ runId, lineId: uid(3), chunkIndex: 1 }).success).toBe(true);
+    expect(activitySpeechRequestSchema.safeParse({ runId }).success).toBe(false);
+    expect(activitySpeechRequestSchema.safeParse({ runId, turnId: uid(2), lineId: uid(3) }).success).toBe(false);
   });
 });

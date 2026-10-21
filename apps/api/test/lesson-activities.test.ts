@@ -1134,6 +1134,47 @@ describe("dialogue speech", () => {
     expect(await errorCode(response)).toBe("ACTIVITY_ACTION_INVALID");
   });
 
+  it("speaks read aloud lines in the narrator voice, with usage recorded, and names unknown lines", async () => {
+    const s = await setup();
+    const opened = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.story), "read_aloud", scriptedAi([])));
+    const payload = opened.activity.payload;
+    if (payload.type !== "read_aloud") throw new Error("Expected read aloud.");
+    const bodies = stubAzure();
+    const path = SPEAK(s.base, opened.activity.id);
+    const line = payload.lines.find((candidate) => candidate.speaker === null)!;
+    const response = await call("POST", path, s.learner, { runId: opened.run.id, lineId: line.id }, withSpeech());
+    expect(response.status).toBe(200);
+    const hash = await speechClipHash({ voice: FENNA, text: line.dutchText, ipa: null });
+    expect(await response.json()).toEqual({ status: "ready", url: clipUrl(hash) });
+    expect(bodies[0]).toContain(`<voice name="${FENNA}">`);
+    expect(await env.DB.prepare("SELECT surface FROM speech_usage").all().then((r) => r.results)).toEqual([{ surface: "lesson_activity" }]);
+    expect(await errorCode(await call("POST", path, s.learner, { runId: opened.run.id, lineId: uuid() }, withSpeech()))).toBe("ACTIVITY_LINE_NOT_FOUND");
+    expect((await call("POST", path, s.learner, { runId: opened.run.id, turnId: line.id }, withSpeech())).status).toBe(404);
+  });
+
+  it("voices a speak from English line by its speaker's cast voice", async () => {
+    const s = await setup();
+    await castPieterAsNarrator(s.courseId);
+    const english = JSON.stringify({ lines: Array.from({ length: 3 }, (_, index) => ({ index, englishText: `English ${index}` })), metrics: ["speaking"] });
+    const opened = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.story), "speak_from_english", scriptedAi([say(english)])));
+    const payload = opened.activity.payload;
+    if (payload.type !== "speak_from_english") throw new Error("Expected speak from English.");
+    const bodies = stubAzure();
+    const line = payload.lines.find((candidate) => candidate.speaker === "Pieter")!;
+    const response = await call("POST", SPEAK(s.base, opened.activity.id), s.learner, { runId: opened.run.id, lineId: line.id }, withSpeech());
+    const hash = await speechClipHash({ voice: FENNA, text: PIETER_LINE, ipa: null });
+    expect(await response.json()).toEqual({ status: "ready", url: clipUrl(hash) });
+    expect(bodies).toHaveLength(1);
+    const anonymous = await call("POST", SPEAK(s.base, opened.activity.id), null, { runId: opened.run.id, lineId: line.id }, withSpeech());
+    expect(anonymous.status).toBe(401);
+    const incomplete = await call("POST", SPEAK(s.base, opened.activity.id), s.newcomer, { runId: opened.run.id, lineId: line.id }, withSpeech());
+    expect(incomplete.status).toBe(403);
+    const unpublished = await call("POST", `/api/courses/${s.courseId}/lessons/${s.unpublishedId}/activities/${opened.activity.id}/speech`, s.learner, { runId: opened.run.id, lineId: line.id }, withSpeech());
+    expect(unpublished.status).toBe(404);
+    const hidden = await call("POST", `/api/courses/${s.draftCourseId}/lessons/${s.hiddenLessonId}/activities/${opened.activity.id}/speech`, s.learner, { runId: opened.run.id, lineId: line.id }, withSpeech());
+    expect(hidden.status).toBe(404);
+  });
+
   it("refuses a hidden, unpublished, mismatched, or stranger's request before reading the activity", async () => {
     const s = await setup();
     const opened = await openRoleplay(s);

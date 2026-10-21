@@ -151,7 +151,9 @@ export const activityRunPatchRequestSchema = z.discriminatedUnion("action", [
 export const activityMetricChangeSchema = z.strictObject({ key: lessonActivityMetricSchema, before: z.number().min(0).max(1), after: z.number().min(0).max(1) });
 export type ActivityMetricChange = z.infer<typeof activityMetricChangeSchema>;
 export const activityRunPatchResponseSchema = z.strictObject({ run: lessonActivityRunSchema, metrics: z.array(activityMetricChangeSchema).max(3).optional() });
-export const activitySpeechRequestSchema = z.strictObject({ runId: opaqueIdSchema, turnId: opaqueIdSchema, chunkIndex: z.number().int().nonnegative().optional() });
+// A request names exactly one of turnId (role-play) or lineId (read aloud and speak from English).
+export const activitySpeechRequestSchema = z.strictObject({ runId: opaqueIdSchema, turnId: opaqueIdSchema.optional(), lineId: opaqueIdSchema.optional(), chunkIndex: z.number().int().nonnegative().optional() })
+  .refine((request) => (request.turnId === undefined) !== (request.lineId === undefined), { message: "Name either turnId or lineId.", path: ["turnId"] });
 export const activitySpeechResponseSchema = z.discriminatedUnion("status", [
   z.strictObject({ status: z.literal("ready"), url: z.string().url() }), z.strictObject({ status: z.literal("pending"), retryAfterMs: z.number().int().min(250).max(10_000) }),
 ]);

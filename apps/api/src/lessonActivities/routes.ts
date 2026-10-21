@@ -7,6 +7,7 @@ import {
 } from "@wordinator/contracts/lesson-activities";
 import { collectLessonWords, readDialogueTurns, walkLessonBlocks, type LessonBlockOf, type LessonDocument } from "@wordinator/contracts/lesson-document";
 import { dialogueVoices, speechClipHash } from "@wordinator/contracts/speech";
+import { speechNarrator } from "@wordinator/contracts";
 import type { Context, Hono, MiddlewareHandler } from "hono";
 import { aiErrorResponse, assertDailySpeechCap, completeChat, readAiSettings, recordSpeechUsage } from "../ai";
 import type { AppEnvironment } from "../app";
@@ -281,15 +282,18 @@ export function registerLessonActivityRoutes(app: Hono<AppEnvironment>, deps: Ro
     const db = context.env.DB;
     const row = await readActivity(db, context.req.param("activityId") ?? "");
     if (!row || row.lessonId !== found.lessonId || row.courseId !== found.courseId || row.status !== "ready") return apiError(context, 404, "ACTIVITY_NOT_FOUND", "This activity is not available.");
-    if (row.activityType !== "roleplay") return apiError(context, 400, "ACTIVITY_ACTION_INVALID", "Dialogue audio is available only for role-play activities.");
+    if (row.activityType !== "roleplay" && row.activityType !== "read_aloud" && row.activityType !== "speak_from_english") return apiError(context, 400, "ACTIVITY_ACTION_INVALID", "Audio is available only for role-play and speaking activities.");
     const payload = validPayload(row);
-    if (!payload || payload.type !== "roleplay") return apiError(context, 503, "ACTIVITY_UNAVAILABLE", "This activity is unavailable.");
+    if (!payload || (payload.type !== "roleplay" && payload.type !== "read_aloud" && payload.type !== "speak_from_english")) return apiError(context, 503, "ACTIVITY_UNAVAILABLE", "This activity is unavailable.");
     const uid = userId(context);
     const run = await db.prepare(`SELECT ${runColumns} FROM lesson_activity_runs WHERE id=? AND activity_id=? AND user_id=?`).bind(parsed.data.runId, row.id, uid).first<RunRow>();
     // An archived lesson has no owned run to check. As on the answer route, it serves ready audio and writes no learner state.
     if (!run && !found.archived) return apiError(context, 404, "ACTIVITY_RUN_NOT_FOUND", "This activity run is not available.");
-    const turn = payload.turns.find((candidate) => candidate.id === parsed.data.turnId);
-    if (!turn) return apiError(context, 404, "ACTIVITY_TURN_NOT_FOUND", "This dialogue line is not part of this activity.");
+    // Role-play names a turn; read aloud and speak from English name a line. A request naming the other kind finds nothing.
+    const turn = payload.type === "roleplay"
+      ? (parsed.data.turnId === undefined ? undefined : payload.turns.find((candidate) => candidate.id === parsed.data.turnId))
+      : (parsed.data.lineId === undefined ? undefined : payload.lines.find((candidate) => candidate.id === parsed.data.lineId));
+    if (!turn) return apiError(context, 404, payload.type === "roleplay" ? "ACTIVITY_TURN_NOT_FOUND" : "ACTIVITY_LINE_NOT_FOUND", "This line is not part of this activity.");
     const chunks = speechChunks(turn.referenceText.trim());
     // A long line is never spoken whole or truncated: the learner asks for each part, and a part is required when there are several.
     if (parsed.data.chunkIndex === undefined && chunks.length > 1) return apiError(context, 400, "ACTIVITY_CHUNK_INVALID", "Ask for this long line one part at a time.");
@@ -302,10 +306,14 @@ export function registerLessonActivityRoutes(app: Hono<AppEnvironment>, deps: Ro
     // speakers in the published dialogue (the stored activity's turns when that dialogue is no longer published).
     const course = await db.prepare("SELECT speech_cast AS speechCast FROM courses WHERE id = ?").bind(found.courseId).first<{ speechCast: string | null }>();
     const dialogue = [...walkLessonBlocks(found.document.blocks)].map(({ block }) => block)
-      .find((block): block is LessonBlockOf<"dialogue"> => block.type === "dialogue" && block.id === payload.dialogueId);
-    const speakers = (dialogue ? readDialogueTurns(dialogue) : payload.turns).map((candidate) => candidate.speaker);
-    const voice = dialogueVoices(speakers, storedSpeechCast(course?.speechCast ?? null), found.language)(turn.speaker);
-    const spoken = { key: `turn:${turn.id}:${chunkIndex}`, voice, text: chunk, ipa: null };
+      .find((block): block is LessonBlockOf<"dialogue"> => block.type === "dialogue" && payload.type === "roleplay" && block.id === payload.dialogueId);
+    // Speaking lines take the same lookup by speaker name; a line with no speaker is read in the course narrator voice.
+    const lineSpeakers = payload.type === "roleplay" ? [] : [...walkLessonBlocks(found.document.blocks)].flatMap(({ block }) => block.type === "dialogue" ? readDialogueTurns(block as LessonBlockOf<"dialogue">).map((candidate) => candidate.speaker) : []);
+    const speakers = payload.type === "roleplay" ? (dialogue ? readDialogueTurns(dialogue) : payload.turns).map((candidate) => candidate.speaker)
+      : [...lineSpeakers, ...payload.lines.flatMap((line) => line.speaker === null ? [] : [line.speaker])];
+    const voiceOf = dialogueVoices(speakers, storedSpeechCast(course?.speechCast ?? null), found.language);
+    const voice = turn.speaker === null ? speechNarrator(found.language) : voiceOf(turn.speaker);
+    const spoken = { key: `${payload.type === "roleplay" ? "turn" : "line"}:${turn.id}:${chunkIndex}`, voice, text: chunk, ipa: null };
     const item = { ...spoken, hash: await speechClipHash(spoken) };
     // The daily character cap is checked before the clip is looked up, as the tutor's on-demand audio does.
     const settings = await readAiSettings(db);
