@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { emptyLessonDocument, type LessonBlock, type LessonDocument } from "./lessonDocument";
-import { LESSON_ACTIVITY_RECIPE_VERSION, LESSON_ACTIVITY_SCHEMA_VERSION, gradeLessonActivityAnswer, lessonActivityFocus, lessonActivityMetricSchema, lessonActivityPayloadSchema, lessonActivityTypeSchema, lessonActivityViewSchema, normalizeLessonSentence, resolveLessonActivitySources, toLessonActivityView, verifyLessonActivitySource } from "./lessonActivities";
+import { LESSON_ACTIVITY_RECIPE_VERSION, LESSON_ACTIVITY_SCHEMA_VERSION, gradeLessonActivityAnswer, lessonActivityFocus, lessonActivityMetricSchema, lessonActivityPayloadSchema, lessonActivityTypeSchema, lessonActivityViewSchema, normalizeLessonSentence, resolveLessonActivitySources, storySpeakingLines, firstImage, toLessonActivityView, verifyLessonActivitySource } from "./lessonActivities";
 
 const uid = (n: number) => `00000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 const props = { textColor: "default" as const, backgroundColor: "default" as const };
@@ -151,7 +151,7 @@ describe("lesson activity contracts", () => {
     const doc = { ...emptyLessonDocument(), blocks: [para(1, "Introduction"), dialogue(2, [{ speaker: "Anna", text: "Hi" }, { speaker: "Mira", text: "Hello" }])] } as unknown as LessonDocument;
     const sources = await resolveLessonActivitySources({ document: doc, includeLessonEnd: false });
     expect(sources.some((source) => source.activityTypes.includes("roleplay"))).toBe(false);
-    expect(sources.find((source) => source.sourceId === "intro")?.activityTypes).toEqual(["story_summary", "story_comprehension"]);
+    expect(sources.find((source) => source.sourceId === "intro")?.activityTypes).toEqual(["story_summary", "story_comprehension", "read_aloud", "speak_from_english"]);
   });
 
   it("keeps a level 3 heading inside a non-grammar section as part of that section", async () => {
@@ -159,7 +159,7 @@ describe("lesson activity contracts", () => {
     const sources = await resolveLessonActivitySources({ document: doc, includeLessonEnd: false });
     expect(sources.map((source) => source.sourceId)).not.toContain(uid(3));
     expect(sources.some((source) => source.sourceLabel === "Details")).toBe(false);
-    expect(sources.find((source) => source.sourceId === uid(1))?.activityTypes).toEqual(["story_summary", "story_comprehension"]);
+    expect(sources.find((source) => source.sourceId === uid(1))?.activityTypes).toEqual(["story_summary", "story_comprehension", "read_aloud", "speak_from_english"]);
     expect(sources.find((source) => source.sourceId === uid(5))).toMatchObject({ sourceKind: "dialogue", sourceLabel: "Dialogue · Story", activityTypes: ["roleplay"] });
   });
 
@@ -191,7 +191,7 @@ describe("lesson activity contracts", () => {
     const doc = { ...emptyLessonDocument(), blocks: [heading(1, "Story", 1), para(2, "Story text"), columnList, dialogue(9, sofiaAndMira)] } as unknown as LessonDocument;
     const sources = await resolveLessonActivitySources({ document: doc, includeLessonEnd: false });
     expect(sources.map((source) => source.sourceId)).not.toContain(uid(5));
-    expect(sources.find((source) => source.sourceId === uid(1))?.activityTypes).toEqual(["story_summary", "story_comprehension"]);
+    expect(sources.find((source) => source.sourceId === uid(1))?.activityTypes).toEqual(["story_summary", "story_comprehension", "read_aloud", "speak_from_english"]);
     expect(sources.find((source) => source.sourceId === uid(9))).toMatchObject({ sourceLabel: "Dialogue · Story", activityTypes: ["roleplay"] });
   });
 
@@ -242,5 +242,51 @@ describe("lesson activity contracts", () => {
       expect(lessonActivityPayloadSchema.safeParse({ ...payload, metrics: [] }).success).toBe(false);
       expect(lessonActivityPayloadSchema.safeParse({ ...payload, metrics: ["lesson_share", "lesson_reading", "lesson_grammar", "lesson_activities"] }).success).toBe(false);
     }
+  });
+
+  it("gives grammar sections exactly guided grammar, grammar explanation and tricky grammar", async () => {
+    const doc = { ...emptyLessonDocument(), blocks: [heading(1, "Grammar", 1), para(2, "Rule"), { id: uid(3), type: "callout", props: { variant: "grammar", icon: "auto" }, content: [{ type: "text", text: "Tip" }], children: [] }] } as unknown as LessonDocument;
+    const sources = await resolveLessonActivitySources({ document: doc, includeLessonEnd: false });
+    expect(sources.find((source) => source.sourceId === uid(1))?.activityTypes).toEqual(["grammar_explanation", "guided_grammar", "tricky_grammar"]);
+  });
+
+  it("gives story sections reading and speaking activities and lists speaking lines in document order", async () => {
+    const story = [heading(1, "Story", 1), para(2, "Ik woon in Amsterdam. Heb je een fiets?"), dialogue(3, sofiaAndMira), para(4, "Dat is leuk!")];
+    const doc = { ...emptyLessonDocument(), blocks: story } as unknown as LessonDocument;
+    const sources = await resolveLessonActivitySources({ document: doc, includeLessonEnd: false });
+    expect(sources.find((source) => source.sourceId === uid(1))?.activityTypes).toEqual(["story_summary", "story_comprehension", "read_aloud", "speak_from_english"]);
+    expect(storySpeakingLines(story)).toEqual([
+      { blockId: uid(2), sourceIndex: 0, speaker: null, text: "Ik woon in Amsterdam." },
+      { blockId: uid(2), sourceIndex: 1, speaker: null, text: "Heb je een fiets?" },
+      { blockId: uid(3), sourceIndex: 0, speaker: "Sofia", text: "Hallo." },
+      { blockId: uid(3), sourceIndex: 1, speaker: "Mira", text: "Goedemorgen." },
+      { blockId: uid(4), sourceIndex: 0, speaker: null, text: "Dat is leuk!" },
+    ]);
+  });
+
+  it("caps speaking lines at 60", () => {
+    const blocks = Array.from({ length: 70 }, (_, n) => para(200 + n, `Zin ${n}.`));
+    const lines = storySpeakingLines(blocks);
+    expect(lines).toHaveLength(60);
+    expect(lines[59]).toMatchObject({ text: "Zin 59." });
+  });
+
+  it("finds the first image inside columns as its URL and alt text", () => {
+    const image = (id: number, url: string, name: string): LessonBlock => ({ id: uid(id), type: "image", props: { textAlignment: "left", backgroundColor: "default", name, url, caption: "", showPreview: true }, content: undefined, children: [] });
+    const columns = { id: uid(20), type: "columnList", props: {}, content: undefined, children: [
+      { id: uid(21), type: "column", props: { width: 50 }, content: undefined, children: [para(22, "Tekst")] },
+      { id: uid(23), type: "column", props: { width: 50 }, content: undefined, children: [image(24, "https://cdn.example/a.png", "Een kat")] },
+    ] } as unknown as LessonBlock;
+    expect(firstImage([para(1, "Voor"), columns])).toEqual({ url: "https://cdn.example/a.png", alt: "Een kat" });
+    expect(firstImage([para(1, "Voor")])).toBeNull();
+  });
+
+  it("points a section's practice ID at its first practice block and leaves dialogue and lesson-end sources without one", async () => {
+    const practice = (id: number): LessonBlock => ({ id: uid(id), type: "practice", props: { data: "{}" }, content: undefined, children: [] });
+    const doc = { ...emptyLessonDocument(), blocks: [heading(1, "Story", 1), para(2, "Text"), practice(3), dialogue(4, sofiaAndMira), practice(5)] } as unknown as LessonDocument;
+    const sources = await resolveLessonActivitySources({ document: doc });
+    expect(sources.find((source) => source.sourceId === uid(1))?.practiceBlockId).toBe(uid(3));
+    expect(sources.find((source) => source.sourceKind === "dialogue")?.practiceBlockId).toBeNull();
+    expect(sources.find((source) => source.sourceKind === "lesson_end")?.practiceBlockId).toBeNull();
   });
 });

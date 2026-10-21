@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { foldEquivalentAccents, opaqueIdSchema } from "./index";
-import { inlineText, LESSON_IMAGE_ALT_MAX, LESSON_IMAGE_URL_MAX, readDialogueTurns, topBlockSchema, type LessonBlock, type LessonBlockOf, type LessonDocument } from "./lessonDocument";
+import { inlineText, LESSON_IMAGE_ALT_MAX, LESSON_IMAGE_URL_MAX, readDialogueTurns, topBlockSchema, walkLessonBlocks, type LessonBlock, type LessonBlockOf, type LessonDocument } from "./lessonDocument";
 
 export const LESSON_ACTIVITY_RECIPE_VERSION = 2;
 export const LESSON_ACTIVITY_SCHEMA_VERSION = 2;
@@ -22,7 +22,7 @@ export const lessonActivitySourceKindSchema = z.enum(["section", "dialogue", "le
 export type LessonActivitySourceKind = z.infer<typeof lessonActivitySourceKindSchema>;
 export const lessonActivityDescriptorSchema = z.strictObject({
   sourceId: z.string().min(1).max(200), sourceKind: lessonActivitySourceKindSchema, sourceLabel: z.string().min(1).max(200),
-  returnBlockId: opaqueIdSchema.nullable(), returnHeadingId: opaqueIdSchema.nullable(), fingerprint: SOURCE_FINGERPRINT_SCHEMA,
+  returnBlockId: opaqueIdSchema.nullable(), returnHeadingId: opaqueIdSchema.nullable(), practiceBlockId: opaqueIdSchema.nullable(), fingerprint: SOURCE_FINGERPRINT_SCHEMA,
   activityTypes: z.array(lessonActivityTypeSchema),
 });
 export type ActivityDescriptor = z.infer<typeof lessonActivityDescriptorSchema>;
@@ -236,10 +236,12 @@ export async function resolveLessonActivitySources({ document, title = "Lesson",
     if (next) section.end = Math.min(section.end, next.start - 1);
   }
   const descriptors: ActivityDescriptor[] = [];
-  const add = async (sourceId: string, sourceKind: LessonActivitySourceKind, label: string, blockId: string | null, headingId: string | null, content: unknown, activityTypes: LessonActivityType[]) => {
+  const add = async (sourceId: string, sourceKind: LessonActivitySourceKind, label: string, blockId: string | null, headingId: string | null, content: unknown, activityTypes: LessonActivityType[], practiceBlockId: string | null = null) => {
     if (!activityTypes.length) return;
-    descriptors.push({ sourceId, sourceKind, sourceLabel: label, returnBlockId: blockId, returnHeadingId: headingId, fingerprint: await fingerprintLessonActivitySource(content), activityTypes });
+    descriptors.push({ sourceId, sourceKind, sourceLabel: label, returnBlockId: blockId, returnHeadingId: headingId, practiceBlockId, fingerprint: await fingerprintLessonActivitySource(content), activityTypes });
   };
+  // Dialogue-bearing sections and an introduction with a dialogue get the story activities, including the two speaking ones.
+  const storyTypes: LessonActivityType[] = ["story_summary", "story_comprehension", "read_aloud", "speak_from_english"];
   const isDialogue = (block: LessonBlock): block is LessonBlockOf<"dialogue"> => block.type === "dialogue";
   // A dialogue is eligible for role-play only when Sofia and at least one partner both have original turns.
   const isRoleplayEligible = (turns: ReturnType<typeof readDialogueTurns>) => turns.some((turn) => turn.speaker.trim().toLocaleLowerCase() === "sofia") && turns.some((turn) => turn.speaker.trim().toLocaleLowerCase() !== "sofia");
@@ -247,8 +249,8 @@ export async function resolveLessonActivitySources({ document, title = "Lesson",
   const introBlocks = flattened.slice(0, firstHeadingIndex).map(({ block }) => block).filter((block) => block.type !== "divider");
   if (introBlocks.length) {
     const dialogues = introBlocks.filter(isDialogue);
-    const types: LessonActivityType[] = dialogues.length ? ["story_summary", "story_comprehension"] : [];
-    await add("intro", "section", "Introduction", introBlocks[0]!.id, null, introBlocks.map(activitySourceBlock), types);
+    const types: LessonActivityType[] = dialogues.length ? [...storyTypes] : [];
+    await add("intro", "section", "Introduction", introBlocks[0]!.id, null, introBlocks.map(activitySourceBlock), types, firstPracticeId(introBlocks));
     for (const dialogue of dialogues) {
       const turns = readDialogueTurns(dialogue);
       if (isRoleplayEligible(turns)) await add(dialogue.id, "dialogue", "Dialogue · Introduction", dialogue.id, null, turns, ["roleplay"]);
@@ -279,11 +281,11 @@ export async function resolveLessonActivitySources({ document, title = "Lesson",
     const dialogues = contents.filter(isDialogue);
     const hasGrammar = section.grammar;
     const hasSummary = /summary|recap|wrap[- ]?up|lesson end/i.test(section.label);
-    const types: LessonActivityType[] = dialogues.length ? ["story_summary", "story_comprehension"] : [];
-    if (hasGrammar) types.push("grammar_explanation", "tricky_grammar");
+    const types: LessonActivityType[] = dialogues.length ? [...storyTypes] : [];
+    if (hasGrammar) types.push("grammar_explanation", "guided_grammar", "tricky_grammar");
     if (hasSummary) types.push("mixed_practice");
     const safeTypes = [...new Set(types)];
-    await add(section.id, "section", section.label || title, contents[0]?.id ?? section.headingId, section.headingId, contents.map(activitySourceBlock), safeTypes);
+    await add(section.id, "section", section.label || title, contents[0]?.id ?? section.headingId, section.headingId, contents.map(activitySourceBlock), safeTypes, firstPracticeId(contents));
     for (const dialogue of dialogues) {
       const turns = readDialogueTurns(dialogue);
       if (!isRoleplayEligible(turns)) continue;
@@ -297,4 +299,36 @@ export async function resolveLessonActivitySources({ document, title = "Lesson",
 export const verifyLessonActivitySource = (descriptors: readonly ActivityDescriptor[], sourceId: string, type: LessonActivityType, fingerprint: string) => {
   const descriptor = descriptors.find((item) => item.sourceId === sourceId && item.activityTypes.includes(type));
   return descriptor?.fingerprint === fingerprint ? descriptor : null;
+}
+
+// The lines of a story's read-aloud and speak-from-English activities, in document order (at most 60). Dialogue turns stay whole
+// with their speaker; prose paragraphs and list items split into sentences at . ? and !, keeping the punctuation. `blockId` and
+// `sourceIndex` (the turn or sentence number inside that block) point back at the source; no IDs are assigned here.
+export const STORY_SPEAKING_LINES_MAX = 60;
+export type StorySpeakingLine = { blockId: string; sourceIndex: number; speaker: string | null; text: string };
+const sentencesOf = (text: string) => text.match(/[^.?!]+[.?!]*/g)?.map((sentence) => sentence.trim()).filter((sentence) => sentence.length > 0) ?? [];
+export function storySpeakingLines(blocks: readonly LessonBlock[]): StorySpeakingLine[] {
+  const lines: StorySpeakingLine[] = [];
+  for (const { block } of walkLessonBlocks(blocks)) {
+    if (lines.length >= STORY_SPEAKING_LINES_MAX) break;
+    if (block.type === "dialogue") {
+      readDialogueTurns(block).forEach((turn, sourceIndex) => {
+        const text = turn.text.trim();
+        if (text) lines.push({ blockId: block.id, sourceIndex, speaker: turn.speaker, text });
+      });
+    } else if (block.type === "paragraph" || block.type === "bulletListItem" || block.type === "numberedListItem") {
+      sentencesOf(inlineText(block.content)).forEach((text, sourceIndex) => { lines.push({ blockId: block.id, sourceIndex, speaker: null, text }); });
+    }
+  }
+  return lines.slice(0, STORY_SPEAKING_LINES_MAX);
+}
+// The first practice block of a source, columns included; the guided grammar completion links back to it.
+const firstPracticeId = (blocks: readonly LessonBlock[]) => {
+  for (const { block } of walkLessonBlocks(blocks)) if (block.type === "practice") return block.id;
+  return null;
+};
+// The first image in reading order, columns included, that has a URL; `alt` is the image's name prop.
+export function firstImage(blocks: readonly LessonBlock[]): { url: string; alt: string } | null {
+  for (const { block } of walkLessonBlocks(blocks)) if (block.type === "image" && block.props.url) return { url: block.props.url, alt: block.props.name };
+  return null;
 }
