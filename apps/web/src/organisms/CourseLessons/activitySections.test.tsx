@@ -3,7 +3,7 @@ import { resolveLessonActivitySources, type ActivityDescriptor } from "@wordinat
 import { act, cleanup, render } from "@testing-library/react";
 import { useRef } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { activityParts, sectionActivities, useVisibleParts } from "./activitySections";
+import { activityParts, activityPlacements, sectionActivities, useVisibleParts } from "./activitySections";
 import { lessonIndexEntries, useCurrentEntry } from "./LessonIndex";
 
 // A lesson shaped like Dutch Foundations': its title, a story, a words-only section with level-3 groups, a grammar section split
@@ -64,6 +64,19 @@ describe("Do more with AI's section", () => {
     expect(ids(sectionActivities(entries, at(11), descriptors, new Set([blockId(11)])).activities)).toEqual(["section:11:teal"]);
     // With none of them on screen there is nothing of the section's to offer, so the lesson end is.
     expect(ids(sectionActivities(entries, at(8), descriptors, new Set()).activities)).toEqual(["lesson_end:-"]);
+  });
+
+  it("places each source's activities after its section's last block, and the lesson end after the lesson's", () => {
+    const placements = activityPlacements(lesson, entries, descriptors);
+    const placed = Object.fromEntries([...placements].map(([id, activities]) => [id.slice(-2), ids(activities)]));
+    expect(placed).toEqual({
+      // The title's section ends at the story; the words section has none.
+      "04": ["section:03", "dialogue:03"],
+      // Each grammar part ends at the next part or the next level-2 heading.
+      "10": ["section:09:violet"],
+      "12": ["section:11:teal"],
+      "16": ["section:15", "lesson_end:-"],
+    });
   });
 
   it("offers the introduction's activities before the first entry", () => {

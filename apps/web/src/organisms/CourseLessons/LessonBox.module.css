@@ -47,3 +47,9 @@
 .actions[data-compact] .done svg{width:0.75rem;height:0.75rem}
 .note{margin:0;color:var(--color-foreground-faint);font-size:var(--text-xs);line-height:var(--line-compact)}
 @media(prefers-reduced-motion:reduce){.action,.heading,.titleReveal{transition:none}}
+/* A section's activities in the text, after its last block. A quiet card; links share the rail's action style and sit two
+   or more to a row where the column has room. */
+.inline{display:grid;gap:var(--space-3);padding:var(--space-4);background:var(--color-surface);border:var(--ring-hairline);border-radius:var(--radius-lg)}
+.inlineHeading{display:flex;align-items:center;gap:var(--space-2);margin:0;color:var(--color-foreground-muted);font-size:var(--type-eyebrow);font-weight:var(--weight-bold);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase}
+.inlineHeading svg{width:1.25rem;height:1.25rem;flex:none;color:var(--color-action)}
+.inlineLinks{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,15rem),1fr));gap:var(--space-2)}

@@ -30,8 +30,8 @@ import styles from "./CourseLessons.module.css";
 import { LessonReadingProgress, type ReadingTracking, saveLessonPosition, useResumeScroll } from "./LessonReadingProgress";
 import { typicalMinutes, useReadingTime } from "./LessonTime";
 import { CategoryBadge, entryStates, LessonIndex, lessonIndexEntries, LESSON_INDEX_MIN, stickyInset, useCurrentEntry, type LessonIndexEntry } from "./LessonIndex";
-import { LessonBox, LessonBoxActions, type LessonActivitySuggestion, type LessonBoxLesson } from "./LessonBox";
-import { activityParts, sectionActivities, useVisibleParts } from "./activitySections";
+import { LessonBox, LessonBoxActions, SectionActivities, type LessonActivitySuggestion, type LessonBoxLesson } from "./LessonBox";
+import { activityParts, activityPlacements, sectionActivities, useVisibleParts } from "./activitySections";
 import { HeadingDot } from "./HeadingDot";
 import { LessonStickyHeader } from "./LessonStickyHeader";
 import { LessonWords, useVisibleWords, useWordsCollapsed, type LessonWordsPlacement } from "./LessonWords";
@@ -180,6 +180,15 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
   const visibleParts = useVisibleParts(parts, tracked, reading, side);
   const section = sectionActivities(tracked, current, allActivityDescriptors, visibleParts);
   const activitySuggestions: LessonActivitySuggestion[] = section.activities.flatMap(({ descriptor, part }) => descriptor.activityTypes.map((type) => ({ descriptor, type, part, done: doneActivities.has(`${descriptor.sourceId}:${type}`) })));
+  // Each source's activities also sit in the text, after its section's last block (docs/lesson-activities.md#in-the-text).
+  const placements = useMemo(() => document ? activityPlacements(document, tracked, allActivityDescriptors) : new Map<string, never[]>(), [document, tracked, allActivityDescriptors]);
+  const renderAfterBlock = (id: string) => {
+    const placed = placements.get(id);
+    const practices = slots?.afterBlock(id);
+    if (!placed?.length) return practices;
+    return <>{practices}<SectionActivities courseSlug={scope.courseSlug} lessonSlug={lesson.slug}
+      suggestions={placed.flatMap(({ descriptor, part }) => descriptor.activityTypes.map((type) => ({ descriptor, type, part, done: doneActivities.has(`${descriptor.sourceId}:${type}`) })))} /></>;
+  };
   const colors = useMemo(() => new Map(indexed.flatMap((entry) => entry.color ? [[entry.id, entry.color] as const] : [])), [indexed]);
   const renderHeadingBadge = useCallback((id: string) => {
     const badge = badges.get(id);
@@ -211,7 +220,7 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
     {!gate && <LessonReadingProgress steps={steps} reading={reading} tracking={tracking} onPercent={setPercent} onReached={setReachedStep} />}
     <div ref={reading} className={gate ? `${styles.body} ${styles.gated}` : styles.body} style={gate && gateHeight !== null ? { maxBlockSize: gateHeight } : undefined}>
       {!lesson.document && <p className={styles.preview}>{t("courses.lessons.draftPreview")}</p>}
-      <LessonDocument document={document} anchored vocabulary={false} renderAfterBlock={slots?.afterBlock} renderHeadingBadge={renderHeadingBadge}
+      <LessonDocument document={document} anchored vocabulary={false} renderAfterBlock={renderAfterBlock} renderHeadingBadge={renderHeadingBadge}
         renderShare={share ? (block) => <ShareButton piece={block.type === "example" ? { kind: "example", block } : { kind: "dialogue", block }}
           label={t(`lessonShares.shareNamed.${block.type}`)} /> : undefined}
         renderPractice={(block) =>

@@ -89,16 +89,11 @@ function ActivityGlyph({ type }: { type: ActivityType }) {
   return <Icon aria-hidden="true" data-icon={type} />;
 }
 
-// The lesson's actions, above the profile row: Practise words (a drill of the course's words) beside Ask AI (a new tutor
-// conversation prefilled to talk the lesson's grammar and topics through), and Ask for more practices like this (a new tutor
-// conversation with a prefilled request naming the lesson). A prefilled conversation sends nothing until the learner sends it.
-// `compact` shows icons only, stacked (names stay as tooltips and accessible names). A done suggestion ends with a Done badge,
-// which compact mode reduces to a check on the icon while its text stays for assistive technology. The header's badge counts the
-// completed suggestions, and shows nothing until there is one.
-// `completedCount` is the lesson-wide count of the viewer's completed activities (the completed list), not only this section's.
-export function LessonBoxActions({ lesson, compact = false, courseSlug, lessonSlug, suggestions = [], completedCount = 0, sectionLabel: label, sectionCategory }: { lesson: LessonBoxLesson; compact?: boolean; courseSlug?: string; lessonSlug?: string; suggestions?: readonly LessonActivitySuggestion[]; completedCount?: number; sectionLabel?: string | null; sectionCategory?: OverviewCategory | undefined }) {
+// Renders one suggested activity as a link to its page: its type's icon on a block in the type's category, its label, and a check
+// once done. A grammar part's activities start with the part's colour dot. `named` keeps the source's name in the accessible name
+// (visually hidden), for links whose surroundings do not name it.
+function useActivityLink(courseSlug: string | undefined, lessonSlug: string | undefined) {
   const { t } = useTranslation();
-  const named = { number: lesson.number, lesson: lesson.title, course: lesson.courseTitle };
   const activityLabel: Record<ActivityType, string> = {
     story_summary: t("lessonActivities.types.story_summary"), story_comprehension: t("lessonActivities.types.story_comprehension"),
     grammar_explanation: t("lessonActivities.types.grammar_explanation"), guided_grammar: t("lessonActivities.types.guided_grammar"),
@@ -110,16 +105,40 @@ export function LessonBoxActions({ lesson, compact = false, courseSlug, lessonSl
   const doneBadge = (done: boolean | undefined) => done ? <>
     {" "}<span className={styles.done} title={t("courses.lessonBox.activityDone")}><Check aria-hidden="true" /><span className={styles.doneText}>{t("courses.lessonBox.activityDone")}</span></span>
   </> : null;
-  // The section the suggestions belong to: dialogue suggestions share their section's heading, so name that section.
-  // `sectionLabel`, when given, names it (the lesson page passes its current index entry).
-  const sectionLabel = label !== undefined ? label : (suggestions.find((entry) => entry.descriptor.sourceKind === "section")?.descriptor.sourceLabel ?? suggestions[0]?.descriptor.sourceLabel.replace(/^Dialogue · /, "")) || null;
-  // Every link but the first keeps its source in its accessible name; so does the first when it belongs to a grammar part, which
-  // the heading does not name. A part's activities start with its colour dot.
-  const activityLink = ({ descriptor, type, done, part }: LessonActivitySuggestion, named: boolean) => <Link key={`${descriptor.sourceId}:${type}`} className={styles.action} data-category={activityCategory(type)}
+  return ({ descriptor, type, done, part }: LessonActivitySuggestion, named: boolean) => <Link key={`${descriptor.sourceId}:${type}`} className={styles.action} data-category={activityCategory(type)}
     title={`${activityLabel[type]} · ${descriptor.sourceLabel}`} to="/courses/$courseSlug/lessons/$lessonSlug/activities/$sourceId/$activityType"
     params={{ courseSlug: courseSlug!, lessonSlug: lessonSlug!, sourceId: descriptor.sourceId, activityType: type }}>
     <ActivityGlyph type={type} /><span className={styles.label}>{part && <><HeadingDot color={part.color} />{" "}</>}{activityLabel[type]}{named && <>{" "}<span className={styles.doneText}>· {descriptor.sourceLabel}</span></>}</span>{doneBadge(done)}
   </Link>;
+}
+
+// A source's activities in the text, after the last block of the section they come from, under a small
+// Do more with AI heading. Every link keeps its source in its accessible name.
+export function SectionActivities({ suggestions, courseSlug, lessonSlug }: { suggestions: readonly LessonActivitySuggestion[]; courseSlug: string; lessonSlug: string }) {
+  const { t } = useTranslation();
+  const activityLink = useActivityLink(courseSlug, lessonSlug);
+  return <aside className={styles.inline} aria-label={t("courses.lessonBox.doMoreWithAi")}>
+    <p className={styles.inlineHeading}><Sparkles aria-hidden="true" />{t("courses.lessonBox.doMoreWithAi")}</p>
+    <div className={styles.inlineLinks}>{suggestions.map((suggestion) => activityLink(suggestion, true))}</div>
+  </aside>;
+}
+
+// The lesson's actions, above the profile row: Practise words (a drill of the course's words) beside Ask AI (a new tutor
+// conversation prefilled to talk the lesson's grammar and topics through), and Ask for more practices like this (a new tutor
+// conversation with a prefilled request naming the lesson). A prefilled conversation sends nothing until the learner sends it.
+// `compact` shows icons only, stacked (names stay as tooltips and accessible names). A done suggestion ends with a Done badge,
+// which compact mode reduces to a check on the icon while its text stays for assistive technology. The header's badge counts the
+// completed suggestions, and shows nothing until there is one.
+// `completedCount` is the lesson-wide count of the viewer's completed activities (the completed list), not only this section's.
+export function LessonBoxActions({ lesson, compact = false, courseSlug, lessonSlug, suggestions = [], completedCount = 0, sectionLabel: label, sectionCategory }: { lesson: LessonBoxLesson; compact?: boolean; courseSlug?: string; lessonSlug?: string; suggestions?: readonly LessonActivitySuggestion[]; completedCount?: number; sectionLabel?: string | null; sectionCategory?: OverviewCategory | undefined }) {
+  const { t } = useTranslation();
+  const named = { number: lesson.number, lesson: lesson.title, course: lesson.courseTitle };
+  // The section the suggestions belong to: dialogue suggestions share their section's heading, so name that section.
+  // `sectionLabel`, when given, names it (the lesson page passes its current index entry).
+  const sectionLabel = label !== undefined ? label : (suggestions.find((entry) => entry.descriptor.sourceKind === "section")?.descriptor.sourceLabel ?? suggestions[0]?.descriptor.sourceLabel.replace(/^Dialogue · /, "")) || null;
+  // Every link but the first keeps its source in its accessible name; so does the first when it belongs to a grammar part, which
+  // the heading does not name.
+  const activityLink = useActivityLink(courseSlug, lessonSlug);
   return <div className={styles.actions} data-compact={compact || undefined} role="group" aria-label={t("courses.lessonBox.actions")}>
     <h2 className={styles.actionsHeading}><Sparkles aria-hidden="true" /><span>{t("courses.lessonBox.doMoreWithAi")}</span>
       {completedCount > 0 && <Badge component="span" variant="light" size="sm" aria-label={t("courses.lessonBox.activitiesDoneCount", { count: completedCount })}>{completedCount}</Badge>}

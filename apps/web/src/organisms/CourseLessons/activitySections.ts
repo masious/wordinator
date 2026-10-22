@@ -1,4 +1,5 @@
 import type { ActivityDescriptor } from "@wordinator/contracts/lesson-activities";
+import type { LessonDocument } from "@wordinator/contracts/lesson-document";
 import { type RefObject, useEffect, useState } from "react";
 import type { OverviewCategory } from "../LessonOverview/overviewModel";
 import { stickyInset, type HeadingColor, type LessonIndexEntry } from "./LessonIndex";
@@ -85,4 +86,34 @@ export function useVisibleParts(parts: ReadonlyMap<string, ActivityPart>, entrie
     return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); if (frame) cancelAnimationFrame(frame); };
   }, [parts, entries, reading, side]);
   return visible;
+}
+
+// Where each source's activities sit in the text, keyed by the block they follow. A source runs from its heading
+// (the introduction from the top) to the next heading that starts a source boundary: any level-1 or level-2 heading, or a grammar
+// part's level-3 heading. Its activities follow its last top-level block, its role-play after them; the lesson-end activity follows
+// the lesson's last block.
+export function activityPlacements(document: LessonDocument, entries: readonly LessonIndexEntry[], descriptors: readonly ActivityDescriptor[]) {
+  const parts = activityParts(entries, descriptors);
+  const blocks = document.blocks;
+  const isHeading = (index: number) => blocks[index]?.type === "heading";
+  const boundary = (index: number) => {
+    const block = blocks[index];
+    return block?.type === "heading" && (block.props.level < 3 || parts.has(block.id));
+  };
+  const placements = new Map<string, SectionActivity[]>();
+  const place = (index: number, activities: SectionActivity[]) => {
+    const anchor = blocks[Math.max(0, index)]; if (!anchor || !activities.length) return;
+    placements.set(anchor.id, [...placements.get(anchor.id) ?? [], ...activities]);
+  };
+  for (const descriptor of descriptors) {
+    if (descriptor.sourceKind === "lesson_end") { place(blocks.length - 1, [{ descriptor, part: null }]); continue; }
+    if (descriptor.sourceKind !== "section") continue;
+    const start = descriptor.returnHeadingId === null ? -1 : blocks.findIndex((block) => block.id === descriptor.returnHeadingId);
+    let end = start + 1;
+    while (end < blocks.length && !(descriptor.returnHeadingId === null ? isHeading(end) : boundary(end))) end += 1;
+    const part = descriptor.returnHeadingId ? parts.get(descriptor.returnHeadingId) ?? null : null;
+    const dialogues = descriptors.filter((dialogue) => dialogue.sourceKind === "dialogue" && dialogue.returnHeadingId === descriptor.returnHeadingId);
+    place(end - 1, [{ descriptor, part }, ...dialogues.map((dialogue) => ({ descriptor: dialogue, part }))]);
+  }
+  return placements;
 }
