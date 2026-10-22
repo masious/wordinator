@@ -1713,7 +1713,7 @@ export const resources = {
         hoursMinutes: "{{hours}}h {{minutes}}m",
         continue: {
           title: "Pick up where you left off",
-          lesson: "Lesson {{number}} of {{total}} · {{course}}",
+          place: "Lesson {{number}} of {{total}}",
           noneTitle: "Your next lesson appears here",
           noneBody: "Once a course has a published lesson, you can start it from here.",
           continueLesson: "Continue lesson",
@@ -1788,6 +1788,8 @@ export const resources = {
         minutesHelp: "A whole number from 5 to 240.",
         invalid: "Enter a whole number of minutes from 5 to 240.",
         save: "Save study goal",
+          ringTodayGoal: "today's goal",
+          ringToday: "today",
         loading: "Loading your study goal",
         unavailable: "Your study goal could not be loaded.",
       },

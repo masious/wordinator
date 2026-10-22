@@ -63,6 +63,18 @@ describe("Home dashboard", () => {
     expect(await screen.findByRole("link", { name: /Continue lesson/ })).toHaveAttribute("href", "/courses/deutsch-fur-anfanger/lessons/hallo?resume=true");
   });
 
+  it("names the resume lesson under the title, marks its place in the course under the ring, and shows its image behind the card", async () => {
+    dashboardBody = { ...dashboardBody, resume: { ...resume, lesson: { ...resume.lesson, number: 2, imageUrl: "https://images.test/hallo.webp" } } };
+    const { container } = renderHome();
+    expect(await screen.findByRole("heading", { level: 3, name: "Hallo" })).toBeInTheDocument();
+    const dots = [...screen.getByTestId("lesson-dots").querySelectorAll("li")].map((dot) => dot.dataset.state ?? "next");
+    expect(dots).toEqual(["done", "current", "next", "next"]);
+    expect(screen.getByText("Lesson 2 of 4")).toBeInTheDocument();
+    expect(screen.getByText("today's goal")).toBeInTheDocument();
+    expect(screen.getByText("Deutsch für Anfänger")).toBeInTheDocument();
+    expect(container.querySelector('img[src="https://images.test/hallo.webp"]')).toHaveAttribute("alt", "");
+  });
+
   it("shows today's minutes and a link to set a goal when there is no goal", async () => {
     activityBody = activity("week", { today: { lesson: 600, practice: 300 }, goal: null });
     renderHome();

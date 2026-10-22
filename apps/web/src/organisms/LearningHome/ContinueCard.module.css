@@ -1,20 +1,42 @@
-.card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,7.5rem);gap:var(--space-6);align-items:center;padding:clamp(var(--space-6),3vw,var(--space-8));color:var(--color-feature-text);background:var(--color-feature-surface);border:var(--ring-hairline);border-color:var(--color-feature-line);border-radius:var(--radius-lg);box-shadow:var(--shadow-card)}
-.copy{display:grid;gap:var(--space-3);justify-items:start;min-width:0}
-.top{display:flex;flex-wrap:wrap;gap:var(--space-2);min-height:1.5rem}
+/* The streak sits at the top and the lesson at the bottom; the ring stays beside the lesson. */
+.card{position:relative;isolation:isolate;display:grid;grid-template-areas:"top top" "copy ring";grid-template-rows:auto 1fr;grid-template-columns:minmax(0,1fr) minmax(0,7.5rem);gap:var(--space-6);min-height:18rem;padding:clamp(var(--space-6),3vw,var(--space-8));overflow:hidden;color:var(--color-feature-text);background:var(--color-feature-surface);border:var(--ring-hairline);border-color:var(--color-feature-line);border-radius:var(--radius-lg);box-shadow:var(--shadow-card)}
+/* The lesson's image under a feature-surface gradient up from the bottom edge, where the copy and the ring sit, deepest in the
+   bottom-left corner; it is gone before the top. */
+.backdrop{position:absolute;inset:0;z-index:-1}
+.backdrop img{display:block;width:100%;height:100%;object-fit:cover}
+.backdrop::after{content:"";position:absolute;inset:0;background:linear-gradient(to top right,color-mix(in srgb,var(--color-feature-surface) 45%,transparent),transparent 55%),linear-gradient(to top,color-mix(in srgb,var(--color-feature-surface) 85%,transparent),color-mix(in srgb,var(--color-feature-surface) 55%,transparent) 40%,transparent 75%)}
+/* The copy and the ring's figures sit over the image: a text shadow and near-white secondary lines keep them legible. */
+.copy,.side{--card-text-secondary:color-mix(in srgb,var(--color-feature-text) 85%,transparent);text-shadow:var(--shadow-text-on-image)}
+.top{grid-area:top;display:flex;flex-wrap:wrap;align-self:start;gap:var(--space-2);min-height:1.5rem}
+/* The streak: vivid orange on an orange-tinted feature surface, after Noto's animated flame. */
+.top .streak{gap:var(--space-1);color:var(--color-vivid-orange);background:color-mix(in srgb,var(--color-vivid-orange) 18%,var(--color-feature-surface));font-size:var(--type-metadata)}
+.copy{grid-area:copy;display:grid;align-self:end;gap:var(--space-3);justify-items:start;min-width:0}
 .copy h2{margin:0;font-size:var(--type-section-title);font-weight:var(--weight-bold);letter-spacing:var(--tracking-title);line-height:var(--line-title)}
-.lesson,.muted,.goal{margin:0;color:var(--color-feature-text-muted)}
+.copy .lessonTitle{margin:0;font-size:var(--text-lg);font-weight:var(--weight-semibold);letter-spacing:var(--tracking-title);line-height:var(--line-title);overflow-wrap:anywhere}
+.lesson,.muted,.goal{margin:0;color:var(--card-text-secondary)}
 .lesson{font-family:var(--font-mono);font-size:var(--type-metadata)}
+/* The goal line, then the action on its right. */
+.actionRow{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-3) var(--space-5)}
 .goal{font-size:var(--type-body)}
 .goalLink{color:var(--color-feature-text);font-weight:var(--weight-semibold)}
-.action{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);justify-self:start;min-height:var(--control-height);padding:0 var(--space-5);color:var(--color-action-text);background:var(--color-action);border-radius:var(--radius-sm);font-size:var(--type-control-label);font-weight:var(--weight-semibold);text-decoration:none;transition:transform var(--motion-standard) var(--ease-physical),background-color var(--motion-standard) var(--ease-physical)}
+.action{text-shadow:none;display:inline-flex;flex:none;align-items:center;justify-content:center;gap:var(--space-2);min-height:var(--control-height);padding:0 var(--space-5);color:var(--color-action-text);background:var(--color-action);border-radius:var(--radius-sm);font-size:var(--type-control-label);font-weight:var(--weight-semibold);text-decoration:none;transition:transform var(--motion-standard) var(--ease-physical),background-color var(--motion-standard) var(--ease-physical)}
 .action:hover{transform:translateY(-1px)}
 .action svg{width:1rem}
-.ring{position:relative;display:grid;place-items:center;width:100%;max-width:7.5rem;aspect-ratio:1;min-width:0;justify-self:end}
+/* The ring, then the lesson's place in its course, in greys and in words. */
+.side{grid-area:ring;display:grid;align-self:end;justify-items:center;gap:var(--space-3);min-width:0}
+.place{display:grid;justify-items:center;gap:var(--space-1)}
+.dots{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:var(--space-1);margin:0;padding:0;list-style:none}
+.dots li{width:0.375rem;height:0.375rem;background:var(--color-feature-track);border-radius:var(--radius-pill)}
+.dots li[data-state="done"]{background:var(--color-feature-text-muted)}
+.dots li[data-state="current"]{background:var(--color-feature-text);box-shadow:0 0 0 0.125rem var(--color-feature-track)}
+.placeText{white-space:nowrap;color:var(--card-text-secondary);font-family:var(--font-mono);font-size:var(--type-metadata);font-variant-numeric:tabular-nums}
+.ring{position:relative;display:grid;place-items:center;width:100%;max-width:7.5rem;aspect-ratio:1;min-width:0}
 .ring svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
 .track,.arc{fill:none;stroke-width:3}
 .track{stroke:var(--color-feature-track)}
 .arc{stroke:var(--color-action);stroke-linecap:round;transition:stroke-dashoffset var(--motion-standard) var(--ease-physical)}
 .arc[data-met]{stroke:var(--color-success)}
-.centre{max-width:76%;overflow-wrap:anywhere;text-align:center;font-size:clamp(var(--type-metadata),1.5vw,var(--type-card-title));font-weight:var(--weight-bold);font-variant-numeric:tabular-nums}
-@media(max-width:48em){.card{grid-template-columns:minmax(0,1fr)}.ring{justify-self:start}.action{justify-self:stretch}}
+.centre{display:grid;justify-items:center;max-width:76%;line-height:var(--line-title);overflow-wrap:anywhere;text-align:center;font-size:clamp(var(--type-metadata),1.5vw,var(--type-card-title));font-weight:var(--weight-bold);font-variant-numeric:tabular-nums}
+.centre small{color:var(--card-text-secondary);font-size:var(--type-metadata);font-weight:var(--weight-regular)}
+@media(max-width:48em){.card{grid-template-areas:"top" "copy" "ring";grid-template-rows:auto 1fr auto;grid-template-columns:minmax(0,1fr)}.side{justify-items:start}.place{justify-items:start}.dots{justify-content:start}.action{flex:1 1 100%}}
 @media(prefers-reduced-motion:reduce){.arc,.action{transition:none}.action:hover{transform:none}}

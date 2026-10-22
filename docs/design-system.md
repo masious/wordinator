@@ -214,6 +214,7 @@ Layer order uses `--z-content: 10`, `--z-navigation: 100`, `--z-floating-action:
 | `--shadow-floating` / `--shadow-overlay` | `0 1rem 3rem` at `12%` / `0 1.5rem 4rem` at `18%` |
 | `--shadow-pressed` | compact ambient and inset press shadow |
 | `--shadow-accent` | accent glow under the tutor mark |
+| `--shadow-text-on-image` | text shadow for light text over an image (the home Continue card); the same in both schemes |
 
 Cards are one layer: paper, a line border, `--radius-lg`, and `--shadow-card`; linked cards lift `-0.2rem` to `--shadow-raised` on hover. Lightweight rows use separators rather than independent elevation. The bezel and core radius tokens remain only until the cleanup batch. Slight rotation is allowed only as a decorative accent—approximately `-0.35deg` to `0.35deg`—never on dense forms, long text, or the complete application shell, and it is removed below `48em`.
 
