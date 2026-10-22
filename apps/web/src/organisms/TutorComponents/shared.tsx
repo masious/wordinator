@@ -1,3 +1,4 @@
+import { normalizeAnswer } from "@wordinator/contracts";
 import { parseTargetSpans, type TutorComponentKind, type TutorGrade, type TutorHintView } from "@wordinator/contracts/tutor";
 import { Check, Lightbulb, X } from "lucide-react";
 import { createContext, useContext, useEffect, useState, type KeyboardEvent, type ReactNode } from "react";
@@ -53,12 +54,16 @@ function SkipRow({ action }: { action: SkipAction }) {
   </div>;
 }
 
+// A component shown inside another card that already names its kind (the learner's answered set): no panel and no eyebrow.
+export const BareFrameContext = createContext(false);
+
 // The component's inset panel: a mono eyebrow naming the kind, the body, the answer's footer, and Skip where offered.
 export function ComponentFrame({ kind, children, labelledBy }: { kind: TutorComponentKind; children: ReactNode; labelledBy?: string }) {
   const { t } = useTranslation();
   const skip = useContext(SkipContext);
-  return <section className={styles.frame} aria-label={labelledBy ? undefined : t(`tutorComponents.kinds.${kind}`)} aria-labelledby={labelledBy} data-kind={kind}>
-    <p className={styles.eyebrow}>{t(`tutorComponents.kinds.${kind}`)}</p>
+  const bare = useContext(BareFrameContext);
+  return <section className={styles.frame} aria-label={labelledBy ? undefined : t(`tutorComponents.kinds.${kind}`)} aria-labelledby={labelledBy} data-kind={kind} data-bare={bare || undefined}>
+    {!bare && <p className={styles.eyebrow}>{t(`tutorComponents.kinds.${kind}`)}</p>}
     {children}
     {skip && <SkipRow action={skip} />}
   </section>;
@@ -89,12 +94,14 @@ export function VerdictBadge({ ok, label, children }: { ok: boolean; label: stri
 const SHOWS_ITEMS: readonly TutorComponentKind[] = ["fill_in", "article", "dictation"];
 
 // A graded answer in place: the badge, per-item marks where an answer has several parts (blanks, nouns, dictation words), and
-// one feedback box holding the expected answer when it differs and the tutor's note, each under a narrow label column.
-export function GradeResult({ kind, grade }: { kind: TutorComponentKind; grade: TutorGrade }) {
+// one feedback box holding the expected answer when it differs and the tutor's note, each under a narrow label column. When the
+// answer shows its marks against `marked`, the expected answer is left out if it says the same, and is otherwise another way to say it.
+export function GradeResult({ kind, grade, marked = null }: { kind: TutorComponentKind; grade: TutorGrade; marked?: string | null }) {
   const { t } = useTranslation();
   const label = grade.correct ? (grade.matched === false && grade.verdict === "acceptable" ? t("tutorComponents.verdict.accepted") : t("tutorComponents.verdict.match"))
     : t("tutorComponents.verdict.miss");
-  const showReference = grade.reference && kind !== "quick_review" && kind !== "say_it" && grade.matched !== true;
+  const showReference = grade.reference && kind !== "quick_review" && kind !== "say_it" && kind !== "spot_words" && grade.matched !== true
+    && !(marked !== null && normalizeAnswer(marked) === normalizeAnswer(grade.reference));
   const items = SHOWS_ITEMS.includes(kind) && grade.items.length > 1 ? grade.items : [];
   return <div className={styles.grade} aria-live="polite">
     <VerdictBadge ok={grade.correct} label={label} />
@@ -106,7 +113,7 @@ export function GradeResult({ kind, grade }: { kind: TutorComponentKind; grade: 
     </ul>}
     {(showReference || grade.note) && <dl className={styles.feedback} data-match={grade.correct || undefined}>
       {showReference && <div className={styles.feedbackRow}>
-        <dt className={styles.noteLabel}>{grade.correct ? t("tutorComponents.referenceAlso") : t("tutorComponents.reference")}</dt>
+        <dt className={styles.noteLabel}>{grade.correct || marked !== null ? t("tutorComponents.referenceAlso") : t("tutorComponents.reference")}</dt>
         <dd className={styles.referenceText}><MarkedText text={grade.reference!} /></dd>
       </div>}
       {grade.note && <div className={styles.feedbackRow}>

@@ -1,6 +1,6 @@
 import styles from "./QuestionPips.module.css";
 
-export type QuestionPipState = "open" | "answered" | "skipped" | "done";
+export type QuestionPipState = "open" | "answered" | "skipped" | "done" | "missed";
 export type QuestionPipItem = { id: string; label: string; state: QuestionPipState };
 
 // A compact, keyboard-focusable status marker for a sequence of questions or practices.

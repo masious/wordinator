@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
-  aiPracticeAnswerRequestSchema, aiPracticeAnswerResponseSchema, aiPracticeContentSchema, applyVerdict, lessonAiPracticesResponseSchema, componentAttemptText, gradeTutorAnswer, messageSpanTexts, parseTargetSpans, saveAiPracticeArgsSchema,
+  aiPracticeAnswerRequestSchema, aiPracticeAnswerResponseSchema, aiPracticeContentSchema, applyVerdict, createTutorConversationRequestSchema, parseMessageMarks, wordPracticeQuerySchema, lessonAiPracticesResponseSchema, componentAttemptText, gradeTutorAnswer, messageSpanTexts, parseTargetSpans, saveAiPracticeArgsSchema,
   toPublicPart, tutorComponentAnswerSchema, tutorComponentPayloadSchemas, tutorComponentView, tutorMessageRequestSchema, tutorProfileSchema,
   tutorRespondRequestSchema, tutorSpeechRequestSchema, tutorStoredPartSchema, tutorStreamEventSchema, updateTutorProfileRequestSchema,
   type TutorComponent, type TutorComponentAnswer, type TutorStoredPart,
@@ -186,5 +186,49 @@ describe("requests and events", () => {
     expect(tutorStreamEventSchema.safeParse({ type: "start", messageId: id(1) }).success).toBe(true);
     expect(tutorStreamEventSchema.safeParse({ type: "error", code: "AI_UNAVAILABLE", message: "x" }).success).toBe(true);
     expect(tutorStreamEventSchema.safeParse({ type: "unknown" }).success).toBe(false);
+  });
+});
+
+describe("spot the words", () => {
+  const words = [{ lessonId: id(1), wordId: id(2) }, { lessonId: id(1), wordId: id(3) }];
+  const spot = () => component("spot_words", { passage: "Het huis is groot.", translation: "The house is big.", words });
+
+  it("grades each word by its tick and writes no practice attempt", () => {
+    const outcome = grade(spot(), { kind: "spot_words", known: [true, false] });
+    expect(outcome.grade).toMatchObject({ correct: false, matched: null, reference: "The house is big.", items: [{ expected: id(2), ok: true }, { expected: id(3), ok: false }] });
+    expect(grade(spot(), { kind: "spot_words", known: [true, true] }).grade.correct).toBe(true);
+    expect(componentAttemptText(spot(), { kind: "spot_words", known: [true, true] })).toBeNull();
+  });
+
+  it("refuses a checklist of another length and a payload without words", () => {
+    expect(gradeTutorAnswer(spot(), { kind: "spot_words", known: [true] })).toEqual({ ok: false, error: "ANSWER_INVALID" });
+    expect(tutorComponentPayloadSchemas.spot_words.safeParse({ passage: "Hoi", words: [] }).success).toBe(false);
+  });
+
+  it("shows the resolved words in the view", () => {
+    const spotWords = [{ lessonId: id(1), wordId: id(2), term: "het huis", meaning: "the house", forms: null }];
+    expect(tutorComponentView(spot(), { spotWords })).toEqual({ kind: "spot_words", passage: "Het huis is groot.", translation: "The house is big.", words: spotWords });
+  });
+});
+
+describe("word practice requests", () => {
+  it("takes up to 15 distinct words and parses the picker's lesson list", () => {
+    const word = (n: number) => ({ lessonId: id(1), wordId: id(n), source: "weak" as const });
+    expect(createTutorConversationRequestSchema.safeParse({}).success).toBe(true);
+    expect(createTutorConversationRequestSchema.safeParse({ wordPractice: Array.from({ length: 15 }, (_, n) => word(n + 2)) }).success).toBe(true);
+    expect(createTutorConversationRequestSchema.safeParse({ wordPractice: Array.from({ length: 16 }, (_, n) => word(n + 2)) }).success).toBe(false);
+    expect(createTutorConversationRequestSchema.safeParse({ wordPractice: [word(2), word(2)] }).success).toBe(false);
+    expect(wordPracticeQuerySchema.parse({ lessons: `${id(1)}, ${id(2)},${id(1)}` }).lessons).toEqual([id(1), id(2)]);
+    expect(wordPracticeQuerySchema.parse({}).lessons).toEqual([]);
+  });
+});
+
+describe("practice word marks", () => {
+  it("parses marks into offsets, keeps speech spans aligned, and leaves invalid marks as text", () => {
+    const parsed = parseMessageMarks("Zie je de [[{{tafels|2}} bij het {{huis|1}}]]? En {{fiets|9}} en {{x}}.", 2);
+    expect(parsed.text).toBe("Zie je de tafels bij het huis? En fiets en {{x}}.");
+    expect(parsed.words!.map((mark) => [parsed.text.slice(mark.start, mark.end), mark.index])).toEqual([["tafels", 1], ["huis", 0]]);
+    expect(parsed.spans.map((span) => parsed.text.slice(span.start, span.end))).toEqual(["tafels bij het huis"]);
+    expect(parseMessageMarks("Geen [[woorden]] hier.", 3)).toEqual({ text: "Geen woorden hier.", spans: [{ start: 5, end: 12 }] });
   });
 });

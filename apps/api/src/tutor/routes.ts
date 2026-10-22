@@ -1,5 +1,5 @@
 import {
-  conversationTitle, messageSpanTexts, toPublicPart, tutorConversationPageSchema, tutorConversationResponseSchema,
+  conversationTitle, createTutorConversationRequestSchema, messageSpanTexts, wordPracticeQuerySchema, wordPracticeResponseSchema, toPublicPart, tutorConversationPageSchema, tutorConversationResponseSchema,
   tutorConversationsQuerySchema, tutorMessagePageSchema, tutorMessageRequestSchema, tutorMessagesQuerySchema, tutorProfileResponseSchema,
   tutorModelsResponseSchema, tutorRespondRequestSchema, tutorSetAnswersRequestSchema, tutorSkipSetRequestSchema, tutorSpeechRequestSchema, tutorUsageQuerySchema, tutorUsageResponseSchema, updateTutorConversationRequestSchema, updateTutorProfileRequestSchema, type TutorStoredPart, type TutorStreamEvent,
 } from "@wordinator/contracts/tutor";
@@ -11,7 +11,7 @@ import type { AuthUser } from "../auth";
 import { apiError, parseJson } from "../http";
 import { logInfo } from "../logger";
 import { gradeComponentAnswer, modelJudge } from "./grading";
-import { accountLibrary } from "./library";
+import { accountLibrary, readableLessonList, readableWords, wordKey } from "./library";
 import { runAgentTurn, type TurnEmit } from "./loop";
 import { speakStoredText } from "./onDemandSpeech";
 import { LANGUAGE_NAMES } from "./prompt";
@@ -23,6 +23,7 @@ import {
   touchConversationStatement,
 } from "./store";
 import { applyConfirmation } from "./tools";
+import { practiceCandidates, readPracticeWords } from "./wordPractice";
 
 // The AI tutor routes (docs/ai-tutor.md#api), mounted at `/api/ai` after the session middleware. Every route needs a signed-in
 // account that finished setup; every conversation, message, and tool call ID is resolved under that account, so another
@@ -59,9 +60,42 @@ tutorRoutes.get("/conversations", async (context) => {
   return context.json(tutorConversationPageSchema.parse(await listConversations(context.env.DB, userIdOf(context), parsed.data.archived, cursor)));
 });
 
+// An empty body starts an ordinary conversation; `wordPractice` starts a word practice with the learner's chosen lesson words,
+// each resolved under their read rules (an unreadable or archived one is `404 WORD_NOT_FOUND`).
 tutorRoutes.post("/conversations", async (context) => {
-  const row = await createConversation(context.env.DB, userIdOf(context));
+  const db = context.env.DB; const userId = userIdOf(context);
+  const raw = await context.req.text();
+  let words = null;
+  if (raw.trim()) {
+    const parsed = await parseJson(context, createTutorConversationRequestSchema, 8_192); if ("response" in parsed) return parsed.response;
+    const chosen = parsed.data.wordPractice;
+    if (chosen) {
+      const found = await readableWords(db, userId, chosen);
+      if (chosen.some((ref) => { const word = found.get(wordKey(ref)); return !word || word.archived; })) {
+        return apiError(context, 404, "WORD_NOT_FOUND", "One of these words is not available.");
+      }
+      words = chosen.map((ref) => {
+        const { term, meaning, forms, example, note } = found.get(wordKey(ref))!;
+        return { lessonId: ref.lessonId, wordId: ref.wordId, term, source: ref.source, meaning, forms, example, note };
+      });
+    }
+  }
+  const row = await createConversation(db, userId, Date.now(), words);
   return context.json(tutorConversationResponseSchema.parse({ conversation: presentConversation(row) }), 201);
+});
+
+// The word practice picker: the readable lessons, and the weak and new words of the chosen ones (unreadable IDs are ignored).
+tutorRoutes.get("/word-practice", async (context) => {
+  const parsed = wordPracticeQuerySchema.safeParse(context.req.query());
+  if (!parsed.success) return apiError(context, 400, "VALIDATION_ERROR", "The word practice query is invalid.");
+  const db = context.env.DB; const userId = userIdOf(context);
+  const listed = (await readableLessonList(db, userId, { courseId: null, query: null })).filter((lesson) => !lesson.archived);
+  const readable = new Set(listed.map((lesson) => lesson.lessonId));
+  const rows = await readPracticeWords(db, userId, parsed.data.lessons.filter((id) => readable.has(id)));
+  return context.json(wordPracticeResponseSchema.parse({
+    lessons: listed.map((lesson) => ({ id: lesson.lessonId, title: lesson.title, courseTitle: lesson.courseTitle })),
+    items: practiceCandidates(rows, Date.now()),
+  }));
 });
 
 tutorRoutes.get("/conversations/:conversationId", async (context) => {

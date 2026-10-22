@@ -229,6 +229,10 @@ Decisions and execution batches are in [LESSON_ACTIVITIES_PLAN.html](../LESSON_A
 
 Plan and execution batches are in [ACTIVITIES_V2_PLAN.html](../ACTIVITIES_V2_PLAN.html). Adds guided grammar steps, read-aloud and speak-from-English activities, a Do more with AI badge, and a completion-metric snapshot per run, on top of v1 (see the section above). [Lesson activities](lesson-activities.md) owns behavior. Migration `0038_lesson_activities_v2.sql` was applied to production and both apps were deployed on 2026-10-21. The Up next Done badges (first-try score and finish time) were committed after that deploy and ship with the next one.
 
+## Word practice and answer marks — completed 2026-10-22, not yet deployed
+
+Experimental; the owner may roll it back. The drill results' Practise drill words and more picks up to 15 words (the drill's Again words, then weak and never-practised words of chosen lessons) and starts a tutor [word practice](word-practice.md): passages with a new Spot the words checklist, practice sets, a `get_words` read tool, and practice word marks shown as highlights with word cards. Across the tutor, the grading model returns a minimal correction of a wrong open answer, answers a few words off show [answer marks](ai-tutor.md#answer-components), and a finished set shows as the learner's answered set. Migration `0039_ai_conversation_word_practice.sql`. A temporary `/temp-feedback` page holds the answer-feedback prototypes.
+
 ## Unprioritized future backlog
 
 No ordering is implied.

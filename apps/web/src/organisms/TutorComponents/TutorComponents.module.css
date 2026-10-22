@@ -33,7 +33,7 @@
 /* Multiple choice: full-width choice tiles with a mono key number. */
 .options{display:grid;gap:var(--space-2);margin:0;padding:0;list-style:none}
 .option{display:flex;align-items:center;gap:var(--space-3);width:100%;min-height:var(--touch-target);padding:var(--space-2) var(--space-4);font:var(--type-body)/var(--line-body) var(--font-sans);color:var(--color-foreground);text-align:left;background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-md);cursor:pointer;transition:background var(--motion-press) var(--ease-physical)}
-.option:hover:not(:disabled){background:var(--color-hover)}
+.option:hover:not(:disabled){background:var(--color-action-soft)}
 .option:focus-visible{outline:var(--border-strong);outline-offset:2px}
 .option:disabled{cursor:default}
 .option[aria-pressed="true"]{background:var(--color-selected);border-color:var(--color-highlight)}
@@ -79,9 +79,23 @@
 .hintsLabel{display:inline-flex;align-items:center;gap:var(--space-1);margin:0;font-size:var(--type-metadata);color:var(--color-foreground-muted)}
 .hintList{display:flex;flex-wrap:wrap;gap:var(--space-2);margin:0;padding:0;list-style:none}
 .hintButton{min-height:var(--control-height-sm);padding:var(--space-1) var(--space-3);font:var(--type-metadata)/var(--line-compact) var(--font-sans);color:var(--color-foreground);background:var(--color-wash-subtle);border:var(--ring-hairline);border-style:dashed;border-radius:var(--radius-pill);cursor:pointer}
-.hintButton:hover{background:var(--color-hover)}
+.hintButton:hover{background:var(--color-action-soft)}
 .hintButton:focus-visible{outline:var(--border-strong);outline-offset:2px}
 .hintOpen{display:inline-flex;flex-wrap:wrap;align-items:baseline;gap:var(--space-2);min-height:var(--control-height-sm);padding:var(--space-1) var(--space-3);font-size:var(--type-metadata);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-pill)}
 .hintOpen[data-used]{background:var(--color-highlight-soft);border-color:var(--color-highlight)}
 .hintCue{color:var(--color-foreground-muted)}
 .hintTerm{font-weight:var(--weight-semibold);color:var(--color-foreground)}
+.passage{margin:0;font-size:var(--type-authored);line-height:var(--line-body);white-space:pre-wrap;overflow-wrap:anywhere;color:var(--color-foreground)}
+.spotList{display:flex;flex-wrap:wrap;gap:var(--space-2);margin:0;padding:0;list-style:none}
+.spotList .toggle{min-height:var(--control-height);padding:0 var(--space-4);font-size:var(--text-md)}
+/* Answer marks: the typed answer with each fix standing over the smaller, struck word that was typed. */
+.marked{display:grid;gap:var(--space-1)}
+.markedLabel{margin:0;font-size:var(--type-metadata);font-weight:var(--weight-semibold);color:var(--color-foreground)}
+.markedLine{margin:0;padding:var(--space-3) var(--space-4);font-size:var(--type-authored);line-height:2.4;color:var(--color-foreground);background:var(--color-control-surface);border:var(--ring-hairline);border-radius:var(--radius-md)}
+.stack{display:inline-flex;flex-direction:column;align-items:center;vertical-align:bottom;line-height:1.25}
+.fix{padding:0 0.25em;color:var(--color-foreground);text-decoration:none;background:var(--color-success-surface);border-radius:var(--radius-sm)}
+.fixLetters{text-decoration:underline 2px var(--color-success);text-underline-offset:0.15em}
+.typed{padding:0 0.25em;font-size:0.75em;color:var(--color-danger-text);text-decoration:line-through 1.5px var(--color-danger);background:var(--color-danger-surface);border-radius:var(--radius-sm)}
+.moved{text-decoration:underline dashed 2px var(--color-highlight);text-underline-offset:0.25em;cursor:help}
+.moved:focus-visible{outline:var(--border-strong);outline-offset:2px}
+.frame[data-bare]{padding:0;background:none;border:0;box-shadow:none}

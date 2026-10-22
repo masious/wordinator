@@ -1,0 +1,51 @@
+.page{display:grid;gap:var(--space-8);max-width:72rem;margin:0 auto;padding:var(--space-8) var(--space-4);color:var(--color-foreground)}
+.header{display:grid;gap:var(--space-3);justify-items:start}
+.header h1{margin:0;font-family:var(--font-display);font-size:var(--type-page-title)}
+.header p,.lead{margin:0;color:var(--color-foreground-muted)}
+.section{display:grid;gap:var(--space-4)}
+.section h2{margin:0;font-size:var(--text-lg)}
+
+/* 1 · The learner's turn: right-aligned paper card with an accent edge on the speaker's side. */
+.userRow{display:flex;justify-content:flex-end}
+.answers{display:grid;gap:var(--space-3);width:min(36rem,100%);padding:var(--space-4) var(--space-5);background:var(--color-core);border:var(--ring-hairline);border-right:3px solid var(--color-action);border-radius:var(--radius-lg) var(--radius-sm) var(--radius-sm) var(--radius-lg);box-shadow:var(--shadow-card)}
+.answersHead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-2)}
+.answersTitle{margin:0;font:var(--weight-medium) var(--type-eyebrow)/var(--line-compact) var(--font-mono);color:var(--color-foreground-muted);text-transform:uppercase}
+.answersCount{margin:0;padding-top:var(--space-3);font:var(--weight-medium) var(--type-eyebrow)/var(--line-compact) var(--font-mono);color:var(--color-foreground-muted);text-transform:uppercase;border-top:var(--ring-hairline)}
+.prompt{margin:0;font-size:var(--text-lg)}
+.note{margin:0;font-size:var(--type-metadata);color:var(--color-foreground-muted)}
+.verdict{display:inline-flex;align-items:center;gap:var(--space-2);justify-self:start;margin:0;padding:var(--space-1) var(--space-3) var(--space-1) var(--space-1);font-weight:var(--weight-semibold);color:var(--color-danger-text);background:var(--color-danger-surface);border-radius:var(--radius-pill)}
+.verdict[data-ok]{color:var(--color-foreground);background:var(--color-success-surface)}
+.verdictIcon{display:inline-grid;place-items:center;width:22px;height:22px;color:var(--color-core);background:var(--color-danger);border-radius:50%}
+.verdict[data-ok] .verdictIcon{background:var(--color-success)}
+
+/* 2 · The comparison table. */
+.table{width:100%;border-collapse:collapse;font-size:var(--type-body)}
+.table th,.table td{padding:var(--space-3);text-align:left;vertical-align:top;border-bottom:var(--ring-hairline)}
+.table thead th{font:var(--weight-medium) var(--type-eyebrow)/var(--line-compact) var(--font-mono);color:var(--color-foreground-muted);text-transform:uppercase}
+.table tbody th{width:12rem;font-weight:var(--weight-semibold)}
+.reference{display:block;margin-top:var(--space-1);font-weight:var(--weight-regular);font-size:var(--type-metadata);color:var(--color-foreground-muted)}
+
+/* The answer line and its marks. */
+.line{margin:0;font-size:var(--type-authored);line-height:2.2}
+.line[data-style="stacked"]{line-height:2.4}
+.hint{border-radius:var(--radius-sm);cursor:help}
+.hint:focus-visible{outline:var(--border-strong);outline-offset:2px}
+.wrong{color:var(--color-danger-text);text-decoration:line-through 2px var(--color-danger);background:var(--color-danger-surface);border-radius:var(--radius-sm);padding:0 0.15em}
+.extra{color:var(--color-foreground-muted);text-decoration:line-through 2px var(--color-foreground-muted)}
+.inserted{color:var(--color-foreground);text-decoration:none;background:var(--color-success-surface);border-bottom:2px solid var(--color-success);border-radius:var(--radius-sm);padding:0 0.15em}
+.pair{white-space:nowrap}
+.caret{display:inline-block;padding:0 0.1em;font-weight:var(--weight-semibold);color:var(--color-danger);transform:translateY(0.15em)}
+.moved{text-decoration:underline dashed 2px var(--color-highlight);text-underline-offset:0.25em}
+.typo{text-decoration:underline wavy var(--color-danger);text-underline-offset:0.2em}
+.char_missing{color:var(--color-foreground);background:var(--color-success-surface);border-bottom:2px solid var(--color-success)}
+.char_extra{color:var(--color-danger-text);text-decoration:line-through}
+.stack{display:inline-flex;flex-direction:column;align-items:center;vertical-align:bottom;line-height:1.3}
+.stackTyped{padding:0 0.25em;font-size:0.75em;color:var(--color-danger-text);text-decoration:line-through 1.5px var(--color-danger);background:var(--color-danger-surface);border-radius:var(--radius-sm)}
+.stackTop{text-decoration:none;white-space:nowrap;color:var(--color-foreground);background:var(--color-success-surface);border-radius:var(--radius-sm);padding:0 0.3em}
+.chips{display:flex;flex-wrap:wrap;gap:var(--space-1);margin:0}
+.chip{display:inline-flex;align-items:baseline;gap:var(--space-1);padding:var(--space-1) var(--space-2);font-size:var(--type-body);background:var(--color-surface);border:var(--ring-hairline);border-radius:var(--radius-sm)}
+.chipWrong{color:var(--color-danger-text);background:var(--color-danger-surface);border-color:var(--color-danger)}
+.chipMissing{border-style:dashed;border-color:var(--color-success);background:var(--color-success-surface)}
+.chipFix{color:var(--color-foreground);font-weight:var(--weight-semibold)}
+
+@media(max-width:48em){.table thead{display:none}.table tr{display:grid}.table tbody th{width:auto}}

@@ -1,10 +1,11 @@
-import { parseTargetSpans, type TutorComponentAnswer, type TutorConfirmationSummary, type TutorPart } from "@wordinator/contracts/tutor";
+import { parseMessageMarks, TUTOR_WORD_PRACTICE_MAX, type TutorComponentAnswer, type TutorConfirmationSummary, type TutorPart } from "@wordinator/contracts/tutor";
 import { BookOpen, Check, ChevronDown, LoaderCircle, Sparkles, X } from "lucide-react";
 import { useId, useState, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { PlainText } from "../../molecules/PlainText";
 import { Avatar, Button } from "../../ui";
 import { AnswerComponent, type ClipSource } from "../TutorComponents";
+import { AnsweredSet } from "./AnsweredSet";
 import { AssistantText } from "./Markdown";
 import styles from "./Tutor.module.css";
 
@@ -193,6 +194,8 @@ export function AssistantParts({ parts, streaming, handlers }: { parts: readonly
   const open = components.filter((part) => part.answeredAt === null);
   const docked = Boolean(handlers.docked) && !streaming && open.length > 0;
   const setOpen = !streaming && components.length > 1 && open.length > 0;
+  // Every question answered or skipped: they leave the tutor's card for the learner's answered set after it.
+  const settled = !streaming && components.length > 0 && open.length === 0;
   const firstOpen = open[0]?.toolCallId;
   let spanBase = 0;
   const nodes: ReactNode[] = [];
@@ -215,15 +218,17 @@ export function AssistantParts({ parts, streaming, handlers }: { parts: readonly
     switch (part.type) {
       case "text": {
         const base = spanBase; spanBase += part.spans.length;
-        nodes.push(<AssistantText key={index} text={part.text} spans={part.spans} spanBase={base} speech={handlers.speech} lang={handlers.lang} />);
+        nodes.push(<AssistantText key={index} text={part.text} spans={part.spans} words={part.words} spanBase={base} speech={handlers.speech} lang={handlers.lang} />);
         return;
       }
       case "raw_text": {
-        const parsed = parseTargetSpans(part.raw);
-        nodes.push(<AssistantText key={index} text={parsed.text} spans={parsed.spans} lang={handlers.lang} />);
+        // Streaming text has no stored marks yet; numbers outside the conversation's list render as plain text.
+        const parsed = parseMessageMarks(part.raw, TUTOR_WORD_PRACTICE_MAX);
+        nodes.push(<AssistantText key={index} text={parsed.text} spans={parsed.spans} words={parsed.words} lang={handlers.lang} />);
         return;
       }
       case "component": {
+        if (settled) return;
         if (docked && part.answeredAt === null) {
           if (part.toolCallId === firstOpen) nodes.push(<p key="docked" className={styles.dockedLine} role="status">{t("tutor.dock.inline", { count: open.length })}</p>);
           return;
@@ -263,11 +268,14 @@ export function AssistantParts({ parts, streaming, handlers }: { parts: readonly
   });
   flushSteps();
   if (streaming && nodes.length === 0) nodes.push(<p key="thinking" className={styles.thinking} role="status">{t("tutor.thinking")}</p>);
-  return <div className={styles.assistantRow}>
-    <span className={`${styles.turnAvatar} ${styles.tutorAvatar}`} role="img" aria-label={t("tutor.tutorAvatar")}><Sparkles size={16} aria-hidden="true" /></span>
-    <article className={styles.assistantCard} aria-label={t("tutor.assistantTurn")}>
-      <p className={styles.assistantMeta}><span>{t("tutor.tutorName")}</span><span aria-hidden="true">·</span><span>{t("tutor.aiLabel")}</span></p>
-      <div className={styles.assistant}>{nodes}</div>
-    </article>
-  </div>;
+  return <>
+    <div className={styles.assistantRow}>
+      <span className={`${styles.turnAvatar} ${styles.tutorAvatar}`} role="img" aria-label={t("tutor.tutorAvatar")}><Sparkles size={16} aria-hidden="true" /></span>
+      <article className={styles.assistantCard} aria-label={t("tutor.assistantTurn")}>
+        <p className={styles.assistantMeta}><span>{t("tutor.tutorName")}</span><span aria-hidden="true">·</span><span>{t("tutor.aiLabel")}</span></p>
+        <div className={styles.assistant}>{nodes}</div>
+      </article>
+    </div>
+    {settled && <AnsweredSet parts={components} language={handlers.language} clip={handlers.componentClip} />}
+  </>;
 }

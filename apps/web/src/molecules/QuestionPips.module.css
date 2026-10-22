@@ -3,9 +3,10 @@
 .pip::before{content:"";width:10px;height:10px;background:var(--color-wash-strong);border:var(--ring-hairline);border-radius:50%;transition:transform var(--motion-standard) var(--ease-physical),background-color var(--motion-standard) ease,border-color var(--motion-standard) ease,box-shadow var(--motion-standard) ease}
 .pip[data-state="answered"]::before{background:var(--color-action);border-color:var(--color-action)}
 .pip[data-state="done"]::before{background:var(--color-success);border-color:var(--color-success)}
+.pip[data-state="missed"]::before{background:var(--color-danger);border-color:var(--color-danger)}
 .pip[data-state="skipped"]::before{background:transparent;border:1px dashed var(--color-foreground-muted)}
 .pip[aria-current="step"]::before{transform:scale(1.35);box-shadow:0 0 0 2px var(--color-core),0 0 0 3px var(--color-foreground)}
-.pip[aria-current="step"]:not([data-state="skipped"])::before{background:var(--color-action);border-color:var(--color-action)}
+.pip[aria-current="step"]:not([data-state="skipped"],[data-state="missed"])::before{background:var(--color-action);border-color:var(--color-action)}
 .pip:focus-visible{outline:var(--border-strong);outline-offset:0}
 .pip:disabled{cursor:default}
 @media(prefers-reduced-motion:reduce){.pip::before{transition:none}}

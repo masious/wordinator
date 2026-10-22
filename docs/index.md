@@ -19,6 +19,7 @@ These files are the living specification for Wordinator. Each topic has one prim
 | [learning-time.md](learning-time.md) | Learning time (C15): what is measured, the clock, sending time, lesson and practice medians, activity categories, the daily goal and streak, the home dashboard, and the Progress page |
 | [ai-tutor.md](ai-tutor.md) | The AI tutor: entry point, conversations, formatting, tools and their visibility, confirmation, answer components, next lesson, providers and fallback, the daily cap, and prompt-injection rules |
 | [tutor-sessions-and-memory.md](tutor-sessions-and-memory.md) | Tutor study plans and the session panel, per-conversation context scope, dated tutor notes, practice topics, tutor words, word observations, personal practices, the reading component, and short prompt references (C14l) |
+| [word-practice.md](word-practice.md) | Word practice (experimental): the drill's Practise drill words and more picker, word practice conversations, the tutor's passage-and-checklist script, and practice word marks with their word cards |
 | [content/index.md](content/index.md) | Course curriculum, storyline, and taught-topic coverage for member-authored Dutch Foundations content |
 | [settings-and-administration.md](settings-and-administration.md) | Settings page structure, the Tutor settings section, the superuser flag, analytics, the AI providers and models page, retired creator membership administration, and the interactive image cropper |
 | [notifications.md](notifications.md) | Notification triggers, read state, retention, and links |

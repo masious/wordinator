@@ -805,3 +805,45 @@
     width: 9rem;
   }
 }
+/* A word practice conversation before its first message: the picked words and Start practice. */
+.practiceStart{display:grid;gap:var(--space-3);justify-items:start;margin:var(--space-4) 0;padding:var(--space-5);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-lg)}
+.practiceStart p{margin:0;color:var(--color-foreground-muted)}
+.practiceTitle{margin:0;font-family:var(--font-display);font-size:var(--text-xl);color:var(--color-foreground)}
+.practiceWords{display:flex;flex-wrap:wrap;gap:var(--space-2);margin:0;padding:0;list-style:none}
+.practiceWords li{padding:var(--space-1) var(--space-3);font-size:var(--type-metadata);background:var(--color-surface);border:var(--ring-hairline);border-radius:var(--radius-pill)}
+.practiceWords li[data-source="drill"]{background:var(--color-highlight-soft);border-color:var(--color-highlight)}
+
+/* The learner's answered set: their turn, right-aligned paper with an accent edge on their side; one answer at a time. */
+.answeredSet {
+  display: grid;
+  gap: var(--space-3);
+  width: min(36rem, 92%);
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-core);
+  border: var(--ring-hairline);
+  border-right: 3px solid var(--color-action);
+  border-radius: var(--radius-lg) var(--radius-sm) var(--radius-sm) var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+.answeredHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+.answeredTitle,
+.answeredCount {
+  margin: 0;
+  font: var(--weight-medium) var(--type-eyebrow)/var(--line-compact) var(--font-mono);
+  color: var(--color-foreground-muted);
+  text-transform: uppercase;
+}
+.answeredCount {
+  padding-top: var(--space-3);
+  border-top: var(--ring-hairline);
+}
+.answeredSkipped {
+  margin: 0;
+  color: var(--color-foreground-muted);
+}

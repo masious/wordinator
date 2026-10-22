@@ -1,7 +1,8 @@
 import type { AiProvider } from "@wordinator/contracts/ai";
+import { z } from "zod";
 import {
-  TUTOR_CONVERSATIONS_PAGE_SIZE, TUTOR_MESSAGES_PAGE_SIZE, toPublicPart, tutorStoredPartSchema,
-  type TutorConversation, type TutorMessage, type TutorMessageStatus, type TutorStoredPart, type TutorTitleSource,
+  TUTOR_CONVERSATIONS_PAGE_SIZE, TUTOR_MESSAGES_PAGE_SIZE, toPublicPart, tutorStoredPartSchema, tutorWordPracticeWordSchema,
+  type TutorConversation, type TutorWordPracticeWord, type TutorMessage, type TutorMessageStatus, type TutorStoredPart, type TutorTitleSource,
 } from "@wordinator/contracts/tutor";
 
 // Conversations and messages in D1 (docs/data-model.md#ai-tutor). Every read and write is scoped by the signed-in account's ID,
@@ -9,9 +10,11 @@ import {
 
 export type ConversationRow = {
   id: string; title: string; titleSource: TutorTitleSource; archivedAt: number | null; provider: AiProvider | null; createdAt: number; updatedAt: number; tokens: number;
+  // A word practice conversation's words as stored JSON; null otherwise.
+  wordPractice: string | null;
 };
 // `tokens` sums the conversation's metered model requests (indexed by `ai_usage.conversation_id`).
-const CONVERSATION_COLUMNS = `id, title, title_source AS titleSource, archived_at AS archivedAt, provider, created_at AS createdAt, updated_at AS updatedAt,
+const CONVERSATION_COLUMNS = `id, title, title_source AS titleSource, archived_at AS archivedAt, provider, word_practice AS wordPractice, created_at AS createdAt, updated_at AS updatedAt,
   (SELECT COALESCE(SUM(u.tokens_in + u.tokens_out), 0) FROM ai_usage u WHERE u.conversation_id = ai_conversations.id AND u.user_id = ai_conversations.user_id) AS tokens`;
 
 type Cursor = [number, string];
@@ -24,8 +27,22 @@ export function decodeCursor(value: string): Cursor | null {
   return null;
 }
 
-export const presentConversation = (row: ConversationRow): TutorConversation =>
-  ({ id: row.id, title: row.title, titleSource: row.titleSource, archivedAt: row.archivedAt, provider: row.provider, createdAt: row.createdAt, updatedAt: row.updatedAt, tokens: row.tokens });
+// The stored word practice words; unreadable JSON reads as none.
+export function conversationWordPractice(row: Pick<ConversationRow, "wordPractice">): TutorWordPracticeWord[] | null {
+  if (!row.wordPractice) return null;
+  try {
+    const parsed = z.array(tutorWordPracticeWordSchema).safeParse(JSON.parse(row.wordPractice));
+    return parsed.success ? parsed.data : null;
+  } catch { return null; }
+}
+
+export function presentConversation(row: ConversationRow): TutorConversation {
+  const words = conversationWordPractice(row);
+  return {
+    id: row.id, title: row.title, titleSource: row.titleSource, archivedAt: row.archivedAt, provider: row.provider, createdAt: row.createdAt, updatedAt: row.updatedAt, tokens: row.tokens,
+    ...(words ? { wordPractice: words } : {}),
+  };
+}
 
 export async function readConversation(db: D1Database, userId: string, id: string): Promise<ConversationRow | null> {
   return db.prepare(`SELECT ${CONVERSATION_COLUMNS} FROM ai_conversations WHERE id = ? AND user_id = ?`).bind(id, userId).first<ConversationRow>();
@@ -41,10 +58,13 @@ export async function listConversations(db: D1Database, userId: string, archived
   return { items: page.map(presentConversation), nextCursor: rows.results.length > TUTOR_CONVERSATIONS_PAGE_SIZE && tail ? encodeCursor(tail.updatedAt, tail.id) : null };
 }
 
-export async function createConversation(db: D1Database, userId: string, now = Date.now()): Promise<ConversationRow> {
-  const row: ConversationRow = { id: crypto.randomUUID(), title: "", titleSource: "auto", archivedAt: null, provider: null, createdAt: now, updatedAt: now, tokens: 0 };
-  await db.prepare("INSERT INTO ai_conversations (id, user_id, title, archived_at, created_at, updated_at) VALUES (?, ?, ?, NULL, ?, ?)")
-    .bind(row.id, userId, row.title, now, now).run();
+export async function createConversation(db: D1Database, userId: string, now = Date.now(), wordPractice: readonly TutorWordPracticeWord[] | null = null): Promise<ConversationRow> {
+  const row: ConversationRow = {
+    id: crypto.randomUUID(), title: "", titleSource: "auto", archivedAt: null, provider: null, createdAt: now, updatedAt: now, tokens: 0,
+    wordPractice: wordPractice ? JSON.stringify(wordPractice) : null,
+  };
+  await db.prepare("INSERT INTO ai_conversations (id, user_id, title, archived_at, word_practice, created_at, updated_at) VALUES (?, ?, ?, NULL, ?, ?, ?)")
+    .bind(row.id, userId, row.title, row.wordPractice, now, now).run();
   return row;
 }
 

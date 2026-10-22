@@ -1,7 +1,7 @@
 import { wordDrillDirectionSchema, wordDrillResultSchema } from "@wordinator/contracts/lesson-document";
 import {
-  TUTOR_TITLE_MAX, componentHints, componentWords, saveAiPracticeArgsSchema, defaultAiPracticeFocus, stripTargetMarks, TUTOR_COMPONENT_KINDS, TUTOR_HINT_KINDS, TUTOR_NOTES_MAX, tutorComponentPayloadSchemas, tutorComponentView,
-  type QuickReviewCardView, type TutorComponent, type TutorComponentKind, type TutorComponentView, type TutorConfirmationAction,
+  TUTOR_TITLE_MAX, TUTOR_WORD_PRACTICE_MAX, componentHints, parseWordMarks, tutorWordRefSchema, componentWords, saveAiPracticeArgsSchema, defaultAiPracticeFocus, stripTargetMarks, TUTOR_COMPONENT_KINDS, TUTOR_HINT_KINDS, TUTOR_NOTES_MAX, tutorComponentPayloadSchemas, tutorComponentView,
+  type QuickReviewCardView, type SpotWordView, type TutorComponent, type TutorWordMark, type TutorComponentKind, type TutorComponentView, type TutorConfirmationAction,
   type TutorConfirmationSummary, type TutorStoredPart, type TutorToolDetail,
 } from "@wordinator/contracts/tutor";
 import { z } from "zod";
@@ -12,7 +12,7 @@ import { listAiPractices, saveAiPractice } from "./aiPractices";
 import { recentLessons, recentMistakes, recentWords, searchWords, weakestWords } from "./learner";
 import { lessonForModel, nextLesson, readableCourse, readableCourses, readableLesson, hintViews, readableLessonList, readableWords, wordKey, type ReadableLesson } from "./library";
 import { writeTutorNotes } from "./profile";
-import { parseParts, setConversationTitle } from "./store";
+import { conversationWordPractice, parseParts, readConversation, setConversationTitle } from "./store";
 
 // The tutor's tools (docs/ai-tutor.md#tools). Every tool runs as the signed-in account: the context carries its user ID and no
 // tool accepts one. Lessons, courses, and words are resolved under the account's read rules (published lessons of visible
@@ -55,6 +55,10 @@ const READ_TOOLS = {
     description: "Reads one published lesson by its lessonId (from list_lessons, get_course_progress, or the snapshot): blocks with IDs, new words with IDs, examples, dialogues, and practices. lessonId \"next\" reads the lesson the learner should study next; call it once per turn.",
     schema: z.object({ lessonId: z.union([z.uuid(), z.literal("next")]) }),
   },
+  get_words: {
+    description: "Reads lesson words by their references (lessonId and wordId, as the snapshot, a word practice list, or another tool gives them): each word's term, meaning, forms, example, and lesson. Ask for all the words you need in one call.",
+    schema: z.object({ words: z.array(tutorWordRefSchema).min(1).max(TUTOR_WORD_PRACTICE_MAX) }),
+  },
   get_recent_mistakes: { description: "The learner's most recent practice answers that did not match.", schema: z.object({ limit: limitArg }) },
   list_ai_practices: { description: "The AI practices saved for a lesson.", schema: lessonIdArg },
 } as const;
@@ -69,6 +73,7 @@ const COMPONENT_DESCRIPTIONS: Record<TutorComponentKind, string> = {
   say_it: "Asks the learner to say a target-language sentence aloud; it is scored by pronunciation assessment.",
   dictation: "Plays a target-language sentence as audio only; the learner types what they heard.",
   fix_mistake: "Shows a target-language sentence with exactly one error; give the corrected reference.",
+  spot_words: "Shows a short target-language passage (no marks) and a checklist of the lesson words it uses (words, in the order they appear); the learner ticks the ones they recognised. Give the passage's English translation; it shows after the checklist is sent.",
 };
 const COMPONENT_NOTE = " Name the lesson (lessonId) and the lesson words it tests (words) when it practises a lesson. Ask a practice set: call several ask_* tools of different kinds in one response, then wait for all the answers.";
 const HINT_NOTE = " Add hints for the key words the learner must produce: each a lesson word ID (from get_lesson or the word tools) with the cue, the exact words of the question it helps with (such as \"tidy up\"). The learner sees only the cue until they open a hint; the word comes from the lesson.";
@@ -157,6 +162,16 @@ async function dispatchTool(context: ToolContext, name: string, args: unknown): 
         const words = await searchWords(db, userId, String(input.query), 20);
         return ok({ query: String(input.query).slice(0, 100), count: words.length }, { words });
       }
+      case "get_words": {
+        const refs = (input.words as Array<{ lessonId: string; wordId: string }>);
+        const found = await readableWords(db, userId, refs);
+        const words = refs.flatMap((ref) => {
+          const word = found.get(wordKey(ref));
+          return word ? [{ lessonId: word.lessonId, wordId: word.wordId, term: word.term, meaning: word.meaning, forms: word.forms, example: word.example, lessonTitle: word.lessonTitle }] : [];
+        });
+        const missing = refs.filter((ref) => !found.has(wordKey(ref))).map((ref) => ref.wordId);
+        return ok({ count: words.length }, missing.length ? { words, notFound: missing } : { words });
+      }
       case "get_weak_words": { const words = await weakestWords(db, userId, limit, context.now()); return ok({ count: words.length }, { words }); }
       case "get_recent_words": { const words = await recentWords(db, userId, limit); return ok({ count: words.length }, { words }); }
       case "get_recent_mistakes": { const mistakes = await recentMistakes(db, userId, limit); return ok({ count: mistakes.length }, { mistakes }); }
@@ -224,6 +239,13 @@ async function askComponent(context: ToolContext, kind: TutorComponentKind, args
   const parsed = tutorComponentPayloadSchemas[kind].safeParse(withoutAnswerMarks(args));
   if (!parsed.success) return invalidArguments(parsed.error);
   const component = { kind, payload: parsed.data } as TutorComponent;
+  // A Spot the words passage may mark the conversation's practice words; the marks leave the stored passage for the view.
+  let passageMarks: TutorWordMark[] | undefined;
+  if (component.kind === "spot_words" && component.payload.passage.includes("{{")) {
+    const conversation = await readConversation(context.db, context.userId, context.conversationId);
+    const marked = parseWordMarks(component.payload.passage, conversation ? conversationWordPractice(conversation)?.length ?? 0 : 0);
+    component.payload.passage = marked.text; passageMarks = marked.words;
+  }
   if (component.payload.lessonId && !(await readableLesson(context.db, context.userId, component.payload.lessonId))) return notFound("lesson");
   const hintRefs = componentHints(component);
   const refs = [...componentWords(component), ...hintRefs];
@@ -232,11 +254,16 @@ async function askComponent(context: ToolContext, kind: TutorComponentKind, args
   if (missing.length) return failed("WORD_NOT_FOUND", `These words are not in a lesson the learner can read: ${[...new Set(missing.map((ref) => ref.wordId))].join(", ")}. Use word IDs from get_lesson or the word tools.`);
   const hints = hintViews(hintRefs, words);
   let cards: QuickReviewCardView[] | undefined;
+  let spotWords: SpotWordView[] | undefined;
   if (component.kind === "quick_review") cards = component.payload.cards.map((card) => {
     const word = words.get(wordKey(card))!;
     return { lessonId: card.lessonId, wordId: card.wordId, direction: card.direction, term: word.term, meaning: word.meaning, forms: word.forms, example: word.example };
   });
-  return { kind: "component", component, view: tutorComponentView(component, { cards, hints, random: context.random }) };
+  if (component.kind === "spot_words") spotWords = component.payload.words.map((ref) => {
+    const word = words.get(wordKey(ref))!;
+    return { lessonId: ref.lessonId, wordId: ref.wordId, term: word.term, meaning: word.meaning, forms: word.forms };
+  });
+  return { kind: "component", component, view: tutorComponentView(component, { cards, spotWords, passageMarks, hints, random: context.random }) };
 }
 
 const titled = (lesson: ReadableLesson) => ({ course: { id: lesson.course.id, title: lesson.course.title }, lesson: { id: lesson.id, title: lesson.title } });

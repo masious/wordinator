@@ -8,7 +8,7 @@ import { readableLesson, readableWords, wordKey } from "./library";
 
 // What answering a component writes (docs/ai-tutor.md#answer-components): a practice attempt (practice kind `ai`), a word review
 // for every lesson word the component tests, and for Say it a pronunciation attempt. A tested word whose hint the learner opened
-// is reviewed as Again even when the answer is right, since the learner did not produce it unaided. Words and lessons are re-resolved under the
+// is reviewed as Again even when the answer is right, since the learner did not produce it unaided. Spot the words reviews each word by its own tick. Words and lessons are re-resolved under the
 // account's read rules; nothing is written for a word or lesson it cannot read or for an archived course. Shared with AI
 // practices (C14h), which pass source `ai_practice` and their practice ID.
 
@@ -45,6 +45,15 @@ export async function recordComponentAnswer(db: D1Database, input: RecordAnswerI
       const word = words.get(wordKey(card));
       if (word && !word.archived) reviews.push({
         termKey: word.termKey, direction: card.direction, result: answer.results[index] ?? "again", source: input.source,
+        courseId: word.courseId, lessonId: word.lessonId, wordId: word.wordId, conversationId: input.conversationId, createdAt: now,
+      });
+    });
+  } else if (component.kind === "spot_words" && answer.kind === "spot_words") {
+    // Each word of the checklist is reviewed on its own, in the understand direction: recognised is Got it.
+    component.payload.words.forEach((ref, index) => {
+      const word = words.get(wordKey(ref));
+      if (word && !word.archived) reviews.push({
+        termKey: word.termKey, direction: "understand", result: answer.known[index] ? "got" : "again", source: input.source,
         courseId: word.courseId, lessonId: word.lessonId, wordId: word.wordId, conversationId: input.conversationId, createdAt: now,
       });
     });

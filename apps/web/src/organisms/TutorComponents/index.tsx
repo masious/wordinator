@@ -2,6 +2,7 @@ import { answerHintsUsed, type TutorComponentAnswer, type TutorComponentView, ty
 import { useContext, useState } from "react";
 import { ArticleComponent, ChoiceComponent } from "./ChoiceComponents";
 import { QuickReviewComponent, SayItComponent } from "./SpeechComponents";
+import { SpotWordsComponent } from "./SpotWords";
 import { DictationComponent, FillInComponent, FixMistakeComponent, TranslateComponent } from "./TextComponents";
 import { DraftContext, GradeHeldContext, HintsContext, SkipContext } from "./shared";
 import type { AnswerComponentProps, ClipSource } from "./types";
@@ -9,9 +10,9 @@ import { WordOrderComponent } from "./WordOrder";
 
 // The answer components (docs/ai-tutor.md#answer-components). Use one component directly when the kind is known, or
 // `AnswerComponent` with any view; every one takes the contracts' view, the stored answer and grade, and `onAnswer`.
-export { ArticleComponent, ChoiceComponent, DictationComponent, FillInComponent, FixMistakeComponent, QuickReviewComponent, SayItComponent, TranslateComponent, WordOrderComponent };
+export { ArticleComponent, ChoiceComponent, DictationComponent, FillInComponent, FixMistakeComponent, QuickReviewComponent, SayItComponent, SpotWordsComponent, TranslateComponent, WordOrderComponent };
 export { ClipButton, CLIP_RETRIES, CLIP_RETRY_MS, resetOnDemandSpeech, useOnDemandSpeechAvailable } from "./ClipButton";
-export { DraftContext, GradeResult, MarkedText, VerdictBadge, type DraftMode } from "./shared";
+export { BareFrameContext, DraftContext, GradeResult, MarkedText, VerdictBadge, type DraftMode } from "./shared";
 export type { AnswerComponentProps, ClipResult, ClipSource, ComponentAnswerOf, ComponentViewOf } from "./types";
 
 export type AnyAnswerComponentProps = {
@@ -61,5 +62,6 @@ function KindComponent({ view, answer: same, ...rest }: Omit<AnyAnswerComponentP
     case "say_it": return <SayItComponent {...props("say_it")} />;
     case "dictation": return <DictationComponent {...props("dictation")} />;
     case "fix_mistake": return <FixMistakeComponent {...props("fix_mistake")} />;
+    case "spot_words": return <SpotWordsComponent {...props("spot_words")} />;
   }
 }

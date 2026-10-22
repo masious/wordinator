@@ -4,6 +4,8 @@ import { blankMatches, countBlanks, normalizeAnswer, opaqueIdSchema } from "./in
 import { aiPracticeFocusSchema, practiceAttemptVerdictSchema, pronunciationScoresSchema, type AiPracticeFocus } from "./learning";
 import { wordDrillDirectionSchema, wordDrillResultSchema } from "./lessonDocument";
 
+export * from "./answerDiff";
+
 // The AI tutor (C14g): conversations, messages and their parts, the streamed turn's events, the answer components with their
 // payloads, answers, and pure grading, and the tutor profile. docs/ai-tutor.md owns behavior and docs/data-model.md#ai-tutor the
 // rows. The component payloads are shared with AI practices (C14h, docs/courses.md#ai-practices).
@@ -61,13 +63,59 @@ export function parseTargetSpans(raw: string): { text: string; spans: TutorSpan[
   return { text, spans };
 }
 
+// ---- Practice word marks ----
+
+// In a word practice conversation the model marks each practice word it writes, in whatever form, as `{{form|n}}`: n is the
+// word's 1-based number in the conversation's list. The server parses the marks out like target-language spans; a mark is stored
+// as offsets into the text and the word's 0-based index, and the web highlights it with the word's card. A mark whose number is
+// not in the list keeps its text without a mark; anything that is not a whole mark stays literal.
+export const tutorWordMarkSchema = z.strictObject({ start: z.number().int().nonnegative(), end: z.number().int().nonnegative(), index: z.number().int().nonnegative() });
+export type TutorWordMark = z.infer<typeof tutorWordMarkSchema>;
+const WORD_MARK = /\{\{([^{}|\n]{1,120})\|(\d{1,2})\}\}/g;
+
+/** Removes `{{form|n}}` marks from `raw`; `at` maps an offset of `raw` to its offset in `text`. */
+export function parseWordMarks(raw: string, wordCount: number): { text: string; words: TutorWordMark[]; at: (offset: number) => number } {
+  let text = ""; let index = 0;
+  const words: TutorWordMark[] = [];
+  // Offsets in `raw` where characters were removed, with how many were removed by then.
+  const removed: Array<[number, number]> = [];
+  let dropped = 0;
+  for (const match of raw.matchAll(WORD_MARK)) {
+    const form = match[1]!; const number = Number(match[2]);
+    text += raw.slice(index, match.index);
+    const start = text.length;
+    text += form;
+    if (form.trim() && number >= 1 && number <= wordCount) words.push({ start, end: start + form.length, index: number - 1 });
+    // From the form on, its two opening braces are gone; after the mark, everything but the form is.
+    removed.push([match.index + 2, dropped + 2]);
+    dropped += match[0].length - form.length;
+    removed.push([match.index + match[0].length, dropped]);
+    index = match.index + match[0].length;
+  }
+  text += raw.slice(index);
+  const at = (offset: number) => {
+    let shift = 0;
+    for (const [from, count] of removed) if (offset >= from) shift = count;
+    return offset - shift;
+  };
+  return { text, words, at };
+}
+
+/** A stored text part's text with its target-language spans and practice word marks (see both parsers). */
+export function parseMessageMarks(raw: string, wordCount: number): { text: string; spans: TutorSpan[]; words?: TutorWordMark[] } {
+  const target = parseTargetSpans(raw);
+  const marked = parseWordMarks(target.text, wordCount);
+  const spans = target.spans.map((span) => ({ start: marked.at(span.start), end: marked.at(span.end) }));
+  return marked.words.length ? { text: marked.text, spans, words: marked.words } : { text: marked.text, spans };
+}
+
 // The text without its `[[...]]` marks. Answer and reference fields of a component are stored without marks, so grading compares
 // plain text; display fields (a question, options, a source sentence, a translation, a hint) keep them for the web to emphasise.
 export const stripTargetMarks = (raw: string): string => parseTargetSpans(raw).text;
 
 // ---- Answer components ----
 
-export const TUTOR_COMPONENT_KINDS = ["fill_in", "translate", "word_order", "article", "choice", "quick_review", "say_it", "dictation", "fix_mistake"] as const;
+export const TUTOR_COMPONENT_KINDS = ["fill_in", "translate", "word_order", "article", "choice", "quick_review", "say_it", "dictation", "fix_mistake", "spot_words"] as const;
 export const tutorComponentKindSchema = z.enum(TUTOR_COMPONENT_KINDS);
 export type TutorComponentKind = z.infer<typeof tutorComponentKindSchema>;
 // Deterministic kinds are graded by the server alone; open kinds compare with the reference and then ask the model for a verdict.
@@ -138,11 +186,20 @@ export const quickReviewPayloadSchema = z.object({
 export const sayItPayloadSchema = z.object({ ...componentBase, sentence: z.string().trim().min(1).max(TUTOR_SPAN_MAX), translation: optionalSentence });
 export const dictationPayloadSchema = z.object({ ...componentBase, ...hintsField, sentence: z.string().trim().min(1).max(TUTOR_SPAN_MAX), translation: optionalSentence });
 export const fixMistakePayloadSchema = z.object({ ...componentBase, ...hintsField, sentence, reference: sentence, hint: optionalSentence });
+// Spot the words: a short target-language passage that uses the listed lesson words; the learner ticks the ones they recognised.
+// The passage is stored without marks; the translation shows once the checklist is sent.
+export const TUTOR_PASSAGE_MAX = 1_200;
+export const spotWordsPayloadSchema = z.object({
+  lessonId: componentBase.lessonId,
+  passage: z.string().trim().min(1).max(TUTOR_PASSAGE_MAX),
+  translation: z.string().trim().max(TUTOR_PASSAGE_MAX).nullable().optional(),
+  words: z.array(tutorWordRefSchema).min(1).max(TUTOR_COMPONENT_WORDS_MAX),
+});
 
 export const tutorComponentPayloadSchemas = {
   fill_in: fillInPayloadSchema, translate: translatePayloadSchema, word_order: wordOrderPayloadSchema, article: articlePayloadSchema,
   choice: choicePayloadSchema, quick_review: quickReviewPayloadSchema, say_it: sayItPayloadSchema, dictation: dictationPayloadSchema,
-  fix_mistake: fixMistakePayloadSchema,
+  fix_mistake: fixMistakePayloadSchema, spot_words: spotWordsPayloadSchema,
 } as const;
 export type TutorComponentPayloads = { [K in TutorComponentKind]: z.output<(typeof tutorComponentPayloadSchemas)[K]> };
 export type TutorComponent = { [K in TutorComponentKind]: { kind: K; payload: TutorComponentPayloads[K] } }[TutorComponentKind];
@@ -156,6 +213,7 @@ export const tutorComponentSchema: z.ZodType<TutorComponent> = z.discriminatedUn
   z.object({ kind: z.literal("say_it"), payload: sayItPayloadSchema }),
   z.object({ kind: z.literal("dictation"), payload: dictationPayloadSchema }),
   z.object({ kind: z.literal("fix_mistake"), payload: fixMistakePayloadSchema }),
+  z.object({ kind: z.literal("spot_words"), payload: spotWordsPayloadSchema }),
 ]) as z.ZodType<TutorComponent>;
 
 // The lesson words a component tests: its `words`, or a quick review's cards.
@@ -172,6 +230,9 @@ export const quickReviewCardViewSchema = z.strictObject({
   term: z.string(), meaning: z.string(), forms: z.string().nullable(), example: z.string().nullable(),
 });
 export type QuickReviewCardView = z.infer<typeof quickReviewCardViewSchema>;
+// A word of a Spot the words checklist, resolved by the server like quick review cards. The meaning is hidden until answered.
+export const spotWordViewSchema = z.strictObject({ lessonId: opaqueIdSchema, wordId: opaqueIdSchema, term: z.string(), meaning: z.string(), forms: z.string().nullable() });
+export type SpotWordView = z.infer<typeof spotWordViewSchema>;
 export const tutorComponentViewSchema = z.discriminatedUnion("kind", [
   z.strictObject({ kind: z.literal("fill_in"), prompt: z.string(), blanks: z.number().int().positive(), translation: z.string().nullable(), ...hintViews }),
   z.strictObject({ kind: z.literal("translate"), source: z.string(), ...hintViews }),
@@ -184,6 +245,8 @@ export const tutorComponentViewSchema = z.discriminatedUnion("kind", [
   // Audio only: the sentence is never part of the view.
   z.strictObject({ kind: z.literal("dictation"), translation: z.string().nullable(), ...hintViews }),
   z.strictObject({ kind: z.literal("fix_mistake"), sentence: z.string(), hint: z.string().nullable(), ...hintViews }),
+  // `marks` are the practice word marks of the passage (word practice conversations only).
+  z.strictObject({ kind: z.literal("spot_words"), passage: z.string(), translation: z.string().nullable(), words: z.array(spotWordViewSchema), marks: z.array(tutorWordMarkSchema).optional() }),
 ]);
 export type TutorComponentView = z.infer<typeof tutorComponentViewSchema>;
 
@@ -204,7 +267,7 @@ function shuffled<T>(items: readonly T[], random: () => number): T[] {
  * The view of a component: the payload without its reference answer. A quick review needs its cards' words, which the server
  * resolves; `random` shuffles word order chunks once, when the component is created, and the view is stored with it.
  */
-export function tutorComponentView(component: TutorComponent, options: { cards?: QuickReviewCardView[]; hints?: TutorHintView[]; random?: () => number } = {}): TutorComponentView {
+export function tutorComponentView(component: TutorComponent, options: { cards?: QuickReviewCardView[]; spotWords?: SpotWordView[]; passageMarks?: TutorWordMark[]; hints?: TutorHintView[]; random?: () => number } = {}): TutorComponentView {
   const random = options.random ?? Math.random;
   // Resolved hints, only for kinds that take them; none leaves the field out, so older views stay as they were.
   const hints = options.hints?.length && (TUTOR_HINT_KINDS as readonly string[]).includes(component.kind) ? { hints: options.hints } : {};
@@ -221,6 +284,10 @@ export function tutorComponentView(component: TutorComponent, options: { cards?:
     case "say_it": return { kind: "say_it", sentence: component.payload.sentence, translation: component.payload.translation ?? null };
     case "dictation": return { kind: "dictation", translation: component.payload.translation ?? null, ...hints };
     case "fix_mistake": return { kind: "fix_mistake", sentence: component.payload.sentence, hint: component.payload.hint ?? null, ...hints };
+    case "spot_words": return {
+      kind: "spot_words", passage: component.payload.passage, translation: component.payload.translation ?? null, words: options.spotWords ?? [],
+      ...(options.passageMarks?.length ? { marks: options.passageMarks } : {}),
+    };
   }
 }
 
@@ -247,6 +314,8 @@ export const tutorComponentAnswerSchema = z.discriminatedUnion("kind", [
   z.strictObject({ kind: z.literal("say_it"), scores: pronunciationScoresSchema }),
   z.strictObject({ kind: z.literal("dictation"), text: typedAnswer, ...hintsUsed }),
   z.strictObject({ kind: z.literal("fix_mistake"), text: typedAnswer, ...hintsUsed }),
+  // One flag per word of the checklist, in its order: true when the learner recognised it.
+  z.strictObject({ kind: z.literal("spot_words"), known: z.array(z.boolean()).min(1).max(TUTOR_COMPONENT_WORDS_MAX) }),
 ]);
 export type TutorComponentAnswer = z.infer<typeof tutorComponentAnswerSchema>;
 
@@ -264,6 +333,9 @@ export const tutorGradeSchema = z.strictObject({
   reference: z.string().nullable(),
   items: z.array(tutorGradeItemSchema).max(50),
   score: z.number().min(0).max(100).nullable(),
+  // The judge's minimal correction of an open answer it did not accept: the learner's own sentence with the fewest changes that
+  // make it right. The web marks the answer's mistakes against it (see `diffWords`).
+  corrected: z.string().max(1_000).nullable().optional(),
 });
 export type TutorGrade = z.infer<typeof tutorGradeSchema>;
 
@@ -351,16 +423,27 @@ export function gradeTutorAnswer(component: TutorComponent, answer: TutorCompone
       const correct = items.every((item) => item.ok);
       return { ok: true, needsVerdict: false, grade: grade({ correct, matched: correct, reference: component.payload.sentence, items }) };
     }
+    case "spot_words": {
+      const { known } = answer as Extract<TutorComponentAnswer, { kind: "spot_words" }>;
+      const words = component.payload.words;
+      if (known.length !== words.length) return invalid;
+      const items = words.map((word, index) => ({ expected: word.wordId, given: known[index] ? "recognised" : "not recognised", ok: known[index]! }));
+      return { ok: true, needsVerdict: false, grade: grade({ correct: items.every((item) => item.ok), reference: component.payload.translation ?? null, items }) };
+    }
   }
 }
 
 /** Takes the model's verdict on an open answer that did not match its reference. */
-export function applyVerdict(graded: TutorGrade, verdict: z.infer<typeof practiceAttemptVerdictSchema> | null, note: string | null): TutorGrade {
-  return { ...graded, verdict, note: note ? note.slice(0, TUTOR_NOTE_MAX) : null, correct: graded.matched === true || verdict === "acceptable" };
+export function applyVerdict(graded: TutorGrade, verdict: z.infer<typeof practiceAttemptVerdictSchema> | null, note: string | null, corrected: string | null = null): TutorGrade {
+  const accepted = graded.matched === true || verdict === "acceptable";
+  return {
+    ...graded, verdict, note: note ? note.slice(0, TUTOR_NOTE_MAX) : null, correct: accepted,
+    ...(corrected && !accepted ? { corrected: corrected.slice(0, 1_000) } : {}),
+  };
 }
 
 /**
- * The practice attempt text of an answered component: prompt, answer, and reference. Quick review and Say it write no practice
+ * The practice attempt text of an answered component: prompt, answer, and reference. Quick review, Say it, and Spot the words write no practice
  * attempt (they write word reviews and a pronunciation attempt), so they return null.
  */
 export function componentAttemptText(component: TutorComponent, answer: TutorComponentAnswer): { prompt: string; answer: string; reference: string } | null {
@@ -380,13 +463,14 @@ export function componentAttemptText(component: TutorComponent, answer: TutorCom
     case "dictation": return { prompt: component.payload.translation ?? "Dictation", answer: answer.kind === "dictation" ? answer.text : "", reference: component.payload.sentence };
     case "fix_mistake": return { prompt: component.payload.sentence, answer: answer.kind === "fix_mistake" ? answer.text : "", reference: component.payload.reference };
     case "quick_review":
-    case "say_it": return null;
+    case "say_it":
+    case "spot_words": return null;
   }
 }
 
-// The review direction a graded component records for the words it tests: choosing a meaning is understanding, every other kind
+// The review direction a graded component records for the words it tests: choosing a meaning or spotting a word is understanding, every other kind
 // produces the target language. Quick review cards carry their own direction; Say it records no review.
-export const componentReviewDirection = (kind: TutorComponentKind) => kind === "choice" ? "understand" as const : "produce" as const;
+export const componentReviewDirection = (kind: TutorComponentKind) => kind === "choice" || kind === "spot_words" ? "understand" as const : "produce" as const;
 
 // ---- AI practices (C14h) ----
 
@@ -458,7 +542,7 @@ export const tutorConfirmationOutcomeSchema = z.strictObject({ ok: z.boolean(), 
 export const tutorToolDetailSchema = z.record(z.string(), z.union([z.string().max(TUTOR_SHORT_TEXT_MAX), z.number(), z.boolean(), z.null()]));
 export type TutorToolDetail = z.infer<typeof tutorToolDetailSchema>;
 
-const textPart = z.strictObject({ type: z.literal("text"), text: z.string(), spans: z.array(tutorSpanSchema) });
+const textPart = z.strictObject({ type: z.literal("text"), text: z.string(), spans: z.array(tutorSpanSchema), words: z.array(tutorWordMarkSchema).optional() });
 const toolCallPart = z.strictObject({ type: z.literal("tool_call"), toolCallId: opaqueIdSchema, name: z.string(), arguments: z.record(z.string(), z.unknown()) });
 const errorPart = z.strictObject({ type: z.literal("error"), code: z.string(), message: z.string() });
 const answeredFields = { answeredAt: z.number().int().nullable() };
@@ -525,13 +609,56 @@ export type TutorMessagePage = z.infer<typeof tutorMessagePageSchema>;
 export const TUTOR_TITLE_SOURCES = ["auto", "tutor", "user"] as const;
 export const tutorTitleSourceSchema = z.enum(TUTOR_TITLE_SOURCES);
 export type TutorTitleSource = z.infer<typeof tutorTitleSourceSchema>;
+// A word practice conversation (experimental): up to 15 words the learner picked after a drill, each with where it came from:
+// missed in the drill, weak in memory, or never practised. The tutor reads their details with `get_words`.
+export const TUTOR_WORD_PRACTICE_MAX = 15;
+export const WORD_PRACTICE_SOURCES = ["drill", "weak", "new"] as const;
+export const wordPracticeSourceSchema = z.enum(WORD_PRACTICE_SOURCES);
+export type WordPracticeSource = z.infer<typeof wordPracticeSourceSchema>;
+// The word's card (meaning, forms, example, note) is kept for the web's highlights; the prompt carries only the reference and term.
+export const tutorWordPracticeWordSchema = z.strictObject({
+  lessonId: opaqueIdSchema, wordId: opaqueIdSchema, term: z.string(), source: wordPracticeSourceSchema,
+  meaning: z.string().optional(), forms: z.string().nullable().optional(), example: z.string().nullable().optional(), note: z.string().nullable().optional(),
+});
+export type TutorWordPracticeWord = z.infer<typeof tutorWordPracticeWordSchema>;
 export const tutorConversationSchema = z.strictObject({
   id: opaqueIdSchema, title: z.string().max(TUTOR_TITLE_MAX), titleSource: tutorTitleSourceSchema, archivedAt: z.number().int().nullable(),
   provider: aiProviderSchema.nullable(), createdAt: z.number().int(), updatedAt: z.number().int(),
   // Tokens in and out of every model request made for the conversation (docs/ai-tutor.md#usage-box).
   tokens: z.number().int().nonnegative(),
+  // Present only on a word practice conversation.
+  wordPractice: z.array(tutorWordPracticeWordSchema).optional(),
 });
 export type TutorConversation = z.infer<typeof tutorConversationSchema>;
+// `POST /api/ai/conversations`: an empty body starts an ordinary conversation; `wordPractice` starts a word practice with these
+// lesson words, each once. The API resolves them under the learner's read rules and refuses an unreadable one.
+export const createTutorConversationRequestSchema = z.strictObject({
+  wordPractice: z.array(z.strictObject({ lessonId: opaqueIdSchema, wordId: opaqueIdSchema, source: wordPracticeSourceSchema }))
+    .min(1).max(TUTOR_WORD_PRACTICE_MAX)
+    .refine((words) => new Set(words.map((word) => `${word.lessonId}:${word.wordId}`)).size === words.length, { message: "Pick each word once." })
+    .optional(),
+});
+export type CreateTutorConversationRequest = z.input<typeof createTutorConversationRequestSchema>;
+
+// `GET /api/ai/word-practice?lessons=<id>,<id>`: the word practice picker. `lessons` are the readable published lessons in
+// library order; `items` are the chosen lessons' words that are weak (memory more likely forgotten than not within a week) or new
+// (never reviewed), one per term, weakest first. Known words and well-remembered ones are left out.
+export const WORD_PRACTICE_LESSONS_MAX = 10;
+export const wordPracticeQuerySchema = z.object({
+  lessons: z.string().max(1_000).optional()
+    .transform((value) => value ? [...new Set(value.split(",").map((id) => id.trim()).filter(Boolean))] : [])
+    .pipe(z.array(opaqueIdSchema).max(WORD_PRACTICE_LESSONS_MAX)),
+});
+export const wordPracticeCandidateSchema = z.strictObject({
+  lessonId: opaqueIdSchema, wordId: opaqueIdSchema, term: z.string(), meaning: z.string(), lessonTitle: z.string(),
+  source: z.enum(["weak", "new"]), recall: z.number().min(0).max(1),
+});
+export type WordPracticeCandidate = z.infer<typeof wordPracticeCandidateSchema>;
+export const wordPracticeResponseSchema = z.strictObject({
+  lessons: z.array(z.strictObject({ id: opaqueIdSchema, title: z.string(), courseTitle: z.string() })),
+  items: z.array(wordPracticeCandidateSchema),
+});
+export type WordPracticeResponse = z.infer<typeof wordPracticeResponseSchema>;
 export const tutorConversationResponseSchema = z.strictObject({ conversation: tutorConversationSchema });
 export const tutorConversationPageSchema = z.strictObject({ items: z.array(tutorConversationSchema), nextCursor: z.string().nullable() });
 export type TutorConversationPage = z.infer<typeof tutorConversationPageSchema>;

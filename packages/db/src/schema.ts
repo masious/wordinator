@@ -771,6 +771,8 @@ export const aiConversations = sqliteTable(
     titleSource: text("title_source", { enum: ["auto", "tutor", "user"] }).notNull().default("auto"),
     archivedAt: integer("archived_at"),
     provider: text("provider", { enum: ["openrouter", "workers_ai", "azure"] }),
+    // A word practice conversation's words, JSON `[{ lessonId, wordId, term, source }]`; null otherwise.
+    wordPractice: text("word_practice"),
     createdAt: integer("created_at").notNull(),
     updatedAt: integer("updated_at").notNull(),
   },

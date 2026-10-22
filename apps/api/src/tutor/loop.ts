@@ -1,11 +1,11 @@
 import type { AiProvider, AiSettings } from "@wordinator/contracts/ai";
-import { answerHintsUsed, componentHints, parseTargetSpans, toPublicPart, type TutorSpan, type TutorStoredPart, type TutorStreamEvent } from "@wordinator/contracts/tutor";
+import { answerHintsUsed, componentHints, parseMessageMarks, toPublicPart, type TutorSpan, type TutorStoredPart, type TutorStreamEvent } from "@wordinator/contracts/tutor";
 import { AiLimitError, AiRequestError, AiUnavailableError, streamChat, type AiChatMessage, type AiEnv } from "../ai";
 import { logError, logInfo, logWarn } from "../logger";
 import { learnerSnapshot, systemPrompt } from "./prompt";
 import { readTutorProfile } from "./profile";
 import { accountLibrary } from "./library";
-import { insertMessageStatement, lastMessageAt, presentMessage, readConversation, readHistory, touchConversationStatement, type StoredMessage } from "./store";
+import { conversationWordPractice, insertMessageStatement, lastMessageAt, presentMessage, readConversation, readHistory, touchConversationStatement, type StoredMessage } from "./store";
 import { runTool, toolDefinitions, type ToolContext } from "./tools";
 
 // The agent loop (docs/ai-tutor.md, docs/architecture.md#ai-tutor-and-learning-data). One turn: call the model with the system
@@ -118,7 +118,7 @@ function parseArguments(raw: string): { ok: true; value: Record<string, unknown>
 const skippedResult = (message: string) => ({ kind: "result" as const, ok: false, error: "SKIPPED", detail: {}, data: { error: "SKIPPED", message } });
 
 // Read tools whose identical repeat in one turn is answered from the first call instead of being run again.
-const REPEATABLE_READS = new Set(["search_words", "get_weak_words", "get_recent_words", "get_course_progress", "get_lesson", "list_lessons", "get_recent_mistakes", "list_ai_practices"]);
+const REPEATABLE_READS = new Set(["search_words", "get_words", "get_weak_words", "get_recent_words", "get_course_progress", "get_lesson", "list_lessons", "get_recent_mistakes", "list_ai_practices"]);
 
 // Why a tool call failed, as a filterable tag: the model's mistake (bad arguments, unknown tool, an ID it cannot read), a
 // limit or ordering rule of the loop, a refusal of the learner's data (archived course, untested word), or a server failure.
@@ -145,6 +145,8 @@ export async function runAgentTurn(options: TurnOptions): Promise<StoredMessage>
   const [profile, library, history, conversation] = await Promise.all([
     readTutorProfile(db, userId), accountLibrary(db, userId), readHistory(db, userId, conversationId, HISTORY_MESSAGES), readConversation(db, userId, conversationId),
   ]);
+  // A word practice conversation's marks name its words by number; elsewhere a mark keeps only its text.
+  const practiceWords = conversation ? conversationWordPractice(conversation)?.length ?? 0 : 0;
   const system = systemPrompt(library?.language ?? "nl", profile, await learnerSnapshot(db, userId, profile, started), conversation ?? undefined);
   const messageId = crypto.randomUUID();
   await emit({ type: "start", messageId });
@@ -152,7 +154,7 @@ export async function runAgentTurn(options: TurnOptions): Promise<StoredMessage>
   const parts: TutorStoredPart[] = [];
   let rawText = "";
   const flushText = () => {
-    if (rawText.trim()) parts.push({ type: "text", ...parseTargetSpans(rawText) });
+    if (rawText.trim()) parts.push({ type: "text", ...parseMessageMarks(rawText, practiceWords) });
     rawText = "";
   };
   const context: ToolContext = { db, userId, conversationId, now, random: options.random ?? Math.random };

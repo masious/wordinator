@@ -10,6 +10,7 @@ import { SCORE_FAIR, SCORE_GOOD } from "../../molecules/SpeakControls";
 import { SpeechButton } from "../../molecules/Speech";
 import { Button, IconButton, Surface } from "../../ui";
 import { drillDuration, drillTier, type LastDrill } from "./drillSession";
+import { WordPracticeDialog } from "./WordPracticeDialog";
 import styles from "./DrillResults.module.css";
 
 export type FinishedDrill = { durationMs: number; pronunciation: number | null; previous: LastDrill | null };
@@ -82,12 +83,14 @@ function AgainWords({ groupId, cards }: { groupId: string; cards: readonly Drill
 }
 
 // The end of a session (docs/words.md#end-of-session): a tiered headline, accuracy, words recalled, and time, the pronunciation
-// score against the last session, and the words that needed Again.
-export function DrillResults({ groupId, cards, first, finished, failure, onAgain, onBack }: {
+// score against the last session, and the words that needed Again. Practise drill words and more opens the word practice picker,
+// which starts a tutor conversation with `onPractice`.
+export function DrillResults({ groupId, cards, first, finished, failure, onAgain, onBack, onPractice }: {
   groupId: string; cards: readonly DrillCard[]; first: ReadonlyMap<number, WordDrillResult>; finished: FinishedDrill;
-  failure: ReactNode; onAgain: () => void; onBack: () => void;
+  failure: ReactNode; onAgain: () => void; onBack: () => void; onPractice?: (conversationId: string) => void;
 }) {
   const { t } = useTranslation();
+  const [practising, setPractising] = useState(false);
   const labelId = useId();
   const got = [...first.values()].filter((result) => result === "got").length;
   const accuracy = cards.length ? Math.round(got / cards.length * 100) : 0;
@@ -116,8 +119,12 @@ export function DrillResults({ groupId, cards, first, finished, failure, onAgain
       {failure}
       <div className={styles.actions}>
         <Button variant="secondary" onClick={onBack}>{t("drill.backToWords")}</Button>
+        {onPractice && <Button variant="secondary" onClick={() => setPractising(true)}>{t("drill.practiceMore")}</Button>}
         <Button onClick={onAgain}>{t("drill.drillAgain")}</Button>
       </div>
+      {onPractice && <WordPracticeDialog opened={practising} onClose={() => setPractising(false)} onStarted={onPractice}
+        drillWords={again.map(({ word }) => ({ lessonId: word.lessonId, wordId: word.id, term: word.term, meaning: word.meaning }))}
+        lessonIds={cards.map(({ word }) => word.lessonId)} />}
     </section>
   </Surface>;
 }

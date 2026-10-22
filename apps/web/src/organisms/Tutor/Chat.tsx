@@ -8,6 +8,7 @@ import { ApiError, apiRequest, tutorConversationQueryOptions, tutorConversations
 import { SpeechRecognitionScope, type TokenSource } from "../../molecules/speechRecognition";
 import { Button, TextAreaField } from "../../ui";
 import { AssistantParts, UserMessage, type PartHandlers, type StreamPart } from "./Messages";
+import { PracticeWordsContext } from "../../molecules/PracticeWord";
 import { PrivacyNotice } from "./PrivacyNotice";
 import { QuestionDock } from "./QuestionDock";
 import { conversationPath, limitResetsAt, streamTurn, tutorClip } from "./tutorApi";
@@ -195,13 +196,21 @@ export function TutorChat({ accountId, conversationId, conversation, newProvider
   };
 
   const resets = limitUntil === null ? "" : new Date(limitUntil).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-  return <SpeechRecognitionScope locale={recognitionLocale} token={token}>
+  return <SpeechRecognitionScope locale={recognitionLocale} token={token}><PracticeWordsContext.Provider value={conversation?.wordPractice ?? null}>
     <div className={styles.chat}>
       <div className={styles.messages} aria-live="polite" aria-busy={busy || undefined}>
         {messages.hasNextPage && <Button variant="quiet" className={styles.earlier} loading={messages.isFetchingNextPage} onClick={() => void messages.fetchNextPage()}>{t("tutor.earlier")}</Button>}
         {messages.isError && <p className={styles.errorLine} role="alert">{t("tutor.messagesUnavailable")}</p>}
         {!messages.hasNextPage && <PrivacyNotice accountId={accountId} />}
-        {list.length === 0 && !streaming && !messages.isPending && <p className={styles.emptyChat}>{t("tutor.emptyChat")}</p>}
+        {list.length === 0 && !streaming && !messages.isPending && (conversation?.wordPractice && !archived
+          ? <section className={styles.practiceStart} aria-labelledby="word-practice-title">
+            <h2 id="word-practice-title" className={styles.practiceTitle}>{t("tutor.wordPractice.title", { count: conversation.wordPractice.length })}</h2>
+            <p>{t("tutor.wordPractice.body")}</p>
+            <ul className={styles.practiceWords}>{conversation.wordPractice.map((word) => <li key={`${word.lessonId}:${word.wordId}`} data-source={word.source}
+              title={t(`tutor.wordPractice.sources.${word.source}`)}>{word.term}</li>)}</ul>
+            <Button loading={busy} disabled={composerLocked} onClick={() => { void send(t("tutor.wordPractice.message")).catch(() => undefined); }}>{t("tutor.wordPractice.start")}</Button>
+          </section>
+          : <p className={styles.emptyChat}>{t("tutor.emptyChat")}</p>)}
         {list.map((message) => message.role === "user"
           ? <UserMessage key={message.id} text={textOf(message)} />
           : <AssistantParts key={message.id} parts={message.parts} streaming={false} handlers={handlers(message, false)} />)}
@@ -231,5 +240,5 @@ export function TutorChat({ accountId, conversationId, conversation, newProvider
           </>}
       </form>}
     </div>
-  </SpeechRecognitionScope>;
+  </PracticeWordsContext.Provider></SpeechRecognitionScope>;
 }

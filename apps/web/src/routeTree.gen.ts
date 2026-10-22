@@ -17,6 +17,7 @@ import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as ProgressRouteImport } from './routes/progress'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as TempRouteImport } from './routes/temp'
+import { Route as TempFeedbackRouteImport } from './routes/temp-feedback'
 import { Route as UiRouteImport } from './routes/ui'
 import { Route as WordsRouteImport } from './routes/words'
 import { Route as R2overviewLessonSlugRouteImport } from './routes/2overview.$lessonSlug'
@@ -82,6 +83,11 @@ const SettingsRoute = SettingsRouteImport.update({
 const TempRoute = TempRouteImport.update({
   id: '/temp',
   path: '/temp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TempFeedbackRoute = TempFeedbackRouteImport.update({
+  id: '/temp-feedback',
+  path: '/temp-feedback',
   getParentRoute: () => rootRouteImport,
 } as any)
 const UiRoute = UiRouteImport.update({
@@ -237,6 +243,7 @@ export interface FileRoutesByFullPath {
   '/progress': typeof ProgressRoute
   '/settings': typeof SettingsRoute
   '/temp': typeof TempRoute
+  '/temp-feedback': typeof TempFeedbackRoute
   '/ui': typeof UiRoute
   '/words': typeof WordsRoute
   '/2overview/$lessonSlug': typeof R2overviewLessonSlugRoute
@@ -273,6 +280,7 @@ export interface FileRoutesByTo {
   '/progress': typeof ProgressRoute
   '/settings': typeof SettingsRoute
   '/temp': typeof TempRoute
+  '/temp-feedback': typeof TempFeedbackRoute
   '/ui': typeof UiRoute
   '/words': typeof WordsRoute
   '/2overview/$lessonSlug': typeof R2overviewLessonSlugRoute
@@ -310,6 +318,7 @@ export interface FileRoutesById {
   '/progress': typeof ProgressRoute
   '/settings': typeof SettingsRoute
   '/temp': typeof TempRoute
+  '/temp-feedback': typeof TempFeedbackRoute
   '/ui': typeof UiRoute
   '/words': typeof WordsRoute
   '/2overview/$lessonSlug': typeof R2overviewLessonSlugRoute
@@ -348,6 +357,7 @@ export interface FileRouteTypes {
     | '/progress'
     | '/settings'
     | '/temp'
+    | '/temp-feedback'
     | '/ui'
     | '/words'
     | '/2overview/$lessonSlug'
@@ -384,6 +394,7 @@ export interface FileRouteTypes {
     | '/progress'
     | '/settings'
     | '/temp'
+    | '/temp-feedback'
     | '/ui'
     | '/words'
     | '/2overview/$lessonSlug'
@@ -420,6 +431,7 @@ export interface FileRouteTypes {
     | '/progress'
     | '/settings'
     | '/temp'
+    | '/temp-feedback'
     | '/ui'
     | '/words'
     | '/2overview/$lessonSlug'
@@ -457,6 +469,7 @@ export interface RootRouteChildren {
   ProgressRoute: typeof ProgressRoute
   SettingsRoute: typeof SettingsRoute
   TempRoute: typeof TempRoute
+  TempFeedbackRoute: typeof TempFeedbackRoute
   UiRoute: typeof UiRoute
   WordsRoute: typeof WordsRoute
   R2overviewLessonSlugRoute: typeof R2overviewLessonSlugRoute
@@ -541,6 +554,13 @@ declare module '@tanstack/react-router' {
       path: '/temp'
       fullPath: '/temp'
       preLoaderRoute: typeof TempRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/temp-feedback': {
+      id: '/temp-feedback'
+      path: '/temp-feedback'
+      fullPath: '/temp-feedback'
+      preLoaderRoute: typeof TempFeedbackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ui': {
@@ -737,6 +757,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProgressRoute: ProgressRoute,
   SettingsRoute: SettingsRoute,
   TempRoute: TempRoute,
+  TempFeedbackRoute: TempFeedbackRoute,
   UiRoute: UiRoute,
   WordsRoute: WordsRoute,
   R2overviewLessonSlugRoute: R2overviewLessonSlugRoute,

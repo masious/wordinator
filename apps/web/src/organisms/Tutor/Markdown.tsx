@@ -1,6 +1,7 @@
-import { TUTOR_SPAN_MAX, type TutorSpan } from "@wordinator/contracts/tutor";
+import { TUTOR_SPAN_MAX, type TutorSpan, type TutorWordMark } from "@wordinator/contracts/tutor";
 import { Fragment, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
+import { PracticeWordMark } from "../../molecules/PracticeWord";
 import { ClipButton, type ClipSource } from "../TutorComponents";
 import styles from "./Tutor.module.css";
 
@@ -8,7 +9,7 @@ import styles from "./Tutor.module.css";
 // lists, `inline code`, short headings as section labels, and http/https links. Everything else (raw HTML, images, tables, code
 // blocks, other link schemes) stays literal text. The parser keeps source offsets, so the stored target-language spans (offsets
 // into the same text) render inside any formatting with a speaker button after each. Output is React elements only: no HTML is
-// ever parsed or injected.
+// ever parsed or injected. Practice word marks (offsets into the same text) render as highlights with the word's card.
 
 type Leaf = { type: "text"; start: number; end: number } | { type: "code"; start: number; end: number };
 type Inline = Leaf | { type: "strong"; children: Inline[] } | { type: "em"; children: Inline[] } | { type: "link"; href: string; children: Leaf[] };
@@ -103,8 +104,8 @@ function leavesOf(nodes: Inline[], into: Leaf[] = [], inLink = new Set<Leaf>(), 
 
 type SpanAt = { index: number; span: TutorSpan; text: string; anchor: Leaf | null };
 
-export function AssistantText({ text, spans, spanBase = 0, speech, lang }: {
-  text: string; spans: readonly TutorSpan[];
+export function AssistantText({ text, spans, words = [], spanBase = 0, speech, lang }: {
+  text: string; spans: readonly TutorSpan[]; words?: readonly TutorWordMark[];
   // The index of this part's first span among the message's spans; speech requests name spans by that index.
   spanBase?: number;
   // The clip of a span by its message index; without it (while streaming) spans show without speaker buttons.
@@ -124,12 +125,14 @@ export function AssistantText({ text, spans, spanBase = 0, speech, lang }: {
   const renderLeaf = (leaf: Leaf, key: number) => {
     const cuts = new Set([leaf.start, leaf.end]);
     for (const { span } of marked) for (const at of [span.start, span.end]) if (at > leaf.start && at < leaf.end) cuts.add(at);
+    for (const word of words) for (const at of [word.start, word.end]) if (at > leaf.start && at < leaf.end) cuts.add(at);
     const points = [...cuts].sort((left, right) => left - right);
     const pieces: ReactNode[] = [];
     for (let position = 0; position < points.length - 1; position += 1) {
       const from = points[position]!; const to = points[position + 1]!;
       const inside = marked.find(({ span }) => span.start <= from && span.end >= to);
-      const piece = text.slice(from, to);
+      const practice = words.find((word) => word.start <= from && word.end >= to);
+      const piece = practice ? <PracticeWordMark index={practice.index}>{text.slice(from, to)}</PracticeWordMark> : text.slice(from, to);
       pieces.push(inside ? <span key={from} className={styles.target} lang={lang}>{piece}</span> : <Fragment key={from}>{piece}</Fragment>);
       for (const entry of marked) {
         if (entry.anchor !== leaf || Math.min(leaf.end, entry.span.end) !== to) continue;

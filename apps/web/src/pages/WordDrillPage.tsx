@@ -33,8 +33,9 @@ export function validateWordDrillSearch(search: Record<string, unknown>): WordDr
 // One session's cards, shown one at a time. The first grade of each card is sent once, as soon as it is given; a failed save is
 // kept to retry, and a word that is gone (404) finishes from the session's copy with its grade ignored. The session is timed from
 // its first card to its last grade; with the pronunciation scores heard meanwhile, that is kept locally as the last session.
-function DrillRun({ groupId, accountId, cards, language, scores, course, onAgain, onBack }: {
+function DrillRun({ groupId, accountId, cards, language, scores, course, onAgain, onBack, onPractice }: {
   groupId: string; accountId: string; cards: readonly DrillCard[]; language: string; scores: RefObject<number[]>; course: string | undefined; onAgain: () => void; onBack: () => void;
+  onPractice?: (conversationId: string) => void;
 }) {
   const { t } = useTranslation();
   const [state, setState] = useState(() => startDrill(cards.length));
@@ -82,7 +83,7 @@ function DrillRun({ groupId, accountId, cards, language, scores, course, onAgain
   const current = state.queue[0];
   if (current === undefined) {
     return <DrillResults groupId={groupId} cards={cards} first={state.first} finished={finished ?? { durationMs: Date.now() - startedAt, pronunciation: null, previous: null }}
-      failure={failure} onAgain={onAgain} onBack={onBack} />;
+      failure={failure} onAgain={onAgain} onBack={onBack} onPractice={onPractice} />;
   }
   return <div className={styles.session}>
     <div className={styles.toolbar}>
@@ -99,8 +100,9 @@ function DrillRun({ groupId, accountId, cards, language, scores, course, onAgain
 }
 
 // A session: its deck, fetched once, then the cards; Drill again starts the next session with a fresh deck.
-function DrillSession({ groupId, accountId, settings, run, language, scores, onAgain, onBack }: {
+function DrillSession({ groupId, accountId, settings, run, language, scores, onAgain, onBack, onPractice }: {
   groupId: string; accountId: string; settings: WordDrillSettings; run: number; language: string; scores: RefObject<number[]>; onAgain: () => void; onBack: () => void;
+  onPractice?: (conversationId: string) => void;
 }) {
   const { t } = useTranslation();
   const deck = useQuery(wordDrillQueryOptions(groupId, settings, run));
@@ -117,11 +119,11 @@ function DrillSession({ groupId, accountId, settings, run, language, scores, onA
     </EmptyState></Surface>;
   }
   return <DrillRun groupId={groupId} accountId={accountId} cards={deck.data.cards} language={language} scores={scores} course={settings.source === "course" ? settings.course : undefined}
-    onAgain={onAgain} onBack={onBack} />;
+    onAgain={onAgain} onBack={onBack} onPractice={onPractice} />;
 }
 
 // The drill page (C12e): self-graded cards one at a time, then the results. Desktop only, like other new work.
-export function WordDrillPage({ groupId, settings, onBack }: { groupId: string; settings: WordDrillSettings; onBack: () => void }) {
+export function WordDrillPage({ groupId, settings, onBack, onPractice }: { groupId: string; settings: WordDrillSettings; onBack: () => void; onPractice?: (conversationId: string) => void }) {
   const { t } = useTranslation();
   const session = useQuery(sessionQueryOptions());
   const [run, setRun] = useState(0);
@@ -148,7 +150,7 @@ export function WordDrillPage({ groupId, settings, onBack }: { groupId: string; 
         <p className={styles.settings}>{t("drill.settings", { source: subtitle, direction })}</p>
       </header>
       <SpeechRecognitionScope locale={recognitionLocale} token={token} onAssessment={onAssessment}><DrillSession key={`${run}:${settings.source}:${settings.lesson ?? settings.course ?? ""}:${settings.direction}`} groupId={groupId} accountId={session.data.user.id} settings={settings} run={run}
-        language={language} scores={scores} onAgain={() => setRun((value) => value + 1)} onBack={onBack} /></SpeechRecognitionScope>
+        language={language} scores={scores} onAgain={() => setRun((value) => value + 1)} onBack={onBack} onPractice={onPractice} /></SpeechRecognitionScope>
     </div>
   </GroupFrame>;
 }

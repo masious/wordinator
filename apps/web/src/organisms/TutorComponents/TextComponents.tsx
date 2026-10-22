@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { ListenStatusLine, SpeakButton } from "../../molecules/SpeakControls";
 import { SENTENCE_ANSWER_WINDOW, useSpokenAnswer } from "../../molecules/speechRecognition";
 import { TextAreaField, TextField } from "../../ui";
+import { AnswerMarks, answerMarks } from "./AnswerMarks";
 import { ClipButton } from "./ClipButton";
 import { ComponentFrame, GradePending, GradeResult, HintRow, MarkedText, plainEnter, SubmitRow, useAnswerFlow } from "./shared";
 import type { AnswerComponentProps } from "./types";
@@ -63,14 +64,16 @@ function SentenceAnswer({ kind, initial, label, answerText, grade, locked, pendi
   const listening = useSpokenAnswer("", (heard) => setText(heard.heard), undefined, SENTENCE_ANSWER_WINDOW);
   const ready = text.trim().length > 0;
   const submit = () => { if (!locked && ready) onSubmit(text.trim()); };
+  // A graded answer a few words off shows its marks in place of the field.
+  const marks = grade && answerText !== null ? answerMarks(kind, answerText, grade) : null;
   return <>
-    <div className={`${styles.answerRow} ${grade?.correct ? styles.matched : ""}`}>
+    {marks ? <AnswerMarks label={label} diff={marks.diff} /> : <div className={`${styles.answerRow} ${grade?.correct ? styles.matched : ""}`}>
       <TextAreaField ref={field} label={label} value={answerText ?? text} disabled={locked} autosize minRows={2} maxLength={1000}
         onChange={(event) => setText(event.currentTarget.value)} onKeyDown={(event) => { if (plainEnter(event)) { event.preventDefault(); submit(); } }} />
       {spoken && listening.available && !locked && <SpeakButton state={listening} onListen={listening.listen} compact />}
-    </div>
+    </div>}
     {spoken && listening.available && !locked && <ListenStatusLine status={listening.status} />}
-    {grade ? <GradeResult kind={kind} grade={grade} /> : answerText !== null ? <GradePending />
+    {grade ? <GradeResult kind={kind} grade={grade} marked={marks?.target ?? null} /> : answerText !== null ? <GradePending />
       : <SubmitRow disabled={locked || !ready} pending={pending} failed={failed} onSubmit={submit} label={t("tutorComponents.check")} />}
   </>;
 }

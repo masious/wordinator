@@ -15,5 +15,6 @@ function WordDrillRoute() {
   const settings = Route.useSearch();
   const navigate = Route.useNavigate();
   const onBack = useCallback(() => { void navigate({ to: "/words" }); }, [navigate]);
-  return <WordDrillPage groupId={groupId} settings={settings} onBack={onBack} />;
+  const onPractice = useCallback((conversation: string) => { void navigate({ to: "/ai", search: { conversation } }); }, [navigate]);
+  return <WordDrillPage groupId={groupId} settings={settings} onBack={onBack} onPractice={onPractice} />;
 }

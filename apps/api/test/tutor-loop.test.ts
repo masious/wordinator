@@ -38,8 +38,10 @@ describe("model history", () => {
 
 describe("verdicts", () => {
   it("reads the first JSON object and refuses anything else", () => {
-    expect(parseVerdict("Sure! {\"verdict\": \"error\", \"note\": \"Wrong verb.\"}")).toEqual({ verdict: "error", note: "Wrong verb." });
-    expect(parseVerdict("{\"verdict\": \"acceptable\"}")).toEqual({ verdict: "acceptable", note: null });
+    expect(parseVerdict("Sure! {\"verdict\": \"error\", \"note\": \"Wrong verb.\"}")).toEqual({ verdict: "error", note: "Wrong verb.", corrected: null });
+    expect(parseVerdict("{\"verdict\": \"acceptable\", \"corrected\": \"Ignored.\"}")).toEqual({ verdict: "acceptable", note: null, corrected: null });
+    expect(parseVerdict("{\"verdict\": \"error\", \"note\": \"Op.\", \"corrected\": \" ik zie veel spullen op de markt \"}"))
+      .toEqual({ verdict: "error", note: "Op.", corrected: "ik zie veel spullen op de markt" });
     expect(parseVerdict("{\"verdict\": \"maybe\"}")).toBeNull();
     expect(parseVerdict("acceptable")).toBeNull();
   });

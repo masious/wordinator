@@ -458,7 +458,11 @@ it("cancels a card and shows an answered card as a muted line", async () => {
     expect(within(dock).getByText("Huis means?")).toBeInTheDocument();
     fireEvent.click(within(dock).getByRole("button", { name: "Skip" }));
     expect(await screen.findByText("Let's move on.")).toBeInTheDocument();
-    expect(screen.getByText("Skipped · Multiple choice")).toBeInTheDocument();
+    // The skipped question leaves the tutor's card for the learner's answers.
+    const answers = screen.getByRole("region", { name: "Your answers" });
+    expect(within(answers).getByText("Your answers · Multiple choice")).toBeInTheDocument();
+    expect(within(answers).getByText("Skipped")).toBeInTheDocument();
+    expect(within(answers).getByText("0 of 1 right")).toBeInTheDocument();
     expect(screen.queryByText("Huis means?")).toBeNull();
     expect(posts().find((entry) => entry.path.endsWith("/answers"))?.body).toEqual({ answers: [{ toolCallId: id(43), skip: true }] });
     expect(composer()).toBeEnabled();

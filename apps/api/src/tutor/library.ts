@@ -127,7 +127,7 @@ export async function nextLesson(db: D1Database, userId: string): Promise<Readab
 }
 
 export type IndexedTutorWord = TutorWordRef & {
-  courseId: string; termKey: string; term: string; meaning: string; forms: string | null; example: string | null; lessonTitle: string; archived: boolean;
+  courseId: string; termKey: string; term: string; meaning: string; forms: string | null; example: string | null; note: string | null; lessonTitle: string; archived: boolean;
 };
 export const wordKey = (ref: TutorWordRef) => `${ref.lessonId}:${ref.wordId}`;
 
@@ -137,7 +137,7 @@ export async function readableWords(db: D1Database, userId: string, refs: readon
   if (!refs.length) return found;
   const from = readableLessonsFrom(userId);
   const rows = await db.prepare(
-    `SELECT w.lesson_id AS lessonId, w.word_id AS wordId, w.course_id AS courseId, w.term_key AS termKey, w.term, w.meaning, w.forms, w.example,
+    `SELECT w.lesson_id AS lessonId, w.word_id AS wordId, w.course_id AS courseId, w.term_key AS termKey, w.term, w.meaning, w.forms, w.example, w.note,
        rl.title AS lessonTitle, rl.status = 'archived' AS archived
      FROM json_each(?) ref
      JOIN course_lesson_words w ON w.lesson_id = json_extract(ref.value, '$[0]') AND w.word_id = json_extract(ref.value, '$[1]')
