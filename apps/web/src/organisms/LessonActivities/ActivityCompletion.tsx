@@ -21,8 +21,8 @@ export const lessonTarget = (props: LessonParams, descriptor?: ActivityDescripto
 
 const Glyph = ({ type }: { type: ActivityType }) => { const Icon = activityIcon(type); return <Icon aria-hidden="true" />; };
 const percent = (value: number) => Math.round(value * 100);
-// Question activities show their first-try score; reading, explanation and speaking activities show a plain Done.
-const scored = new Set<ActivityType>(["story_comprehension", "tricky_grammar", "mixed_practice", "guided_grammar"]);
+// Question activities show their first-try score; reading and speaking activities show a plain Done.
+const scored = new Set<ActivityType>(["tricky_grammar", "mixed_practice", "guided_grammar"]);
 
 export type ActivityCompletionProps = LessonParams & {
   // What `{{lesson}}` in the lesson-share metric names.

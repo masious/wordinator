@@ -23,7 +23,7 @@ Each measured second belongs to one **activity**. Rows are kept per account, loc
 
 ### Lesson activity time
 
-v2 deployed to production 2026-10-21 ([ACTIVITIES_V2_PLAN.html](../ACTIVITIES_V2_PLAN.html)). [Lesson activities](lesson-activities.md#learning-time) adds `lesson_activity`, targeted to the lesson and shared activity ID, with reading/grammar/speaking focus. It counts in the existing AI-practice aggregate and daily goal, while retaining its own activity/focus row. Generation waits and completed/inactive work do not claim time. It never changes required-practice or lesson-reading medians. In v2, `read_aloud` and `speak_from_english` count as speaking focus and `guided_grammar` as grammar focus, per [lesson activities](lesson-activities.md#learning-time).
+v2 deployed to production 2026-10-21 ([ACTIVITIES_V2_PLAN.html](../ACTIVITIES_V2_PLAN.html)). [Lesson activities](lesson-activities.md#learning-time) adds `lesson_activity`, targeted to the lesson and shared activity ID, with reading/grammar/speaking focus. It counts in the existing AI-practice aggregate and daily goal, while retaining its own activity/focus row. Generation waits and completed/inactive work do not claim time. It never changes required-practice or lesson-reading medians. `read_aloud` counts as speaking focus and `guided_grammar` as grammar focus; `review_words` claims no lesson-activity time, because its drill records drill time ([lesson activities](lesson-activities.md#learning-time)).
 
 ## The clock
 

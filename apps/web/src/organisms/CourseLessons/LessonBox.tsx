@@ -22,9 +22,9 @@ import { HeadingDot } from "./HeadingDot";
 import { typicalMinutes } from "./LessonTime";
 import styles from "./LessonBox.module.css";
 
-// The learning category that colours an action (docs/design-system.md#learning-categories): grammar activities are grammar; story
-// activities and the speaking ones built on story sections are story. Practise words is the words category.
-const activityCategory = (type: ActivityType) => lessonActivityFocus(type) === "grammar" ? "grammar" : "story";
+// The learning category that colours an action (docs/design-system.md#learning-categories): grammar activities are grammar; read
+// aloud is story. Review words and Practise words are the words category.
+const activityCategory = (type: ActivityType) => type === "review_words" ? "words" : lessonActivityFocus(type) === "grammar" ? "grammar" : "story";
 
 export type LessonBoxLesson = { groupId: string; courseId: string; courseTitle: string; lessonId: string; title: string; number: number };
 
@@ -95,12 +95,11 @@ function ActivityGlyph({ type }: { type: ActivityType }) {
 function useActivityLink(courseSlug: string | undefined, lessonSlug: string | undefined) {
   const { t } = useTranslation();
   const activityLabel: Record<ActivityType, string> = {
-    story_summary: t("lessonActivities.types.story_summary"), story_comprehension: t("lessonActivities.types.story_comprehension"),
     guided_grammar: t("lessonActivities.types.guided_grammar"),
-    tricky_grammar: t("lessonActivities.types.tricky_grammar"), mixed_practice: t("lessonActivities.types.mixed_practice"), roleplay: t("lessonActivities.types.roleplay"),
-    read_aloud: t("lessonActivities.types.read_aloud"), speak_from_english: t("lessonActivities.types.speak_from_english"),
+    tricky_grammar: t("lessonActivities.types.tricky_grammar"), mixed_practice: t("lessonActivities.types.mixed_practice"), 
+    read_aloud: t("lessonActivities.types.read_aloud"), review_words: t("lessonActivities.types.review_words"),
   };
-  // A check-only mark: the word is visually hidden (so the accessible name reads "Story summary Done") and shows as a title tooltip.
+  // A check-only mark: the word is visually hidden (so the accessible name reads "Read aloud Done") and shows as a title tooltip.
   // A space separates it from the label.
   const doneBadge = (done: boolean | undefined) => done ? <>
     {" "}<span className={styles.done} title={t("courses.lessonBox.activityDone")}><Check aria-hidden="true" /><span className={styles.doneText}>{t("courses.lessonBox.activityDone")}</span></span>

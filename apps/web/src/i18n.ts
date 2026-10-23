@@ -259,7 +259,7 @@ export const resources = {
         got: "Got it",
         unsaved_one: "{{count}} answer could not be saved.",
         unsaved_other: "{{count}} answers could not be saved.",
-        backToWords: "Back to words",
+        backToWords: "Back to words", finishing: "Finishing the drill",
         drillAgain: "Drill again",
         practiceMore: "Practise drill words and more",
         wordPractice: {
@@ -399,26 +399,26 @@ export const resources = {
         backToSection: "Back to {{section}}", loadingSources: "Finding activities for this lesson", unavailable: "This activity is not available for this section.",
         openFailed: "The activity could not be opened.", preparing: "Preparing your activity", openingStep: "Opening the activity…", openedStep: "Activity request accepted", generatingStep: "Creating the activity…", preparingFor: "{{activity}} for {{section}}", waitingForGeneration: "Waiting for the generated content to be ready.", checkAgain: "Check again", generationTimedOut: "This is taking longer than expected. Try again in a moment.", archivedUnsaved: "This archived lesson is open for read-only practice. Your answers will not be saved.",
         finished: "Activity complete", finishedBody: "Your work stays private.", doneScore: "{{correct}}/{{total}} correct", doneWhen: "{{status}} · {{when}}", backToLesson: "Back to lesson", skipActivity: "Skip this activity", skipActivityTo: "Skip this activity, go to {{destination}}", progress: "Question {{current}} of {{total}}",
-        englishSummary: "Scene summary", dutchRecap: "Dutch recap", done: "Done", answerLabel: "Your answer", correct: "Correct", correctChoice: "Correct answer", generatedBy: "Generated with {{model}}", generatedByUnknown: "Model not recorded", choiceWrong: "Not quite. The correct answer is marked.", tryAgain: "Here is the reference answer.", retry: "Try again", finish: "Finish", continue: "Continue", checkAnswer: "Check answer",
-        cueLanguage: "Cue language", english: "English", dutch: "Dutch", roleplayIntro: "You are {{speaker}} in the original dialogue.", startDialogue: "Start dialogue", yourTurn: "Your reply", holdToSpeak: "Hold to speak", send: "Send",
+        done: "Done", answerLabel: "Your answer", correct: "Correct", correctChoice: "Correct answer", generatedBy: "Generated with {{model}}", generatedByUnknown: "Model not recorded", choiceWrong: "Not quite. The correct answer is marked.", tryAgain: "Here is the reference answer.", retry: "Try again", finish: "Finish", continue: "Continue", checkAnswer: "Check answer",
+        startDialogue: "Start reading", yourTurn: "What you said", holdToSpeak: "Hold to speak", send: "Send",
         opening: "Opening activity", startAgain: "Start again", saveFailed: "Your progress could not be saved. Try again.", answerFailed: "Your answer could not be checked. Try again.",
         
-        roleplay: {
-          cueHeading: "Your line as {{speaker}}", revealDutch: "Reveal Dutch", replay: "Replay", replayLine: "Replay the line from {{speaker}}",
+        readAloud: {
+          chooseReader: "Whose lines do you read?", chooseReaderHint: "The app reads the other lines aloud.", allLines: "All lines",
+          lineHeading: "Read this line aloud as {{speaker}}", replay: "Replay", replayLine: "Replay the line from {{speaker}}",
           preparingDialogue: "Preparing the dialogue audio…", playing: "Playing the dialogue…", yourTurn: "Your turn as {{speaker}}.", afterLast: "The dialogue continues",
           holdHint: "Hold the button, or hold Space or Enter while it is focused, and speak. Release to stop. Nothing is sent until you press Send.",
           listen: { preparing: "Starting the microphone…", listening: "Speak now…", quiet: "Can't hear anything yet. Is the right microphone on?", hearing: "Hearing you…", heardSoFar: "“{{interim}}…”", checking: "Working out what you said…" },
           draftFromSpeech: "Draft from your speech. Check it, edit it if needed, then press Send.",
-          unavailable: "Speaking is not available on this device. Type your reply instead.",
-          blocked: "The microphone is blocked. Allow it in the browser, or type your reply.",
-          failed: "Speech recognition is not available right now. Type your reply instead.",
-          noSpeech: "No speech was heard. Hold to speak again, or type your reply.",
+          unavailable: "Speaking is not available on this device. Type the line instead.",
+          blocked: "The microphone is blocked. Allow it in the browser, or type the line.",
+          failed: "Speech recognition is not available right now. Type the line instead.",
+          noSpeech: "No speech was heard. Hold to speak again, or type the line.",
           audioUnavailable: "Dialogue audio is unavailable right now. The text is shown, so you can carry on.",
-          different: "Different from Sofia's line", original: "Sofia's line: {{text}}", pronunciation: "Pronunciation of this line",
-          listenSofia: "Listen to Sofia"
+          pronunciation: "Pronunciation of this line"
         },
-        types: { story_summary: "Story summary", story_comprehension: "Story comprehension", guided_grammar: "Guided grammar", tricky_grammar: "Tricky grammar practice", mixed_practice: "Mixed lesson practice", roleplay: "Dialogue role-play", read_aloud: "Read aloud", speak_from_english: "Speak from English" },
-        speaking: { progress: "Line {{n}} of {{total}}", readHeading: "Read this line aloud", speakHeading: "Say this in Dutch", original: "Original line: {{text}}", audioUnavailable: "Audio is unavailable right now. The text is shown, so you can carry on." },
+        types: { guided_grammar: "Guided grammar", tricky_grammar: "Tricky grammar practice", mixed_practice: "Mixed lesson practice", read_aloud: "Read aloud", review_words: "Review words" },
+        speaking: { progress: "Your line {{n}} of {{total}}", original: "Original line: {{text}}" },
         backToPractices: "Back to the lesson's practices", listen: "Listen", differentLine: "Different from the original line",
         metrics: { lesson_share: "This lesson is now {{percent}}% done (+{{delta}}%)", lesson_reading: "+{{delta}}% of this lesson's reading", lesson_grammar: "+{{delta}}% of this lesson's grammar", lesson_activities: "{{percent}}% of this lesson's activities done (+{{delta}}%)" }
       },

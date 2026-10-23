@@ -8,6 +8,13 @@ import "../../i18n";
 import type { ActivityDescriptor, ActivityType, LessonActivityRun } from "@wordinator/contracts/lesson-activities";
 import { LessonActivityPage, type LessonActivityPageProps } from "./LessonActivityPage";
 
+// Review words embeds the word drill (its own tests cover the cards); here it is a stand-in that shows its settings and finishes.
+vi.mock("../../pages/WordDrillPage", () => ({
+  EmbeddedWordDrill: ({ settings, onFinished, backLabel }: { settings: Record<string, unknown>; onFinished: () => void; backLabel: string }) => <div>
+    <p>Drill of {JSON.stringify(settings)}</p><button type="button" onClick={onFinished}>Finish drill</button><span>{backLabel}</span>
+  </div>,
+}));
+
 const groupId = "20000000-0000-4000-8000-000000000001";
 const courseId = "30000000-0000-4000-8000-000000000001";
 const lessonId = "40000000-0000-4000-8000-000000000001";
@@ -19,17 +26,17 @@ const uuid = (n: number) => `80000000-0000-4000-8000-${String(n).padStart(12, "0
 
 const storyDescriptor: ActivityDescriptor = {
   sourceId: "section-story", sourceKind: "section", sourceLabel: "Story", returnBlockId: uuid(1), returnHeadingId: uuid(2), practiceBlockId: null, fingerprint,
-  activityTypes: ["story_comprehension", "story_summary", "tricky_grammar"],
+  activityTypes: ["tricky_grammar", "review_words"],
 };
 const introDescriptor: ActivityDescriptor = {
   sourceId: "intro", sourceKind: "section", sourceLabel: "Introduction", returnBlockId: uuid(3), returnHeadingId: null, practiceBlockId: null, fingerprint,
-  activityTypes: ["story_comprehension"],
+  activityTypes: ["tricky_grammar"],
 };
-const summaryPayload = { type: "story_summary", recipeVersion: 1, schemaVersion: 1, image: null, pairs: [{ dutch: "Sofia koopt brood.", english: "Sofia buys bread." }, { dutch: "Zij eet het.", english: "She eats it." }], newWords: [{ term: "het brood", translation: "the bread" }] };
+const wordsPayload = { type: "review_words", recipeVersion: 1, schemaVersion: 1, wordIds: [uuid(700), uuid(701)] };
 const descriptorList = { descriptors: [storyDescriptor, introDescriptor] };
 
 const run = (overrides: Partial<LessonActivityRun> = {}): LessonActivityRun => ({
-  id: runId, status: "active", cursor: 0, cueMode: "english", startedAt: 1, updatedAt: 1, completedAt: null, ephemeral: false, ...overrides,
+  id: runId, status: "active", cursor: 0, reader: null, startedAt: 1, updatedAt: 1, completedAt: null, ephemeral: false, ...overrides,
 });
 const choice = (n: number, prompt: string) => ({
   id: uuid(100 + n), kind: "choice" as const, prompt, options: [
@@ -39,7 +46,7 @@ const choice = (n: number, prompt: string) => ({
 const storyQuestions = [1, 2, 3, 4].map((n) => choice(n, `Story question ${n}?`));
 const storyActivity = (overrides: Record<string, unknown> = {}) => ({
   id: activityId, sourceId: "section-story", sourceLabel: "Story", sourceFingerprint: fingerprint,
-  payload: { type: "story_comprehension", recipeVersion: 1, schemaVersion: 1, questions: storyQuestions, ...overrides },
+  payload: { type: "tricky_grammar", recipeVersion: 1, schemaVersion: 1, questions: storyQuestions, ...overrides },
 });
 const readyResponse = (overrides: { run?: Partial<LessonActivityRun>; payload?: Record<string, unknown> } = {}) => ({
   status: "ready", activity: storyActivity(overrides.payload), run: run(overrides.run), ephemeral: false,
@@ -78,7 +85,7 @@ function renderPage(overrides: Partial<LessonActivityPageProps> = {}) {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false, staleTime: 20_000 }, mutations: { retry: false } } });
   const props: LessonActivityPageProps = {
     groupId, courseId, courseSlug: "dutch-foundations", lessonId, lessonSlug: "lesson-title", lessonTitle: "Lesson title", accountId,
-    type: "story_comprehension", sourceId: "section-story", archived: false, ...overrides,
+    type: "tricky_grammar", sourceId: "section-story", archived: false, ...overrides,
   };
   const root = createRootRoute();
   const route = createRoute({ getParentRoute: () => root, path: "$", component: () => <LessonActivityPage {...props} /> });
@@ -102,7 +109,7 @@ describe("Lesson activity page", () => {
     expect(await screen.findByText("Preparing your activity")).toBeInTheDocument();
     expect(await screen.findByText("Story question 1?", undefined, { timeout: 3000 })).toBeInTheDocument();
     expect(polls).toBeGreaterThanOrEqual(2);
-    expect(callsTo(calls, "/activities/open", "POST")[0]?.body).toEqual({ sourceId: "section-story", type: "story_comprehension", expectedFingerprint: fingerprint });
+    expect(callsTo(calls, "/activities/open", "POST")[0]?.body).toEqual({ sourceId: "section-story", type: "tricky_grammar", expectedFingerprint: fingerprint });
   });
 
   it("checks a choice answer, shows feedback once, and continues to the next question", async () => {
@@ -195,18 +202,18 @@ describe("Lesson activity page", () => {
       open: () => ({
         status: "ready", ephemeral: false, run: run(),
         activity: { id: activityId, sourceId: "section-story", sourceLabel: "Story", sourceFingerprint: fingerprint,
-          payload: summaryPayload },
+          payload: wordsPayload },
       }),
       run: (body) => ({ run: run({ status: body.action === "complete" ? "completed" : "active", completedAt: body.action === "complete" ? 2 : null }) }),
     });
     const listReads = () => callsTo(calls, "/activities", "GET").length;
-    renderPage({ type: "story_summary" });
-    fireEvent.click(await screen.findByRole("button", { name: "Done" }));
+    renderPage({ type: "review_words" });
+    fireEvent.click(await screen.findByRole("button", { name: "Finish drill" }));
     expect(await screen.findByText("Activity complete")).toBeInTheDocument();
     await waitFor(() => expect(listReads()).toBe(2));
 
     fireEvent.click(screen.getByRole("button", { name: "Start again" }));
-    expect(await screen.findByRole("button", { name: "Done" })).toBeInTheDocument();
+    expect(await screen.findByRole("button", { name: "Finish drill" })).toBeInTheDocument();
     await waitFor(() => expect(listReads()).toBe(3));
     expect(callsTo(calls, "/run", "PATCH").map((call) => call.body)).toEqual([{ action: "complete" }, { action: "restart" }]);
   });
@@ -215,10 +222,9 @@ describe("Lesson activity page", () => {
     const paragraph = (n: number) => ({ id: uuid(500 + n), type: "paragraph", props: { textColor: "default", backgroundColor: "default" }, content: [{ type: "text", text: `Lesson text ${n}.`, styles: {} }], children: [] });
     const guidedStep = (n: number) => ({ blocks: [paragraph(n)], question: choice(n, `Guided question ${n}?`) });
     const payloads: Record<string, { payload: Record<string, unknown>; marker: string }> = {
-      story_summary: { payload: summaryPayload, marker: "Sofia koopt brood." },
+      review_words: { payload: wordsPayload, marker: `Drill of ${JSON.stringify({ source: "lesson", lesson: lessonId, section: "section-story", direction: "mixed" })}` },
       guided_grammar: { payload: { type: "guided_grammar", recipeVersion: 1, schemaVersion: 1, steps: [guidedStep(1), guidedStep(2)], followUps: [] }, marker: "Guided question 1?" },
-      read_aloud: { payload: { type: "read_aloud", recipeVersion: 1, schemaVersion: 1, lines: [{ id: uuid(601), index: 0, speaker: "Dirk", dutchText: "Goedemorgen, Dirk." }] }, marker: "Read this line aloud" },
-      speak_from_english: { payload: { type: "speak_from_english", recipeVersion: 1, schemaVersion: 1, lines: [{ id: uuid(602), index: 0, speaker: "Dirk", englishText: "Good morning, Dirk.", dutchText: null }] }, marker: "Say this in Dutch" },
+      read_aloud: { payload: { type: "read_aloud", recipeVersion: 1, schemaVersion: 1, lines: [{ id: uuid(601), index: 0, speaker: "Dirk", dutchText: "Goedemorgen, Dirk." }] }, marker: "Whose lines do you read?" },
     };
     for (const [type, { payload, marker }] of Object.entries(payloads)) {
       it(`${type}`, async () => {
@@ -235,31 +241,31 @@ describe("Lesson activity page", () => {
   it("shows only the changed metrics on completion, then Up next and the back links", async () => {
     serve({
       descriptors: () => descriptorList,
-      open: () => ({ status: "ready", ephemeral: false, run: run(), activity: { id: activityId, sourceId: "section-story", sourceLabel: "Story", sourceFingerprint: fingerprint, payload: summaryPayload } }),
+      open: () => ({ status: "ready", ephemeral: false, run: run(), activity: { id: activityId, sourceId: "section-story", sourceLabel: "Story", sourceFingerprint: fingerprint, payload: wordsPayload } }),
       run: () => ({ run: run({ status: "completed", completedAt: 2 }), metrics: [{ key: "lesson_reading", before: 0.2, after: 0.5 }, { key: "lesson_grammar", before: 0.1, after: 0.1 }] }),
     });
-    renderPage({ type: "story_summary" });
-    fireEvent.click(await screen.findByRole("button", { name: "Done" }));
+    renderPage({ type: "review_words" });
+    fireEvent.click(await screen.findByRole("button", { name: "Finish drill" }));
     expect(await screen.findByRole("progressbar", { name: "+30% of this lesson's reading" })).toBeInTheDocument();
     expect(screen.queryByRole("progressbar", { name: /grammar/ })).toBeNull();
-    expect(screen.getByRole("link", { name: /Story comprehension · Introduction/ })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Tricky grammar practice · Introduction/ })).toBeInTheDocument();
   });
 
   describe("Skip this activity", () => {
-    const grammarDescriptor: ActivityDescriptor = { ...introDescriptor, sourceId: "grammar", sourceLabel: "Grammar", activityTypes: ["guided_grammar", "story_comprehension"] };
+    const grammarDescriptor: ActivityDescriptor = { ...introDescriptor, sourceId: "grammar", sourceLabel: "Grammar", activityTypes: ["guided_grammar", "mixed_practice"] };
     const skipList = (completed: unknown[] = []) => ({ descriptors: [storyDescriptor, grammarDescriptor], completed });
     const done = (type: string) => ({ sourceId: "grammar", type, correct: null, total: null, completedAt: null });
 
     it("links to the next not-completed suggestion and sends nothing", async () => {
       const calls = serve({ descriptors: () => skipList([done("guided_grammar")]), open: () => readyResponse() });
       renderPage();
-      const link = await screen.findByRole("link", { name: "Skip this activity, go to Story comprehension · Grammar" });
-      expect(link).toHaveAttribute("href", "/courses/dutch-foundations/lessons/lesson-title/activities/grammar/story_comprehension");
+      const link = await screen.findByRole("link", { name: "Skip this activity, go to Mixed lesson practice · Grammar" });
+      expect(link).toHaveAttribute("href", "/courses/dutch-foundations/lessons/lesson-title/activities/grammar/mixed_practice");
       expect(calls.filter((call) => call.method !== "GET" && !call.path.endsWith("/activities/open"))).toHaveLength(0);
     });
 
     it("falls back to the lesson when every suggestion is done", async () => {
-      serve({ descriptors: () => skipList([done("guided_grammar"), done("story_comprehension")]), open: () => readyResponse() });
+      serve({ descriptors: () => skipList([done("guided_grammar"), done("mixed_practice")]), open: () => readyResponse() });
       renderPage();
       const link = await screen.findByRole("link", { name: "Skip this activity, go to Back to lesson" });
       expect(link).toHaveAttribute("href", expect.stringContaining("/courses/dutch-foundations/lessons/lesson-title"));

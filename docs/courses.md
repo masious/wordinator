@@ -350,7 +350,7 @@ Experimental, development only, not an approved product change (2026-10-23). `/t
 
 ## Lesson activities
 
-v2 deployed to production 2026-10-21 ([ACTIVITIES_V2_PLAN.html](../ACTIVITIES_V2_PLAN.html)). Section-aware suggestions in Do more with AI open dedicated, cached activities with a top return link to the original lesson section. [Lesson activities](lesson-activities.md) owns the catalogue, shared/private boundary and original-dialogue role-play. Each suggestion shows a check-only Done mark once the viewer has completed that activity's current version (private, from the same list). These are separate from the Tutor-saved practices below. Activities do not count toward required lesson completion; the exception for answered guided grammar steps, which advance reading position, is owned by [lesson activities](lesson-activities.md). In v2, the Do more with AI header shows a badge with the count of this lesson's completed activities, with a per-type icon ([lesson activities](lesson-activities.md)).
+v2 deployed to production 2026-10-21 ([ACTIVITIES_V2_PLAN.html](../ACTIVITIES_V2_PLAN.html)). Section-aware suggestions (since 2026-10-24 only on the Do more with AI cards in the text) open dedicated, cached activities with a top return link to the original lesson section. [Lesson activities](lesson-activities.md) owns the catalogue, shared/private boundary and the dialogue-section activities (review words and read aloud). Each suggestion shows a check-only Done mark once the viewer has completed that activity's current version (private, from the same list). These are separate from the Tutor-saved practices below. Activities do not count toward required lesson completion; the exception for answered guided grammar steps, which advance reading position, is owned by [lesson activities](lesson-activities.md). In v2, the Do more with AI header shows a badge with the count of this lesson's completed activities, with a per-type icon ([lesson activities](lesson-activities.md)).
 
 ## AI practices
 
@@ -481,6 +481,6 @@ Courses are archived, not hard-deleted. The owner or group creator may archive a
 ## Deferred
 
 - Speaking practice, speak-and-repeat, and spoken answers in lessons. These need an explicit product exception for audio and pronunciation, and a privacy review because browser speech recognition may send audio to the browser vendor. The exceptions so far are [spoken answers](words.md#spoken-answers) on Produce drill cards and Words tab word cards (approved 2026-10-15), and the microphone of the [AI tutor's](ai-tutor.md#answer-components) Translate and Say it components and of AI practices (C14); neither extends to lesson practice blocks or their word recaps.
-- Open-ended interactive role-play dialogues. Original-dialogue replay with the learner as Sofia is approved in [lesson activities](lesson-activities.md); ordinary text-to-speech playback stays with [lesson speech](speech.md) (C10).
+- Open-ended interactive role-play dialogues. Reading one speaker's original lines while the app voices the others is [read aloud](lesson-activities.md#read-aloud); ordinary text-to-speech playback stays with [lesson speech](speech.md) (C10).
 - Feed posts for course updates
 - Course-specific notifications beyond contributor requests

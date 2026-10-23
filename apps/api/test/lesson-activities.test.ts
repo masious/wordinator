@@ -28,21 +28,22 @@ const dialogue = (turns: Array<{ speaker: string; text: string }>) => ({ id: uui
 const callout = (text: string) => ({ id: uuid(), type: "callout" as const, props: { variant: "grammar" as const, icon: "auto" as const }, content: plain(text), children: [] });
 
 const GRAMMAR_TYPES: ActivityType[] = ["guided_grammar", "tricky_grammar"];
-const STORY_TYPES: ActivityType[] = ["story_summary", "story_comprehension", "read_aloud", "speak_from_english"];
+const STORY_TYPES: ActivityType[] = ["review_words", "read_aloud"];
 const SOFIA_LINE = "Goedemorgen, ik wil graag brood kopen.";
 const PIETER_LINE = "Goedemorgen! Wat wilt u hebben?";
 
-// Intro paragraph, a story section with a Sofia/Pieter dialogue, a grammar section with a grammar callout and a level-3 subsection,
+// Intro paragraph, a story section with its words and a Sofia/Pieter dialogue, a grammar section with a grammar callout and a level-3 subsection,
 // and a Summary section. The partner line and the learner speaker label can be changed for a test.
 function marketLesson(partner = PIETER_LINE, sofiaSpeaker = "Sofia", imageUrl: string | null = null) {
   const story = blocks.heading("Story: at the market");
   const scene = dialogue([{ speaker: sofiaSpeaker, text: SOFIA_LINE }, { speaker: "Pieter", text: partner }]);
+  const storyWords = blocks.vocabulary(word("bakker"), word("vroeg"));
   const grammar = blocks.heading("Grammar: verb second");
   const subsection = blocks.heading("Questions", 3);
   const summary = blocks.heading("Summary");
   const document = documentOf(
     blocks.paragraph("Welcome. Today we shop for bread and practise word order."), blocks.vocabulary(word("brood"), word("koop")),
-    story, ...(imageUrl ? [blocks.image(imageUrl, "The market")] : []), blocks.paragraph("Sofia goes to the bakery early in the morning."), scene,
+    story, ...(imageUrl ? [blocks.image(imageUrl, "The market")] : []), blocks.paragraph("Sofia goes to the bakery early in the morning."), storyWords, scene,
     grammar, callout("In a main clause the verb takes second place."), blocks.paragraph("Put the verb after the first element."),
     blocks.example("Ik koop brood.", "I buy bread."),
     subsection, blocks.paragraph("Questions start with the question word, then the verb."), blocks.example("Koop jij brood?", "Do you buy bread?"),
@@ -60,20 +61,8 @@ function tricky(correctIndex = 0, extra: Record<string, unknown> = {}) {
   return { json: JSON.stringify({ questions, metrics: ["lesson_grammar"], ...extra }) };
 }
 
-function story(correctIndex = 0) {
-  const questions = [0, 1, 2, 3].map((index) => ({
-    prompt: `Scene question ${index + 1}?`, options: ["Yes", "No", "Maybe"], correctIndex, explanation: "The scene says so.",
-  }));
-  return { json: JSON.stringify({ questions, metrics: ["lesson_reading"] }) };
-}
-
-const summary = (extra: Record<string, unknown> = {}) => ({
-  pairs: [{ dutch: "Sofia gaat naar de bakker.", english: "Sofia goes to the baker." }, { dutch: "Ze koopt brood.", english: "She buys bread." }],
-  newWords: [{ term: "bakker", translation: "baker" }], metrics: ["lesson_share"], ...extra,
-});
-
 // The IDs the server assigned, read from the opened view. Options keep the model's order, so option 0 is the correct one for tricky()
-// and story() with their default correctIndex.
+// with its default correctIndex.
 type OpenedPayload = Ready["activity"]["payload"];
 function trickyAll(opened: Ready) {
   const payload = opened.activity.payload as Extract<OpenedPayload, { type: "tricky_grammar" }>;
@@ -83,18 +72,6 @@ function trickyAll(opened: Ready) {
   });
 }
 const trickyIds = (opened: Ready) => trickyAll(opened)[0]!;
-function storyQuestions(opened: Ready) {
-  const payload = opened.activity.payload as Extract<OpenedPayload, { type: "story_comprehension" }>;
-  return payload.questions.map((question) => ({ id: question.id, correct: question.options[0]!.id, wrong: question.options[1]!.id }));
-}
-
-// Role-play model reply: English only, one entry per source turn in order. The Dutch lines, speakers and order come from the lesson.
-function roleplay(englishPartner = "Good morning! What would you like?") {
-  return JSON.stringify({ cues: [
-    { index: 0, englishText: "Good morning, I want to buy bread.", cue: "Say good morning and ask for bread." },
-    { index: 1, englishText: englishPartner, cue: englishPartner },
-  ] });
-}
 
 // Lesson images must be uploaded to the lesson before a document can use them.
 const png = new Uint8Array([137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 0, 3, 0, 0, 0, 2]);
@@ -185,7 +162,7 @@ describe("authentication and visibility", () => {
   it("refuses anonymous requests with 401", async () => {
     const s = await setup();
     expect(await errorCode(await call("GET", s.base, null))).toBe("AUTH_REQUIRED");
-    expect(await errorCode(await call("POST", `${s.base}/open`, null, { sourceId: "x", type: "story_summary", expectedFingerprint: "0".repeat(64) }))).toBe("AUTH_REQUIRED");
+    expect(await errorCode(await call("POST", `${s.base}/open`, null, { sourceId: "x", type: "read_aloud", expectedFingerprint: "0".repeat(64) }))).toBe("AUTH_REQUIRED");
     const anonymousStatus = await call("GET", `${s.base}/${uuid()}`, null);
     expect(anonymousStatus.status).toBe(401);
     expect(await errorCode(anonymousStatus)).toBe("AUTH_REQUIRED");
@@ -196,7 +173,7 @@ describe("authentication and visibility", () => {
     const listed = await call("GET", s.base, s.newcomer);
     expect(listed.status).toBe(403);
     expect(await errorCode(listed)).toBe("ONBOARDING_REQUIRED");
-    const opened = await openActivity(s.newcomer, s.base, s.descriptor(s.ids.story), "story_summary");
+    const opened = await openActivity(s.newcomer, s.base, s.descriptor(s.ids.story), "read_aloud");
     expect(opened.status).toBe(403);
     expect(await errorCode(opened)).toBe("ONBOARDING_REQUIRED");
     const polled = await call("GET", `${s.base}/${uuid()}`, s.newcomer);
@@ -209,13 +186,13 @@ describe("authentication and visibility", () => {
     const unpublished = `/api/courses/${s.courseId}/lessons/${s.unpublishedId}/activities`;
     expect((await call("GET", unpublished, s.learner)).status).toBe(404);
     expect(await errorCode(await call("GET", unpublished, s.learner))).toBe("LESSON_NOT_FOUND");
-    expect((await openActivity(s.learner, unpublished, s.descriptor(s.ids.story), "story_summary")).status).toBe(404);
+    expect((await openActivity(s.learner, unpublished, s.descriptor(s.ids.story), "read_aloud")).status).toBe(404);
     expect(await errorCode(await call("GET", `${unpublished}/${uuid()}`, s.learner))).toBe("LESSON_NOT_FOUND");
 
     const hidden = `/api/courses/${s.draftCourseId}/lessons/${s.hiddenLessonId}/activities`;
     expect(await errorCode(await call("GET", hidden, s.learner))).toBe("LESSON_NOT_FOUND");
     expect(await errorCode(await call("GET", `${hidden}/${uuid()}`, s.learner))).toBe("LESSON_NOT_FOUND");
-    expect((await openActivity(s.learner, hidden, s.descriptor(s.ids.story), "story_summary")).status).toBe(404);
+    expect((await openActivity(s.learner, hidden, s.descriptor(s.ids.story), "read_aloud")).status).toBe(404);
     // The owner sees the published lesson in the draft course; the learner, who is not a contributor there, does not.
     expect((await call("GET", hidden, s.owner)).status).toBe(200);
 
@@ -248,12 +225,11 @@ describe("descriptors", () => {
     expect(activityDescriptorListResponseSchema.parse(JSON.parse(first)).descriptors).toHaveLength(s.descriptors.length);
   });
 
-  it("offers the story, grammar, subsection, summary, role-play, and lesson-end sources and no others", async () => {
+  it("offers the story, grammar, subsection, summary, and lesson-end sources and no others", async () => {
     const s = await setup();
     const offered = Object.fromEntries(s.descriptors.map((item) => [item.sourceId, item.activityTypes]));
     expect(offered).toEqual({
       [s.ids.story]: STORY_TYPES,
-      [s.ids.dialogue]: ["roleplay"],
       [s.ids.grammar]: GRAMMAR_TYPES,
       [s.ids.subsection]: GRAMMAR_TYPES,
       [s.ids.summary]: ["mixed_practice"],
@@ -284,7 +260,7 @@ describe("opening", () => {
     expect(second.activity.id).toBe(first.activity.id);
     expect(second.activity.payload).toEqual(first.activity.payload);
     expect(second.run.id).not.toBe(first.run.id);
-    expect(first.run).toMatchObject({ cursor: 0, status: "active", cueMode: "english", ephemeral: false });
+    expect(first.run).toMatchObject({ cursor: 0, status: "active", reader: null, ephemeral: false });
     expect(ai.calls).toHaveLength(1);
     expect(ai.remaining()).toBe(0);
     expect(await countRows("SELECT COUNT(*) AS n FROM lesson_activities")).toBe(1);
@@ -301,14 +277,11 @@ describe("references stay server-side until submission", () => {
   it("never sends correct options, reference answers, expected order, explanations or reference text before an answer", async () => {
     const s = await setup();
     const q = tricky();
-    const sc = story();
-    const dialogueSource = s.descriptor(s.ids.dialogue);
-    const ai = scriptedAi([say(q.json), say(sc.json), say(roleplay())]);
+    const ai = scriptedAi([say(q.json)]);
     const trickyOpen = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "tricky_grammar", ai));
-    const storyOpen = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.story), "story_comprehension", ai));
-    const playOpen = await readyOpen(await openActivity(s.learner, s.base, dialogueSource, "roleplay", ai));
+    const playOpen = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.story), "read_aloud"));
     const forbidden = /correctOptionId|referenceAnswers|expectedOrder|"explanation"|referenceText/;
-    for (const body of [trickyOpen, storyOpen, playOpen]) expect(JSON.stringify(body.activity)).not.toMatch(forbidden);
+    for (const body of [trickyOpen, playOpen]) expect(JSON.stringify(body.activity)).not.toMatch(forbidden);
     const polled = await call("GET", `${s.base}/${trickyOpen.activity.id}`, s.learner);
     expect(JSON.stringify(activityStatusResponseSchema.parse(await polled.json()))).not.toMatch(forbidden);
     expect(JSON.stringify(trickyOpen.activity.payload)).toContain(trickyIds(trickyOpen).question);
@@ -370,9 +343,9 @@ describe("answers", () => {
 describe("run progress", () => {
   it("moves the cursor only after an answer, requires every item before completion, and restarts", async () => {
     const s = await setup();
-    const sc = story();
-    const opened = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.story), "story_comprehension", scriptedAi([say(sc.json)])));
-    const questions = storyQuestions(opened);
+    const q = tricky();
+    const opened = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "tricky_grammar", scriptedAi([say(q.json)])));
+    const questions = trickyAll(opened);
     const runPath = `${s.base}/${opened.activity.id}/run`;
     const answersPath = `${s.base}/${opened.activity.id}/answers`;
     const patch = (body: unknown) => call("PATCH", runPath, s.learner, body);
@@ -383,7 +356,7 @@ describe("run progress", () => {
     expect(await errorCode(early)).toBe("ACTIVITY_ANSWER_REQUIRED");
 
     const [first, second, third, fourth] = questions;
-    expect((await call("POST", answersPath, s.learner, answerBody(opened.run.id, first!.id, first!.correct))).status).toBe(200);
+    expect((await call("POST", answersPath, s.learner, answerBody(opened.run.id, first!.question, first!.correct))).status).toBe(200);
     const moved = activityRunPatchResponseSchema.parse(await (await patch({ action: "continue", expectedCursor: 0 })).json());
     expect(moved.run).toMatchObject({ cursor: 1, status: "active" });
 
@@ -401,7 +374,7 @@ describe("run progress", () => {
     expect(restarted.run).toMatchObject({ cursor: 0, status: "active", completedAt: null });
     expect(await countRows("SELECT COUNT(*) AS n FROM lesson_activity_answers WHERE run_id = ?", opened.run.id)).toBe(1);
 
-    for (const item of [second!, third!, fourth!]) expect((await call("POST", answersPath, s.learner, answerBody(opened.run.id, item.id, item.correct))).status).toBe(200);
+    for (const item of [second!, third!, fourth!]) expect((await call("POST", answersPath, s.learner, answerBody(opened.run.id, item.question, item.correct))).status).toBe(200);
     const completed = activityRunPatchResponseSchema.parse(await (await patch({ action: "complete" })).json());
     expect(completed.run).toMatchObject({ status: "completed" });
     expect(completed.run.completedAt).not.toBeNull();
@@ -587,14 +560,6 @@ describe("model output contract", () => {
     expect(opened.activity.payload).toMatchObject({ type: "tricky_grammar", recipeVersion: 2, schemaVersion: 2 });
   });
 
-  it.each(wrappings)("accepts a summary with an extra top-level id wrapped in %s", async (_, wrap) => {
-    const s = await setup();
-    const reply = { id: "lesson_001", ...summary() };
-    const ai = scriptedAi([say(wrap(JSON.stringify(reply)))]);
-    const opened = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.story), "story_summary", ai));
-    expect(opened.activity.payload).toEqual({ type: "story_summary", recipeVersion: 2, schemaVersion: 2, pairs: reply.pairs, newWords: reply.newWords, image: null });
-  });
-
   it("ignores model IDs that are not UUIDs and uses server-assigned UUIDs", async () => {
     const s = await setup();
     const base = JSON.parse(tricky().json) as { questions: Array<Record<string, unknown>> };
@@ -628,12 +593,12 @@ describe("model output contract", () => {
     const s = await setup();
     const three = JSON.stringify({ questions: [0, 1, 2].map((index) => choiceItem(`Scene question ${index + 1}?`)) });
     const ai = scriptedAi([say(three)]);
-    const failed = await openActivity(s.learner, s.base, s.descriptor(s.ids.story), "story_comprehension", ai);
+    const failed = await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "tricky_grammar", ai);
     expect(failed.status).toBe(503);
     expect(await errorCode(failed)).toBe("ACTIVITY_GENERATION_FAILED");
-    expect(await countRows("SELECT COUNT(*) AS n FROM lesson_activities WHERE source_id = ? AND activity_type = ? AND status = 'failed'", s.ids.story, "story_comprehension")).toBe(1);
+    expect(await countRows("SELECT COUNT(*) AS n FROM lesson_activities WHERE source_id = ? AND activity_type = ? AND status = 'failed'", s.ids.grammar, "tricky_grammar")).toBe(1);
     const events = logged("lesson_activity.output_invalid");
-    expect(events).toEqual([expect.objectContaining({ type: "story_comprehension", reason: "schema" })]);
+    expect(events).toEqual([expect.objectContaining({ type: "tricky_grammar", reason: "schema" })]);
     expect(String(events[0]!.paths)).toContain("questions");
     // The log names the failing path; the model text and the lesson content stay out of it.
     expect(logs.join("\n")).not.toContain("Scene question");
@@ -713,255 +678,111 @@ describe("model output contract", () => {
   });
 });
 
-// Story summary (docs/lesson-activities.md): sentence pairs, new words the lesson does not teach, and an image read from the
-// current published document, never from the cached payload.
-describe("story summary", () => {
+describe("dialogue section activities", () => {
   type Setup = Awaited<ReturnType<typeof setup>>;
-  const openSummary = (s: Setup, reply: unknown, cookie = s.learner) =>
-    openActivity(cookie, s.base, s.descriptor(s.ids.story), "story_summary", scriptedAi([say(JSON.stringify(reply))]));
-  const storedPayload = async (s: Setup) => JSON.parse((await env.DB.prepare("SELECT payload FROM lesson_activities WHERE source_id = ? AND activity_type = 'story_summary'").bind(s.ids.story).first<{ payload: string }>())!.payload) as Record<string, unknown>;
-  const collectImage = (lesson: Awaited<ReturnType<typeof readLesson>>) => {
-    const image = lesson.draft!.document.blocks.find((block): block is LessonBlockOf<"image"> => block.type === "image");
-    if (!image) throw new Error("No image in the lesson");
-    return image.props.url;
-  };
-  // Publishes the lesson with the story section's image URL changed. The image block ID stays, so the section fingerprint stays too.
-  async function publishImage(s: Setup, url: string) {
-    const path = lessonPath(s.groupId, s.courseId, s.lessonId);
-    const lesson = await readLesson(path, s.owner);
-    const document = structuredClone(lesson.draft!.document) as LessonDocument;
-    const image = document.blocks.find((block): block is LessonBlockOf<"image"> => block.type === "image");
-    if (!image) throw new Error("No image in the lesson");
-    image.props.url = url;
-    await saveDraft(path, s.owner, document, lesson.draft!.version);
-    await publishLesson(path, s.owner, (await readLesson(path, s.owner)).draft!.version);
-  }
-
-  it("filters a new word that the lesson already teaches, in any case, and repeats within the list", async () => {
-    const s = await setup();
-    const reply = summary({ newWords: [
-      { term: "BROOD", translation: "bread" }, { term: " Koop ", translation: "buy" }, { term: "bakker", translation: "baker" },
-      { term: "Bakker", translation: "baker again" }, { term: "markt", translation: "market" },
-    ] });
-    const opened = await readyOpen(await openSummary(s, reply));
-    if (opened.activity.payload.type !== "story_summary") throw new Error("Expected story_summary.");
-    expect(opened.activity.payload.newWords).toEqual([{ term: "bakker", translation: "baker" }, { term: "markt", translation: "market" }]);
-    expect(opened.activity.payload.pairs).toEqual(reply.pairs);
-  });
-
-  it("fails fewer than two pairs as ACTIVITY_OUTPUT_INVALID", async () => {
-    const s = await setup();
-    const failed = await openSummary(s, summary({ pairs: [{ dutch: "Sofia gaat naar de bakker.", english: "Sofia goes to the baker." }] }));
-    expect(failed.status).toBe(503);
-    expect(await errorCode(failed)).toBe("ACTIVITY_GENERATION_FAILED");
-    expect(await countRows("SELECT COUNT(*) AS n FROM lesson_activities WHERE activity_type = 'story_summary' AND status = 'failed'")).toBe(1);
-    expect(await countRows("SELECT COUNT(*) AS n FROM lesson_activities WHERE status = 'ready'")).toBe(0);
-  });
-
-  it("keeps at most three metrics from the enum, once each, and falls back to lesson_share", async () => {
-    const s = await setup();
-    await readyOpen(await openSummary(s, summary({ metrics: ["bogus", "lesson_reading", "lesson_reading", "lesson_share", "lesson_grammar", "lesson_activities"] })));
-    expect((await storedPayload(s)).metrics).toEqual(["lesson_reading", "lesson_share", "lesson_grammar"]);
-    await env.DB.prepare("DELETE FROM lesson_activities").run();
-    await readyOpen(await openSummary(s, summary({ metrics: ["bogus", 7] })));
-    expect((await storedPayload(s)).metrics).toEqual(["lesson_share"]);
-    await env.DB.prepare("DELETE FROM lesson_activities").run();
-    const { metrics: _omitted, ...withoutMetrics } = summary();
-    await readyOpen(await openSummary(s, withoutMetrics));
-    expect((await storedPayload(s)).metrics).toEqual(["lesson_share"]);
-  });
-
-  it("serves the image from the current published document, never from the cached payload", async () => {
-    const s = await setup({ image: true });
-    const path = lessonPath(s.groupId, s.courseId, s.lessonId);
-    const first = (collectImage(await readLesson(path, s.owner)));
-    const second = await uploadImage(path, s.owner);
-    expect(second).not.toBe(first);
-    const opened = await readyOpen(await openSummary(s, summary()));
-    if (opened.activity.payload.type !== "story_summary") throw new Error("Expected story_summary.");
-    expect(opened.activity.payload.image).toEqual({ url: first, alt: "The market" });
-    expect(JSON.stringify(await storedPayload(s))).not.toContain("image");
-
-    // The lesson is republished with the image block ID unchanged, so the descriptor fingerprint is the same.
-    await publishImage(s, second);
-    const polled = await call("GET", `${s.base}/${opened.activity.id}`, s.learner);
-    expect(polled.status).toBe(200);
-    const body = activityStatusResponseSchema.parse(await polled.json());
-    if (body.status !== "ready" || body.activity.payload.type !== "story_summary") throw new Error("Expected a ready story_summary.");
-    expect(body.activity.payload.image).toEqual({ url: second, alt: "The market" });
-    const reopened = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.story), "story_summary"));
-    expect(reopened.activity.payload).toMatchObject({ image: { url: second } });
-  });
-});
-
-describe("original-dialogue role-play content", () => {
-  type Setup = Awaited<ReturnType<typeof setup>>;
-  const openRoleplay = (s: Setup, ai?: Ai) => openActivity(s.learner, s.base, s.descriptor(s.ids.dialogue), "roleplay", ai);
-  const cue = (index: number, englishText = `English line ${index}`, text = `Cue ${index}`) => ({ index, englishText, cue: text });
-  const cueReply = (cues: unknown) => JSON.stringify({ cues });
-  // The stored payload keeps the references the view omits, so it shows what the server actually holds.
-  async function storedRoleplay(sourceId: string) {
-    const row = await env.DB.prepare("SELECT payload FROM lesson_activities WHERE source_id = ? AND activity_type = 'roleplay'").bind(sourceId).first<{ payload: string }>();
-    const payload = lessonActivityPayloadSchema.parse(JSON.parse(row!.payload));
-    if (payload.type !== "roleplay") throw new Error("Expected a role-play payload.");
-    return payload;
-  }
-
-  it("keeps the lesson's Dutch lines, speakers and order, and marks only Sofia's turn as the learner's", async () => {
-    const s = await setup();
-    const ai = scriptedAi([say(roleplay())]);
-    await readyOpen(await openRoleplay(s, ai));
-    expect(ai.calls).toHaveLength(1);
-    const stored = await storedRoleplay(s.ids.dialogue);
-    expect(stored.dialogueId).toBe(s.ids.dialogue);
-    expect(stored.turns.map(({ index, speaker, isLearner, dutchText, referenceText, voice }) => ({ index, speaker, isLearner, dutchText, referenceText, voice }))).toEqual([
-      { index: 0, speaker: "Sofia", isLearner: true, dutchText: SOFIA_LINE, referenceText: SOFIA_LINE, voice: null },
-      { index: 1, speaker: "Pieter", isLearner: false, dutchText: PIETER_LINE, referenceText: PIETER_LINE, voice: null },
-    ]);
-    expect(stored.turns[0]).toMatchObject({ englishText: "Good morning, I want to buy bread.", cue: "Say good morning and ask for bread." });
-    expect(stored.turns[1]).toMatchObject({ englishText: "Good morning! What would you like?" });
-    expect(new Set(stored.turns.map((turn) => turn.id)).size).toBe(2);
-  });
-
-  it("uses the model only for English: Dutch-looking English text never replaces a lesson line", async () => {
-    const s = await setup();
-    await readyOpen(await openRoleplay(s, scriptedAi([say(cueReply([cue(0, "Hoi, ik wil brood kopen."), cue(1, "Hallo! Wat wil je?")]))])));
-    const stored = await storedRoleplay(s.ids.dialogue);
-    expect(stored.turns.map((turn) => [turn.speaker, turn.dutchText, turn.referenceText])).toEqual([
-      ["Sofia", SOFIA_LINE, SOFIA_LINE], ["Pieter", PIETER_LINE, PIETER_LINE],
-    ]);
-    expect(stored.turns[0]!.englishText).toBe("Hoi, ik wil brood kopen.");
-  });
-
-  // Extra keys are stripped, not trusted: the turns still come only from the lesson.
-  it.each([
-    ["top-level turns that replace the lesson", JSON.stringify({ cues: [cue(0), cue(1)], turns: [{ speaker: "Pieter", dutchText: "Hoi!" }] })],
-    ["a Dutch replacement on a turn", cueReply([{ ...cue(0), dutchText: "Hoi!" }, cue(1)])],
-    ["a reference replacement on a turn", cueReply([{ ...cue(0), referenceText: "Hoi!" }, cue(1)])],
-    ["a speaker change on a turn", cueReply([{ ...cue(0), speaker: "Pieter" }, cue(1)])],
-    ["a learner flag change on a turn", cueReply([{ ...cue(0), isLearner: false }, cue(1)])],
-    ["a JSON fence", "```json\n" + cueReply([cue(0), cue(1)]) + "\n```"],
-  ])("ignores a model reply's attempt at %s and keeps the lesson's turns", async (_label, reply) => {
-    const s = await setup();
-    await readyOpen(await openRoleplay(s, scriptedAi([say(reply)])));
-    const stored = await storedRoleplay(s.ids.dialogue);
-    expect(stored.turns.map((turn) => [turn.speaker, turn.isLearner, turn.dutchText, turn.referenceText])).toEqual([
-      ["Sofia", true, SOFIA_LINE, SOFIA_LINE], ["Pieter", false, PIETER_LINE, PIETER_LINE],
-    ]);
-  });
-
-  it.each([
-    ["a reordered reply", cueReply([cue(1), cue(0)])],
-    ["one cue too few", cueReply([cue(0)])],
-    ["one cue too many", cueReply([cue(0), cue(1), cue(2)])],
-    ["an index outside the turns", cueReply([cue(0), cue(2)])],
-    ["no JSON at all", "Here are the cues."],
-  ])("fails the activity, with nothing ready to serve, for a model reply with %s", async (_label, reply) => {
-    const s = await setup();
-    const ai = scriptedAi([say(reply)]);
-    const failed = await openRoleplay(s, ai);
-    expect(failed.status).toBe(503);
-    expect(await errorCode(failed)).toBe("ACTIVITY_GENERATION_FAILED");
-    expect(ai.calls).toHaveLength(1);
-    expect(await countRows("SELECT COUNT(*) AS n FROM lesson_activities WHERE status = 'ready'")).toBe(0);
-    expect(await countRows("SELECT COUNT(*) AS n FROM lesson_activities WHERE status = 'failed'")).toBe(1);
-  });
-
-  it("grades Sofia's turn against the original Dutch line, whatever the model wrote", async () => {
-    const s = await setup();
-    const opened = await readyOpen(await openRoleplay(s, scriptedAi([say(cueReply([cue(0, "Good morning."), cue(1)]))])));
+  const openStory = (s: Setup, type: ActivityType, ai?: Ai, cookie = s.learner) => openActivity(cookie, s.base, s.descriptor(s.ids.story), type, ai);
+  const storedPayload = async (s: Setup, type: string) => JSON.parse((await env.DB.prepare("SELECT payload FROM lesson_activities WHERE source_id = ? AND activity_type = ?").bind(s.ids.story, type).first<{ payload: string }>())!.payload) as Record<string, unknown>;
+  const storedLines = async (s: Setup) => (await storedPayload(s, "read_aloud")).lines as Array<Record<string, unknown>>;
+  const readAloud = (opened: Ready) => {
     const payload = opened.activity.payload;
-    if (payload.type !== "roleplay") throw new Error("Expected a role-play payload.");
-    const sofiaTurn = payload.turns.find((turn) => turn.isLearner);
-    if (!sofiaTurn) throw new Error("Expected Sofia's turn.");
-    const path = `${s.base}/${opened.activity.id}/answers`;
-    const answer = async (text: string) => activityAnswerResponseSchema.parse(await (await call("POST", path, s.learner, {
-      runId: opened.run.id, itemId: sofiaTurn.id, answer: { kind: "text", text }, inputMode: "spoken", idempotencyKey: uuid(),
-    })).json());
-    expect(await answer(SOFIA_LINE.toUpperCase())).toMatchObject({ itemId: sofiaTurn.id, correct: true, reference: SOFIA_LINE });
-    expect(await answer("Goedemorgen, ik wil graag melk kopen.")).toMatchObject({ correct: false, reference: SOFIA_LINE });
-  });
+    if (payload.type !== "read_aloud") throw new Error("Expected read aloud.");
+    return payload.lines;
+  };
+  const textAnswer = (runId: string, itemId: string, text: string) => ({ runId, itemId, answer: { kind: "text", text }, inputMode: "typed", idempotencyKey: uuid() });
+  const patch = (s: Setup, opened: Ready, body: unknown, cookie = s.learner) => call("PATCH", `${s.base}/${opened.activity.id}/run`, cookie, body);
 
-  it("matches Sofia's speaker label case-insensitively and trimmed, as the eligibility rule does", async () => {
-    const s = await setup({ sofiaSpeaker: "sofia" });
-    expect(s.descriptor(s.ids.dialogue).activityTypes).toEqual(["roleplay"]);
-    await readyOpen(await openRoleplay(s, scriptedAi([say(roleplay())])));
-    const stored = await storedRoleplay(s.ids.dialogue);
-    expect(stored.turns.map((turn) => [turn.speaker, turn.isLearner])).toEqual([["sofia", true], ["Pieter", false]]);
-  });
-
-  it("refuses a role-play cache miss at the daily cap before any model call", async () => {
-    const s = await setup();
-    await writeAiSettings(env.DB, { ...DEFAULT_AI_SETTINGS, dailyTurnCap: 0 });
-    const none = scriptedAi([]);
-    const miss = await openRoleplay(s, none);
-    expect(miss.status).toBe(429);
-    expect(await errorCode(miss)).toBe("AI_DAILY_LIMIT");
-    expect(none.calls).toHaveLength(0);
-  });
-});
-
-// Read aloud is served from the published lines with no model; speak from English asks the model for English by position only.
-describe("speaking activities", () => {
-  type Setup = Awaited<ReturnType<typeof setup>>;
-  const openSpeaking = (s: Setup, type: ActivityType, ai?: Ai, cookie = s.learner) => openActivity(cookie, s.base, s.descriptor(s.ids.story), type, ai);
-  const storedLines = async (s: Setup, type: string) => (JSON.parse((await env.DB.prepare("SELECT payload FROM lesson_activities WHERE source_id = ? AND activity_type = ?").bind(s.ids.story, type).first<{ payload: string }>())!.payload) as { lines: Array<Record<string, unknown>>; metrics: string[] }).lines;
-  let logs: string[];
-  const logged = (name: string) => logs.map((line) => JSON.parse(line) as Record<string, unknown>).filter((line) => line.event === name);
-  beforeEach(() => { logs = []; vi.spyOn(console, "log").mockImplementation((line: unknown) => { logs.push(String(line)); }); });
-  const english = (count: number) => JSON.stringify({ lines: Array.from({ length: count }, (_, index) => ({ index, englishText: `English ${index}` })), metrics: ["speaking"] });
-
-  it("opens read aloud with no model call, no AI allowance and stable line IDs", async () => {
+  it("opens read aloud with no model call, no AI allowance and stable line IDs: the dialogue's turns only, with speakers", async () => {
     const s = await setup();
     const none = scriptedAi([]);
-    const first = await readyOpen(await openSpeaking(s, "read_aloud", none));
-    expect(first.activity.payload.type).toBe("read_aloud");
-    const stored = await storedLines(s, "read_aloud");
-    expect(stored.map((line) => line.dutchText)).toEqual(["Sofia goes to the bakery early in the morning.", SOFIA_LINE, PIETER_LINE]);
+    const first = await readyOpen(await openStory(s, "read_aloud", none));
+    expect(first.activity.generatedBy).toBeNull();
+    const stored = await storedLines(s);
+    expect(stored.map((line) => [line.speaker, line.dutchText])).toEqual([["Sofia", SOFIA_LINE], ["Pieter", PIETER_LINE]]);
     expect(stored.map((line) => line.referenceText)).toEqual(stored.map((line) => line.dutchText));
     const ids = stored.map((line) => line.id);
-    expect(new Set(ids).size).toBe(3);
-    const second = await readyOpen(await openSpeaking(s, "read_aloud", none, s.rival));
+    expect(new Set(ids).size).toBe(2);
+    const second = await readyOpen(await openStory(s, "read_aloud", none, s.rival));
     expect(second.activity.id).toBe(first.activity.id);
-    expect((await storedLines(s, "read_aloud")).map((line) => line.id)).toEqual(ids);
+    expect((await storedLines(s)).map((line) => line.id)).toEqual(ids);
     expect(none.calls).toHaveLength(0);
     expect(await countRows("SELECT COUNT(*) AS n FROM ai_usage")).toBe(0);
     expect(await countRows("SELECT COUNT(*) AS n FROM ai_turn_reservations")).toBe(0);
-    expect(await countRows("SELECT COUNT(*) AS n FROM lesson_activities WHERE activity_type = 'read_aloud' AND status = 'ready' AND lease_token IS NULL")).toBe(1);
   });
 
-  it("serves read aloud even at a zero daily AI cap", async () => {
+  it("serves read aloud and review words even at a zero daily AI cap", async () => {
     const s = await setup();
     await writeAiSettings(env.DB, { ...DEFAULT_AI_SETTINGS, dailyTurnCap: 0 });
-    await readyOpen(await openSpeaking(s, "read_aloud", scriptedAi([])));
+    await readyOpen(await openStory(s, "read_aloud", scriptedAi([])));
+    await readyOpen(await openStory(s, "review_words", scriptedAi([])));
   });
 
   it("refuses read aloud to anonymous, setup-incomplete and out-of-library requests, and for hidden lessons", async () => {
     const s = await setup();
     const body = { sourceId: s.ids.story, type: "read_aloud", expectedFingerprint: s.descriptor(s.ids.story).fingerprint };
     expect((await call("POST", `${s.base}/open`, null, body)).status).toBe(401);
-    expect((await openSpeaking(s, "read_aloud", undefined, s.newcomer)).status).toBe(403);
-    expect((await openSpeaking(s, "read_aloud", undefined, s.stranger)).status).toBe(404);
+    expect((await openStory(s, "read_aloud", undefined, s.newcomer)).status).toBe(403);
+    expect((await openStory(s, "read_aloud", undefined, s.stranger)).status).toBe(404);
     expect((await openActivity(s.learner, `/api/courses/${s.courseId}/lessons/${s.unpublishedId}/activities`, s.descriptor(s.ids.story), "read_aloud")).status).toBe(404);
     expect((await openActivity(s.learner, `/api/courses/${s.draftCourseId}/lessons/${s.hiddenLessonId}/activities`, s.descriptor(s.ids.story), "read_aloud")).status).toBe(404);
     expect(await countRows("SELECT COUNT(*) AS n FROM lesson_activities WHERE activity_type = 'read_aloud'")).toBe(0);
   });
 
-  it("builds speak from English with server Dutch lines and the model's English by position", async () => {
+  it("reads every line without a reader, and only the chosen speaker's lines with one", async () => {
     const s = await setup();
-    await readyOpen(await openSpeaking(s, "speak_from_english", scriptedAi([say(english(3))])));
-    const lines = await storedLines(s, "speak_from_english");
-    expect(lines.map((line) => line.dutchText)).toEqual(["Sofia goes to the bakery early in the morning.", SOFIA_LINE, PIETER_LINE]);
-    expect(lines.map((line) => line.englishText)).toEqual(["English 0", "English 1", "English 2"]);
+    const opened = await readyOpen(await openStory(s, "read_aloud"));
+    const [sofia, pieter] = readAloud(opened);
+    const answers = `${s.base}/${opened.activity.id}/answers`;
+    // No reader: both lines must be read before completion.
+    expect((await call("POST", answers, s.learner, textAnswer(opened.run.id, sofia!.id, SOFIA_LINE))).status).toBe(200);
+    expect(await errorCode(await patch(s, opened, { action: "complete" }))).toBe("ACTIVITY_INCOMPLETE");
+    // Choosing Pieter starts over at his first line; Sofia's earlier answer does not count for him.
+    const chosen = await patch(s, opened, { action: "set_reader", reader: "Pieter" });
+    expect(activityRunPatchResponseSchema.parse(await chosen.json()).run).toMatchObject({ reader: "Pieter", cursor: 0, status: "active" });
+    expect(await errorCode(await patch(s, opened, { action: "complete" }))).toBe("ACTIVITY_INCOMPLETE");
+    const graded = activityAnswerResponseSchema.parse(await (await call("POST", answers, s.learner, textAnswer(opened.run.id, pieter!.id, "goedemorgen wat wilt u hebben"))).json());
+    expect(graded).toMatchObject({ correct: true, reference: PIETER_LINE });
+    const done = await patch(s, opened, { action: "complete" });
+    expect(done.status).toBe(200);
+    expect(activityRunPatchResponseSchema.parse(await done.json()).run).toMatchObject({ status: "completed", reader: "Pieter" });
+    // A fresh read of the activity keeps the reader.
+    const polled = activityStatusResponseSchema.parse(await (await call("GET", `${s.base}/${opened.activity.id}`, s.learner)).json());
+    expect(polled.status === "ready" && polled.run.reader).toBe("Pieter");
   });
 
-  it("fails a speak from English line-count mismatch as ACTIVITY_OUTPUT_INVALID", async () => {
+  it("refuses a reader the dialogue does not name, and a reader for another activity type", async () => {
     const s = await setup();
-    const failed = await openSpeaking(s, "speak_from_english", scriptedAi([say(english(2))]));
-    expect(failed.status).toBe(503);
-    expect(await errorCode(failed)).toBe("ACTIVITY_GENERATION_FAILED");
-    expect(logged("lesson_activity.output_invalid")).toEqual([expect.objectContaining({ type: "speak_from_english", reason: "schema" })]);
-    expect(await countRows("SELECT COUNT(*) AS n FROM lesson_activities WHERE activity_type = 'speak_from_english' AND status = 'failed'")).toBe(1);
+    const opened = await readyOpen(await openStory(s, "read_aloud"));
+    expect(await errorCode(await patch(s, opened, { action: "set_reader", reader: "Daan" }))).toBe("ACTIVITY_READER_INVALID");
+    const words = await readyOpen(await openStory(s, "review_words"));
+    expect(await errorCode(await patch(s, words, { action: "set_reader", reader: "Sofia" }))).toBe("ACTIVITY_ACTION_INVALID");
+    // Another account cannot set the reader of this run: it has no run of its own here.
+    expect(await errorCode(await patch(s, opened, { action: "set_reader", reader: "Sofia" }, s.rival))).toBe("ACTIVITY_RUN_NOT_FOUND");
+  });
+
+  it("names the section's words in review words and completes without answers", async () => {
+    const s = await setup();
+    const opened = await readyOpen(await openStory(s, "review_words", scriptedAi([])));
+    expect(opened.activity.generatedBy).toBeNull();
+    const payload = opened.activity.payload;
+    if (payload.type !== "review_words") throw new Error("Expected review words.");
+    expect(payload.wordIds).toHaveLength(2);
+    const done = await patch(s, opened, { action: "complete" });
+    expect(done.status).toBe(200);
+    const listed = activityDescriptorListResponseSchema.parse(await (await call("GET", s.base, s.learner)).json());
+    expect(listed.completed).toEqual([expect.objectContaining({ sourceId: s.ids.story, type: "review_words", correct: null, total: null })]);
+  });
+
+  it("drills only the section's words for a review-words deck, and refuses a section outside a lesson drill", async () => {
+    const s = await setup();
+    const deck = async (query: string) => call("GET", `/api/groups/${s.groupId}/word-drill?${query}`, s.learner);
+    const section = await deck(`source=lesson&lessonId=${s.lessonId}&section=${encodeURIComponent(s.ids.story)}&direction=understand`);
+    expect(section.status).toBe(200);
+    const cards = (await section.json() as { cards: Array<{ word: { term: string } }> }).cards.map((card) => card.word.term).sort();
+    expect(cards).toEqual(["bakker", "vroeg"]);
+    const unknown = await deck(`source=lesson&lessonId=${s.lessonId}&section=nope&direction=understand`);
+    expect((await unknown.json() as { cards: unknown[] }).cards).toEqual([]);
+    expect(await errorCode(await deck(`source=weak&section=${encodeURIComponent(s.ids.story)}`))).toBe("INVALID_DRILL");
+    expect(await errorCode(await deck(`source=lesson&lessonId=${s.lessonId}&batch=1&section=${encodeURIComponent(s.ids.story)}`))).toBe("INVALID_DRILL");
   });
 });
 
@@ -973,7 +794,7 @@ describe("daily AI cap", () => {
 
     await writeAiSettings(env.DB, { ...DEFAULT_AI_SETTINGS, dailyTurnCap: 0 });
     const none = scriptedAi([]);
-    const miss = await openActivity(s.learner, s.base, s.descriptor(s.ids.story), "story_comprehension", none);
+    const miss = await openActivity(s.learner, s.base, s.descriptor(s.ids.summary), "mixed_practice", none);
     expect(miss.status).toBe(429);
     expect(await errorCode(miss)).toBe("AI_DAILY_LIMIT");
     expect(none.calls).toHaveLength(0);
@@ -986,7 +807,7 @@ describe("daily AI cap", () => {
   });
 });
 
-describe("dialogue speech", () => {
+describe("read-aloud speech", () => {
   const LONG_LINE = Array.from({ length: 12 }, (_, index) => `Dit is zin nummer ${index + 1} van de lange regel.`).join(" ");
   // Dutch voices in list order are the narrator Fenna, then Colette and Maarten. Sofia, the first speaker without a cast entry,
   // takes Colette. Pieter's cast entry (Fenna) decides his voice, not his position (Maarten).
@@ -1016,16 +837,15 @@ describe("dialogue speech", () => {
     MEDIA: media as unknown as R2Bucket,
   });
   const clipUrl = (hash: string) => `https://wordinator.test/api/media/speech/${hash}.mp3`;
-  const speakBody = (opened: Ready, turnId: string, chunkIndex?: number) => ({ runId: opened.run.id, turnId, ...(chunkIndex === undefined ? {} : { chunkIndex }) });
+  const speakBody = (opened: Ready, lineId: string, chunkIndex?: number) => ({ runId: opened.run.id, lineId, ...(chunkIndex === undefined ? {} : { chunkIndex }) });
   const turnNamed = (opened: Ready, speaker: string) => {
     const payload = opened.activity.payload;
-    const turn = payload.type === "roleplay" ? payload.turns.find((candidate) => candidate.speaker === speaker) : undefined;
-    if (!turn) throw new Error(`No turn by ${speaker}`);
-    return turn;
+    const line = payload.type === "read_aloud" ? payload.lines.find((candidate) => candidate.speaker === speaker) : undefined;
+    if (!line) throw new Error(`No line by ${speaker}`);
+    return line;
   };
-  async function openRoleplay(s: Setup) {
-    const source = s.descriptor(s.ids.dialogue);
-    return readyOpen(await openActivity(s.learner, s.base, source, "roleplay", scriptedAi([say(roleplay())])));
+  async function openReadAloud(s: Setup, cookie = s.learner) {
+    return readyOpen(await openActivity(cookie, s.base, s.descriptor(s.ids.story), "read_aloud"));
   }
   async function castPieterAsNarrator(courseId: string) {
     await env.DB.prepare("UPDATE courses SET speech_cast = ? WHERE id = ?").bind(JSON.stringify({ Pieter: FENNA }), courseId).run();
@@ -1033,10 +853,10 @@ describe("dialogue speech", () => {
 
   afterEach(() => vi.restoreAllMocks());
 
-  it("speaks a partner line in its course cast voice and serves the clip under the lesson's cache key", async () => {
+  it("speaks another speaker's line in its course cast voice and serves the clip under the lesson's cache key", async () => {
     const s = await setup();
     await castPieterAsNarrator(s.courseId);
-    const opened = await openRoleplay(s);
+    const opened = await openReadAloud(s);
     const bodies = stubAzure();
     const media = fakeMedia();
     const response = await call("POST", SPEAK(s.base, opened.activity.id), s.learner, speakBody(opened, turnNamed(opened, "Pieter").id), withSpeech(true, media));
@@ -1049,10 +869,10 @@ describe("dialogue speech", () => {
     expect(media.keys).toEqual([`speech/${hash}.mp3`]);
   });
 
-  it("speaks Sofia's reference line in her positional cast voice", async () => {
+  it("speaks a line without a cast entry in its speaker's positional cast voice", async () => {
     const s = await setup();
     await castPieterAsNarrator(s.courseId);
-    const opened = await openRoleplay(s);
+    const opened = await openReadAloud(s);
     const bodies = stubAzure();
     const response = await call("POST", SPEAK(s.base, opened.activity.id), s.learner, speakBody(opened, turnNamed(opened, "Sofia").id), withSpeech());
     const hash = await speechClipHash({ voice: COLETTE, text: SOFIA_LINE, ipa: null });
@@ -1063,7 +883,7 @@ describe("dialogue speech", () => {
   it("serves a repeated request from the cache, and a clip the lesson already holds, without synthesizing again", async () => {
     const s = await setup();
     await castPieterAsNarrator(s.courseId);
-    const opened = await openRoleplay(s);
+    const opened = await openReadAloud(s);
     const bodies = stubAzure();
     const media = fakeMedia();
     const body = speakBody(opened, turnNamed(opened, "Pieter").id);
@@ -1089,7 +909,7 @@ describe("dialogue speech", () => {
   it("speaks a long line one part at a time, never whole or truncated", async () => {
     const s = await setup({ partner: LONG_LINE });
     await castPieterAsNarrator(s.courseId);
-    const opened = await openRoleplay(s);
+    const opened = await openReadAloud(s);
     const parts = speechChunks(LONG_LINE);
     expect(parts.length).toBeGreaterThan(1);
     const bodies = stubAzure();
@@ -1109,7 +929,7 @@ describe("dialogue speech", () => {
 
   it("refuses a chunk index on a short line that has only one part", async () => {
     const s = await setup();
-    const opened = await openRoleplay(s);
+    const opened = await openReadAloud(s);
     const response = await call("POST", SPEAK(s.base, opened.activity.id), s.learner, speakBody(opened, turnNamed(opened, "Sofia").id, 1), withSpeech());
     expect(response.status).toBe(400);
     expect(await errorCode(response)).toBe("ACTIVITY_CHUNK_INVALID");
@@ -1118,7 +938,7 @@ describe("dialogue speech", () => {
   it("answers 202 with a retry hint while another request holds the clip", async () => {
     const s = await setup();
     await castPieterAsNarrator(s.courseId);
-    const opened = await openRoleplay(s);
+    const opened = await openReadAloud(s);
     const bodies = stubAzure();
     const hash = await speechClipHash({ voice: FENNA, text: PIETER_LINE, ipa: null });
     const now = Date.now();
@@ -1133,7 +953,7 @@ describe("dialogue speech", () => {
   it("answers 503 SPEECH_FAILED when synthesis fails, and counts the attempt", async () => {
     const s = await setup();
     await castPieterAsNarrator(s.courseId);
-    const opened = await openRoleplay(s);
+    const opened = await openReadAloud(s);
     const bodies = stubAzure(500);
     const response = await call("POST", SPEAK(s.base, opened.activity.id), s.learner, speakBody(opened, turnNamed(opened, "Pieter").id), withSpeech());
     expect(response.status).toBe(503);
@@ -1146,7 +966,7 @@ describe("dialogue speech", () => {
 
   it("refuses audio past the daily character cap before the clip is looked up", async () => {
     const s = await setup();
-    const opened = await openRoleplay(s);
+    const opened = await openReadAloud(s);
     await writeAiSettings(env.DB, { ...DEFAULT_AI_SETTINGS, dailySpeechCharCap: 5 });
     const bodies = stubAzure();
     const response = await call("POST", SPEAK(s.base, opened.activity.id), s.learner, speakBody(opened, turnNamed(opened, "Pieter").id), withSpeech());
@@ -1155,79 +975,38 @@ describe("dialogue speech", () => {
     expect(bodies).toHaveLength(0);
   });
 
-  it("answers 503 SPEECH_UNAVAILABLE without an Azure key, after the turn is checked", async () => {
+  it("answers 503 SPEECH_UNAVAILABLE without an Azure key, after the line is checked", async () => {
     const s = await setup();
-    const opened = await openRoleplay(s);
+    const opened = await openReadAloud(s);
     const bodies = stubAzure();
     const path = SPEAK(s.base, opened.activity.id);
     const unconfigured = await call("POST", path, s.learner, speakBody(opened, turnNamed(opened, "Pieter").id), withSpeech(false));
     expect(unconfigured.status).toBe(503);
     expect(await errorCode(unconfigured)).toBe("SPEECH_UNAVAILABLE");
-    expect(await errorCode(await call("POST", path, s.learner, speakBody(opened, uuid()), withSpeech(false)))).toBe("ACTIVITY_TURN_NOT_FOUND");
+    expect(await errorCode(await call("POST", path, s.learner, speakBody(opened, uuid()), withSpeech(false)))).toBe("ACTIVITY_LINE_NOT_FOUND");
     expect(bodies).toHaveLength(0);
   });
 
-  it("answers 404 ACTIVITY_TURN_NOT_FOUND for a turn ID the activity does not contain", async () => {
+  it("answers 404 ACTIVITY_TURN_NOT_FOUND for a line ID the activity does not contain", async () => {
     const s = await setup();
-    const opened = await openRoleplay(s);
+    const opened = await openReadAloud(s);
     const response = await call("POST", SPEAK(s.base, opened.activity.id), s.learner, speakBody(opened, uuid()), withSpeech());
     expect(response.status).toBe(404);
-    expect(await errorCode(response)).toBe("ACTIVITY_TURN_NOT_FOUND");
+    expect(await errorCode(response)).toBe("ACTIVITY_LINE_NOT_FOUND");
   });
 
-  it("refuses speech for an activity that is not a role-play", async () => {
+  it("refuses speech for an activity that is not read aloud", async () => {
     const s = await setup();
     const q = tricky();
     const opened = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "tricky_grammar", scriptedAi([say(q.json)])));
-    const response = await call("POST", SPEAK(s.base, opened.activity.id), s.learner, { runId: opened.run.id, turnId: uuid() }, withSpeech());
+    const response = await call("POST", SPEAK(s.base, opened.activity.id), s.learner, { runId: opened.run.id, lineId: uuid() }, withSpeech());
     expect(response.status).toBe(400);
     expect(await errorCode(response)).toBe("ACTIVITY_ACTION_INVALID");
   });
 
-  it("speaks read aloud lines in the narrator voice, with usage recorded, and names unknown lines", async () => {
-    const s = await setup();
-    const opened = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.story), "read_aloud", scriptedAi([])));
-    const payload = opened.activity.payload;
-    if (payload.type !== "read_aloud") throw new Error("Expected read aloud.");
-    const bodies = stubAzure();
-    const path = SPEAK(s.base, opened.activity.id);
-    const line = payload.lines.find((candidate) => candidate.speaker === null)!;
-    const response = await call("POST", path, s.learner, { runId: opened.run.id, lineId: line.id }, withSpeech());
-    expect(response.status).toBe(200);
-    const hash = await speechClipHash({ voice: FENNA, text: line.dutchText, ipa: null });
-    expect(await response.json()).toEqual({ status: "ready", url: clipUrl(hash) });
-    expect(bodies[0]).toContain(`<voice name="${FENNA}">`);
-    expect(await env.DB.prepare("SELECT surface FROM speech_usage").all().then((r) => r.results)).toEqual([{ surface: "lesson_activity" }]);
-    expect(await errorCode(await call("POST", path, s.learner, { runId: opened.run.id, lineId: uuid() }, withSpeech()))).toBe("ACTIVITY_LINE_NOT_FOUND");
-    expect((await call("POST", path, s.learner, { runId: opened.run.id, turnId: line.id }, withSpeech())).status).toBe(404);
-  });
-
-  it("voices a speak from English line by its speaker's cast voice", async () => {
-    const s = await setup();
-    await castPieterAsNarrator(s.courseId);
-    const english = JSON.stringify({ lines: Array.from({ length: 3 }, (_, index) => ({ index, englishText: `English ${index}` })), metrics: ["speaking"] });
-    const opened = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.story), "speak_from_english", scriptedAi([say(english)])));
-    const payload = opened.activity.payload;
-    if (payload.type !== "speak_from_english") throw new Error("Expected speak from English.");
-    const bodies = stubAzure();
-    const line = payload.lines.find((candidate) => candidate.speaker === "Pieter")!;
-    const response = await call("POST", SPEAK(s.base, opened.activity.id), s.learner, { runId: opened.run.id, lineId: line.id }, withSpeech());
-    const hash = await speechClipHash({ voice: FENNA, text: PIETER_LINE, ipa: null });
-    expect(await response.json()).toEqual({ status: "ready", url: clipUrl(hash) });
-    expect(bodies).toHaveLength(1);
-    const anonymous = await call("POST", SPEAK(s.base, opened.activity.id), null, { runId: opened.run.id, lineId: line.id }, withSpeech());
-    expect(anonymous.status).toBe(401);
-    const incomplete = await call("POST", SPEAK(s.base, opened.activity.id), s.newcomer, { runId: opened.run.id, lineId: line.id }, withSpeech());
-    expect(incomplete.status).toBe(403);
-    const unpublished = await call("POST", `/api/courses/${s.courseId}/lessons/${s.unpublishedId}/activities/${opened.activity.id}/speech`, s.learner, { runId: opened.run.id, lineId: line.id }, withSpeech());
-    expect(unpublished.status).toBe(404);
-    const hidden = await call("POST", `/api/courses/${s.draftCourseId}/lessons/${s.hiddenLessonId}/activities/${opened.activity.id}/speech`, s.learner, { runId: opened.run.id, lineId: line.id }, withSpeech());
-    expect(hidden.status).toBe(404);
-  });
-
   it("refuses a hidden, unpublished, mismatched, or stranger's request before reading the activity", async () => {
     const s = await setup();
-    const opened = await openRoleplay(s);
+    const opened = await openReadAloud(s);
     const body = speakBody(opened, turnNamed(opened, "Pieter").id);
     const bodies = stubAzure();
     expect(await errorCode(await call("POST", `/api/courses/${s.courseId}/lessons/${s.unpublishedId}/activities/${opened.activity.id}/speech`, s.learner, body, withSpeech()))).toBe("LESSON_NOT_FOUND");
@@ -1240,14 +1019,14 @@ describe("dialogue speech", () => {
 
   it("refuses another account's run, and accepts the account's own run on the same activity", async () => {
     const s = await setup();
-    const opened = await openRoleplay(s);
-    const rivalOpened = await readyOpen(await openActivity(s.rival, s.base, s.descriptor(s.ids.dialogue), "roleplay"));
-    const turnId = turnNamed(opened, "Pieter").id;
-    const denied = await call("POST", SPEAK(s.base, opened.activity.id), s.rival, { runId: opened.run.id, turnId }, withSpeech());
+    const opened = await openReadAloud(s);
+    const rivalOpened = await openReadAloud(s, s.rival);
+    const lineId = turnNamed(opened, "Pieter").id;
+    const denied = await call("POST", SPEAK(s.base, opened.activity.id), s.rival, { runId: opened.run.id, lineId }, withSpeech());
     expect(denied.status).toBe(404);
     expect(await errorCode(denied)).toBe("ACTIVITY_RUN_NOT_FOUND");
     const bodies = stubAzure();
-    const own = await call("POST", SPEAK(s.base, opened.activity.id), s.rival, { runId: rivalOpened.run.id, turnId }, withSpeech());
+    const own = await call("POST", SPEAK(s.base, opened.activity.id), s.rival, { runId: rivalOpened.run.id, lineId }, withSpeech());
     expect(own.status).toBe(200);
     expect(bodies).toHaveLength(1);
   });
@@ -1255,18 +1034,18 @@ describe("dialogue speech", () => {
   it("serves ready audio to an archived course without a run, and makes no new audio there", async () => {
     const s = await setup();
     await castPieterAsNarrator(s.courseId);
-    const opened = await openRoleplay(s);
+    const opened = await openReadAloud(s);
     const bodies = stubAzure();
     const pieter = turnNamed(opened, "Pieter").id;
     const warm = await call("POST", SPEAK(s.base, opened.activity.id), s.learner, speakBody(opened, pieter), withSpeech());
     const warmBody = await warm.json();
     await env.DB.prepare("UPDATE courses SET status = 'archived' WHERE id = ?").bind(s.courseId).run();
     // An archived course is visible to its owner, who has no run of this activity, so the read-only path answers from the cache.
-    const readOnly = await call("POST", SPEAK(s.base, opened.activity.id), s.owner, { runId: crypto.randomUUID(), turnId: pieter }, withSpeech());
+    const readOnly = await call("POST", SPEAK(s.base, opened.activity.id), s.owner, { runId: crypto.randomUUID(), lineId: pieter }, withSpeech());
     expect(readOnly.status).toBe(200);
     expect(await readOnly.json()).toEqual(warmBody);
     // Audio that is not made yet is not made for an archived course.
-    const fresh = await call("POST", SPEAK(s.base, opened.activity.id), s.owner, { runId: crypto.randomUUID(), turnId: turnNamed(opened, "Sofia").id }, withSpeech());
+    const fresh = await call("POST", SPEAK(s.base, opened.activity.id), s.owner, { runId: crypto.randomUUID(), lineId: turnNamed(opened, "Sofia").id }, withSpeech());
     expect(fresh.status).toBe(409);
     expect(await errorCode(fresh)).toBe("ACTIVITY_READ_ONLY");
     expect(bodies).toHaveLength(1);

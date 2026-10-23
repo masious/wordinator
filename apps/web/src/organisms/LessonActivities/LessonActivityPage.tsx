@@ -4,7 +4,7 @@ import { useEffect, useState, type KeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { ArrowLeft } from "lucide-react";
 import {
-  activityRunPatchResponseSchema, lessonActivityFocus,
+  activityRunPatchResponseSchema, lessonActivityFocus, readerLines,
   type ActivityDescriptor, type ActivityMetricChange, type ActivityType, type LessonActivityRun, type LessonActivityViewPayload,
 } from "@wordinator/contracts/lesson-activities";
 import { ProgressMeter } from "../../molecules/ProgressMeter";
@@ -20,15 +20,13 @@ import { ActivityCompletion, lessonTarget } from "./ActivityCompletion";
 import { suggestedActivities } from "./activitySuggestions";
 import { AnswerResult, ChoiceOptions, CorrectBadge } from "./ChoiceOptions";
 import { GuidedGrammarActivity } from "./GuidedGrammarActivity";
+import { EmbeddedWordDrill } from "../../pages/WordDrillPage";
 import { ReadAloudActivity } from "./ReadAloudActivity";
-import { RoleplayActivity } from "./RoleplayActivity";
-import { SpeakFromEnglishActivity } from "./SpeakFromEnglishActivity";
-import { SummaryActivity } from "./SummaryActivity";
 import styles from "./LessonActivity.module.css";
 
 export type LessonActivityPageProps = {
   groupId: string; courseId: string; courseSlug: string; lessonId: string; lessonSlug: string; lessonTitle: string; accountId: string;
-  // The library language (`nl` or `de`), for the microphone of role-play.
+  // The library language (`nl` or `de`), for the microphone of read aloud and review words.
   language?: string | undefined;
   // Null when the URL names no known activity type; the page then shows the unavailable state.
   type: ActivityType | null; sourceId: string; archived: boolean;
@@ -37,8 +35,7 @@ export type LessonActivityPageProps = {
 type ReadyActivity = Extract<LessonActivityOpenResponse, { status: "ready" }>;
 type Payload = LessonActivityViewPayload;
 type Question = Extract<Payload, { type: "tricky_grammar" }>["questions"][number];
-type CueMode = LessonActivityRun["cueMode"];
-type RunAction = { action: "set_cue_mode"; cueMode: CueMode } | { action: "continue"; expectedCursor: number } | { action: "complete" } | { action: "restart" };
+type RunAction = { action: "set_reader"; reader: string | null } | { action: "continue"; expectedCursor: number } | { action: "complete" } | { action: "restart" };
 
 // How long a generation may take before the page offers Retry instead of polling on (docs/lesson-activities.md#shared-cached-content).
 export const GENERATION_WAIT_MS = 60_000;
@@ -104,15 +101,14 @@ export function LessonActivityPage(props: LessonActivityPageProps) {
     },
   });
 
-  useLearningClaim(ready && run && payload && !ready.ephemeral && !props.archived && run.status !== "completed"
+  // Review words is timed by its drill, as drill time, so the page claims nothing for it (docs/learning-time.md).
+  useLearningClaim(ready && run && payload && payload.type !== "review_words" && !ready.ephemeral && !props.archived && run.status !== "completed"
     ? { groupId: props.groupId, target: () => ({ activity: "lesson_activity", courseId: props.courseId, lessonId: props.lessonId, activityId: ready.activity.id, focus: lessonActivityFocus(payload.type) }) }
     : null);
 
-  const items: Question[] = payload?.type === "story_comprehension" || payload?.type === "tricky_grammar" || payload?.type === "mixed_practice" ? payload.questions : [];
-  const learnerTurns = payload?.type === "roleplay" ? payload.turns.filter((turn) => turn.isLearner) : [];
-  const total = payload?.type === "roleplay" ? learnerTurns.length
-    : payload?.type === "guided_grammar" ? payload.steps.length
-      : payload?.type === "read_aloud" || payload?.type === "speak_from_english" ? payload.lines.length : items.length;
+  const items: Question[] = payload?.type === "tricky_grammar" || payload?.type === "mixed_practice" ? payload.questions : [];
+  const total = payload?.type === "read_aloud" ? readerLines(payload.lines, run?.reader ?? null).length
+    : payload?.type === "guided_grammar" ? payload.steps.length : items.length;
   const cursor = run?.cursor ?? 0;
   const completed = run?.status === "completed";
   const keyFor = (itemId: string) => run && ready ? draftKey(props.accountId, ready.activity.id, run.id, itemId) : null;
@@ -158,8 +154,8 @@ export function LessonActivityPage(props: LessonActivityPageProps) {
     <header className={styles.header}>
       <span className={styles.eyebrow}>{props.lessonTitle} · {ready.activity.sourceLabel}</span>
       <h1 className={styles.title}>{t(`lessonActivities.types.${ready.activity.payload.type}`)}</h1>
-      {/* The model behind the shared content; read aloud comes straight from the lesson, so it names none. */}
-      {ready.activity.payload.type !== "read_aloud" && <span className={styles.model}>
+      {/* The model behind the shared content; read aloud and review words come straight from the lesson, so they name none. */}
+      {ready.activity.payload.type !== "read_aloud" && ready.activity.payload.type !== "review_words" && <span className={styles.model}>
         {ready.activity.generatedBy ? t("lessonActivities.generatedBy", { model: ready.activity.generatedBy }) : t("lessonActivities.generatedByUnknown")}
       </span>}
       {total > 0 && <ProgressMeter value={completed ? 100 : (100 * cursor) / total} label={t("lessonActivities.progress", { current: Math.min(cursor + 1, total), total })} showLabel />}
@@ -169,17 +165,14 @@ export function LessonActivityPage(props: LessonActivityPageProps) {
       ? <ActivityCompletion courseSlug={props.courseSlug} lessonSlug={props.lessonSlug} lessonLabel={props.lessonTitle} descriptors={descriptors.data.descriptors}
         descriptor={descriptor} completed={descriptors.data.completed} followUps={payload?.type === "guided_grammar" ? payload.followUps : undefined} metrics={completionMetrics}
         restarting={patchRun.isPending} onRestart={restart} />
-      : payload?.type === "story_summary" ? <SummaryActivity payload={payload} completing={patchRun.isPending} onComplete={() => patchRun.mutate({ action: "complete" })} />
       : payload?.type === "guided_grammar" && run ? <GuidedGrammarActivity endpoint={endpoint} runId={run.id} steps={payload.steps} cursor={cursor}
         advancing={patchRun.isPending} onContinue={() => advance()} onComplete={() => patchRun.mutate({ action: "complete" })} />
-      : (payload?.type === "read_aloud" || payload?.type === "speak_from_english") && run ? (() => {
-        const common = { groupId: props.groupId, language: props.language, endpoint, runId: run.id, cursor, advancing: patchRun.isPending, onContinue: () => advance(),
-          backToLesson: <Link className={styles.back} {...lessonTarget(props, descriptor)}>{t("lessonActivities.backToLesson")}</Link> };
-        return payload.type === "read_aloud" ? <ReadAloudActivity {...common} lines={payload.lines} /> : <SpeakFromEnglishActivity {...common} lines={payload.lines} />;
-      })()
-      : payload?.type === "roleplay" && run ? <RoleplayActivity groupId={props.groupId} language={props.language} endpoint={endpoint} runId={run.id} turns={payload.turns}
-        cursor={cursor} cueMode={run.cueMode} keyFor={keyFor} advancing={patchRun.isPending} onCueMode={(cueMode) => patchRun.mutate({ action: "set_cue_mode", cueMode })}
+      : payload?.type === "read_aloud" && run ? <ReadAloudActivity groupId={props.groupId} language={props.language} endpoint={endpoint} runId={run.id} lines={payload.lines}
+        cursor={cursor} reader={run.reader} choosing={cursor === 0} advancing={patchRun.isPending} onChooseReader={(reader) => patchRun.mutateAsync({ action: "set_reader", reader })}
         onContinue={() => advance()} backToLesson={<Link className={styles.back} {...lessonTarget(props, descriptor)}>{t("lessonActivities.backToLesson")}</Link>} />
+      : payload?.type === "review_words" && run ? <EmbeddedWordDrill groupId={props.groupId} accountId={props.accountId} libraryLanguage={props.language}
+        settings={{ source: "lesson", lesson: props.lessonId, section: props.sourceId, direction: "mixed" }} backLabel={t("lessonActivities.backToLesson")}
+        onBack={() => void navigate(lessonTarget(props, descriptor))} onFinished={() => { if (!ready.ephemeral) patchRun.mutate({ action: "complete" }); }} />
       : items[cursor] && run ? <ActivityItem key={items[cursor].id} endpoint={endpoint} runId={run.id} item={items[cursor]} draftKey={items[cursor].kind === "fill_in" ? keyFor(items[cursor].id) : null}
         last={cursor + 1 >= items.length} advancing={patchRun.isPending} onContinue={() => advance()} />
       : <Surface className={styles.panel}><p>{t("lessonActivities.unavailable")}</p><Button onClick={() => { setOpened(null); void open(); }}>{t("common.retry")}</Button></Surface>}

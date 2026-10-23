@@ -48,7 +48,7 @@ type ActivityRow = {
 // Defaults to a ready row with a payload; tests override the fields they check.
 function insertActivity(db: D1Database, scope: Scope, row: Partial<ActivityRow> = {}) {
   const full: ActivityRow = {
-    id: uuid(), cacheKey: uuid(), status: "ready", activityType: "story_summary", language: "nl",
+    id: uuid(), cacheKey: uuid(), status: "ready", activityType: "tricky_grammar", language: "nl",
     leaseToken: null, leaseExpiresAt: null, payload: '{"items":[]}', ...row,
   };
   return db.prepare(
@@ -57,12 +57,14 @@ function insertActivity(db: D1Database, scope: Scope, row: Partial<ActivityRow> 
   ).bind(full.id, scope.lessonId, scope.courseId, full.activityType, full.language, full.cacheKey, full.status, full.leaseToken, full.leaseExpiresAt, full.payload, now, now);
 }
 
-type RunRow = { id: string; cursor: number; cueMode: string; status: string; completedAt: number | null };
+// Runs before 0045 had a defaulted cue_mode and no reader, so a run row names neither unless a test sets the reader.
+type RunRow = { id: string; cursor: number; status: string; completedAt: number | null; reader?: string };
 function insertRun(db: D1Database, activityId: string, userId: string, row: Partial<RunRow> = {}) {
-  const full: RunRow = { id: uuid(), cursor: 0, cueMode: "english", status: "active", completedAt: null, ...row };
+  const full: RunRow = { id: uuid(), cursor: 0, status: "active", completedAt: null, ...row };
+  const reader = full.reader === undefined ? [] : [full.reader];
   return db.prepare(
-    "INSERT INTO lesson_activity_runs (id, activity_id, user_id, cursor, cue_mode, status, started_at, updated_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-  ).bind(full.id, activityId, userId, full.cursor, full.cueMode, full.status, now, now, full.completedAt);
+    `INSERT INTO lesson_activity_runs (id, activity_id, user_id, cursor, status, started_at, updated_at, completed_at${reader.length ? ", reader" : ""}) VALUES (?, ?, ?, ?, ?, ?, ?, ?${reader.length ? ", ?" : ""})`,
+  ).bind(full.id, activityId, userId, full.cursor, full.status, now, now, full.completedAt, ...reader);
 }
 
 type AnswerRow = { id: string; idempotencyKey: string; inputMode: string; correct: number; matched: number };
@@ -153,9 +155,10 @@ describe("Migration 0036 tables", () => {
       "generated_by",
     ]);
     const runs = await columns("lesson_activity_runs");
-    expect(runs.map((column) => column.name)).toEqual(["id", "activity_id", "user_id", "cursor", "cue_mode", "status", "started_at", "updated_at", "completed_at", "metrics_before"]);
+    // 0045 replaced cue_mode with reader.
+    expect(runs.map((column) => column.name)).toEqual(["id", "activity_id", "user_id", "cursor", "reader", "status", "started_at", "updated_at", "completed_at", "metrics_before"]);
     expect(Object.fromEntries(runs.filter((column) => column.dflt_value !== null).map((column) => [column.name, column.dflt_value]))).toEqual({
-      cursor: "0", cue_mode: "'english'", status: "'active'",
+      cursor: "0", status: "'active'",
     });
     expect((await columns("lesson_activity_answers")).map((column) => column.name)).toEqual([
       "id", "run_id", "item_id", "idempotency_key", "answer", "input_mode", "correct", "matched", "reference", "pronunciation_json", "created_at",
@@ -217,7 +220,7 @@ describe("lesson activity cache rows", () => {
     const lib = await seedLibrary(env.DB);
     await expect(insertActivity(env.DB, lib, { activityType: "quiz" }).run()).rejects.toThrow(/CHECK/);
     await expect(insertActivity(env.DB, lib, { language: "fr" }).run()).rejects.toThrow(/CHECK/);
-    await insertActivity(env.DB, lib, { activityType: "roleplay", language: "de" }).run();
+    await insertActivity(env.DB, lib, { activityType: "read_aloud", language: "de" }).run();
   });
 });
 
@@ -243,16 +246,15 @@ describe("runs, answers, and reservations", () => {
     await insertAnswer(env.DB, otherRunId, { idempotencyKey: key }).run();
   });
 
-  it("checks run values: cue mode, status, completion pairing, and cursor", async () => {
+  it("checks run values: status, completion pairing, and cursor", async () => {
     const lib = await seedLibrary(env.DB);
     const activityId = uuid();
     await insertActivity(env.DB, lib, { id: activityId }).run();
-    await expect(insertRun(env.DB, activityId, lib.learner, { cueMode: "german" }).run()).rejects.toThrow(/CHECK/);
     await expect(insertRun(env.DB, activityId, lib.learner, { status: "paused" }).run()).rejects.toThrow(/CHECK/);
     await expect(insertRun(env.DB, activityId, lib.learner, { status: "completed", completedAt: null }).run()).rejects.toThrow(/CHECK/);
     await expect(insertRun(env.DB, activityId, lib.learner, { status: "active", completedAt: now }).run()).rejects.toThrow(/CHECK/);
     await expect(insertRun(env.DB, activityId, lib.learner, { cursor: -1 }).run()).rejects.toThrow(/CHECK/);
-    await insertRun(env.DB, activityId, lib.learner, { cueMode: "dutch", status: "completed", completedAt: now }).run();
+    await insertRun(env.DB, activityId, lib.learner, { reader: "Pieter", status: "completed", completedAt: now }).run();
   });
 
   it("checks answer values: input mode and boolean flags", async () => {
@@ -369,10 +371,12 @@ describe("Migration 0038 lesson activity v2", () => {
     ]));
   });
 
-  it("rejects the retired quick_grammar type and admits the nine v2 types", async () => {
+  it("rejects every retired type and admits the five current ones (0045)", async () => {
     const lib = await seedLibrary(env.DB);
-    await expect(insertActivity(env.DB, lib, { activityType: "quick_grammar" }).run()).rejects.toThrow(/CHECK/);
-    for (const activityType of ["story_summary", "story_comprehension", "grammar_explanation", "tricky_grammar", "mixed_practice", "roleplay", "guided_grammar", "read_aloud", "speak_from_english"]) {
+    for (const activityType of ["quick_grammar", "story_summary", "story_comprehension", "grammar_explanation", "roleplay", "speak_from_english"]) {
+      await expect(insertActivity(env.DB, lib, { activityType }).run()).rejects.toThrow(/CHECK/);
+    }
+    for (const activityType of ["tricky_grammar", "mixed_practice", "guided_grammar", "read_aloud", "review_words"]) {
       await insertActivity(env.DB, lib, { activityType }).run();
     }
   });
@@ -413,5 +417,64 @@ describe("Migration 0042 retiring grammar explanation", () => {
     expect(runs.results.map((row) => row.id)).toEqual([storyRun]);
     const payload = await legacy.prepare("SELECT payload FROM lesson_activities WHERE id = ?").bind(guided).first<string>("payload");
     expect(JSON.parse(payload!)).toEqual({ type: "guided_grammar", steps: [], followUps: ["tricky_grammar"] });
+  });
+});
+
+describe("Migration 0044 retiring story comprehension", () => {
+  it("deletes story comprehension activities with their runs and keeps the other story activities", async () => {
+    await applyD1Migrations(legacy, migrations.filter((migration) => migration.name < "0044_"));
+    const lib = await seedLibrary(legacy);
+    const [comprehension, summary] = [uuid(), uuid()];
+    const [comprehensionRun, summaryRun] = [uuid(), uuid()];
+    await legacy.batch([
+      insertActivity(legacy, lib, { id: comprehension, activityType: "story_comprehension" }),
+      insertActivity(legacy, lib, { id: summary, activityType: "story_summary" }),
+      insertRun(legacy, comprehension, lib.learner, { id: comprehensionRun }),
+      insertRun(legacy, summary, lib.learner, { id: summaryRun }),
+    ]);
+
+    await applyD1Migrations(legacy, migrations.filter((migration) => migration.name.startsWith("0044_")));
+
+    const ids = await legacy.prepare("SELECT id FROM lesson_activities").all<{ id: string }>();
+    expect(ids.results.map((row) => row.id)).toEqual([summary]);
+    const runs = await legacy.prepare("SELECT id FROM lesson_activity_runs").all<{ id: string }>();
+    expect(runs.results.map((row) => row.id)).toEqual([summaryRun]);
+  });
+});
+
+describe("Migration 0045 dialogue section activities", () => {
+  it("keeps grammar and mixed practice rows with their runs and answers, and deletes the retired story and role-play types", async () => {
+    await applyD1Migrations(legacy, migrations.filter((migration) => migration.name < "0045_"));
+    const lib = await seedLibrary(legacy);
+    const kept = { guided: uuid(), tricky: uuid(), mixed: uuid() };
+    const retired = { summary: uuid(), roleplay: uuid(), speak: uuid(), read: uuid() };
+    const [keptRun, retiredRun, keptAnswer, retiredAnswer] = [uuid(), uuid(), uuid(), uuid()];
+    await legacy.batch([
+      insertActivity(legacy, lib, { id: kept.guided, activityType: "guided_grammar" }),
+      insertActivity(legacy, lib, { id: kept.tricky, activityType: "tricky_grammar" }),
+      insertActivity(legacy, lib, { id: kept.mixed, activityType: "mixed_practice" }),
+      insertActivity(legacy, lib, { id: retired.summary, activityType: "story_summary" }),
+      insertActivity(legacy, lib, { id: retired.roleplay, activityType: "roleplay" }),
+      insertActivity(legacy, lib, { id: retired.speak, activityType: "speak_from_english" }),
+      insertActivity(legacy, lib, { id: retired.read, activityType: "read_aloud" }),
+      insertRun(legacy, kept.tricky, lib.learner, { id: keptRun, status: "completed", completedAt: now, cursor: 3 }),
+      insertRun(legacy, retired.roleplay, lib.learner, { id: retiredRun }),
+      insertAnswer(legacy, keptRun, { id: keptAnswer }),
+      insertAnswer(legacy, retiredRun, { id: retiredAnswer }),
+    ]);
+
+    await applyD1Migrations(legacy, migrations.filter((migration) => migration.name.startsWith("0045_")));
+
+    const ids = await legacy.prepare("SELECT id FROM lesson_activities").all<{ id: string }>();
+    expect(sorted(ids.results.map((row) => row.id))).toEqual(sorted(Object.values(kept)));
+    const runs = await legacy.prepare("SELECT id, cursor, status, reader FROM lesson_activity_runs").all();
+    expect(runs.results).toEqual([{ id: keptRun, cursor: 3, status: "completed", reader: null }]);
+    const answers = await legacy.prepare("SELECT id FROM lesson_activity_answers").all<{ id: string }>();
+    expect(answers.results.map((row) => row.id)).toEqual([keptAnswer]);
+    expect(await legacy.prepare("SELECT name FROM sqlite_master WHERE name LIKE '%_keep'").all().then((result) => result.results)).toEqual([]);
+    // The rebuilt table admits review words; runs keep their cascades.
+    await insertActivity(legacy, lib, { activityType: "review_words" }).run();
+    await legacy.prepare("DELETE FROM lesson_activities WHERE id = ?").bind(kept.tricky).run();
+    expect(await legacy.prepare("SELECT COUNT(*) AS n FROM lesson_activity_answers").first<number>("n")).toBe(0);
   });
 });

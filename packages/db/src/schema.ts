@@ -427,9 +427,8 @@ export const learningTime = sqliteTable(
 export const lessonActivities = sqliteTable("lesson_activities", {
   id: text("id").primaryKey(), lessonId: text("lesson_id").notNull().references(() => courseLessons.id, { onDelete: "cascade" }),
   courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }), sourceId: text("source_id").notNull(),
-  // Grammar explanation was retired by 0042, which deleted its rows; the check still admits it, since rebuilding this table would
-  // cascade-delete every learner's runs.
-  activityType: text("activity_type", { enum: ["story_summary", "story_comprehension", "tricky_grammar", "mixed_practice", "roleplay", "guided_grammar", "read_aloud", "speak_from_english"] }).notNull(),
+  // 0045 rebuilt the table for dialogue sections' review words and read aloud, retiring the story and role-play types.
+  activityType: text("activity_type", { enum: ["tricky_grammar", "mixed_practice", "guided_grammar", "read_aloud", "review_words"] }).notNull(),
   sourceFingerprint: text("source_fingerprint").notNull(), recipeVersion: integer("recipe_version").notNull(), schemaVersion: integer("schema_version").notNull(),
   language: text("language", { enum: ["nl", "de"] }).notNull(), cacheKey: text("cache_key").notNull(),
   status: text("status", { enum: ["generating", "ready", "failed"] }).notNull(), leaseToken: text("lease_token"), leaseExpiresAt: integer("lease_expires_at"),
@@ -440,19 +439,19 @@ export const lessonActivities = sqliteTable("lesson_activities", {
   check("lesson_activities_status_check", sql`${table.status} in ('generating', 'ready', 'failed')`),
   check("lesson_activities_lease_check", sql`(${table.status} = 'generating') = (${table.leaseToken} IS NOT NULL AND ${table.leaseExpiresAt} IS NOT NULL)`),
   check("lesson_activities_payload_check", sql`(${table.status} = 'ready') = (${table.payload} IS NOT NULL)`),
-  check("lesson_activities_type_check", sql`${table.activityType} in ('story_summary', 'story_comprehension', 'grammar_explanation', 'tricky_grammar', 'mixed_practice', 'roleplay', 'guided_grammar', 'read_aloud', 'speak_from_english')`),
+  check("lesson_activities_type_check", sql`${table.activityType} in ('tricky_grammar', 'mixed_practice', 'guided_grammar', 'read_aloud', 'review_words')`),
   check("lesson_activities_language_check", sql`${table.language} in ('nl', 'de')`),
 ]);
 
 export const lessonActivityRuns = sqliteTable("lesson_activity_runs", {
   id: text("id").primaryKey(), activityId: text("activity_id").notNull().references(() => lessonActivities.id, { onDelete: "cascade" }),
   userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }), cursor: integer("cursor").notNull().default(0),
-  cueMode: text("cue_mode", { enum: ["english", "dutch"] }).notNull().default("english"), status: text("status", { enum: ["active", "completed"] }).notNull().default("active"),
+  // The speaker a read-aloud run reads; null reads every line (0045).
+  reader: text("reader"), status: text("status", { enum: ["active", "completed"] }).notNull().default("active"),
   startedAt: integer("started_at").notNull(), updatedAt: integer("updated_at").notNull(), completedAt: integer("completed_at"), metricsBefore: text("metrics_before"),
 }, (table) => [uniqueIndex("lesson_activity_runs_activity_user_unique").on(table.activityId, table.userId), index("lesson_activity_runs_user_idx").on(table.userId, table.updatedAt),
   check("lesson_activity_runs_cursor_check", sql`${table.cursor} >= 0`),
   check("lesson_activity_runs_completed_check", sql`(${table.status} = 'completed') = (${table.completedAt} IS NOT NULL)`),
-  check("lesson_activity_runs_cue_check", sql`${table.cueMode} in ('english', 'dutch')`),
   check("lesson_activity_runs_status_check", sql`${table.status} in ('active', 'completed')`),
 ]);
 

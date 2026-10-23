@@ -12,7 +12,7 @@ These files are the living specification for Wordinator. Each topic has one prim
 | [posts-and-feed.md](posts-and-feed.md) | Journal post shapes, composer, drafts, feed ordering, pagination, and polling |
 | [discussions-and-reactions.md](discussions-and-reactions.md) | Answers, spoiler concealment, comments, replies, pins, and emoji reactions |
 | [courses.md](courses.md) | Course structure, blocks, contributors, publishing, practice progress and attempts, lesson states, the lesson progress tab and reset, AI practices on the lesson page, and loading |
-| [lesson-activities.md](lesson-activities.md) | Section-aware lesson activity suggestions, dedicated pages, shared generated content, private runs, and original-dialogue role-play |
+| [lesson-activities.md](lesson-activities.md) | Section-aware lesson activity suggestions, dedicated pages, shared generated content, private runs, and the dialogue sections' review words and read aloud |
 | [lesson-shares.md](lesson-shares.md) | Sharing examples, dialogues, and practice questions to the journal: snapshots and references, entry points, duplicates, availability, and the shared answer check |
 | [words.md](words.md) | Word cards, word bookmarks, the Words tab, the Weak words view, Drill (including spoken answers), word memory and its review log, and stored pronunciation scores |
 | [speech.md](speech.md) | Lesson speech: spoken items, voices, dialogue cast, pronunciation overrides, background generation, and playback; on-demand audio for tutor messages |

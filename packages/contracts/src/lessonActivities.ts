@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { foldEquivalentAccents, opaqueIdSchema } from "./index";
-import { inlineText, LESSON_IMAGE_ALT_MAX, LESSON_IMAGE_URL_MAX, readDialogueTurns, topBlockSchema, walkLessonBlocks, type LessonBlock, type LessonBlockOf, type LessonDocument } from "./lessonDocument";
+import { inlineText, readDialogueTurns, readVocabularyBlock, topBlockSchema, walkLessonBlocks, type LessonBlock, type LessonDocument } from "./lessonDocument";
 
 export const LESSON_ACTIVITY_RECIPE_VERSION = 2;
 export const LESSON_ACTIVITY_SCHEMA_VERSION = 2;
@@ -9,16 +9,16 @@ export const LESSON_ACTIVITY_ANSWER_MAX = 2_000;
 // Source fingerprints are SHA-256 digests in lowercase hex, shared by descriptors, views and open requests.
 export const SOURCE_FINGERPRINT_SCHEMA = z.string().regex(/^[a-f0-9]{64}$/);
 export const lessonActivityTypeSchema = z.enum([
-  "story_summary", "story_comprehension", "tricky_grammar", "mixed_practice", "roleplay", "guided_grammar", "read_aloud", "speak_from_english",
+  "tricky_grammar", "mixed_practice", "guided_grammar", "read_aloud", "review_words",
 ]);
 export type LessonActivityType = z.infer<typeof lessonActivityTypeSchema>;
 export type ActivityType = LessonActivityType;
 export const lessonActivityMetricSchema = z.enum(["lesson_share", "lesson_reading", "lesson_grammar", "lesson_activities"]);
 export type ActivityMetric = z.infer<typeof lessonActivityMetricSchema>;
+// Review words is timed as drill time by its drill (docs/learning-time.md), so its page never claims lesson-activity time.
 export const lessonActivityFocus = (type: LessonActivityType): "reading" | "grammar" | "speaking" =>
-  type === "roleplay" || type === "read_aloud" || type === "speak_from_english" ? "speaking"
-    : type === "story_summary" || type === "story_comprehension" ? "reading" : "grammar";
-export const lessonActivitySourceKindSchema = z.enum(["section", "dialogue", "lesson_end"]);
+  type === "read_aloud" ? "speaking" : type === "review_words" ? "reading" : "grammar";
+export const lessonActivitySourceKindSchema = z.enum(["section", "lesson_end"]);
 export type LessonActivitySourceKind = z.infer<typeof lessonActivitySourceKindSchema>;
 export const lessonActivityDescriptorSchema = z.strictObject({
   sourceId: z.string().min(1).max(200), sourceKind: lessonActivitySourceKindSchema, sourceLabel: z.string().min(1).max(200),
@@ -52,39 +52,30 @@ const wordOrderQuestionPayloadSchema = z.strictObject({ id: opaqueIdSchema, kind
     if (question.expectedOrder.length !== question.tokens.length || new Set(question.expectedOrder).size !== question.tokens.length || question.expectedOrder.some((value) => value >= question.tokens.length)) context.addIssue({ code: "custom", path: ["expectedOrder"], message: "Expected order must be a permutation of the tokens." });
   });
 const questionPayloadSchema = z.discriminatedUnion("kind", [choiceQuestionPayloadSchema, fillInQuestionPayloadSchema, wordOrderQuestionPayloadSchema]);
-const roleplayTurnViewSchema = z.strictObject({ id: opaqueIdSchema, index: z.number().int().nonnegative(), speaker: shortText, isLearner: z.boolean(), cue: shortText.nullable(), dutchText: shortText, englishText: shortText.nullable(), voice: z.string().trim().min(1).max(100).nullable() });
-const roleplayTurnPayloadSchema = roleplayTurnViewSchema.extend({ referenceText: shortText });
 // Every activity payload carries one to three metric keys; views never include them.
 const lessonActivityMetricsSchema = z.array(lessonActivityMetricSchema).min(1).max(3);
-const summaryPairsSchema = z.array(z.strictObject({ dutch: shortText, english: shortText })).min(2).max(16);
-const summaryNewWordsSchema = z.array(z.strictObject({ term: shortText, translation: shortText })).max(12);
 const guidedStepBlocksSchema = z.array(topBlockSchema).min(1).max(4);
 const followUpTypeSchema = z.enum(["tricky_grammar", "mixed_practice"]);
 // referenceText is the stored Dutch used for grading; views strip it. dutchText and referenceText hold the same Dutch text.
-const readAloudLineSchema = z.strictObject({ id: opaqueIdSchema, index: z.number().int().nonnegative(), speaker: shortText.nullable(), dutchText: shortText, referenceText: shortText });
-const speakFromEnglishLineSchema = readAloudLineSchema.extend({ englishText: shortText });
+const readAloudLineSchema = z.strictObject({ id: opaqueIdSchema, index: z.number().int().nonnegative(), speaker: shortText, dutchText: shortText, referenceText: shortText });
+// Review words names the section's vocabulary word IDs, in document order; the drill draws its deck from them.
+const reviewWordIdsSchema = z.array(z.string().min(1).max(200)).min(1).max(200);
 const activityContents = {
-  story_summary: z.strictObject({ pairs: summaryPairsSchema, newWords: summaryNewWordsSchema }),
-  story_comprehension: z.strictObject({ questions: z.array(choiceQuestionPayloadSchema).length(4) }),
   tricky_grammar: z.strictObject({ questions: z.array(questionPayloadSchema).length(4) }),
   mixed_practice: z.strictObject({ questions: z.array(questionPayloadSchema).length(6) }),
-  roleplay: z.strictObject({ dialogueId: opaqueIdSchema, cueLanguage: z.enum(["english", "dutch"]), turns: z.array(roleplayTurnPayloadSchema).min(2).max(60) }),
   guided_grammar: z.strictObject({ steps: z.array(z.strictObject({ blocks: guidedStepBlocksSchema, question: choiceQuestionPayloadSchema })).min(2).max(12), followUps: z.array(followUpTypeSchema).max(2) }),
   read_aloud: z.strictObject({ lines: z.array(readAloudLineSchema).min(1).max(60) }),
-  speak_from_english: z.strictObject({ lines: z.array(speakFromEnglishLineSchema).min(1).max(60) }),
+  review_words: z.strictObject({ wordIds: reviewWordIdsSchema }),
 } as const;
 const activityPayload = <T extends LessonActivityType, S extends z.ZodRawShape>(type: T, shape: S) => z.strictObject({
   type: z.literal(type), recipeVersion: z.number().int().positive(), schemaVersion: z.number().int().positive(), metrics: lessonActivityMetricsSchema, ...shape,
 });
 export const lessonActivityPayloadSchema = z.discriminatedUnion("type", [
-  activityPayload("story_summary", activityContents.story_summary.shape),
-  activityPayload("story_comprehension", activityContents.story_comprehension.shape),
   activityPayload("tricky_grammar", activityContents.tricky_grammar.shape),
   activityPayload("mixed_practice", activityContents.mixed_practice.shape),
-  activityPayload("roleplay", activityContents.roleplay.shape),
   activityPayload("guided_grammar", activityContents.guided_grammar.shape),
   activityPayload("read_aloud", activityContents.read_aloud.shape),
-  activityPayload("speak_from_english", activityContents.speak_from_english.shape),
+  activityPayload("review_words", activityContents.review_words.shape),
 ]).superRefine((payload, context) => {
   const questionIds = payload.type === "guided_grammar" ? payload.steps.map((step) => step.question.id)
     : "questions" in payload ? payload.questions.map((question) => question.id) : [];
@@ -92,38 +83,34 @@ export const lessonActivityPayloadSchema = z.discriminatedUnion("type", [
 });
 export type LessonActivityPayload = z.infer<typeof lessonActivityPayloadSchema>;
 const viewContents = {
-  story_summary: z.strictObject({ pairs: summaryPairsSchema, newWords: summaryNewWordsSchema, image: z.strictObject({ url: z.string().min(1).max(LESSON_IMAGE_URL_MAX), alt: z.string().max(LESSON_IMAGE_ALT_MAX) }).nullable() }),
-  story_comprehension: z.strictObject({ questions: z.array(choiceQuestionViewSchema).length(4) }),
   tricky_grammar: z.strictObject({ questions: z.array(questionViewSchema).length(4) }),
   mixed_practice: z.strictObject({ questions: z.array(questionViewSchema).length(6) }),
-  roleplay: z.strictObject({ dialogueId: opaqueIdSchema, cueLanguage: z.enum(["english", "dutch"]), turns: z.array(roleplayTurnViewSchema).min(2).max(60) }),
   guided_grammar: z.strictObject({ steps: z.array(z.strictObject({ blocks: guidedStepBlocksSchema, question: choiceQuestionViewSchema })).min(2).max(12), followUps: z.array(followUpTypeSchema).max(2) }),
   read_aloud: z.strictObject({ lines: z.array(readAloudLineSchema.omit({ referenceText: true })).min(1).max(60) }),
-  speak_from_english: z.strictObject({ lines: z.array(speakFromEnglishLineSchema.omit({ referenceText: true }).extend({ dutchText: shortText.nullable() })).min(1).max(60) }),
+  review_words: z.strictObject({ wordIds: reviewWordIdsSchema }),
 } as const;
 const activityViewPayload = <T extends LessonActivityType, S extends z.ZodRawShape>(type: T, shape: S) => z.strictObject({
   type: z.literal(type), recipeVersion: z.number().int().positive(), schemaVersion: z.number().int().positive(), ...shape,
 });
 export const lessonActivityViewPayloadSchema = z.discriminatedUnion("type", [
-  activityViewPayload("story_summary", viewContents.story_summary.shape),
-  activityViewPayload("story_comprehension", viewContents.story_comprehension.shape),
   activityViewPayload("tricky_grammar", viewContents.tricky_grammar.shape),
   activityViewPayload("mixed_practice", viewContents.mixed_practice.shape),
-  activityViewPayload("roleplay", viewContents.roleplay.shape),
   activityViewPayload("guided_grammar", viewContents.guided_grammar.shape),
   activityViewPayload("read_aloud", viewContents.read_aloud.shape),
-  activityViewPayload("speak_from_english", viewContents.speak_from_english.shape),
+  activityViewPayload("review_words", viewContents.review_words.shape),
 ]);
 export type LessonActivityViewPayload = z.infer<typeof lessonActivityViewPayloadSchema>;
 export const lessonActivityViewSchema = z.strictObject({
   id: opaqueIdSchema, sourceId: z.string().min(1).max(200), sourceLabel: shortText, sourceFingerprint: SOURCE_FINGERPRINT_SCHEMA,
-  // The model the shared content was generated with; null for read aloud (no model) and content cached before it was recorded.
+  // The model the shared content was generated with; null for read aloud and review words (no model) and content cached before it was recorded.
   generatedBy: z.string().min(1).max(200).nullable().default(null),
   payload: lessonActivityViewPayloadSchema,
 });
 export type LessonActivityView = z.infer<typeof lessonActivityViewSchema>;
 
-export const lessonActivityRunSchema = z.strictObject({ id: opaqueIdSchema, status: z.enum(["active", "completed"]), cursor: z.number().int().nonnegative(), cueMode: z.enum(["english", "dutch"]), startedAt: z.number().int(), updatedAt: z.number().int(), completedAt: z.number().int().nullable(), ephemeral: z.boolean().default(false) });
+// `reader` is the speaker a read-aloud run reads (the app voices the others); null reads every line.
+const readerSchema = shortText.max(200).nullable();
+export const lessonActivityRunSchema = z.strictObject({ id: opaqueIdSchema, status: z.enum(["active", "completed"]), cursor: z.number().int().nonnegative(), reader: readerSchema.default(null), startedAt: z.number().int(), updatedAt: z.number().int(), completedAt: z.number().int().nullable(), ephemeral: z.boolean().default(false) });
 export type LessonActivityRun = z.infer<typeof lessonActivityRunSchema>;
 export const activityOpenRequestSchema = z.strictObject({ sourceId: z.string().min(1).max(200), type: lessonActivityTypeSchema, expectedFingerprint: SOURCE_FINGERPRINT_SCHEMA });
 export const activityOpenResponseSchema = z.discriminatedUnion("status", [
@@ -144,7 +131,7 @@ export const activityAnswerSchema = z.discriminatedUnion("kind", [
 export const activityAnswerRequestSchema = z.strictObject({ runId: opaqueIdSchema, itemId: opaqueIdSchema, answer: activityAnswerSchema, inputMode: activityInputModeSchema, idempotencyKey: opaqueIdSchema });
 export const activityAnswerResponseSchema = z.strictObject({ answerId: opaqueIdSchema, itemId: opaqueIdSchema, correct: z.boolean(), reference: shortText.nullable(), explanation: shortText.nullable(), pronunciation: z.unknown().nullable() });
 export const activityRunPatchRequestSchema = z.discriminatedUnion("action", [
-  z.strictObject({ action: z.literal("set_cue_mode"), cueMode: z.enum(["english", "dutch"]) }),
+  z.strictObject({ action: z.literal("set_reader"), reader: readerSchema }),
   z.strictObject({ action: z.literal("continue"), expectedCursor: z.number().int().nonnegative() }),
   z.strictObject({ action: z.literal("complete") }), z.strictObject({ action: z.literal("restart") }),
 ]);
@@ -152,15 +139,13 @@ export const activityRunPatchRequestSchema = z.discriminatedUnion("action", [
 export const activityMetricChangeSchema = z.strictObject({ key: lessonActivityMetricSchema, before: z.number().min(0).max(1), after: z.number().min(0).max(1) });
 export type ActivityMetricChange = z.infer<typeof activityMetricChangeSchema>;
 export const activityRunPatchResponseSchema = z.strictObject({ run: lessonActivityRunSchema, metrics: z.array(activityMetricChangeSchema).max(3).optional() });
-// A request names exactly one of turnId (role-play) or lineId (read aloud and speak from English).
-export const activitySpeechRequestSchema = z.strictObject({ runId: opaqueIdSchema, turnId: opaqueIdSchema.optional(), lineId: opaqueIdSchema.optional(), chunkIndex: z.number().int().nonnegative().optional() })
-  .refine((request) => (request.turnId === undefined) !== (request.lineId === undefined), { message: "Name either turnId or lineId.", path: ["turnId"] });
+// A request names one read-aloud line and, for a long line, a part.
+export const activitySpeechRequestSchema = z.strictObject({ runId: opaqueIdSchema, lineId: opaqueIdSchema, chunkIndex: z.number().int().nonnegative().optional() });
 export const activitySpeechResponseSchema = z.discriminatedUnion("status", [
   z.strictObject({ status: z.literal("ready"), url: z.string().url() }), z.strictObject({ status: z.literal("pending"), retryAfterMs: z.number().int().min(250).max(10_000) }),
 ]);
 
-// answeredItemIds lists items whose answer was submitted; only those speak_from_english lines reveal their Dutch text.
-export function toLessonActivityView(activity: Omit<LessonActivityView, "payload" | "generatedBy"> & { generatedBy?: string | null; payload: LessonActivityPayload }, answeredItemIds: ReadonlySet<string> = new Set()): LessonActivityView {
+export function toLessonActivityView(activity: Omit<LessonActivityView, "payload" | "generatedBy"> & { generatedBy?: string | null; payload: LessonActivityPayload }): LessonActivityView {
   const { payload, ...rest } = activity;
   const stripQuestion = (question: z.infer<typeof questionPayloadSchema>): z.infer<typeof questionViewSchema> => {
     if (question.kind === "choice") return { id: question.id, kind: question.kind, prompt: question.prompt, options: question.options };
@@ -170,29 +155,23 @@ export function toLessonActivityView(activity: Omit<LessonActivityView, "payload
   const stripChoice = (question: z.infer<typeof choiceQuestionPayloadSchema>): z.infer<typeof choiceQuestionViewSchema> => ({ id: question.id, kind: question.kind, prompt: question.prompt, options: question.options });
   // Metrics are server-side only and never reach a view; guided follow-ups do, for the completion screen.
   const { metrics: _metrics, ...content } = payload;
-  const clean = content.type === "story_comprehension" ? { ...content, questions: content.questions.map(stripQuestion) }
-      : content.type === "tricky_grammar" || content.type === "mixed_practice" ? { ...content, questions: content.questions.map(stripQuestion) }
-        : content.type === "roleplay" ? { ...content, turns: content.turns.map(({ referenceText: _, ...turn }) => turn) }
-          : content.type === "story_summary" ? { ...content, image: null }
-            : content.type === "guided_grammar" ? { type: content.type, recipeVersion: content.recipeVersion, schemaVersion: content.schemaVersion, steps: content.steps.map(({ blocks, question }) => ({ blocks, question: stripChoice(question) })), followUps: content.followUps }
-              : content.type === "read_aloud" ? { ...content, lines: content.lines.map(({ referenceText: _, ...line }) => line) }
-                : content.type === "speak_from_english" ? { ...content, lines: content.lines.map(({ referenceText: _, ...line }) => ({ ...line, dutchText: answeredItemIds.has(line.id) ? line.dutchText : null })) } : content;
+  const clean = content.type === "tricky_grammar" || content.type === "mixed_practice" ? { ...content, questions: content.questions.map(stripQuestion) }
+    : content.type === "guided_grammar" ? { type: content.type, recipeVersion: content.recipeVersion, schemaVersion: content.schemaVersion, steps: content.steps.map(({ blocks, question }) => ({ blocks, question: stripChoice(question) })), followUps: content.followUps }
+      : content.type === "read_aloud" ? { ...content, lines: content.lines.map(({ referenceText: _, ...line }) => line) } : content;
   return lessonActivityViewSchema.parse({ ...rest, payload: clean });
 }
 
 export function gradeLessonActivityAnswer(payload: LessonActivityPayload, itemId: string, answer: z.infer<typeof activityAnswerSchema>) {
-  // Speaking lines are compared with the same sentence rule as role-play; a mismatch is a plain non-match, never "incorrect" copy.
-  if (payload.type === "read_aloud" || payload.type === "speak_from_english") {
+  // Read-aloud lines are compared with the lesson sentence rule; a mismatch is a plain non-match, never "incorrect" copy.
+  if (payload.type === "read_aloud") {
     const line = payload.lines.find((candidate) => candidate.id === itemId);
     if (!line) return null;
     return { correct: answer.kind === "text" && sameLessonSentence(answer.text, line.referenceText), reference: line.referenceText, explanation: null };
   }
-  const items = payload.type === "story_comprehension" || payload.type === "tricky_grammar" || payload.type === "mixed_practice" ? payload.questions
-    : payload.type === "roleplay" ? payload.turns.filter((turn) => turn.isLearner)
-      : payload.type === "guided_grammar" ? payload.steps.map((step) => step.question) : [];
+  const items = payload.type === "tricky_grammar" || payload.type === "mixed_practice" ? payload.questions
+    : payload.type === "guided_grammar" ? payload.steps.map((step) => step.question) : [];
   const item = items.find((candidate) => candidate.id === itemId);
   if (!item) return null;
-  if ("isLearner" in item) return { correct: answer.kind === "text" && sameLessonSentence(answer.text, item.referenceText), reference: item.referenceText, explanation: null };
   if (item.kind === "choice") return { correct: answer.kind === "choice" && answer.optionId === item.correctOptionId, reference: item.options.find((option) => option.id === item.correctOptionId)?.text ?? null, explanation: item.explanation };
   if (item.kind === "fill_in") return { correct: answer.kind === "text" && item.referenceAnswers.some((reference) => sameLessonSentence(answer.text, reference)), reference: item.referenceAnswers[0] ?? null, explanation: item.explanation };
   // Word order is graded on the sentence it builds, so a repeated word ("uur … uur") may be taken from either of its chips. Each
@@ -201,7 +180,7 @@ export function gradeLessonActivityAnswer(payload: LessonActivityPayload, itemId
   const complete = (order: readonly number[]) => order.length === item.tokens.length && new Set(order).size === order.length && order.every((index) => index >= 0 && index < item.tokens.length);
   return { correct: answer.kind === "word_order" && complete(answer.order) && sentence(answer.order) === sentence(item.expectedOrder), reference: sentence(item.expectedOrder), explanation: item.explanation };
 }
-// Sentence comparison for role-play reproduction and fill-in answers (plan 04): NFKC, case, the project's accent equivalence
+// Sentence comparison for read-aloud lines and fill-in answers (plan 04): NFKC, case, the project's accent equivalence
 // (foldEquivalentAccents, the rule answer matching uses), and spacing. Punctuation, quotes, dashes and symbols count as spaces,
 // except an apostrophe inside a word, which is kept and typographic forms are read as straight: "z'n" = "z’n", but "z'n" != "zn".
 // Articles are not dropped (word-card matching does that; this rule does not), so "de man" and "man" differ.
@@ -258,21 +237,14 @@ export async function resolveLessonActivitySources({ document, title = "Lesson",
     if (!activityTypes.length) return;
     descriptors.push({ sourceId, sourceKind, sourceLabel: label, returnBlockId: blockId, returnHeadingId: headingId, practiceBlockId, fingerprint: await fingerprintLessonActivitySource(content), activityTypes });
   };
-  // Dialogue-bearing sections and an introduction with a dialogue get the story activities, including the two speaking ones.
-  const storyTypes: LessonActivityType[] = ["story_summary", "story_comprehension", "read_aloud", "speak_from_english"];
-  const isDialogue = (block: LessonBlock): block is LessonBlockOf<"dialogue"> => block.type === "dialogue";
-  // A dialogue is eligible for role-play only when Sofia and at least one partner both have original turns.
-  const isRoleplayEligible = (turns: ReturnType<typeof readDialogueTurns>) => turns.some((turn) => turn.speaker.trim().toLocaleLowerCase() === "sofia") && turns.some((turn) => turn.speaker.trim().toLocaleLowerCase() !== "sofia");
+  // A dialogue section (and an introduction with a dialogue) offers exactly two activities: review words, when the section has
+  // vocabulary, and read aloud, when its dialogues have lines (docs/lesson-activities.md#activity-catalogue).
+  const dialogueTypes = (blocks: readonly LessonBlock[]): LessonActivityType[] => !dialogueLines(blocks).length ? []
+    : [...(sectionWordIds(blocks).length ? ["review_words" as const] : []), "read_aloud"];
   const firstHeadingIndex = starts.find(({ depth }) => depth === 0)?.index ?? flattened.length;
   const introBlocks = flattened.slice(0, firstHeadingIndex).map(({ block }) => block).filter((block) => block.type !== "divider");
   if (introBlocks.length) {
-    const dialogues = introBlocks.filter(isDialogue);
-    const types: LessonActivityType[] = dialogues.length ? [...storyTypes] : [];
-    await add("intro", "section", "Introduction", introBlocks[0]!.id, null, introBlocks.map(activitySourceBlock), types, firstPracticeId(introBlocks));
-    for (const dialogue of dialogues) {
-      const turns = readDialogueTurns(dialogue);
-      if (isRoleplayEligible(turns)) await add(dialogue.id, "dialogue", "Dialogue · Introduction", dialogue.id, null, turns, ["roleplay"]);
-    }
+    await add("intro", "section", "Introduction", introBlocks[0]!.id, null, introBlocks.map(activitySourceBlock), dialogueTypes(introBlocks), firstPracticeId(introBlocks));
   }
   const activitySections: typeof sections = [];
   for (const section of sections) {
@@ -296,19 +268,13 @@ export async function resolveLessonActivitySources({ document, title = "Lesson",
   for (const section of activitySections) {
     const contents = flattened.slice(section.start, section.end).map(({ block }) => block);
     if (!contents.some((block) => block.type !== "divider")) continue;
-    const dialogues = contents.filter(isDialogue);
     const hasGrammar = section.grammar;
     const hasSummary = /summary|recap|wrap[- ]?up|lesson end/i.test(section.label);
-    const types: LessonActivityType[] = dialogues.length ? [...storyTypes] : [];
+    const types: LessonActivityType[] = dialogueTypes(contents);
     if (hasGrammar) types.push("guided_grammar", "tricky_grammar");
     if (hasSummary) types.push("mixed_practice");
     const safeTypes = [...new Set(types)];
     await add(section.id, "section", section.label || title, contents[0]?.id ?? section.headingId, section.headingId, contents.map(activitySourceBlock), safeTypes, firstPracticeId(contents));
-    for (const dialogue of dialogues) {
-      const turns = readDialogueTurns(dialogue);
-      if (!isRoleplayEligible(turns)) continue;
-      await add(dialogue.id, "dialogue", `Dialogue · ${section.label}`, dialogue.id, section.headingId, turns, ["roleplay"]);
-    }
   }
   if (includeLessonEnd) await add("lesson_end", "lesson_end", `${title} · End`, null, null, document.blocks.map(activitySourceBlock), ["mixed_practice"]);
   return descriptors;
@@ -319,34 +285,34 @@ export const verifyLessonActivitySource = (descriptors: readonly ActivityDescrip
   return descriptor?.fingerprint === fingerprint ? descriptor : null;
 }
 
-// The lines of a story's read-aloud and speak-from-English activities, in document order (at most 60). Dialogue turns stay whole
-// with their speaker; prose paragraphs and list items split into sentences at . ? and !, keeping the punctuation. `blockId` and
-// `sourceIndex` (the turn or sentence number inside that block) point back at the source; no IDs are assigned here.
-export const STORY_SPEAKING_LINES_MAX = 60;
-export type StorySpeakingLine = { blockId: string; sourceIndex: number; speaker: string | null; text: string };
-const sentencesOf = (text: string) => text.match(/[^.?!]+[.?!]*/g)?.map((sentence) => sentence.trim()).filter((sentence) => sentence.length > 0) ?? [];
-export function storySpeakingLines(blocks: readonly LessonBlock[]): StorySpeakingLine[] {
-  const lines: StorySpeakingLine[] = [];
+// The lines of a section's read-aloud activity: its dialogues' turns in document order, columns included, each with its speaker
+// (at most 60). `blockId` and `sourceIndex` (the turn number inside that dialogue) point back at the source; no IDs are assigned here.
+export const DIALOGUE_LINES_MAX = 60;
+export type DialogueLine = { blockId: string; sourceIndex: number; speaker: string; text: string };
+export function dialogueLines(blocks: readonly LessonBlock[]): DialogueLine[] {
+  const lines: DialogueLine[] = [];
   for (const { block } of walkLessonBlocks(blocks)) {
-    if (lines.length >= STORY_SPEAKING_LINES_MAX) break;
-    if (block.type === "dialogue") {
-      readDialogueTurns(block).forEach((turn, sourceIndex) => {
-        const text = turn.text.trim();
-        if (text) lines.push({ blockId: block.id, sourceIndex, speaker: turn.speaker, text });
-      });
-    } else if (block.type === "paragraph" || block.type === "bulletListItem" || block.type === "numberedListItem") {
-      sentencesOf(inlineText(block.content)).forEach((text, sourceIndex) => { lines.push({ blockId: block.id, sourceIndex, speaker: null, text }); });
-    }
+    if (block.type !== "dialogue") continue;
+    readDialogueTurns(block).forEach((turn, sourceIndex) => {
+      const text = turn.text.trim(); const speaker = turn.speaker.trim();
+      if (text && speaker) lines.push({ blockId: block.id, sourceIndex, speaker, text });
+    });
   }
-  return lines.slice(0, STORY_SPEAKING_LINES_MAX);
+  return lines.slice(0, DIALOGUE_LINES_MAX);
+}
+// The speakers a read-aloud learner can choose from, in order of first line.
+export const dialogueSpeakers = (lines: readonly { speaker: string }[]) => [...new Set(lines.map((line) => line.speaker))];
+// The lines a read-aloud run reads aloud, in order: the chosen speaker's, or every line when no speaker is chosen. The app voices
+// the rest. A reader the lines do not name reads nothing.
+export const readerLines = <T extends { speaker: string }>(lines: readonly T[], reader: string | null) => reader === null ? [...lines] : lines.filter((line) => line.speaker === reader);
+// The vocabulary words of a source, each once, in document order (columns included); review words drills them.
+export function sectionWordIds(blocks: readonly LessonBlock[]): string[] {
+  const ids = new Set<string>();
+  for (const { block } of walkLessonBlocks(blocks)) if (block.type === "vocabulary") for (const word of readVocabularyBlock(block).words) ids.add(word.id);
+  return [...ids];
 }
 // The first practice block of a source, columns included; the guided grammar completion links back to it.
 const firstPracticeId = (blocks: readonly LessonBlock[]) => {
   for (const { block } of walkLessonBlocks(blocks)) if (block.type === "practice") return block.id;
   return null;
 };
-// The first image in reading order, columns included, that has a URL; `alt` is the image's name prop.
-export function firstImage(blocks: readonly LessonBlock[]): { url: string; alt: string } | null {
-  for (const { block } of walkLessonBlocks(blocks)) if (block.type === "image" && block.props.url) return { url: block.props.url, alt: block.props.name };
-  return null;
-}

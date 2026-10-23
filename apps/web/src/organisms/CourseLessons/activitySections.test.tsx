@@ -38,10 +38,11 @@ describe("Do more with AI's section", () => {
     ]);
   });
 
-  it("names the section the index marks, and offers its story activities with its role-play", () => {
+  it("names the section the index marks, and offers its dialogue activities", () => {
     const section = sectionActivities(entries, at(3), descriptors, new Set());
     expect(section).toMatchObject({ label: "Story: Een tafel bij het raam", category: "story" });
-    expect(ids(section.activities)).toEqual(["section:03", "dialogue:03"]);
+    expect(ids(section.activities)).toEqual(["section:03"]);
+    expect(section.activities[0]?.descriptor.activityTypes).toEqual(["read_aloud"]);
   });
 
   it("falls back to the lesson-end activity in a section without activities, still named after that section", () => {
@@ -71,7 +72,7 @@ describe("Do more with AI's section", () => {
     const placed = Object.fromEntries([...placements].map(([id, activities]) => [id.slice(-2), ids(activities)]));
     expect(placed).toEqual({
       // The title's section ends at the story; the words section has none.
-      "04": ["section:03", "dialogue:03"],
+      "04": ["section:03"],
       // Each grammar part ends at the next part or the next level-2 heading.
       "10": ["section:09:violet"],
       "12": ["section:11:teal"],

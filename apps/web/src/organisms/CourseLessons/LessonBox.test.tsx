@@ -9,7 +9,7 @@ import { LessonBoxActions, type LessonActivitySuggestion, type LessonBoxLesson }
 
 const lesson: LessonBoxLesson = { groupId: "20000000-0000-4000-8000-000000000001", courseId: "30000000-0000-4000-8000-000000000001", courseTitle: "Dutch Foundations", lessonId: "40000000-0000-4000-8000-000000000001", title: "Lesson title", number: 1 };
 const fingerprint = "b".repeat(64);
-const story: ActivityDescriptor = { sourceId: "section-story", sourceKind: "section", sourceLabel: "Story", returnBlockId: null, returnHeadingId: null, practiceBlockId: null, fingerprint, activityTypes: ["story_summary", "story_comprehension"] };
+const story: ActivityDescriptor = { sourceId: "section-story", sourceKind: "section", sourceLabel: "Story", returnBlockId: null, returnHeadingId: null, practiceBlockId: null, fingerprint, activityTypes: ["review_words", "read_aloud"] };
 const grammar: ActivityDescriptor = { sourceId: "section-grammar", sourceKind: "section", sourceLabel: "Grammar", returnBlockId: null, returnHeadingId: null, practiceBlockId: null, fingerprint, activityTypes: ["guided_grammar"] };
 
 afterEach(() => cleanup());
@@ -26,53 +26,53 @@ function renderActions(suggestions: LessonActivitySuggestion[], options: { compa
 describe("Lesson box actions", () => {
   it("links each suggested activity to its own route, one link per descriptor and type", async () => {
     renderActions([
-      { descriptor: story, type: "story_summary" },
-      { descriptor: story, type: "story_comprehension" },
+      { descriptor: story, type: "review_words" },
+      { descriptor: story, type: "read_aloud" },
       { descriptor: grammar, type: "guided_grammar" },
     ]);
     const group = await screen.findByRole("group", { name: "Lesson actions" });
     const activityLinks = within(group).getAllByRole("link").filter((link) => link.getAttribute("href")?.includes("/activities/"));
     expect(activityLinks.map((link) => link.getAttribute("href"))).toEqual([
-      "/courses/dutch-foundations/lessons/lesson-title/activities/section-story/story_summary",
-      "/courses/dutch-foundations/lessons/lesson-title/activities/section-story/story_comprehension",
+      "/courses/dutch-foundations/lessons/lesson-title/activities/section-story/review_words",
+      "/courses/dutch-foundations/lessons/lesson-title/activities/section-story/read_aloud",
       "/courses/dutch-foundations/lessons/lesson-title/activities/section-grammar/guided_grammar",
     ]);
     // The first suggestion sits beside Practise words; the rest keep their section in the accessible name (visually it is the group's one title).
     expect(within(group).getByText("Story", { selector: "p" })).toHaveAttribute("title", "Story");
     expect(within(group).getByRole("link", { name: "Guided grammar · Grammar" })).toHaveTextContent(/^Guided grammar/);
-    expect(within(group).getByRole("link", { name: "Story summary" })).toBeInTheDocument();
-    expect(within(group).getByRole("link", { name: "Story comprehension · Story" })).toBeInTheDocument();
+    expect(within(group).getByRole("link", { name: "Review words" })).toBeInTheDocument();
+    expect(within(group).getByRole("link", { name: "Read aloud · Story" })).toBeInTheDocument();
     expect(within(group).getByRole("link", { name: "Guided grammar · Grammar" })).toBeInTheDocument();
   });
 
   it("ends a done suggestion with a Done badge that its accessible name includes, and leaves the others unmarked", async () => {
     renderActions([
-      { descriptor: story, type: "story_summary", done: true },
-      { descriptor: story, type: "story_comprehension", done: false },
+      { descriptor: story, type: "review_words", done: true },
+      { descriptor: story, type: "read_aloud", done: false },
       { descriptor: grammar, type: "guided_grammar" },
     ]);
     const group = await screen.findByRole("group", { name: "Lesson actions" });
-    const done = within(group).getByRole("link", { name: "Story summary Done" });
+    const done = within(group).getByRole("link", { name: "Review words Done" });
     expect(within(done).getByText("Done")).toBeInTheDocument();
     expect(done.querySelector(".lucide-check")).not.toBeNull();
-    expect(within(group).getByRole("link", { name: "Story comprehension · Story" })).not.toHaveTextContent("Done");
+    expect(within(group).getByRole("link", { name: "Read aloud · Story" })).not.toHaveTextContent("Done");
     expect(within(group).getByRole("link", { name: "Guided grammar · Grammar" })).not.toHaveTextContent("Done");
     expect(within(group).getAllByText("Done")).toHaveLength(1);
     // The full label stays discoverable through the title, since the visible label clamps to two lines.
-    expect(done).toHaveAttribute("title", "Story summary · Story");
+    expect(done).toHaveAttribute("title", "Review words · Story");
   });
 
   it("shows the section label once in the header, on one line with a title, and the links show only the type label", async () => {
     const long = { ...story, sourceLabel: "Story: Een tafel bij het raam" };
-    const dialogue: ActivityDescriptor = { ...story, sourceId: "dialogue-1", sourceKind: "dialogue", sourceLabel: "Dialogue · Story: Een tafel bij het raam", activityTypes: ["roleplay"] };
-    renderActions([{ descriptor: long, type: "story_summary" }, { descriptor: long, type: "story_comprehension" }, { descriptor: dialogue, type: "roleplay" }]);
+    renderActions([{ descriptor: long, type: "review_words" }, { descriptor: long, type: "read_aloud" }]);
     const group = await screen.findByRole("group", { name: "Lesson actions" });
     const header = within(group).getAllByText("Story: Een tafel bij het raam", { selector: "p" });
     expect(header).toHaveLength(1);
     expect(header[0]).toHaveAttribute("title", "Story: Een tafel bij het raam");
-    const link = within(group).getByRole("link", { name: "Story comprehension · Story: Een tafel bij het raam" });
-    expect(link.querySelector("span")?.firstChild?.textContent).toBe("Story comprehension");
+    const link = within(group).getByRole("link", { name: "Read aloud · Story: Een tafel bij het raam" });
+    expect(link.querySelector("span")?.firstChild?.textContent).toBe("Read aloud");
     expect(link).toHaveAttribute("data-category", "story");
+    expect(within(group).getByRole("link", { name: "Review words" })).toHaveAttribute("data-category", "words");
   });
 
   it("keeps the Done word for assistive technology in compact mode, where only the check shows", async () => {
@@ -84,12 +84,11 @@ describe("Lesson box actions", () => {
     expect(done).toHaveAttribute("title", "Guided grammar · Grammar");
   });
 
-  it("gives each of the eight activity types its own icon, marked with data-icon", async () => {
+  it("gives each of the five activity types its own icon, marked with data-icon", async () => {
     // The lucide class names come from the icon exports in activityIcons.ts; each type must render a different one.
     const expected: Record<ActivityType, string> = {
-      story_summary: "lucide-book-open-text", story_comprehension: "lucide-list-checks",
-      guided_grammar: "lucide-footprints", tricky_grammar: "lucide-puzzle", mixed_practice: "lucide-shuffle", roleplay: "lucide-drama",
-      read_aloud: "lucide-mic", speak_from_english: "lucide-languages",
+      guided_grammar: "lucide-footprints", tricky_grammar: "lucide-puzzle", mixed_practice: "lucide-shuffle",
+      read_aloud: "lucide-mic", review_words: "lucide-book-open-check",
     };
     const types = Object.keys(expected) as ActivityType[];
     renderActions(types.map((type) => ({ descriptor: story, type })));
@@ -103,7 +102,7 @@ describe("Lesson box actions", () => {
 
   it("counts the lesson's completed activities in the header badge, not only this section's", async () => {
     renderActions([
-      { descriptor: story, type: "story_summary", done: true },
+      { descriptor: story, type: "review_words", done: true },
       { descriptor: grammar, type: "guided_grammar" },
     ], { completedCount: 3 });
     const group = await screen.findByRole("group", { name: "Lesson actions" });
@@ -111,17 +110,17 @@ describe("Lesson box actions", () => {
   });
 
   it("ends the heading row with the active section's category badge, and has none without a section category", async () => {
-    renderActions([{ descriptor: story, type: "story_summary" }], { sectionCategory: "story" });
+    renderActions([{ descriptor: story, type: "review_words" }], { sectionCategory: "story" });
     const heading = await screen.findByRole("heading", { name: /Do more with AI/i });
     expect(heading.lastElementChild?.querySelector("[data-tone]")).not.toBeNull();
     cleanup();
-    renderActions([{ descriptor: story, type: "story_summary" }]);
+    renderActions([{ descriptor: story, type: "review_words" }]);
     expect((await screen.findByRole("heading", { name: /Do more with AI/i })).querySelector("[data-tone]")).toBeNull();
   });
 
   it("shows no completed badge when no suggestion is completed", async () => {
     renderActions([
-      { descriptor: story, type: "story_summary", done: false },
+      { descriptor: story, type: "review_words", done: false },
       { descriptor: grammar, type: "guided_grammar" },
     ], { completedCount: 0 });
     const group = await screen.findByRole("group", { name: "Lesson actions" });

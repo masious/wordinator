@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { emptyLessonDocument, type LessonBlock, type LessonDocument } from "./lessonDocument";
-import { activitySpeechRequestSchema, LESSON_ACTIVITY_RECIPE_VERSION, activityRunPatchResponseSchema, LESSON_ACTIVITY_SCHEMA_VERSION, gradeLessonActivityAnswer, lessonActivityFocus, lessonActivityMetricSchema, lessonActivityPayloadSchema, lessonActivityTypeSchema, lessonActivityViewSchema, normalizeLessonSentence, resolveLessonActivitySources, storySpeakingLines, firstImage, toLessonActivityView, verifyLessonActivitySource } from "./lessonActivities";
+import { activitySpeechRequestSchema, LESSON_ACTIVITY_RECIPE_VERSION, activityRunPatchResponseSchema, LESSON_ACTIVITY_SCHEMA_VERSION, gradeLessonActivityAnswer, lessonActivityFocus, lessonActivityMetricSchema, lessonActivityPayloadSchema, lessonActivityTypeSchema, lessonActivityViewSchema, normalizeLessonSentence, readerLines, resolveLessonActivitySources, dialogueLines, dialogueSpeakers, sectionWordIds, toLessonActivityView, verifyLessonActivitySource } from "./lessonActivities";
 
 const uid = (n: number) => `00000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 const props = { textColor: "default" as const, backgroundColor: "default" as const };
@@ -14,15 +14,10 @@ const metrics = ["lesson_activities"];
 const choice = (n: number) => ({ id: uid(n), kind: "choice", prompt: "Kies.", options: [1, 2, 3].map((x) => ({ id: uid(n * 10 + x), text: `Optie ${x}` })), correctOptionId: uid(n * 10 + 1), explanation: "Omdat." });
 const step = (n: number, blocks: LessonBlock[] = [para(n * 100, "Uitleg.")]) => ({ blocks, question: choice(n) });
 const guidedPayload = { type: "guided_grammar", recipeVersion: 2, schemaVersion: 2, metrics, steps: [step(10), step(20)], followUps: ["tricky_grammar", "mixed_practice"] };
-const readAloudLine = (n: number) => ({ id: uid(n), index: n, speaker: null, dutchText: "Goedemorgen.", referenceText: "Goedemorgen." });
+const readAloudLine = (n: number, speaker = "Sofia", text = "Goedemorgen.") => ({ id: uid(n), index: n, speaker, dutchText: text, referenceText: text });
 const readAloudPayload = { type: "read_aloud", recipeVersion: 2, schemaVersion: 2, metrics, lines: [readAloudLine(50)] };
-const speakLine = { id: uid(60), index: 0, speaker: "Sofia", dutchText: "Goedemorgen.", referenceText: "Goedemorgen.", englishText: "Good morning." };
-const speakPayload = { type: "speak_from_english", recipeVersion: 2, schemaVersion: 2, metrics, lines: [speakLine] };
-const summaryPayload = { type: "story_summary", recipeVersion: 2, schemaVersion: 2, metrics, pairs: [{ dutch: "Hallo.", english: "Hello." }, { dutch: "Ik heet Mira.", english: "My name is Mira." }], newWords: [{ term: "hallo", translation: "hello" }] };
-const roleplayPayload = { type: "roleplay", recipeVersion: 2, schemaVersion: 2, metrics, dialogueId: uid(70), cueLanguage: "english", turns: [
-  { id: uid(71), index: 0, speaker: "Sofia", isLearner: false, cue: null, dutchText: "Hallo", englishText: null, voice: null, referenceText: "Hallo" },
-  { id: uid(72), index: 1, speaker: "Mira", isLearner: true, cue: "Greet her.", dutchText: "Hallo", englishText: null, voice: null, referenceText: "Hallo" },
-] };
+const reviewWordsPayload = { type: "review_words", recipeVersion: 2, schemaVersion: 2, metrics, wordIds: [uid(80), uid(81)] };
+const words = (id: number, ...ids: number[]): LessonBlock => ({ id: uid(id), type: "vocabulary", props: { data: JSON.stringify({ words: ids.map((n) => ({ id: uid(n), term: `woord${n}`, meaning: "word" })) }) }, content: undefined, children: [] } as unknown as LessonBlock);
 const viewOf = (payload: unknown) => toLessonActivityView({ id: uid(10), sourceId: uid(11), sourceLabel: "Lesson", sourceFingerprint: fingerprint, payload: lessonActivityPayloadSchema.parse(payload) });
 
 describe("lesson activity contracts", () => {
@@ -69,23 +64,8 @@ describe("lesson activity contracts", () => {
     expect(lessonActivityPayloadSchema.safeParse({ type: "tricky_grammar", recipeVersion: 1, schemaVersion: 1, metrics, questions: [{ ...wordOrder, expectedOrder: [0, 0, 1] }, fillIn(2), fillIn(3), fillIn(4)] }).success).toBe(false);
   });
 
-  it("strips role-play reference text from the learner-facing view and still grades it", () => {
-    const turn = (index: number, speaker: string, isLearner: boolean) => ({ id: uid(20 + index), index, speaker, isLearner, cue: "Say hello.", dutchText: "Hallo Sofia", englishText: "Hello Sofia", voice: null, referenceText: "Hallo Sofia" });
-    const payload = lessonActivityPayloadSchema.parse({ type: "roleplay", recipeVersion: 1, schemaVersion: 1, metrics, dialogueId: uid(30), cueLanguage: "english", turns: [turn(0, "Sofia", false), turn(1, "Mira", true)] });
-    const view = toLessonActivityView({ id: uid(10), sourceId: uid(31), sourceLabel: "Dialogue", sourceFingerprint: fingerprint, payload });
-    expect(view.payload.type === "roleplay" && view.payload.turns.length).toBe(2);
-    expect(view.payload.type === "roleplay" && view.payload.turns.every((item) => !("referenceText" in item))).toBe(true);
-    expect(JSON.stringify(view)).not.toContain("referenceText");
-    expect(lessonActivityViewSchema.parse(view).payload.type).toBe("roleplay");
-    expect(gradeLessonActivityAnswer(payload, uid(21), { kind: "text", text: "hallo  sofia" })?.correct).toBe(true);
-    expect(gradeLessonActivityAnswer(payload, uid(21), { kind: "text", text: "Hoi" })?.correct).toBe(false);
-  });
-
   it("compares sentences by punctuation, accent equivalence and spacing, but not by dropping articles", () => {
-    const reply = (referenceText: string) => lessonActivityPayloadSchema.parse({ type: "roleplay", recipeVersion: 1, schemaVersion: 1, metrics, dialogueId: uid(40), cueLanguage: "dutch", turns: [
-      { id: uid(41), index: 0, speaker: "Sofia", isLearner: false, cue: null, dutchText: "Hallo", englishText: null, voice: null, referenceText: "Hallo" },
-      { id: uid(42), index: 1, speaker: "Dirk", isLearner: true, cue: "Greet him.", dutchText: referenceText, englishText: null, voice: null, referenceText },
-    ] });
+    const reply = (referenceText: string) => lessonActivityPayloadSchema.parse({ ...readAloudPayload, lines: [readAloudLine(41, "Sofia", "Hallo"), { ...readAloudLine(42, "Dirk"), dutchText: referenceText, referenceText }] });
     const grade = (referenceText: string, text: string) => gradeLessonActivityAnswer(reply(referenceText), uid(42), { kind: "text", text })?.correct;
 
     // Punctuation-only differences match: commas, full stops, curly quotes, dashes and exclamation marks.
@@ -126,11 +106,11 @@ describe("lesson activity contracts", () => {
     expect(gradeLessonActivityAnswer(fill, uid(1), { kind: "text", text: "de woon" })?.correct).toBe(false);
   });
 
-  it("resolves prefix sections, grammar subsections, multiple eligible dialogue sources and lesson end deterministically", async () => {
+  it("resolves prefix sections, grammar subsections, dialogue sections and lesson end deterministically, with no dialogue sources", async () => {
     const doc = {
       ...emptyLessonDocument(), blocks: [
         para(1, "Introductory content"), dialogue(4, sofiaAndMira), heading(2, "Story", 1), para(3, "Story text"),
-        dialogue(5, [{ speaker: " Sofia ", text: "Dag." }, { speaker: "Jan", text: "Hoi." }]),
+        dialogue(5, [{ speaker: " Sofia ", text: "Dag." }, { speaker: "Jan", text: "Hoi." }]), words(12, 13, 14),
         heading(6, "Grammar", 1), { id: uid(7), type: "callout", props: { variant: "grammar", icon: "auto" }, content: [{ type: "text", text: "Word order" }], children: [] },
         heading(8, "Inversion", 3), para(9, "A rule"), heading(10, "Summary", 2), para(11, "End"),
       ],
@@ -138,44 +118,42 @@ describe("lesson activity contracts", () => {
     const first = await resolveLessonActivitySources({ document: doc, title: "Lesson" });
     const again = await resolveLessonActivitySources({ document: doc, title: "Lesson" });
     expect(first).toEqual(again);
-    expect(first.some((source) => source.sourceId === "intro")).toBe(true);
-    expect(first.filter((source) => source.sourceKind === "dialogue")).toHaveLength(2);
+    expect(first.find((source) => source.sourceId === "intro")?.activityTypes).toEqual(["read_aloud"]);
+    expect(first.find((source) => source.sourceId === uid(2))?.activityTypes).toEqual(["review_words", "read_aloud"]);
+    expect(first.every((source) => source.sourceKind !== ("dialogue" as string))).toBe(true);
     expect(first.find((source) => source.sourceId === uid(8))?.activityTypes).toContain("tricky_grammar");
     expect(first.find((source) => source.sourceId === "lesson_end")?.activityTypes).toContain("mixed_practice");
-    const dialogueSource = first.find((source) => source.sourceKind === "dialogue")!;
-    expect(verifyLessonActivitySource(first, dialogueSource.sourceId, "roleplay", dialogueSource.fingerprint)).toEqual(dialogueSource);
-    expect(verifyLessonActivitySource(first, dialogueSource.sourceId, "roleplay", "0".repeat(64))).toBeNull();
+    const story = first.find((source) => source.sourceId === uid(2))!;
+    expect(verifyLessonActivitySource(first, story.sourceId, "read_aloud", story.fingerprint)).toEqual(story);
+    expect(verifyLessonActivitySource(first, story.sourceId, "read_aloud", "0".repeat(64))).toBeNull();
   });
 
-  it("never offers role-play unless Sofia and a partner both have original turns", async () => {
-    const doc = { ...emptyLessonDocument(), blocks: [heading(1, "Story", 1), dialogue(2, [{ speaker: "Anna", text: "Hi" }, { speaker: "Mira", text: "Hello" }])] } as unknown as LessonDocument;
-    expect((await resolveLessonActivitySources({ document: doc })).some((source) => source.activityTypes.includes("roleplay"))).toBe(false);
-  });
-
-  it("offers no role-play for an introduction dialogue without Sofia", async () => {
-    const doc = { ...emptyLessonDocument(), blocks: [para(1, "Introduction"), dialogue(2, [{ speaker: "Anna", text: "Hi" }, { speaker: "Mira", text: "Hello" }])] } as unknown as LessonDocument;
+  it("offers read aloud on any dialogue, Sofia or not, and review words only where the section has words", async () => {
+    const doc = { ...emptyLessonDocument(), blocks: [
+      heading(1, "Story", 1), dialogue(2, [{ speaker: "Anna", text: "Hi" }, { speaker: "Mira", text: "Hello" }]),
+      heading(3, "Words", 1), words(4, 5),
+    ] } as unknown as LessonDocument;
     const sources = await resolveLessonActivitySources({ document: doc, includeLessonEnd: false });
-    expect(sources.some((source) => source.activityTypes.includes("roleplay"))).toBe(false);
-    expect(sources.find((source) => source.sourceId === "intro")?.activityTypes).toEqual(["story_summary", "story_comprehension", "read_aloud", "speak_from_english"]);
+    expect(sources.find((source) => source.sourceId === uid(1))?.activityTypes).toEqual(["read_aloud"]);
+    // A words-only section has no dialogue, so it offers neither.
+    expect(sources.find((source) => source.sourceId === uid(3))).toBeUndefined();
   });
 
   it("keeps a level 3 heading inside a non-grammar section as part of that section", async () => {
-    const doc = { ...emptyLessonDocument(), blocks: [heading(1, "Story", 1), para(2, "Story text"), heading(3, "Details", 3), para(4, "More"), dialogue(5, sofiaAndMira)] } as unknown as LessonDocument;
+    const doc = { ...emptyLessonDocument(), blocks: [heading(1, "Story", 1), para(2, "Story text"), heading(3, "Details", 3), para(4, "More"), dialogue(5, sofiaAndMira), words(6, 7)] } as unknown as LessonDocument;
     const sources = await resolveLessonActivitySources({ document: doc, includeLessonEnd: false });
     expect(sources.map((source) => source.sourceId)).not.toContain(uid(3));
     expect(sources.some((source) => source.sourceLabel === "Details")).toBe(false);
-    expect(sources.find((source) => source.sourceId === uid(1))?.activityTypes).toEqual(["story_summary", "story_comprehension", "read_aloud", "speak_from_english"]);
-    expect(sources.find((source) => source.sourceId === uid(5))).toMatchObject({ sourceKind: "dialogue", sourceLabel: "Dialogue · Story", activityTypes: ["roleplay"] });
+    expect(sources.find((source) => source.sourceId === uid(1))?.activityTypes).toEqual(["review_words", "read_aloud"]);
   });
 
-  it("has eight activity types, rejects the retired quick_grammar and grammar_explanation, and maps focus for the new types", () => {
-    expect(lessonActivityTypeSchema.options).toHaveLength(8);
-    expect(lessonActivityTypeSchema.safeParse("quick_grammar").success).toBe(false);
-    expect(lessonActivityTypeSchema.safeParse("grammar_explanation").success).toBe(false);
+  it("has five activity types, rejects every retired one, and maps focus", () => {
+    expect(lessonActivityTypeSchema.options).toHaveLength(5);
+    for (const retired of ["quick_grammar", "grammar_explanation", "story_comprehension", "story_summary", "speak_from_english", "roleplay"]) expect(lessonActivityTypeSchema.safeParse(retired).success).toBe(false);
     expect(lessonActivityTypeSchema.safeParse("guided_grammar").success).toBe(true);
     expect(lessonActivityPayloadSchema.safeParse({ type: "quick_grammar", recipeVersion: 2, schemaVersion: 2 }).success).toBe(false);
     expect(lessonActivityFocus("read_aloud")).toBe("speaking");
-    expect(lessonActivityFocus("speak_from_english")).toBe("speaking");
+    expect(lessonActivityFocus("tricky_grammar")).toBe("grammar");
     expect(lessonActivityFocus("guided_grammar")).toBe("grammar");
   });
 
@@ -197,17 +175,7 @@ describe("lesson activity contracts", () => {
     const doc = { ...emptyLessonDocument(), blocks: [heading(1, "Story", 1), para(2, "Story text"), columnList, dialogue(9, sofiaAndMira)] } as unknown as LessonDocument;
     const sources = await resolveLessonActivitySources({ document: doc, includeLessonEnd: false });
     expect(sources.map((source) => source.sourceId)).not.toContain(uid(5));
-    expect(sources.find((source) => source.sourceId === uid(1))?.activityTypes).toEqual(["story_summary", "story_comprehension", "read_aloud", "speak_from_english"]);
-    expect(sources.find((source) => source.sourceId === uid(9))).toMatchObject({ sourceLabel: "Dialogue · Story", activityTypes: ["roleplay"] });
-  });
-
-  it("validates story summary pairs, new words and the view image", () => {
-    expect(lessonActivityPayloadSchema.safeParse(summaryPayload).success).toBe(true);
-    expect(lessonActivityPayloadSchema.safeParse({ ...summaryPayload, pairs: summaryPayload.pairs.slice(0, 1) }).success).toBe(false);
-    expect(lessonActivityPayloadSchema.safeParse({ ...summaryPayload, newWords: Array.from({ length: 13 }, (_, n) => ({ term: `woord${n}`, translation: "word" })) }).success).toBe(false);
-    const view = viewOf(summaryPayload);
-    expect(lessonActivityViewSchema.parse(view).payload).toMatchObject({ type: "story_summary", image: null, pairs: summaryPayload.pairs });
-    expect(JSON.stringify(view)).not.toContain("metrics");
+    expect(sources.find((source) => source.sourceId === uid(1))?.activityTypes).toEqual(["read_aloud"]);
   });
 
   it("validates guided grammar steps and follow-ups, and omits the answer from its view", () => {
@@ -235,66 +203,70 @@ describe("lesson activity contracts", () => {
     expect(JSON.stringify(view)).not.toContain("referenceText");
   });
 
-  it("validates speak-from-English lines and shows Dutch text only after an answer", () => {
-    expect(lessonActivityPayloadSchema.safeParse(speakPayload).success).toBe(true);
-    const { englishText: _englishText, ...withoutEnglish } = speakLine;
-    expect(lessonActivityPayloadSchema.safeParse({ ...speakPayload, lines: [withoutEnglish] }).success).toBe(false);
-    const view = viewOf(speakPayload);
-    expect(lessonActivityViewSchema.parse(view).payload).toMatchObject({ type: "speak_from_english", lines: [{ englishText: "Good morning.", dutchText: null }] });
-    expect(JSON.stringify(view)).not.toContain("referenceText");
+  it("requires a speaker on every read-aloud line", () => {
+    expect(lessonActivityPayloadSchema.safeParse({ ...readAloudPayload, lines: [{ ...readAloudLine(50), speaker: null }] }).success).toBe(false);
   });
 
-  it("requires one to three metrics on every payload, roleplay included", () => {
-    for (const payload of [summaryPayload, guidedPayload, readAloudPayload, speakPayload, roleplayPayload]) {
+  it("validates review-words word IDs and keeps them in the view", () => {
+    expect(lessonActivityPayloadSchema.safeParse(reviewWordsPayload).success).toBe(true);
+    expect(lessonActivityPayloadSchema.safeParse({ ...reviewWordsPayload, wordIds: [] }).success).toBe(false);
+    expect(lessonActivityViewSchema.parse(viewOf(reviewWordsPayload)).payload).toEqual({ type: "review_words", recipeVersion: 2, schemaVersion: 2, wordIds: [uid(80), uid(81)] });
+    expect(gradeLessonActivityAnswer(lessonActivityPayloadSchema.parse(reviewWordsPayload), uid(80), { kind: "text", text: "x" })).toBeNull();
+  });
+
+  it("requires one to three metrics on every payload", () => {
+    for (const payload of [guidedPayload, readAloudPayload, reviewWordsPayload]) {
       expect(lessonActivityPayloadSchema.safeParse(payload).success).toBe(true);
       expect(lessonActivityPayloadSchema.safeParse({ ...payload, metrics: [] }).success).toBe(false);
       expect(lessonActivityPayloadSchema.safeParse({ ...payload, metrics: ["lesson_share", "lesson_reading", "lesson_grammar", "lesson_activities"] }).success).toBe(false);
     }
   });
 
-  it("gives grammar sections exactly guided grammar, grammar explanation and tricky grammar", async () => {
+  it("gives grammar sections exactly guided grammar and tricky grammar", async () => {
     const doc = { ...emptyLessonDocument(), blocks: [heading(1, "Grammar", 1), para(2, "Rule"), { id: uid(3), type: "callout", props: { variant: "grammar", icon: "auto" }, content: [{ type: "text", text: "Tip" }], children: [] }] } as unknown as LessonDocument;
     const sources = await resolveLessonActivitySources({ document: doc, includeLessonEnd: false });
     expect(sources.find((source) => source.sourceId === uid(1))?.activityTypes).toEqual(["guided_grammar", "tricky_grammar"]);
   });
 
-  it("gives story sections reading and speaking activities and lists speaking lines in document order", async () => {
-    const story = [heading(1, "Story", 1), para(2, "Ik woon in Amsterdam. Heb je een fiets?"), dialogue(3, sofiaAndMira), para(4, "Dat is leuk!")];
-    const doc = { ...emptyLessonDocument(), blocks: story } as unknown as LessonDocument;
-    const sources = await resolveLessonActivitySources({ document: doc, includeLessonEnd: false });
-    expect(sources.find((source) => source.sourceId === uid(1))?.activityTypes).toEqual(["story_summary", "story_comprehension", "read_aloud", "speak_from_english"]);
-    expect(storySpeakingLines(story)).toEqual([
-      { blockId: uid(2), sourceIndex: 0, speaker: null, text: "Ik woon in Amsterdam." },
-      { blockId: uid(2), sourceIndex: 1, speaker: null, text: "Heb je een fiets?" },
+  it("lists a dialogue section's lines from its dialogues only, in document order, with trimmed speakers", () => {
+    const story = [heading(1, "Story", 1), para(2, "Ik woon in Amsterdam."), dialogue(3, sofiaAndMira), para(4, "Dat is leuk!"),
+      dialogue(5, [{ speaker: " Jan ", text: "Hoi." }])];
+    expect(dialogueLines(story)).toEqual([
       { blockId: uid(3), sourceIndex: 0, speaker: "Sofia", text: "Hallo." },
       { blockId: uid(3), sourceIndex: 1, speaker: "Mira", text: "Goedemorgen." },
-      { blockId: uid(4), sourceIndex: 0, speaker: null, text: "Dat is leuk!" },
+      { blockId: uid(5), sourceIndex: 0, speaker: "Jan", text: "Hoi." },
     ]);
+    expect(dialogueSpeakers(dialogueLines(story))).toEqual(["Sofia", "Mira", "Jan"]);
   });
 
-  it("caps speaking lines at 60", () => {
-    const blocks = Array.from({ length: 70 }, (_, n) => para(200 + n, `Zin ${n}.`));
-    const lines = storySpeakingLines(blocks);
+  it("caps dialogue lines at 60", () => {
+    const turns = (from: number) => Array.from({ length: 35 }, (_, n) => ({ speaker: n % 2 ? "Mira" : "Sofia", text: `Zin ${from + n}.` }));
+    const blocks = [dialogue(200, turns(0)), dialogue(201, turns(35))];
+    const lines = dialogueLines(blocks);
     expect(lines).toHaveLength(60);
     expect(lines[59]).toMatchObject({ text: "Zin 59." });
   });
 
-  it("finds the first image inside columns as its URL and alt text", () => {
-    const image = (id: number, url: string, name: string): LessonBlock => ({ id: uid(id), type: "image", props: { textAlignment: "left", backgroundColor: "default", name, url, caption: "", showPreview: true }, content: undefined, children: [] });
-    const columns = { id: uid(20), type: "columnList", props: {}, content: undefined, children: [
-      { id: uid(21), type: "column", props: { width: 50 }, content: undefined, children: [para(22, "Tekst")] },
-      { id: uid(23), type: "column", props: { width: 50 }, content: undefined, children: [image(24, "https://cdn.example/a.png", "Een kat")] },
-    ] } as unknown as LessonBlock;
-    expect(firstImage([para(1, "Voor"), columns])).toEqual({ url: "https://cdn.example/a.png", alt: "Een kat" });
-    expect(firstImage([para(1, "Voor")])).toBeNull();
+  it("reads every line without a reader and only the reader's lines with one", () => {
+    const lines = [readAloudLine(1, "Sofia"), readAloudLine(2, "Mira"), readAloudLine(3, "Sofia")];
+    expect(readerLines(lines, null).map((line) => line.id)).toEqual([uid(1), uid(2), uid(3)]);
+    expect(readerLines(lines, "Sofia").map((line) => line.id)).toEqual([uid(1), uid(3)]);
+    expect(readerLines(lines, "Jan")).toEqual([]);
   });
 
-  it("points a section's practice ID at its first practice block and leaves dialogue and lesson-end sources without one", async () => {
+  it("collects a section's word IDs once each, columns included", () => {
+    const columns = { id: uid(20), type: "columnList", props: {}, content: undefined, children: [
+      { id: uid(21), type: "column", props: { width: 50 }, content: undefined, children: [words(22, 30, 31)] },
+    ] } as unknown as LessonBlock;
+    expect(sectionWordIds([words(10, 31, 32), columns])).toEqual([uid(31), uid(32), uid(30)]);
+    expect(sectionWordIds([para(1, "Geen woorden")])).toEqual([]);
+  });
+
+  it("points a section's practice ID at its first practice block and leaves the lesson-end source without one", async () => {
     const practice = (id: number): LessonBlock => ({ id: uid(id), type: "practice", props: { data: "{}" }, content: undefined, children: [] });
     const doc = { ...emptyLessonDocument(), blocks: [heading(1, "Story", 1), para(2, "Text"), practice(3), dialogue(4, sofiaAndMira), practice(5)] } as unknown as LessonDocument;
     const sources = await resolveLessonActivitySources({ document: doc });
     expect(sources.find((source) => source.sourceId === uid(1))?.practiceBlockId).toBe(uid(3));
-    expect(sources.find((source) => source.sourceKind === "dialogue")?.practiceBlockId).toBeNull();
     expect(sources.find((source) => source.sourceKind === "lesson_end")?.practiceBlockId).toBeNull();
   });
 
@@ -315,29 +287,15 @@ describe("lesson activity contracts", () => {
     expect(gradeLessonActivityAnswer(payload, uid(999), { kind: "text", text: "Goedemorgen." })).toBeNull();
   });
 
-  it("grades speak-from-English lines by normalized sentence and never reports a mismatch as incorrect", () => {
-    const payload = lessonActivityPayloadSchema.parse(speakPayload);
-    const correct = gradeLessonActivityAnswer(payload, uid(60), { kind: "text", text: "Goedemorgen" });
-    const wrong = gradeLessonActivityAnswer(payload, uid(60), { kind: "text", text: "Dag." });
-    expect(correct?.correct).toBe(true);
-    expect(wrong).toEqual({ correct: false, reference: "Goedemorgen.", explanation: null });
-    expect(JSON.stringify(wrong)).not.toMatch(/incorrect/i);
-  });
-
-  it("strips guided correct options and speaking reference text from views, revealing speak-from-English Dutch only after answers", () => {
+  it("strips guided correct options and read-aloud reference text from views", () => {
     const guided = viewOf(guidedPayload);
     expect(JSON.stringify(guided)).not.toContain("correctOptionId");
     expect(JSON.stringify(guided)).not.toContain("referenceText");
-    const base = { id: uid(10), sourceId: uid(11), sourceLabel: "Lesson", sourceFingerprint: fingerprint };
-    const unanswered = toLessonActivityView({ ...base, payload: lessonActivityPayloadSchema.parse(speakPayload) });
-    expect(unanswered.payload).toMatchObject({ type: "speak_from_english", lines: [{ dutchText: null }] });
-    const answered = toLessonActivityView({ ...base, payload: lessonActivityPayloadSchema.parse(speakPayload) }, new Set([uid(60)]));
-    expect(lessonActivityViewSchema.parse(answered).payload).toMatchObject({ type: "speak_from_english", lines: [{ dutchText: "Goedemorgen." }] });
-    expect(JSON.stringify(answered)).not.toContain("referenceText");
+    expect(JSON.stringify(viewOf(readAloudPayload))).not.toContain("referenceText");
   });
 
   it("returns metric changes with completion and rejects unknown metric keys", () => {
-    const run = { id: uid(70), status: "completed", cursor: 0, cueMode: "english", startedAt: 1, updatedAt: 2, completedAt: 2 };
+    const run = { id: uid(70), status: "completed", cursor: 0, reader: "Mira", startedAt: 1, updatedAt: 2, completedAt: 2 };
     expect(activityRunPatchResponseSchema.parse({ run }).metrics).toBeUndefined();
     expect(activityRunPatchResponseSchema.parse({ run, metrics: [{ key: "lesson_grammar", before: 0.25, after: 0.5 }] }).metrics).toEqual([{ key: "lesson_grammar", before: 0.25, after: 0.5 }]);
     expect(activityRunPatchResponseSchema.safeParse({ run, metrics: [{ key: "course_progress", before: 0, after: 1 }] }).success).toBe(false);
@@ -347,10 +305,9 @@ describe("lesson activity contracts", () => {
 
 describe("activity speech request", () => {
   const runId = uid(1);
-  it("names exactly one of turnId or lineId", () => {
-    expect(activitySpeechRequestSchema.safeParse({ runId, turnId: uid(2) }).success).toBe(true);
+  it("names one line, and never a role-play turn", () => {
     expect(activitySpeechRequestSchema.safeParse({ runId, lineId: uid(3), chunkIndex: 1 }).success).toBe(true);
     expect(activitySpeechRequestSchema.safeParse({ runId }).success).toBe(false);
-    expect(activitySpeechRequestSchema.safeParse({ runId, turnId: uid(2), lineId: uid(3) }).success).toBe(false);
+    expect(activitySpeechRequestSchema.safeParse({ runId, turnId: uid(2) }).success).toBe(false);
   });
 });

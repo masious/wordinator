@@ -32,7 +32,7 @@ export function activityParts(entries: readonly LessonIndexEntry[], descriptors:
 
 // What Do more with AI offers while index entry `current` is the reader's (-1 before the first): the activities of the section it
 // is in (its level-2 entry's, when it is a level-3 one), that section's own first, then those of its grammar parts that are on
-// screen (`visible`, by heading), in reading order, each source's role-play after it. A section with none falls back to the
+// screen (`visible`, by heading), in reading order. A section with none falls back to the
 // lesson-end activity. The area is named after the section, as its row in the index is.
 export function sectionActivities(entries: readonly LessonIndexEntry[], current: number, descriptors: readonly ActivityDescriptor[], visible: ReadonlySet<string>): SectionActivities {
   const owners = sectionOwners(entries);
@@ -50,7 +50,6 @@ export function sectionActivities(entries: readonly LessonIndexEntry[], current:
     const part = descriptor.returnHeadingId ? parts.get(descriptor.returnHeadingId) ?? null : null;
     if (part && !visible.has(part.headingId)) continue;
     activities.push({ descriptor, part });
-    for (const dialogue of descriptors) if (dialogue.sourceKind === "dialogue" && dialogue.returnHeadingId === descriptor.returnHeadingId) activities.push({ descriptor: dialogue, part });
   }
   if (!activities.length) {
     const end = descriptors.find((descriptor) => descriptor.sourceKind === "lesson_end");
@@ -112,8 +111,7 @@ export function activityPlacements(document: LessonDocument, entries: readonly L
     let end = start + 1;
     while (end < blocks.length && !(descriptor.returnHeadingId === null ? isHeading(end) : boundary(end))) end += 1;
     const part = descriptor.returnHeadingId ? parts.get(descriptor.returnHeadingId) ?? null : null;
-    const dialogues = descriptors.filter((dialogue) => dialogue.sourceKind === "dialogue" && dialogue.returnHeadingId === descriptor.returnHeadingId);
-    place(end - 1, [{ descriptor, part }, ...dialogues.map((dialogue) => ({ descriptor: dialogue, part }))]);
+    place(end - 1, [{ descriptor, part }]);
   }
   return placements;
 }

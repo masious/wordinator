@@ -92,11 +92,9 @@ function practiceSetScript(messages: Message[]): Reply {
   return { text: `You answered ${answered} of ${results.length}.` };
 }
 
-// Lesson activities (apps/api/src/lessonActivities/generate.ts) ask the same provider for one strict JSON output per activity, and
-// for English cues of a role-play dialogue. The stub answers each with fixed content in the shape the generator reads, so generation
-// is deterministic.
+// Lesson activities (apps/api/src/lessonActivities/generate.ts) ask the same provider for one strict JSON output per activity. The
+// stub answers each with fixed content in the shape the generator reads, so generation is deterministic.
 const ACTIVITY_SYSTEM_MARK = "language-learning activity data";
-const ROLEPLAY_CUE_MARK = "Create English translations and cues for one original dialogue";
 // The model's share of an activity (the generator assigns every ID and shuffles word order itself): choices give three option texts
 // and the index of the correct one; word order gives the sentence's tokens in their correct order.
 type ModelChoice = { prompt: string; options: [string, string, string]; correctIndex: number; explanation: string };
@@ -111,30 +109,8 @@ const trickyQuestions = () => [
   { kind: "choice", ...choice("Which is the plural of “boek”?", ["boeken", "boekjes", "boek"], 0, "The plural adds -en.") },
 ];
 
-// Dutch lines of the stub's dialogue and their English translations and cues; any other line is spoken back as it is.
-const DIALOGUE_LINES: Record<string, { english: string; cue: string }> = {
-  "Hallo! Ik ben Anna.": { english: "Hello! I am Anna.", cue: "Anna greets you and introduces herself." },
-  "Hoi, ik ben Sofia.": { english: "Hi, I am Sofia.", cue: "Introduce yourself as Sofia." },
-  "Leuk je te ontmoeten.": { english: "Nice to meet you.", cue: "Anna says it is nice to meet you." },
-  "Ook leuk, dank je.": { english: "Nice too, thank you.", cue: "Reply that it is nice to meet her too." },
-  "Tot ziens!": { english: "Goodbye!", cue: "Anna says goodbye." },
-};
-
-// The model's JSON for each non-roleplay type, in the shape the generator's model schemas read.
+// The model's JSON for each generated type, in the shape the generator's model schemas read.
 function activityOutput(type: string, user = ""): Record<string, unknown> | null {
-  if (type === "story_summary") return {
-    pairs: [
-      { dutch: "Sofia bestelt koffie in een café.", english: "Sofia orders a coffee in a café." },
-      { dutch: "Ze vraagt een vreemde de weg naar het station.", english: "She asks a stranger the way to the station." },
-    ],
-    newWords: [{ term: "het station", translation: "the station" }], metrics: ["lesson_share", "lesson_reading"],
-  };
-  if (type === "story_comprehension") return { questions: [
-    choice("Where does Sofia order a coffee?", ["At a café", "At the station", "At school"], 0, "The scene opens in a café."),
-    choice("What does Sofia ask for?", ["Directions", "Money", "A menu"], 0, "She asks the way to the station."),
-    choice("Who does Sofia talk to?", ["A waiter", "A stranger", "Her teacher"], 1, "She talks to a stranger on the street."),
-    choice("How does the conversation end?", ["Politely", "Angrily", "Abruptly"], 0, "They say goodbye politely."),
-  ], metrics: ["lesson_reading"] };
   if (type === "tricky_grammar") return { questions: trickyQuestions(), metrics: ["lesson_grammar"] };
   if (type === "mixed_practice") return { questions: [
     ...trickyQuestions(),
@@ -161,16 +137,11 @@ function guidedOutput(user: string): Record<string, unknown> | null {
   };
 }
 
-// The reply for an activity generation or a role-play cue request, or null for any other conversation.
+// The reply for an activity generation, or null for any other conversation.
 function activityReply(messages: Message[]): Reply | null {
   const system = messages.find((message) => message.role === "system")?.content ?? "";
   if (!system.includes(ACTIVITY_SYSTEM_MARK)) return null;
   const user = messages.find((message) => message.role === "user")?.content ?? "";
-  if (user.includes(ROLEPLAY_CUE_MARK)) {
-    const turns = JSON.parse(/Source turns \(JSON, in order\): (\[.*\])/.exec(user)?.[1] ?? "[]") as Array<{ text: string }>;
-    const cues = turns.map((turn, index) => ({ index, englishText: DIALOGUE_LINES[turn.text]?.english ?? turn.text, cue: DIALOGUE_LINES[turn.text]?.cue ?? "Say this line." }));
-    return { text: JSON.stringify({ cues, metrics: ["lesson_activities"] }) };
-  }
   const type = /Activity type: ([a-z_]+)\./.exec(user)?.[1] ?? "";
   const output = activityOutput(type, user);
   return output ? { text: JSON.stringify(output) } : null;

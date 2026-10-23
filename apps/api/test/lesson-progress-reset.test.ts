@@ -40,15 +40,15 @@ async function seedActivity(courseId: string, lessonId: string, sourceId: string
   const id = crypto.randomUUID(); const now = Date.now();
   await env.DB.prepare(
     `INSERT INTO lesson_activities (id, lesson_id, course_id, source_id, activity_type, source_fingerprint, recipe_version, schema_version, language, cache_key, status, lease_token, lease_expires_at, next_attempt_at, payload, created_at, updated_at)
-     VALUES (?, ?, ?, ?, 'story_summary', 'fingerprint', 1, 1, 'nl', ?, 'ready', NULL, NULL, NULL, ?, ?, ?)`,
+     VALUES (?, ?, ?, ?, 'tricky_grammar', 'fingerprint', 1, 1, 'nl', ?, 'ready', NULL, NULL, NULL, ?, ?, ?)`,
   ).bind(id, lessonId, courseId, sourceId, `cache-${id}`, JSON.stringify({ items: [{ id: "item-1" }] }), now, now).run();
   return id;
 }
 async function seedRun(activityId: string, userId: string) {
   const id = crypto.randomUUID(); const now = Date.now();
   await env.DB.prepare(
-    `INSERT INTO lesson_activity_runs (id, activity_id, user_id, cursor, cue_mode, status, started_at, updated_at, completed_at)
-     VALUES (?, ?, ?, 0, 'english', 'active', ?, ?, NULL)`,
+    `INSERT INTO lesson_activity_runs (id, activity_id, user_id, cursor, status, started_at, updated_at, completed_at)
+     VALUES (?, ?, ?, 0, 'active', ?, ?, NULL)`,
   ).bind(id, activityId, userId, now, now).run();
   return id;
 }
