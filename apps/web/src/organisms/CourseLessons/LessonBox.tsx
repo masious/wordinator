@@ -96,7 +96,7 @@ function useActivityLink(courseSlug: string | undefined, lessonSlug: string | un
   const { t } = useTranslation();
   const activityLabel: Record<ActivityType, string> = {
     story_summary: t("lessonActivities.types.story_summary"), story_comprehension: t("lessonActivities.types.story_comprehension"),
-    grammar_explanation: t("lessonActivities.types.grammar_explanation"), guided_grammar: t("lessonActivities.types.guided_grammar"),
+    guided_grammar: t("lessonActivities.types.guided_grammar"),
     tricky_grammar: t("lessonActivities.types.tricky_grammar"), mixed_practice: t("lessonActivities.types.mixed_practice"), roleplay: t("lessonActivities.types.roleplay"),
     read_aloud: t("lessonActivities.types.read_aloud"), speak_from_english: t("lessonActivities.types.speak_from_english"),
   };

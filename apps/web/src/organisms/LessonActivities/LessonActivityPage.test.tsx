@@ -46,7 +46,7 @@ const readyResponse = (overrides: { run?: Partial<LessonActivityRun>; payload?: 
 });
 const wordOrderQuestion = { id: uuid(300), kind: "word_order" as const, prompt: "Arrange the sentence.", tokens: ["Ik", "heb", "een", "hond"] };
 const trickyActivity = () => ({
-  id: activityId, sourceId: "section-story", sourceLabel: "Story", sourceFingerprint: fingerprint,
+  id: activityId, sourceId: "section-story", sourceLabel: "Story", sourceFingerprint: fingerprint, generatedBy: "gpt-5.6-luna",
   payload: { type: "tricky_grammar", recipeVersion: 1, schemaVersion: 1, questions: [wordOrderQuestion, choice(2, "Tricky question 2?"), choice(3, "Tricky question 3?"), choice(4, "Tricky question 4?")] },
 });
 
@@ -149,7 +149,7 @@ describe("Lesson activity page", () => {
     expect(answers[0]).toMatchObject({ answer: { kind: "text", text: "Wil jij" } });
   });
 
-  it("orders word tokens by tapping and submits the order as indices", async () => {
+  it("orders word tokens on the shared word-order board and submits the order as indices", async () => {
     const answers: Record<string, unknown>[] = [];
     serve({
       descriptors: () => descriptorList,
@@ -158,26 +158,25 @@ describe("Lesson activity page", () => {
     });
     renderPage({ type: "tricky_grammar" });
     await screen.findByText("Arrange the sentence.");
-    const bank = screen.getByRole("list", { name: "Words" });
+    // The page names the model that generated the cached content.
+    expect(screen.getByText("Generated with gpt-5.6-luna")).toBeInTheDocument();
+    // The board (WordOrderBoard, shared with lesson practices and the tutor) also takes drags between the placed words.
+    const pool = screen.getByRole("list", { name: "Pieces" });
     const answerRow = screen.getByRole("list", { name: "Your sentence" });
     expect(screen.getByRole("button", { name: "Check answer" })).toBeDisabled();
 
-    fireEvent.click(within(bank).getByRole("button", { name: "hond" }));
-    fireEvent.click(within(bank).getByRole("button", { name: "Ik" }));
-    expect(within(answerRow).getAllByRole("button").map((button) => button.textContent)).toEqual(["hond", "Ik"]);
-    fireEvent.click(screen.getByRole("button", { name: "Reset" }));
-    expect(within(answerRow).queryAllByRole("button")).toHaveLength(0);
-    expect(screen.getByText("Tap the words below, in order.")).toBeInTheDocument();
-
-    for (const word of ["hond", "Ik", "heb", "een"]) fireEvent.click(within(bank).getByRole("button", { name: word }));
-    // Removing a placed word returns it to the bank, so the order can be corrected before checking.
-    fireEvent.click(within(answerRow).getByRole("button", { name: "Remove een" }));
+    for (const word of ["hond", "Ik", "heb", "een"]) fireEvent.click(within(pool).getByRole("button", { name: `Add “${word}”` }));
+    expect(within(answerRow).getAllByRole("button").map((button) => button.textContent)).toEqual(["hond", "Ik", "heb", "een"]);
+    // Removing a placed word returns it to the pool, so the order can be corrected before checking.
+    fireEvent.click(within(answerRow).getByRole("button", { name: "Remove “een”, place 4" }));
     expect(screen.getByRole("button", { name: "Check answer" })).toBeDisabled();
-    fireEvent.click(within(bank).getByRole("button", { name: "een" }));
+    fireEvent.click(within(pool).getByRole("button", { name: "Add “een”" }));
     fireEvent.click(screen.getByRole("button", { name: "Check answer" }));
 
     await screen.findByRole("status");
     expect(answers[0]).toMatchObject({ itemId: uuid(300), answer: { kind: "word_order", order: [3, 0, 1, 2] } });
+    // A correct answer reads as the green Correct badge.
+    expect(within(screen.getByRole("status")).getByText("Correct")).toBeInTheDocument();
   });
 
   it("resumes at the server cursor instead of the first item", async () => {
@@ -186,6 +185,8 @@ describe("Lesson activity page", () => {
     expect(await screen.findByText("Story question 3?")).toBeInTheDocument();
     expect(screen.getByText("Question 3 of 4")).toBeInTheDocument();
     expect(screen.queryByText("Story question 1?")).not.toBeInTheDocument();
+    // Content cached before the model was recorded says so.
+    expect(screen.getByText("Model not recorded")).toBeInTheDocument();
   });
 
   it("reloads the lesson's activity list when the run is completed and when it is restarted", async () => {

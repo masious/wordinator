@@ -9,7 +9,7 @@ export const LESSON_ACTIVITY_ANSWER_MAX = 2_000;
 // Source fingerprints are SHA-256 digests in lowercase hex, shared by descriptors, views and open requests.
 export const SOURCE_FINGERPRINT_SCHEMA = z.string().regex(/^[a-f0-9]{64}$/);
 export const lessonActivityTypeSchema = z.enum([
-  "story_summary", "story_comprehension", "grammar_explanation", "tricky_grammar", "mixed_practice", "roleplay", "guided_grammar", "read_aloud", "speak_from_english",
+  "story_summary", "story_comprehension", "tricky_grammar", "mixed_practice", "roleplay", "guided_grammar", "read_aloud", "speak_from_english",
 ]);
 export type LessonActivityType = z.infer<typeof lessonActivityTypeSchema>;
 export type ActivityType = LessonActivityType;
@@ -59,14 +59,13 @@ const lessonActivityMetricsSchema = z.array(lessonActivityMetricSchema).min(1).m
 const summaryPairsSchema = z.array(z.strictObject({ dutch: shortText, english: shortText })).min(2).max(16);
 const summaryNewWordsSchema = z.array(z.strictObject({ term: shortText, translation: shortText })).max(12);
 const guidedStepBlocksSchema = z.array(topBlockSchema).min(1).max(4);
-const followUpTypeSchema = z.enum(["tricky_grammar", "mixed_practice", "grammar_explanation"]);
+const followUpTypeSchema = z.enum(["tricky_grammar", "mixed_practice"]);
 // referenceText is the stored Dutch used for grading; views strip it. dutchText and referenceText hold the same Dutch text.
 const readAloudLineSchema = z.strictObject({ id: opaqueIdSchema, index: z.number().int().nonnegative(), speaker: shortText.nullable(), dutchText: shortText, referenceText: shortText });
 const speakFromEnglishLineSchema = readAloudLineSchema.extend({ englishText: shortText });
 const activityContents = {
   story_summary: z.strictObject({ pairs: summaryPairsSchema, newWords: summaryNewWordsSchema }),
   story_comprehension: z.strictObject({ questions: z.array(choiceQuestionPayloadSchema).length(4) }),
-  grammar_explanation: z.strictObject({ paragraphs: z.array(shortText).min(1).max(8), examples: z.array(z.strictObject({ dutch: shortText, english: shortText })).min(1).max(12) }),
   tricky_grammar: z.strictObject({ questions: z.array(questionPayloadSchema).length(4) }),
   mixed_practice: z.strictObject({ questions: z.array(questionPayloadSchema).length(6) }),
   roleplay: z.strictObject({ dialogueId: opaqueIdSchema, cueLanguage: z.enum(["english", "dutch"]), turns: z.array(roleplayTurnPayloadSchema).min(2).max(60) }),
@@ -80,7 +79,6 @@ const activityPayload = <T extends LessonActivityType, S extends z.ZodRawShape>(
 export const lessonActivityPayloadSchema = z.discriminatedUnion("type", [
   activityPayload("story_summary", activityContents.story_summary.shape),
   activityPayload("story_comprehension", activityContents.story_comprehension.shape),
-  activityPayload("grammar_explanation", activityContents.grammar_explanation.shape),
   activityPayload("tricky_grammar", activityContents.tricky_grammar.shape),
   activityPayload("mixed_practice", activityContents.mixed_practice.shape),
   activityPayload("roleplay", activityContents.roleplay.shape),
@@ -96,7 +94,6 @@ export type LessonActivityPayload = z.infer<typeof lessonActivityPayloadSchema>;
 const viewContents = {
   story_summary: z.strictObject({ pairs: summaryPairsSchema, newWords: summaryNewWordsSchema, image: z.strictObject({ url: z.string().min(1).max(LESSON_IMAGE_URL_MAX), alt: z.string().max(LESSON_IMAGE_ALT_MAX) }).nullable() }),
   story_comprehension: z.strictObject({ questions: z.array(choiceQuestionViewSchema).length(4) }),
-  grammar_explanation: activityContents.grammar_explanation,
   tricky_grammar: z.strictObject({ questions: z.array(questionViewSchema).length(4) }),
   mixed_practice: z.strictObject({ questions: z.array(questionViewSchema).length(6) }),
   roleplay: z.strictObject({ dialogueId: opaqueIdSchema, cueLanguage: z.enum(["english", "dutch"]), turns: z.array(roleplayTurnViewSchema).min(2).max(60) }),
@@ -110,7 +107,6 @@ const activityViewPayload = <T extends LessonActivityType, S extends z.ZodRawSha
 export const lessonActivityViewPayloadSchema = z.discriminatedUnion("type", [
   activityViewPayload("story_summary", viewContents.story_summary.shape),
   activityViewPayload("story_comprehension", viewContents.story_comprehension.shape),
-  activityViewPayload("grammar_explanation", viewContents.grammar_explanation.shape),
   activityViewPayload("tricky_grammar", viewContents.tricky_grammar.shape),
   activityViewPayload("mixed_practice", viewContents.mixed_practice.shape),
   activityViewPayload("roleplay", viewContents.roleplay.shape),
@@ -120,7 +116,10 @@ export const lessonActivityViewPayloadSchema = z.discriminatedUnion("type", [
 ]);
 export type LessonActivityViewPayload = z.infer<typeof lessonActivityViewPayloadSchema>;
 export const lessonActivityViewSchema = z.strictObject({
-  id: opaqueIdSchema, sourceId: z.string().min(1).max(200), sourceLabel: shortText, sourceFingerprint: SOURCE_FINGERPRINT_SCHEMA, payload: lessonActivityViewPayloadSchema,
+  id: opaqueIdSchema, sourceId: z.string().min(1).max(200), sourceLabel: shortText, sourceFingerprint: SOURCE_FINGERPRINT_SCHEMA,
+  // The model the shared content was generated with; null for read aloud (no model) and content cached before it was recorded.
+  generatedBy: z.string().min(1).max(200).nullable().default(null),
+  payload: lessonActivityViewPayloadSchema,
 });
 export type LessonActivityView = z.infer<typeof lessonActivityViewSchema>;
 
@@ -161,7 +160,7 @@ export const activitySpeechResponseSchema = z.discriminatedUnion("status", [
 ]);
 
 // answeredItemIds lists items whose answer was submitted; only those speak_from_english lines reveal their Dutch text.
-export function toLessonActivityView(activity: Omit<LessonActivityView, "payload"> & { payload: LessonActivityPayload }, answeredItemIds: ReadonlySet<string> = new Set()): LessonActivityView {
+export function toLessonActivityView(activity: Omit<LessonActivityView, "payload" | "generatedBy"> & { generatedBy?: string | null; payload: LessonActivityPayload }, answeredItemIds: ReadonlySet<string> = new Set()): LessonActivityView {
   const { payload, ...rest } = activity;
   const stripQuestion = (question: z.infer<typeof questionPayloadSchema>): z.infer<typeof questionViewSchema> => {
     if (question.kind === "choice") return { id: question.id, kind: question.kind, prompt: question.prompt, options: question.options };
@@ -196,7 +195,11 @@ export function gradeLessonActivityAnswer(payload: LessonActivityPayload, itemId
   if ("isLearner" in item) return { correct: answer.kind === "text" && sameLessonSentence(answer.text, item.referenceText), reference: item.referenceText, explanation: null };
   if (item.kind === "choice") return { correct: answer.kind === "choice" && answer.optionId === item.correctOptionId, reference: item.options.find((option) => option.id === item.correctOptionId)?.text ?? null, explanation: item.explanation };
   if (item.kind === "fill_in") return { correct: answer.kind === "text" && item.referenceAnswers.some((reference) => sameLessonSentence(answer.text, reference)), reference: item.referenceAnswers[0] ?? null, explanation: item.explanation };
-  return { correct: answer.kind === "word_order" && answer.order.length === item.expectedOrder.length && answer.order.every((value, index) => value === item.expectedOrder[index]), reference: item.expectedOrder.map((index) => item.tokens[index] ?? "").join(" "), explanation: item.explanation };
+  // Word order is graded on the sentence it builds, so a repeated word ("uur … uur") may be taken from either of its chips. Each
+  // token must be used exactly once.
+  const sentence = (order: readonly number[]) => order.map((index) => item.tokens[index] ?? "").join(" ");
+  const complete = (order: readonly number[]) => order.length === item.tokens.length && new Set(order).size === order.length && order.every((index) => index >= 0 && index < item.tokens.length);
+  return { correct: answer.kind === "word_order" && complete(answer.order) && sentence(answer.order) === sentence(item.expectedOrder), reference: sentence(item.expectedOrder), explanation: item.explanation };
 }
 // Sentence comparison for role-play reproduction and fill-in answers (plan 04): NFKC, case, the project's accent equivalence
 // (foldEquivalentAccents, the rule answer matching uses), and spacing. Punctuation, quotes, dashes and symbols count as spaces,
@@ -297,7 +300,7 @@ export async function resolveLessonActivitySources({ document, title = "Lesson",
     const hasGrammar = section.grammar;
     const hasSummary = /summary|recap|wrap[- ]?up|lesson end/i.test(section.label);
     const types: LessonActivityType[] = dialogues.length ? [...storyTypes] : [];
-    if (hasGrammar) types.push("grammar_explanation", "guided_grammar", "tricky_grammar");
+    if (hasGrammar) types.push("guided_grammar", "tricky_grammar");
     if (hasSummary) types.push("mixed_practice");
     const safeTypes = [...new Set(types)];
     await add(section.id, "section", section.label || title, contents[0]?.id ?? section.headingId, section.headingId, contents.map(activitySourceBlock), safeTypes, firstPracticeId(contents));

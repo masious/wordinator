@@ -297,6 +297,8 @@ v2 deployed to production 2026-10-21 ([ACTIVITIES_V2_PLAN.html](../ACTIVITIES_V2
 - `ai_turn_reservations`: short-lived claims of a daily AI turn for one generation, unique per account, cache key and UTC day. The lesson-activity route inserts one when it takes a lease and deletes it after the commit or the failure.
 - `learning_time` is rebuilt to allow `lesson_activity` with a `reading`, `grammar`, or `speaking` focus.
 
+Migration `0042_retire_grammar_explanation.sql` (2026-10-22) deletes `grammar_explanation` activities, which cascades to their runs and answers, and removes it from guided grammar payloads' `followUps`. The `lesson_activities` type CHECK still admits it, because rebuilding that table would cascade-delete every run; the Drizzle enum no longer lists it. Migration `0043_lesson_activity_generated_by.sql` adds the nullable `generated_by` text column: the model that generated the payload, null for read aloud and for rows cached before it.
+
 Migration `0037_speech_usage_lesson_activity.sql` rebuilds `speech_usage` so its surface may be `lesson_activity` (role-play audio, see [speech](speech.md#lesson-activity-role-play)).
 
 No raw audio, learner answer or Tutor profile enters shared cache payloads. Lesson reset deletes the viewer's private runs and answers for the lesson's activities but keeps shared content; lesson deletion cascades both. Learning-time activity IDs use `practice_id` only under the distinct `lesson_activity` discriminator, with source-derived focus.

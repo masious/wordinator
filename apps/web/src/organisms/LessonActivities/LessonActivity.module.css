@@ -5,6 +5,8 @@
 .back svg{flex:none;width:1rem;height:1rem}
 .header{display:grid;gap:var(--space-2);padding-bottom:var(--space-4);border-bottom:var(--ring-hairline)}
 .eyebrow{color:var(--color-foreground-faint);font-family:var(--font-mono);font-size:var(--type-metadata);overflow-wrap:anywhere}
+/* The generating model, under the title: quiet metadata in the eyebrow's mono face. */
+.model{color:var(--color-foreground-faint);font-family:var(--font-mono);font-size:var(--type-metadata)}
 .title{margin:0;color:var(--color-foreground);font-size:var(--type-page-title);font-weight:var(--weight-bold);letter-spacing:var(--tracking-display);line-height:var(--line-heading)}
 .panel{display:grid;gap:var(--space-4)}
 .panel h2{margin:0;font-size:var(--type-section-title);font-weight:var(--weight-semibold);line-height:var(--line-heading)}
@@ -15,7 +17,22 @@
 .preparation p{margin-top:var(--space-2);font-size:var(--type-metadata);line-height:var(--line-body)}
 .prompt{font-size:var(--type-card-title);font-weight:var(--weight-semibold);line-height:var(--line-title)}
 .choices{display:grid;gap:var(--space-2)}
-.choice{justify-content:flex-start;height:auto;min-height:var(--control-height);text-align:start;white-space:normal}
+.choice{position:relative;overflow:visible;justify-content:flex-start;height:auto;min-height:var(--control-height);text-align:start;white-space:normal}
+/* Once checked: the correct option is green with its badge on the top end corner; a wrong pick keeps a danger edge. */
+.choice[data-correct],.choice[data-correct]:disabled{color:var(--color-foreground);background:var(--color-success-surface);border-color:var(--color-success)}
+.choice[data-wrong],.choice[data-wrong]:disabled{color:var(--color-foreground-muted);border-color:var(--color-danger)}
+.correctBadge{display:inline-flex;align-items:center;justify-self:start;gap:var(--space-1);padding:var(--space-1) var(--space-2);color:var(--color-vivid-text);background:var(--color-success);border-radius:var(--radius-pill);font-size:var(--text-xs);font-weight:var(--weight-semibold);line-height:1;white-space:nowrap}
+.correctBadge svg{width:0.9rem;height:0.9rem;flex:none}
+.correctBadge[data-corner]{position:absolute;inset-block-start:calc(var(--space-2) * -1);inset-inline-end:var(--space-3);box-shadow:var(--shadow-floating)}
+/* A checked answer's result row: the result at the start, Try again and Continue at the end; it wraps on narrow screens. */
+.result{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-3)}
+.result .actions{margin-inline-start:auto}
+.wrong{font-size:var(--type-body);font-weight:var(--weight-semibold)}
+/* A wrong typed or ordered answer's reference: a muted lead, then the answer. */
+.reference{margin:0;font-size:var(--type-body);line-height:var(--line-body)}
+.reference span{color:var(--color-foreground-muted)}
+/* A checked choice's explanation, under its options. */
+.note{margin:0;color:var(--color-foreground-muted);font-size:var(--type-body);line-height:var(--line-body)}
 .actions{display:flex;gap:var(--space-2);flex-wrap:wrap;align-items:center}
 .feedback{display:grid;gap:var(--space-2);padding:var(--space-4);border-radius:var(--radius-md);background:var(--color-wash);border:var(--ring-hairline)}
 .feedback p{margin:0;font-size:var(--type-body);line-height:var(--line-body)}
@@ -38,18 +55,7 @@
 .mic[data-holding]{border-color:var(--color-action);animation:holdPulse 1.2s ease-in-out infinite}
 @keyframes holdPulse{50%{box-shadow:0 0 0 6px var(--color-action-soft)}}
 /* Word order: the answer row above, the word bank below. Each word is a button, so the keyboard reaches every one. */
-.wordOrder{display:grid;gap:var(--space-3)}
 .hint{margin:0;color:var(--color-foreground-muted);font-size:var(--type-body)}
-.answerRow,.bank{display:flex;flex-wrap:wrap;gap:var(--space-2);margin:0;padding:var(--space-3);list-style:none;min-height:var(--control-height);border-radius:var(--radius-md);border:var(--ring-hairline)}
-.answerRow{background:var(--color-surface)}
-.bank{background:var(--color-control-surface)}
-.answerRow li,.bank li{display:contents}
-.placeholder{color:var(--color-foreground-faint);font-size:var(--type-body);align-self:center}
-.token{min-height:var(--touch-target);padding:var(--space-2) var(--space-3);color:var(--color-foreground);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-sm);font:inherit;font-size:var(--type-body);font-weight:var(--weight-semibold);cursor:pointer}
-.token:hover{border-color:var(--color-action)}
-.token:focus-visible{outline:var(--focus-ring-width) solid var(--color-focus);outline-offset:var(--focus-ring-offset)}
-.token[data-used],.token[aria-disabled="true"]{color:var(--color-foreground-faint);background:var(--color-surface-muted);cursor:default}
-.token:disabled{cursor:default;opacity:0.6}
 @media(max-width:48em){.page{width:min(100% - 2 * var(--space-3),var(--width-reading));padding-block:var(--space-4)}.panel{padding:0}.title{font-size:var(--type-section-title)}}
 @media(prefers-reduced-motion:reduce){.page *{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
 .skipRow{display:flex;justify-content:flex-end}

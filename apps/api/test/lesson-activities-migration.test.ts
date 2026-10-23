@@ -149,6 +149,8 @@ describe("Migration 0036 tables", () => {
     expect((await columns("lesson_activities")).map((column) => column.name)).toEqual([
       "id", "lesson_id", "course_id", "source_id", "activity_type", "source_fingerprint", "recipe_version", "schema_version", "language", "cache_key",
       "status", "lease_token", "lease_expires_at", "next_attempt_at", "payload", "created_at", "updated_at",
+      // 0043: the model that generated the payload.
+      "generated_by",
     ]);
     const runs = await columns("lesson_activity_runs");
     expect(runs.map((column) => column.name)).toEqual(["id", "activity_id", "user_id", "cursor", "cue_mode", "status", "started_at", "updated_at", "completed_at", "metrics_before"]);
@@ -386,5 +388,30 @@ describe("Migration 0038 lesson activity v2", () => {
     await insertRun(env.DB, activityId, lib.learner, { id: runId }).run();
     expect(await env.DB.prepare("SELECT metrics_before AS metricsBefore FROM lesson_activity_runs WHERE id = ?").bind(runId).first<{ metricsBefore: string | null }>())
       .toEqual({ metricsBefore: null });
+  });
+});
+
+describe("Migration 0042 retiring grammar explanation", () => {
+  it("deletes grammar explanation activities with their runs, and drops it from guided grammar follow-ups", async () => {
+    await applyD1Migrations(legacy, migrations.filter((migration) => migration.name < "0042_"));
+    const lib = await seedLibrary(legacy);
+    const [explanation, guided, story] = [uuid(), uuid(), uuid()];
+    const [explanationRun, storyRun] = [uuid(), uuid()];
+    await legacy.batch([
+      insertActivity(legacy, lib, { id: explanation, activityType: "grammar_explanation" }),
+      insertActivity(legacy, lib, { id: guided, activityType: "guided_grammar", payload: JSON.stringify({ type: "guided_grammar", steps: [], followUps: ["grammar_explanation", "tricky_grammar"] }) }),
+      insertActivity(legacy, lib, { id: story, activityType: "story_summary" }),
+      insertRun(legacy, explanation, lib.learner, { id: explanationRun }),
+      insertRun(legacy, story, lib.learner, { id: storyRun }),
+    ]);
+
+    await applyD1Migrations(legacy, migrations.filter((migration) => migration.name.startsWith("0042_")));
+
+    const ids = await legacy.prepare("SELECT id FROM lesson_activities").all<{ id: string }>();
+    expect(sorted(ids.results.map((row) => row.id))).toEqual(sorted([guided, story]));
+    const runs = await legacy.prepare("SELECT id FROM lesson_activity_runs").all<{ id: string }>();
+    expect(runs.results.map((row) => row.id)).toEqual([storyRun]);
+    const payload = await legacy.prepare("SELECT payload FROM lesson_activities WHERE id = ?").bind(guided).first<string>("payload");
+    expect(JSON.parse(payload!)).toEqual({ type: "guided_grammar", steps: [], followUps: ["tricky_grammar"] });
   });
 });

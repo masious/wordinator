@@ -53,13 +53,18 @@ describe("lesson activity contracts", () => {
     expect(gradeLessonActivityAnswer(payload, uid(1), { kind: "text", text: "ga" })?.correct).toBe(false);
   });
 
-  it("grades word order against the stored expected order and rejects a non-permutation", () => {
+  it("grades word order by the sentence it builds and rejects a non-permutation", () => {
     const wordOrder = { id: uid(1), kind: "word_order", prompt: "Order the words.", tokens: ["hier", "woon", "ik"], expectedOrder: [2, 1, 0], explanation: "Verb second." };
     const fillIn = (n: number) => ({ id: uid(n), kind: "fill_in", prompt: "Ik … hier.", referenceAnswers: ["woon"], explanation: "Present tense." });
     const payload = lessonActivityPayloadSchema.parse({ type: "tricky_grammar", recipeVersion: 1, schemaVersion: 1, metrics, questions: [wordOrder, fillIn(2), fillIn(3), fillIn(4)] });
     expect(gradeLessonActivityAnswer(payload, uid(1), { kind: "word_order", order: [2, 1, 0] })).toMatchObject({ correct: true, reference: "ik woon hier" });
     expect(gradeLessonActivityAnswer(payload, uid(1), { kind: "word_order", order: [0, 1, 2] })?.correct).toBe(false);
     expect(gradeLessonActivityAnswer(payload, uid(1), { kind: "word_order", order: [2, 1] })?.correct).toBe(false);
+    // A repeated word may come from either of its chips; every chip is still used once.
+    const repeated = lessonActivityPayloadSchema.parse({ type: "tricky_grammar", recipeVersion: 1, schemaVersion: 1, metrics,
+      questions: [{ ...wordOrder, tokens: ["uur", "tot", "elf", "uur", "negen", "van"], expectedOrder: [5, 4, 0, 1, 2, 3] }, fillIn(2), fillIn(3), fillIn(4)] });
+    expect(gradeLessonActivityAnswer(repeated, uid(1), { kind: "word_order", order: [5, 4, 3, 1, 2, 0] })).toMatchObject({ correct: true, reference: "van negen uur tot elf uur" });
+    expect(gradeLessonActivityAnswer(repeated, uid(1), { kind: "word_order", order: [5, 4, 0, 1, 2, 0] })?.correct).toBe(false);
     expect(gradeLessonActivityAnswer(payload, uid(1), { kind: "text", text: "ik woon hier" })?.correct).toBe(false);
     expect(lessonActivityPayloadSchema.safeParse({ type: "tricky_grammar", recipeVersion: 1, schemaVersion: 1, metrics, questions: [{ ...wordOrder, expectedOrder: [0, 0, 1] }, fillIn(2), fillIn(3), fillIn(4)] }).success).toBe(false);
   });
@@ -163,9 +168,10 @@ describe("lesson activity contracts", () => {
     expect(sources.find((source) => source.sourceId === uid(5))).toMatchObject({ sourceKind: "dialogue", sourceLabel: "Dialogue · Story", activityTypes: ["roleplay"] });
   });
 
-  it("has nine v2 activity types, rejects quick_grammar and maps focus for the new types", () => {
-    expect(lessonActivityTypeSchema.options).toHaveLength(9);
+  it("has eight activity types, rejects the retired quick_grammar and grammar_explanation, and maps focus for the new types", () => {
+    expect(lessonActivityTypeSchema.options).toHaveLength(8);
     expect(lessonActivityTypeSchema.safeParse("quick_grammar").success).toBe(false);
+    expect(lessonActivityTypeSchema.safeParse("grammar_explanation").success).toBe(false);
     expect(lessonActivityTypeSchema.safeParse("guided_grammar").success).toBe(true);
     expect(lessonActivityPayloadSchema.safeParse({ type: "quick_grammar", recipeVersion: 2, schemaVersion: 2 }).success).toBe(false);
     expect(lessonActivityFocus("read_aloud")).toBe("speaking");
@@ -209,8 +215,10 @@ describe("lesson activity contracts", () => {
     expect(lessonActivityPayloadSchema.safeParse({ ...guidedPayload, steps: [step(10)] }).success).toBe(false);
     expect(lessonActivityPayloadSchema.safeParse({ ...guidedPayload, steps: [{ ...step(10), blocks: [] }, step(20)] }).success).toBe(false);
     expect(lessonActivityPayloadSchema.safeParse({ ...guidedPayload, steps: [{ ...step(10), blocks: Array.from({ length: 5 }, (_, n) => para(300 + n, "Regel.")) }, step(20)] }).success).toBe(false);
-    expect(lessonActivityPayloadSchema.safeParse({ ...guidedPayload, followUps: ["tricky_grammar", "mixed_practice", "grammar_explanation"] }).success).toBe(false);
+    expect(lessonActivityPayloadSchema.safeParse({ ...guidedPayload, followUps: ["tricky_grammar", "mixed_practice", "mixed_practice"] }).success).toBe(false);
     expect(lessonActivityPayloadSchema.safeParse({ ...guidedPayload, followUps: ["quick_grammar"] }).success).toBe(false);
+    // Grammar explanation is retired, so it is no follow-up either.
+    expect(lessonActivityPayloadSchema.safeParse({ ...guidedPayload, followUps: ["grammar_explanation"] }).success).toBe(false);
     expect(lessonActivityPayloadSchema.safeParse({ ...guidedPayload, steps: [step(10), step(10)] }).success).toBe(false);
     const view = viewOf(guidedPayload);
     expect(lessonActivityViewSchema.parse(view).payload.type).toBe("guided_grammar");
@@ -247,7 +255,7 @@ describe("lesson activity contracts", () => {
   it("gives grammar sections exactly guided grammar, grammar explanation and tricky grammar", async () => {
     const doc = { ...emptyLessonDocument(), blocks: [heading(1, "Grammar", 1), para(2, "Rule"), { id: uid(3), type: "callout", props: { variant: "grammar", icon: "auto" }, content: [{ type: "text", text: "Tip" }], children: [] }] } as unknown as LessonDocument;
     const sources = await resolveLessonActivitySources({ document: doc, includeLessonEnd: false });
-    expect(sources.find((source) => source.sourceId === uid(1))?.activityTypes).toEqual(["grammar_explanation", "guided_grammar", "tricky_grammar"]);
+    expect(sources.find((source) => source.sourceId === uid(1))?.activityTypes).toEqual(["guided_grammar", "tricky_grammar"]);
   });
 
   it("gives story sections reading and speaking activities and lists speaking lines in document order", async () => {

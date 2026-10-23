@@ -8,6 +8,7 @@ import {
   type ActivityDescriptor, type ActivityMetricChange, type ActivityType, type LessonActivityRun, type LessonActivityViewPayload,
 } from "@wordinator/contracts/lesson-activities";
 import { ProgressMeter } from "../../molecules/ProgressMeter";
+import { WordOrderBoard } from "../../molecules/WordOrderBoard";
 import { Button, ErrorState, LoadingState, Surface, TextAreaField } from "../../ui";
 import {
   ApiError, apiRequest, lessonActivitiesQueryOptions, lessonActivityEndpoint, lessonActivityOpen, lessonActivityStatusQueryOptions,
@@ -17,6 +18,7 @@ import { useLearningClaim } from "../../learningTime";
 import { draftKey, readDraft, useAnswerAttempt, writeDraft, type AnswerInput } from "./activityAnswers";
 import { ActivityCompletion, lessonTarget } from "./ActivityCompletion";
 import { suggestedActivities } from "./activitySuggestions";
+import { AnswerResult, ChoiceOptions, CorrectBadge } from "./ChoiceOptions";
 import { GuidedGrammarActivity } from "./GuidedGrammarActivity";
 import { ReadAloudActivity } from "./ReadAloudActivity";
 import { RoleplayActivity } from "./RoleplayActivity";
@@ -156,6 +158,10 @@ export function LessonActivityPage(props: LessonActivityPageProps) {
     <header className={styles.header}>
       <span className={styles.eyebrow}>{props.lessonTitle} · {ready.activity.sourceLabel}</span>
       <h1 className={styles.title}>{t(`lessonActivities.types.${ready.activity.payload.type}`)}</h1>
+      {/* The model behind the shared content; read aloud comes straight from the lesson, so it names none. */}
+      {ready.activity.payload.type !== "read_aloud" && <span className={styles.model}>
+        {ready.activity.generatedBy ? t("lessonActivities.generatedBy", { model: ready.activity.generatedBy }) : t("lessonActivities.generatedByUnknown")}
+      </span>}
       {total > 0 && <ProgressMeter value={completed ? 100 : (100 * cursor) / total} label={t("lessonActivities.progress", { current: Math.min(cursor + 1, total), total })} showLabel />}
     </header>
     {(props.archived || ready.ephemeral) && <Surface tone="quiet"><p>{t("lessonActivities.archivedUnsaved")}</p></Surface>}
@@ -171,10 +177,6 @@ export function LessonActivityPage(props: LessonActivityPageProps) {
           backToLesson: <Link className={styles.back} {...lessonTarget(props, descriptor)}>{t("lessonActivities.backToLesson")}</Link> };
         return payload.type === "read_aloud" ? <ReadAloudActivity {...common} lines={payload.lines} /> : <SpeakFromEnglishActivity {...common} lines={payload.lines} />;
       })()
-      : payload?.type === "grammar_explanation" ? <Surface className={styles.panel}><h2>{t("lessonActivities.explanation")}</h2>
-        {payload.paragraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
-        {payload.examples.map((example, index) => <div className={styles.turn} key={index}><strong lang="nl">{example.dutch}</strong><p>{example.english}</p></div>)}
-        <div className={styles.actions}><Button loading={patchRun.isPending} onClick={() => patchRun.mutate({ action: "complete" })}>{t("lessonActivities.done")}</Button></div></Surface>
       : payload?.type === "roleplay" && run ? <RoleplayActivity groupId={props.groupId} language={props.language} endpoint={endpoint} runId={run.id} turns={payload.turns}
         cursor={cursor} cueMode={run.cueMode} keyFor={keyFor} advancing={patchRun.isPending} onCueMode={(cueMode) => patchRun.mutate({ action: "set_cue_mode", cueMode })}
         onContinue={() => advance()} backToLesson={<Link className={styles.back} {...lessonTarget(props, descriptor)}>{t("lessonActivities.backToLesson")}</Link>} />
@@ -205,49 +207,21 @@ function ActivityItem({ endpoint, runId, item, draftKey, last, advancing, onCont
 
   return <Surface className={styles.panel}>
     <p className={styles.prompt}>{item.prompt}</p>
-    {item.kind === "choice" && <div className={styles.choices} role="group" aria-label={item.prompt}>
-      {item.options.map((option) => <Button key={option.id} variant={selected === option.id ? "primary" : "secondary"} className={styles.choice}
-        aria-pressed={selected === option.id} disabled={locked} onClick={() => setSelected(option.id)}>{option.text}</Button>)}
-    </div>}
+    {item.kind === "choice" && <ChoiceOptions prompt={item.prompt} options={item.options} selected={selected} result={result} onSelect={setSelected} />}
     {item.kind === "fill_in" && <TextAreaField label={t("lessonActivities.answerLabel")} value={draft} disabled={locked} onChange={(event) => save(event.currentTarget.value)}
       onKeyDown={(event: KeyboardEvent<HTMLTextAreaElement>) => { if (event.key === "Enter" && !event.shiftKey && !event.altKey && !event.ctrlKey && !event.metaKey && !event.nativeEvent.isComposing && input && !attempt.pending) { event.preventDefault(); attempt.check(input); } }}
       autosize minRows={2} />}
-    {item.kind === "word_order" && <WordOrder tokens={item.tokens} order={order} disabled={locked} onChange={setOrder} />}
+    {item.kind === "word_order" && <WordOrderBoard chunks={item.tokens} order={order} onChange={setOrder} disabled={locked} matched={result?.correct ?? false} />}
+    {/* A choice's explanation sits under its options, which already mark the correct one. */}
+    {result && item.kind === "choice" && result.explanation && <p className={styles.note}>{result.explanation}</p>}
+    {/* A wrong typed or ordered answer shows the reference; its explanation follows, as a choice's does. */}
+    {result && item.kind !== "choice" && !result.correct && result.reference && <p className={styles.reference}><span>{t("lessonActivities.tryAgain")}</span> {result.reference}</p>}
+    {result && item.kind !== "choice" && result.explanation && <p className={styles.note}>{result.explanation}</p>}
     {result
-      ? <div className={styles.feedback} role="status">
-        <strong>{result.correct ? t("lessonActivities.correct") : t("lessonActivities.tryAgain")}</strong>
-        {result.reference && <p>{result.reference}</p>}
-        {result.explanation && <p>{result.explanation}</p>}
-        <div className={styles.actions}>
-          <Button variant="secondary" onClick={retry}>{t("lessonActivities.retry")}</Button>
-          <Button loading={advancing} disabled={advancing} onClick={onContinue}>{last ? t("lessonActivities.finish") : t("lessonActivities.continue")}</Button>
-        </div>
-      </div>
+      ? <AnswerResult status={result.correct ? <CorrectBadge /> : item.kind === "choice" ? <strong className={styles.wrong}>{t("lessonActivities.choiceWrong")}</strong> : null}
+        continueLabel={last ? t("lessonActivities.finish") : t("lessonActivities.continue")} advancing={advancing} onRetry={retry} onContinue={onContinue} />
       : <div className={styles.actions}><Button loading={attempt.pending} disabled={!input || attempt.pending} onClick={() => { if (input) attempt.check(input); }}>{t("lessonActivities.checkAnswer")}</Button></div>}
     {attempt.error && <p className={styles.alert} role="alert">{t("lessonActivities.answerFailed")}</p>}
   </Surface>;
 }
 
-// Word order: tap the words in sequence to build the answer; tap a word in the answer to take it back; Reset clears the row. Every
-// control is a button, so the keyboard reaches each word.
-function WordOrder({ tokens, order, disabled, onChange }: { tokens: readonly string[]; order: readonly number[]; disabled: boolean; onChange: (order: number[]) => void }) {
-  const { t } = useTranslation();
-  const placed = new Set(order);
-  return <div className={styles.wordOrder}>
-    <p className={styles.hint}>{t("lessonActivities.wordOrderHint")}</p>
-    <ol className={styles.answerRow} aria-label={t("lessonActivities.wordOrderAnswer")}>
-      {order.length === 0 && <li className={styles.placeholder}>{t("lessonActivities.wordOrderEmpty")}</li>}
-      {order.map((tokenIndex, position) => <li key={`${position}-${tokenIndex}`}>
-        <button type="button" className={styles.token} disabled={disabled} aria-label={t("lessonActivities.wordOrderRemove", { word: tokens[tokenIndex] ?? "" })}
-          onClick={() => onChange(order.filter((_, index) => index !== position))}>{tokens[tokenIndex]}</button>
-      </li>)}
-    </ol>
-    <ul className={styles.bank} aria-label={t("lessonActivities.wordOrderBank")}>
-      {tokens.map((token, index) => <li key={index}>
-        <button type="button" className={styles.token} data-used={placed.has(index) || undefined} aria-disabled={placed.has(index) || disabled || undefined}
-          onClick={() => { if (!placed.has(index) && !disabled) onChange([...order, index]); }}>{token}</button>
-      </li>)}
-    </ul>
-    <div className={styles.actions}><Button variant="quiet" disabled={disabled || order.length === 0} onClick={() => onChange([])}>{t("lessonActivities.reset")}</Button></div>
-  </div>;
-}

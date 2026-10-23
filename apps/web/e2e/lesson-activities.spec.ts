@@ -57,17 +57,18 @@ test("scrolling from the story section to the grammar section swaps the suggeste
   await expect(actions.getByRole("link", { name: "Story summary", exact: true })).toBeVisible();
   await expect(actions.getByRole("link", { name: `Story comprehension · ${STORY}`, exact: true })).toBeVisible();
   await expect(actions.getByRole("link", { name: `Dialogue role-play · Dialogue · ${STORY}`, exact: true })).toBeVisible();
-  await expect(actions.getByRole("link", { name: "Grammar explanation" })).toHaveCount(0);
+  await expect(actions.getByRole("link", { name: /^Guided grammar/ })).toHaveCount(0);
 
   await readTo(page, grammar);
-  await expect(actions.getByRole("link", { name: "Grammar explanation", exact: true })).toBeVisible();
-  await expect(actions.getByRole("link", { name: `Guided grammar · ${GRAMMAR}`, exact: true })).toBeVisible();
+  // Grammar explanation is retired; guided grammar leads the grammar section.
+  await expect(actions.getByRole("link", { name: "Guided grammar", exact: true })).toBeVisible();
+  await expect(actions.getByRole("link", { name: /Grammar explanation/ })).toHaveCount(0);
   await expect(actions.getByRole("link", { name: `Tricky grammar practice · ${GRAMMAR}`, exact: true })).toBeVisible();
   await expect(actions.getByRole("link", { name: "Story summary" })).toHaveCount(0);
 
   await readTo(page, story);
   await expect(actions.getByRole("link", { name: "Story summary", exact: true })).toBeVisible();
-  await expect(actions.getByRole("link", { name: "Grammar explanation" })).toHaveCount(0);
+  await expect(actions.getByRole("link", { name: /^Guided grammar/ })).toHaveCount(0);
 });
 
 test("a two-step guided grammar flow advances the lesson's progress meter, shows the completion metrics, and Back to lesson returns to its section", async ({ page }, testInfo) => {
@@ -80,7 +81,7 @@ test("a two-step guided grammar flow advances the lesson's progress meter, shows
   const meter = page.getByRole("progressbar", { name: "Lesson progress" });
   const before = Number(await meter.getAttribute("aria-valuenow"));
 
-  await actions.getByRole("link", { name: `Guided grammar · ${GRAMMAR}`, exact: true }).click();
+  await actions.getByRole("link", { name: "Guided grammar", exact: true }).click();
   await expect(page).toHaveURL(new RegExp(`/activities/${grammar}/guided_grammar$`));
   const back = page.getByRole("link", { name: `Back to ${GRAMMAR}`, exact: true });
   await expect(back).toBeVisible();

@@ -10,7 +10,7 @@ import { LessonBoxActions, type LessonActivitySuggestion, type LessonBoxLesson }
 const lesson: LessonBoxLesson = { groupId: "20000000-0000-4000-8000-000000000001", courseId: "30000000-0000-4000-8000-000000000001", courseTitle: "Dutch Foundations", lessonId: "40000000-0000-4000-8000-000000000001", title: "Lesson title", number: 1 };
 const fingerprint = "b".repeat(64);
 const story: ActivityDescriptor = { sourceId: "section-story", sourceKind: "section", sourceLabel: "Story", returnBlockId: null, returnHeadingId: null, practiceBlockId: null, fingerprint, activityTypes: ["story_summary", "story_comprehension"] };
-const grammar: ActivityDescriptor = { sourceId: "section-grammar", sourceKind: "section", sourceLabel: "Grammar", returnBlockId: null, returnHeadingId: null, practiceBlockId: null, fingerprint, activityTypes: ["grammar_explanation"] };
+const grammar: ActivityDescriptor = { sourceId: "section-grammar", sourceKind: "section", sourceLabel: "Grammar", returnBlockId: null, returnHeadingId: null, practiceBlockId: null, fingerprint, activityTypes: ["guided_grammar"] };
 
 afterEach(() => cleanup());
 
@@ -28,35 +28,35 @@ describe("Lesson box actions", () => {
     renderActions([
       { descriptor: story, type: "story_summary" },
       { descriptor: story, type: "story_comprehension" },
-      { descriptor: grammar, type: "grammar_explanation" },
+      { descriptor: grammar, type: "guided_grammar" },
     ]);
     const group = await screen.findByRole("group", { name: "Lesson actions" });
     const activityLinks = within(group).getAllByRole("link").filter((link) => link.getAttribute("href")?.includes("/activities/"));
     expect(activityLinks.map((link) => link.getAttribute("href"))).toEqual([
       "/courses/dutch-foundations/lessons/lesson-title/activities/section-story/story_summary",
       "/courses/dutch-foundations/lessons/lesson-title/activities/section-story/story_comprehension",
-      "/courses/dutch-foundations/lessons/lesson-title/activities/section-grammar/grammar_explanation",
+      "/courses/dutch-foundations/lessons/lesson-title/activities/section-grammar/guided_grammar",
     ]);
     // The first suggestion sits beside Practise words; the rest keep their section in the accessible name (visually it is the group's one title).
     expect(within(group).getByText("Story", { selector: "p" })).toHaveAttribute("title", "Story");
-    expect(within(group).getByRole("link", { name: "Grammar explanation · Grammar" })).toHaveTextContent(/^Grammar explanation/);
+    expect(within(group).getByRole("link", { name: "Guided grammar · Grammar" })).toHaveTextContent(/^Guided grammar/);
     expect(within(group).getByRole("link", { name: "Story summary" })).toBeInTheDocument();
     expect(within(group).getByRole("link", { name: "Story comprehension · Story" })).toBeInTheDocument();
-    expect(within(group).getByRole("link", { name: "Grammar explanation · Grammar" })).toBeInTheDocument();
+    expect(within(group).getByRole("link", { name: "Guided grammar · Grammar" })).toBeInTheDocument();
   });
 
   it("ends a done suggestion with a Done badge that its accessible name includes, and leaves the others unmarked", async () => {
     renderActions([
       { descriptor: story, type: "story_summary", done: true },
       { descriptor: story, type: "story_comprehension", done: false },
-      { descriptor: grammar, type: "grammar_explanation" },
+      { descriptor: grammar, type: "guided_grammar" },
     ]);
     const group = await screen.findByRole("group", { name: "Lesson actions" });
     const done = within(group).getByRole("link", { name: "Story summary Done" });
     expect(within(done).getByText("Done")).toBeInTheDocument();
     expect(done.querySelector(".lucide-check")).not.toBeNull();
     expect(within(group).getByRole("link", { name: "Story comprehension · Story" })).not.toHaveTextContent("Done");
-    expect(within(group).getByRole("link", { name: "Grammar explanation · Grammar" })).not.toHaveTextContent("Done");
+    expect(within(group).getByRole("link", { name: "Guided grammar · Grammar" })).not.toHaveTextContent("Done");
     expect(within(group).getAllByText("Done")).toHaveLength(1);
     // The full label stays discoverable through the title, since the visible label clamps to two lines.
     expect(done).toHaveAttribute("title", "Story summary · Story");
@@ -76,18 +76,18 @@ describe("Lesson box actions", () => {
   });
 
   it("keeps the Done word for assistive technology in compact mode, where only the check shows", async () => {
-    renderActions([{ descriptor: grammar, type: "grammar_explanation", done: true }], { compact: true });
+    renderActions([{ descriptor: grammar, type: "guided_grammar", done: true }], { compact: true });
     const group = await screen.findByRole("group", { name: "Lesson actions" });
-    const done = within(group).getByRole("link", { name: "Grammar explanation Done" });
+    const done = within(group).getByRole("link", { name: "Guided grammar Done" });
     expect(done.querySelector(".lucide-check")).not.toBeNull();
     expect(within(done).getByText("Done")).toBeInTheDocument();
-    expect(done).toHaveAttribute("title", "Grammar explanation · Grammar");
+    expect(done).toHaveAttribute("title", "Guided grammar · Grammar");
   });
 
-  it("gives each of the nine activity types its own icon, marked with data-icon", async () => {
+  it("gives each of the eight activity types its own icon, marked with data-icon", async () => {
     // The lucide class names come from the icon exports in activityIcons.ts; each type must render a different one.
     const expected: Record<ActivityType, string> = {
-      story_summary: "lucide-book-open-text", story_comprehension: "lucide-list-checks", grammar_explanation: "lucide-notebook-pen",
+      story_summary: "lucide-book-open-text", story_comprehension: "lucide-list-checks",
       guided_grammar: "lucide-footprints", tricky_grammar: "lucide-puzzle", mixed_practice: "lucide-shuffle", roleplay: "lucide-drama",
       read_aloud: "lucide-mic", speak_from_english: "lucide-languages",
     };
@@ -104,7 +104,7 @@ describe("Lesson box actions", () => {
   it("counts the lesson's completed activities in the header badge, not only this section's", async () => {
     renderActions([
       { descriptor: story, type: "story_summary", done: true },
-      { descriptor: grammar, type: "grammar_explanation" },
+      { descriptor: grammar, type: "guided_grammar" },
     ], { completedCount: 3 });
     const group = await screen.findByRole("group", { name: "Lesson actions" });
     expect(within(group).getByLabelText("3 activities completed")).toHaveTextContent("3");
@@ -122,7 +122,7 @@ describe("Lesson box actions", () => {
   it("shows no completed badge when no suggestion is completed", async () => {
     renderActions([
       { descriptor: story, type: "story_summary", done: false },
-      { descriptor: grammar, type: "grammar_explanation" },
+      { descriptor: grammar, type: "guided_grammar" },
     ], { completedCount: 0 });
     const group = await screen.findByRole("group", { name: "Lesson actions" });
     expect(within(group).queryByLabelText(/completed$/)).toBeNull();
@@ -130,11 +130,11 @@ describe("Lesson box actions", () => {
 
   it("names the section it is given, and marks a grammar part's activities with the part's dot and name, the first link too", async () => {
     const part = { headingId: "50000000-0000-4000-8000-000000000009", label: "Asking permission", color: "violet" as const };
-    const asking = { ...grammar, sourceId: "part-1", sourceLabel: "Asking permission", activityTypes: ["grammar_explanation", "tricky_grammar"] as ActivityType[] };
+    const asking = { ...grammar, sourceId: "part-1", sourceLabel: "Asking permission", activityTypes: ["guided_grammar", "tricky_grammar"] as ActivityType[] };
     const end: ActivityDescriptor = { ...grammar, sourceId: "lesson_end", sourceKind: "lesson_end", sourceLabel: "Lesson title · End", activityTypes: ["mixed_practice"] };
-    renderActions([{ descriptor: asking, type: "grammar_explanation", part }, { descriptor: asking, type: "tricky_grammar", part }]);
+    renderActions([{ descriptor: asking, type: "guided_grammar", part }, { descriptor: asking, type: "tricky_grammar", part }]);
     let group = await screen.findByRole("group", { name: "Lesson actions" });
-    for (const name of ["Grammar explanation · Asking permission", "Tricky grammar practice · Asking permission"]) {
+    for (const name of ["Guided grammar · Asking permission", "Tricky grammar practice · Asking permission"]) {
       expect(within(group).getByRole("link", { name }).querySelector('[data-color="violet"]')).not.toBeNull();
     }
     cleanup();

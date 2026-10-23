@@ -7,7 +7,7 @@ export const LESSON_ACTIVITY_RETRY_MS = 30_000;
 export type CacheRow = {
   id: string; lessonId: string; courseId: string; sourceId: string; activityType: string; sourceFingerprint: string;
   recipeVersion: number; schemaVersion: number; language: string; cacheKey: string; status: "generating" | "ready" | "failed";
-  leaseToken: string | null; leaseExpiresAt: number | null; nextAttemptAt: number | null; payload: string | null;
+  leaseToken: string | null; leaseExpiresAt: number | null; nextAttemptAt: number | null; payload: string | null; generatedBy: string | null;
 };
 
 /** Atomically elect one generator. A live lease is never stolen; expiry permits recovery. */
@@ -48,15 +48,15 @@ export async function releaseCacheMiss(db: D1Database, userId: string, cacheKey:
 
 /** Commit only if this worker still owns the current, unexpired lease and the source has not been republished. */
 export async function commitGeneratedPayload(db: D1Database, input: {
-  activityId: string; leaseToken: string; payload: string; publishedAt: number; now?: number;
+  activityId: string; leaseToken: string; payload: string; publishedAt: number; generatedBy?: string | null; now?: number;
 }): Promise<boolean> {
   const now = input.now ?? Date.now();
   const result = await db.prepare(
-    `UPDATE lesson_activities SET status='ready', payload=?, lease_token=NULL, lease_expires_at=NULL, next_attempt_at=NULL, updated_at=?
+    `UPDATE lesson_activities SET status='ready', payload=?, generated_by=?, lease_token=NULL, lease_expires_at=NULL, next_attempt_at=NULL, updated_at=?
      WHERE id=? AND status='generating' AND lease_token=? AND lease_expires_at>? AND EXISTS (
      SELECT 1 FROM course_lessons l WHERE l.id=lesson_activities.lesson_id AND l.published_doc IS NOT NULL AND l.published_at=?
      )`,
-  ).bind(input.payload, now, input.activityId, input.leaseToken, now, input.publishedAt).run();
+  ).bind(input.payload, input.generatedBy ?? null, now, input.activityId, input.leaseToken, now, input.publishedAt).run();
   return (result.meta.changes ?? 0) === 1;
 }
 

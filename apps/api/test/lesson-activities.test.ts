@@ -27,7 +27,7 @@ const plain = (text: string) => [{ type: "text" as const, text, styles: {} }];
 const dialogue = (turns: Array<{ speaker: string; text: string }>) => ({ id: uuid(), type: "dialogue" as const, props: { turns: JSON.stringify(turns) }, children: [] });
 const callout = (text: string) => ({ id: uuid(), type: "callout" as const, props: { variant: "grammar" as const, icon: "auto" as const }, content: plain(text), children: [] });
 
-const GRAMMAR_TYPES: ActivityType[] = ["grammar_explanation", "guided_grammar", "tricky_grammar"];
+const GRAMMAR_TYPES: ActivityType[] = ["guided_grammar", "tricky_grammar"];
 const STORY_TYPES: ActivityType[] = ["story_summary", "story_comprehension", "read_aloud", "speak_from_english"];
 const SOFIA_LINE = "Goedemorgen, ik wil graag brood kopen.";
 const PIETER_LINE = "Goedemorgen! Wat wilt u hebben?";
@@ -289,6 +289,11 @@ describe("opening", () => {
     expect(ai.remaining()).toBe(0);
     expect(await countRows("SELECT COUNT(*) AS n FROM lesson_activities")).toBe(1);
     expect(await countRows("SELECT COUNT(*) AS n FROM lesson_activity_runs")).toBe(2);
+    // The cache row keeps the model that answered, and both accounts see it.
+    const stored = await env.DB.prepare("SELECT generated_by AS model FROM lesson_activities").first<string>("model");
+    expect(stored).toBeTruthy();
+    expect(first.activity.generatedBy).toBe(stored);
+    expect(second.activity.generatedBy).toBe(stored);
   });
 });
 
@@ -674,11 +679,11 @@ describe("model output contract", () => {
       const { generateLessonActivity } = await import("../src/lessonActivities/generate");
       const block = (text: string) => ({ ...blocks.paragraph(text) });
       const payload = await generateLessonActivity({
-        env: { ...env, AI: scriptedAi([guidedReply([[0], [1]], { followUps: ["mixed_practice", "grammar_explanation"] })]).binding } as never, db: env.DB, userId: await seedUser("followup-user"), type: "guided_grammar", language: "nl",
-        source: [], lessonGoal: null, blocks: [block("One."), block("Two.")], eligibleFollowUps: ["grammar_explanation"],
+        env: { ...env, ...scriptedAi([guidedReply([[0], [1]], { followUps: ["mixed_practice", "tricky_grammar"] })]).env } as never, db: env.DB, userId: await seedUser("followup-user"), type: "guided_grammar", language: "nl",
+        source: [], lessonGoal: null, blocks: [block("One."), block("Two.")], eligibleFollowUps: ["tricky_grammar"],
       });
       if (payload.type !== "guided_grammar") throw new Error("Expected guided_grammar.");
-      expect(payload.followUps).toEqual(["grammar_explanation"]);
+      expect(payload.followUps).toEqual(["tricky_grammar"]);
     });
   });
 

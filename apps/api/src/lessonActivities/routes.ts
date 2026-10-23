@@ -13,7 +13,7 @@ import { aiErrorResponse, assertDailySpeechCap, completeChat, readAiSettings, re
 import type { AppEnvironment } from "../app";
 import { apiError, parseJson } from "../http";
 import { azureSynthesizer, clipUrl, onDemandClip, readClips, storedSpeechCast } from "../speech";
-import { activitySourceBlocks, activitySourceData, generateLessonActivity, materializeReadAloud } from "./generate";
+import { activitySourceBlocks, activitySourceData, generateLessonActivity, materializeReadAloud, type GenerationTrace } from "./generate";
 import { completeIfWhole, saveLessonPosition } from "../learning/progress";
 import { completedActivities, metricsSnapshot, parseMetricsSnapshot, readActivityMetrics } from "./metrics";
 import { speechChunks } from "./speech";
@@ -33,7 +33,7 @@ const PATH = "/api/courses/:courseId/lessons/:lessonId/activities";
 const RETRY_MS = 1_000;
 const cacheColumns = `id, lesson_id AS lessonId, course_id AS courseId, source_id AS sourceId, activity_type AS activityType,
   source_fingerprint AS sourceFingerprint, recipe_version AS recipeVersion, schema_version AS schemaVersion, language, cache_key AS cacheKey,
-  status, lease_token AS leaseToken, lease_expires_at AS leaseExpiresAt, next_attempt_at AS nextAttemptAt, payload`;
+  status, lease_token AS leaseToken, lease_expires_at AS leaseExpiresAt, next_attempt_at AS nextAttemptAt, payload, generated_by AS generatedBy`;
 type RunRow = { id: string; activityId: string; userId: string; cursor: number; cueMode: "english" | "dutch"; status: "active" | "completed"; startedAt: number; updatedAt: number; completedAt: number | null };
 const runColumns = `id, activity_id AS activityId, user_id AS userId, cursor, cue_mode AS cueMode, status, started_at AS startedAt, updated_at AS updatedAt, completed_at AS completedAt`;
 const userId = (context: ActivityContext) => context.get("user")!.id;
@@ -101,7 +101,7 @@ async function creditGuidedReading(db: D1Database, uid: string, lesson: Activity
 }
 // A story summary's image is never cached: it is the first image of the current published document's source section.
 function sourcePayload(row: CacheRow, descriptor: { sourceId: string; sourceLabel: string }, payload: LessonActivityPayload, lesson: ActivityLesson, mediaBase: string) {
-  const view = toLessonActivityView({ id: row.id, sourceId: descriptor.sourceId, sourceLabel: descriptor.sourceLabel, sourceFingerprint: row.sourceFingerprint, payload });
+  const view = toLessonActivityView({ id: row.id, sourceId: descriptor.sourceId, sourceLabel: descriptor.sourceLabel, sourceFingerprint: row.sourceFingerprint, generatedBy: row.generatedBy, payload });
   if (view.payload.type !== "story_summary") return lessonActivityViewSchema.parse(view);
   // Documents store R2 keys; the view carries the public URL, as every other lesson reader does.
   const image = firstImage(activitySourceBlocks(lesson.document, descriptor.sourceId));
@@ -173,14 +173,15 @@ export function registerLessonActivityRoutes(app: Hono<AppEnvironment>, deps: Ro
     // Start generation in the request that claimed the lease. Other opens poll this same cache row.
     try {
       const source = activitySourceData(found.document, sourceId);
-      const payload = await generateLessonActivity({ env: context.env, db, userId: uid, type, language: found.language, source: source.content, lessonGoal: found.goal, dialogueId: source.dialogueId, sourceId, lessonTerms: collectLessonWords(found.document).map((word) => word.term), blocks: activitySourceBlocks(found.document, sourceId), eligibleFollowUps: resolved.descriptors.flatMap((item) => item.activityTypes) });
+      const trace: GenerationTrace = { model: null };
+      const payload = await generateLessonActivity({ trace, env: context.env, db, userId: uid, type, language: found.language, source: source.content, lessonGoal: found.goal, dialogueId: source.dialogueId, sourceId, lessonTerms: collectLessonWords(found.document).map((word) => word.term), blocks: activitySourceBlocks(found.document, sourceId), eligibleFollowUps: resolved.descriptors.flatMap((item) => item.activityTypes) });
       // Close the race between the first fingerprint check and the atomic published_at guard.
       const latest = await getLesson(context);
       if ("error" in latest) throw new Error("SOURCE_CHANGED");
       const stillCurrent = await currentSource(latest, sourceId, type);
       const current = stillCurrent.descriptors.find((item) => item.sourceId === sourceId && item.activityTypes.includes(type));
       if (latest.publishedAt !== found.publishedAt || current?.fingerprint !== expectedFingerprint) throw new Error("SOURCE_CHANGED");
-      const committed = await commitGeneratedPayload(db, { activityId: row!.id, leaseToken: token, payload: JSON.stringify(payload), publishedAt: found.publishedAt });
+      const committed = await commitGeneratedPayload(db, { activityId: row!.id, leaseToken: token, payload: JSON.stringify(payload), publishedAt: found.publishedAt, generatedBy: trace.model });
       await releaseCacheMiss(db, uid, key, now);
       if (!committed) return apiError(context, 409, "SOURCE_CHANGED", "The source changed while this activity was being prepared.");
       row = await readActivity(db, row!.id);

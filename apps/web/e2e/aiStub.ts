@@ -135,10 +135,6 @@ function activityOutput(type: string, user = ""): Record<string, unknown> | null
     choice("Who does Sofia talk to?", ["A waiter", "A stranger", "Her teacher"], 1, "She talks to a stranger on the street."),
     choice("How does the conversation end?", ["Politely", "Angrily", "Abruptly"], 0, "They say goodbye politely."),
   ], metrics: ["lesson_reading"] };
-  if (type === "grammar_explanation") return {
-    paragraphs: ["Use de with most nouns and het with the neuter ones.", "Learn each noun with its article, because the article cannot be guessed reliably."],
-    examples: [{ dutch: "de fiets", english: "the bicycle" }, { dutch: "het huis", english: "the house" }], metrics: ["lesson_grammar"],
-  };
   if (type === "tricky_grammar") return { questions: trickyQuestions(), metrics: ["lesson_grammar"] };
   if (type === "mixed_practice") return { questions: [
     ...trickyQuestions(),

@@ -67,10 +67,9 @@ const MIXED_SHAPE = [
 // Every shape also asks for metrics: the lesson skills the activity trains. Wordinator filters and caps them (normalizeMetrics).
 const METRICS_SHAPE = `"metrics": ["<one to three of: ${lessonActivityMetricSchema.options.join(", ")}>"]`;
 const withMetrics = (shape: string) => `${shape.slice(0, -1)}, ${METRICS_SHAPE}}`;
-type ModelType = "story_summary" | "grammar_explanation" | "story_comprehension" | "tricky_grammar" | "mixed_practice";
+type ModelType = "story_summary" | "story_comprehension" | "tricky_grammar" | "mixed_practice";
 const SHAPES: Record<ModelType, string> = {
   story_summary: withMetrics(`{"pairs": [{"dutch": "<one sentence of this section in the target language>", "english": "<accurate English translation>"}, ...], "newWords": [{"term": "<word in the target language>", "translation": "<English meaning>"}]}`),
-  grammar_explanation: withMetrics(`{"paragraphs": ["<short English paragraph>"], "examples": [{"dutch": "<example in the target language>", "english": "<accurate English translation>"}]}`),
   story_comprehension: withMetrics(`{"questions": [${CHOICE_SHAPE}, ...]}`),
   tricky_grammar: withMetrics(`{"questions": [${MIXED_SHAPE}, ...]}`),
   mixed_practice: withMetrics(`{"questions": [${MIXED_SHAPE}, ...]}`),
@@ -78,7 +77,6 @@ const SHAPES: Record<ModelType, string> = {
 const METRICS_RULE = `metrics: one to three keys from ${lessonActivityMetricSchema.options.join(", ")} naming the lesson skills this activity trains.`;
 const RULES: Record<ModelType, string> = {
   story_summary: "pairs: 2-16 items, each one sentence of this section in the target language with its accurate English translation, in reading order. newWords: 0-12 items (term, translation) for words that you used in the pairs and that the lesson does not already teach (see \"Already taught\"); never list an already taught word. Use only this section.",
-  grammar_explanation: "paragraphs: 1-8 items, explaining only grammar taught here. examples: 1-12 items, each in the target language with an accurate English translation.",
   story_comprehension: `questions: exactly ${countFor.story_comprehension} choice questions testing comprehension of this scene, each with exactly three options.`,
   tricky_grammar: `questions: exactly ${countFor.tricky_grammar} questions, each one of the three kinds shown, using only distinctions taught in this lesson.`,
   mixed_practice: `questions: exactly ${countFor.mixed_practice} questions combining this lesson's concepts, each one of the three kinds shown, using only grammar taught in this lesson.`,
@@ -165,8 +163,12 @@ function speakFromEnglishReplySchema(lineCount: number) {
   return z.object({ lines: z.array(z.object({ index: z.number().int().nonnegative(), englishText: cueText })).length(lineCount) })
     .refine((reply) => reply.lines.every((line, position) => line.index === position), { message: "Line indexes must be 0 to n-1 in order." });
 }
+// The model behind a generated activity: the one that answered its request, after any fallback.
+export type GenerationTrace = { model: string | null };
+const noteModel = (trace: GenerationTrace | undefined, response: { model: string }) => { if (trace) trace.model = response.model; };
+
 async function generateSpeakFromEnglish(input: {
-  env: Env; db: D1Database; userId: string; language: "nl" | "de"; lessonGoal: string | null; sourceId: string; blocks: readonly LessonBlock[];
+  env: Env; db: D1Database; userId: string; language: "nl" | "de"; lessonGoal: string | null; sourceId: string; blocks: readonly LessonBlock[]; trace?: GenerationTrace;
 }): Promise<LessonActivityPayload> {
   const { env, db, userId, language, lessonGoal, sourceId } = input;
   const lines = storySpeakingLines(input.blocks);
@@ -178,6 +180,7 @@ async function generateSpeakFromEnglish(input: {
       { role: "user", content: speakFromEnglishPrompt(lines.map((line, index) => ({ index, speaker: line.speaker, text: line.text })), language, lessonGoal) },
     ], maxTokens: 4_000, temperature: 0.2,
   }, { env, db, settings, userId, conversationId: null, turnStart: true });
+  noteModel(input.trace, response);
   let decoded: unknown;
   try { decoded = JSON.parse(extractJsonText(response.text)); } catch { outputInvalid("speak_from_english", "json"); }
   const reply = speakFromEnglishReplySchema(lines.length).safeParse(decoded);
@@ -196,7 +199,7 @@ async function generateSpeakFromEnglish(input: {
 // Dialogue turns store no English translation, so the model is always asked for cues. Speakers, order and Dutch text come from the
 // source only; a model reply can change nothing but the English text of each turn.
 async function generateRolePlay(input: {
-  env: Env; db: D1Database; userId: string; language: "nl" | "de"; source: unknown; lessonGoal: string | null; dialogueId: string;
+  env: Env; db: D1Database; userId: string; language: "nl" | "de"; source: unknown; lessonGoal: string | null; dialogueId: string; trace?: GenerationTrace;
 }): Promise<LessonActivityPayload> {
   const { env, db, userId, language, source, lessonGoal, dialogueId } = input;
   const parsedTurns = sourceTurnsSchema.safeParse(source);
@@ -214,6 +217,7 @@ async function generateRolePlay(input: {
       { role: "user", content: rolePlayCuePrompt(turns, language, lessonGoal) },
     ], maxTokens: 4_000, temperature: 0.2,
   }, { env, db, settings, userId, conversationId: null, turnStart: true });
+  noteModel(input.trace, response);
   let decoded: unknown;
   try { decoded = JSON.parse(extractJsonText(response.text)); } catch { throw new Error("ACTIVITY_OUTPUT_INVALID"); }
   const cues = rolePlayCueReplySchema(turns.length).safeParse(decoded);
@@ -314,9 +318,6 @@ const assemblers = {
   story_comprehension: assembler(z.object({ questions: z.array(modelChoice).length(countFor.story_comprehension) }), (output) => ({
     questions: output.questions.map(choiceQuestion),
   })),
-  grammar_explanation: assembler(z.object({
-    paragraphs: z.array(modelText).min(1).max(8), examples: z.array(z.object({ dutch: modelText, english: modelText })).min(1).max(12),
-  }), (output) => ({ paragraphs: output.paragraphs, examples: output.examples })),
   tricky_grammar: assembler(z.object({ questions: z.array(modelMixedQuestion).length(countFor.tricky_grammar) }), (output) => ({
     questions: output.questions.map(mixedQuestion),
   })),
@@ -345,7 +346,7 @@ function outputInvalid(type: NonRoleplayType, reason: "json" | "schema" | "paylo
 
 // Guided grammar (docs/lesson-activities.md): the model groups numbered chunks of the section into steps and writes one question per
 // step. It never writes IDs or lesson text; Wordinator snapshots the original blocks (original IDs) for each step's chunk indices.
-const FOLLOW_UP_TYPES = ["tricky_grammar", "mixed_practice", "grammar_explanation"] as const;
+const FOLLOW_UP_TYPES = ["tricky_grammar", "mixed_practice"] as const;
 const guidedSchema = z.object({
   steps: z.array(z.object({ chunks: z.array(z.number().int()).min(1).max(4), question: modelChoice })).min(2).max(12),
   followUps: z.array(z.unknown()).catch([]).default([]),
@@ -363,7 +364,7 @@ function guidedPrompt(chunks: readonly LessonTopBlock[], language: "nl" | "de", 
 }
 
 async function generateGuided(input: {
-  env: Env; db: D1Database; userId: string; language: "nl" | "de"; lessonGoal: string | null; blocks: readonly LessonBlock[]; eligibleFollowUps: readonly string[];
+  env: Env; db: D1Database; userId: string; language: "nl" | "de"; lessonGoal: string | null; blocks: readonly LessonBlock[]; eligibleFollowUps: readonly string[]; trace?: GenerationTrace;
 }): Promise<LessonActivityPayload> {
   const { env, db, userId, language, lessonGoal } = input;
   const chunks = guidedChunks(input.blocks);
@@ -375,6 +376,7 @@ async function generateGuided(input: {
       { role: "user", content: guidedPrompt(chunks, language, lessonGoal) },
     ], maxTokens: 3_000, temperature: 0.2,
   }, { env, db, settings, userId, conversationId: null, turnStart: true });
+  noteModel(input.trace, response);
   let decoded: unknown;
   try { decoded = JSON.parse(extractJsonText(response.text)); } catch { outputInvalid("guided_grammar", "json"); }
   const parsed = guidedSchema.safeParse(decoded);
@@ -398,15 +400,17 @@ async function generateGuided(input: {
 export async function generateLessonActivity(input: {
   env: Env; db: D1Database; userId: string; type: ActivityType; language: "nl" | "de"; source: unknown; lessonGoal: string | null;
   dialogueId?: string; sourceId?: string; lessonTerms?: readonly string[]; blocks?: readonly LessonBlock[]; eligibleFollowUps?: readonly string[];
+  // Filled with the model that answered, which the cache row keeps (docs/lesson-activities.md#shared-cached-content).
+  trace?: GenerationTrace;
 }): Promise<LessonActivityPayload> {
   const { env, db, userId, type, language, source, lessonGoal } = input;
   const lessonTerms = input.lessonTerms ?? [];
   if (type === "roleplay") {
     if (!input.dialogueId) throw new Error("ACTIVITY_OUTPUT_INVALID");
-    return generateRolePlay({ env, db, userId, language, source, lessonGoal, dialogueId: input.dialogueId });
+    return generateRolePlay({ env, db, userId, language, source, lessonGoal, dialogueId: input.dialogueId, trace: input.trace });
   }
-  if (type === "guided_grammar") return generateGuided({ env, db, userId, language, lessonGoal, blocks: input.blocks ?? [], eligibleFollowUps: input.eligibleFollowUps ?? [] });
-  if (type === "speak_from_english") return generateSpeakFromEnglish({ env, db, userId, language, lessonGoal, sourceId: input.sourceId ?? "", blocks: input.blocks ?? [] });
+  if (type === "guided_grammar") return generateGuided({ env, db, userId, language, lessonGoal, blocks: input.blocks ?? [], eligibleFollowUps: input.eligibleFollowUps ?? [], trace: input.trace });
+  if (type === "speak_from_english") return generateSpeakFromEnglish({ env, db, userId, language, lessonGoal, sourceId: input.sourceId ?? "", blocks: input.blocks ?? [], trace: input.trace });
   // read_aloud is materialized from the source without a model (materializeReadAloud), never generated here.
   if (!isModelType(type)) throw new Error("ACTIVITY_OUTPUT_INVALID");
   const settings = await readAiSettings(db);
@@ -416,6 +420,7 @@ export async function generateLessonActivity(input: {
       { role: "user", content: promptFor(type, source, language, lessonGoal, lessonTerms) },
     ], maxTokens: type === "mixed_practice" ? 4_000 : 2_000, temperature: 0.2,
   }, { env, db, settings, userId, conversationId: null, turnStart: true });
+  noteModel(input.trace, response);
   let decoded: unknown;
   try { decoded = JSON.parse(extractJsonText(response.text)); } catch { outputInvalid(type, "json"); }
   const assembled = assemblers[type](decoded, lessonTerms);

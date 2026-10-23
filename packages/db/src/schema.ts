@@ -427,11 +427,15 @@ export const learningTime = sqliteTable(
 export const lessonActivities = sqliteTable("lesson_activities", {
   id: text("id").primaryKey(), lessonId: text("lesson_id").notNull().references(() => courseLessons.id, { onDelete: "cascade" }),
   courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }), sourceId: text("source_id").notNull(),
-  activityType: text("activity_type", { enum: ["story_summary", "story_comprehension", "grammar_explanation", "tricky_grammar", "mixed_practice", "roleplay", "guided_grammar", "read_aloud", "speak_from_english"] }).notNull(),
+  // Grammar explanation was retired by 0042, which deleted its rows; the check still admits it, since rebuilding this table would
+  // cascade-delete every learner's runs.
+  activityType: text("activity_type", { enum: ["story_summary", "story_comprehension", "tricky_grammar", "mixed_practice", "roleplay", "guided_grammar", "read_aloud", "speak_from_english"] }).notNull(),
   sourceFingerprint: text("source_fingerprint").notNull(), recipeVersion: integer("recipe_version").notNull(), schemaVersion: integer("schema_version").notNull(),
   language: text("language", { enum: ["nl", "de"] }).notNull(), cacheKey: text("cache_key").notNull(),
   status: text("status", { enum: ["generating", "ready", "failed"] }).notNull(), leaseToken: text("lease_token"), leaseExpiresAt: integer("lease_expires_at"),
   nextAttemptAt: integer("next_attempt_at"), payload: text("payload"), createdAt: integer("created_at").notNull(), updatedAt: integer("updated_at").notNull(),
+  // The model that generated the payload (0043); null for read aloud and for rows cached before it.
+  generatedBy: text("generated_by"),
 }, (table) => [uniqueIndex("lesson_activities_cache_key_unique").on(table.cacheKey), index("lesson_activities_lesson_idx").on(table.lessonId),
   check("lesson_activities_status_check", sql`${table.status} in ('generating', 'ready', 'failed')`),
   check("lesson_activities_lease_check", sql`(${table.status} = 'generating') = (${table.leaseToken} IS NOT NULL AND ${table.leaseExpiresAt} IS NOT NULL)`),
