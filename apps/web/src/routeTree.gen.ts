@@ -28,6 +28,7 @@ import { Route as GroupsGroupIdRouteImport } from './routes/groups.$groupId'
 import { Route as InviteTokenRouteImport } from './routes/invite.$token'
 import { Route as JournalPostIdRouteImport } from './routes/journal_.$postId'
 import { Route as OverviewLessonSlugRouteImport } from './routes/overview.$lessonSlug'
+import { Route as TempHovercardLessonSlugRouteImport } from './routes/temp-hovercard.$lessonSlug'
 import { Route as WordsDrillRouteImport } from './routes/words_.drill'
 import { Route as CoursesCourseSlugManageRouteImport } from './routes/courses_.$courseSlug_.manage'
 import { Route as GroupsGroupIdCoursesRouteImport } from './routes/groups.$groupId_.courses'
@@ -138,6 +139,11 @@ const JournalPostIdRoute = JournalPostIdRouteImport.update({
 const OverviewLessonSlugRoute = OverviewLessonSlugRouteImport.update({
   id: '/overview/$lessonSlug',
   path: '/overview/$lessonSlug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TempHovercardLessonSlugRoute = TempHovercardLessonSlugRouteImport.update({
+  id: '/temp-hovercard/$lessonSlug',
+  path: '/temp-hovercard/$lessonSlug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const WordsDrillRoute = WordsDrillRouteImport.update({
@@ -254,6 +260,7 @@ export interface FileRoutesByFullPath {
   '/invite/$token': typeof InviteTokenRoute
   '/journal/$postId': typeof JournalPostIdRoute
   '/overview/$lessonSlug': typeof OverviewLessonSlugRoute
+  '/temp-hovercard/$lessonSlug': typeof TempHovercardLessonSlugRoute
   '/words/drill': typeof WordsDrillRoute
   '/courses/$courseSlug/manage': typeof CoursesCourseSlugManageRoute
   '/groups/$groupId/courses': typeof GroupsGroupIdCoursesRoute
@@ -291,6 +298,7 @@ export interface FileRoutesByTo {
   '/invite/$token': typeof InviteTokenRoute
   '/journal/$postId': typeof JournalPostIdRoute
   '/overview/$lessonSlug': typeof OverviewLessonSlugRoute
+  '/temp-hovercard/$lessonSlug': typeof TempHovercardLessonSlugRoute
   '/words/drill': typeof WordsDrillRoute
   '/courses/$courseSlug/manage': typeof CoursesCourseSlugManageRoute
   '/groups/$groupId/courses': typeof GroupsGroupIdCoursesRoute
@@ -329,6 +337,7 @@ export interface FileRoutesById {
   '/invite/$token': typeof InviteTokenRoute
   '/journal_/$postId': typeof JournalPostIdRoute
   '/overview/$lessonSlug': typeof OverviewLessonSlugRoute
+  '/temp-hovercard/$lessonSlug': typeof TempHovercardLessonSlugRoute
   '/words_/drill': typeof WordsDrillRoute
   '/courses_/$courseSlug_/manage': typeof CoursesCourseSlugManageRoute
   '/groups/$groupId_/courses': typeof GroupsGroupIdCoursesRoute
@@ -368,6 +377,7 @@ export interface FileRouteTypes {
     | '/invite/$token'
     | '/journal/$postId'
     | '/overview/$lessonSlug'
+    | '/temp-hovercard/$lessonSlug'
     | '/words/drill'
     | '/courses/$courseSlug/manage'
     | '/groups/$groupId/courses'
@@ -405,6 +415,7 @@ export interface FileRouteTypes {
     | '/invite/$token'
     | '/journal/$postId'
     | '/overview/$lessonSlug'
+    | '/temp-hovercard/$lessonSlug'
     | '/words/drill'
     | '/courses/$courseSlug/manage'
     | '/groups/$groupId/courses'
@@ -442,6 +453,7 @@ export interface FileRouteTypes {
     | '/invite/$token'
     | '/journal_/$postId'
     | '/overview/$lessonSlug'
+    | '/temp-hovercard/$lessonSlug'
     | '/words_/drill'
     | '/courses_/$courseSlug_/manage'
     | '/groups/$groupId_/courses'
@@ -480,6 +492,7 @@ export interface RootRouteChildren {
   InviteTokenRoute: typeof InviteTokenRoute
   JournalPostIdRoute: typeof JournalPostIdRoute
   OverviewLessonSlugRoute: typeof OverviewLessonSlugRoute
+  TempHovercardLessonSlugRoute: typeof TempHovercardLessonSlugRoute
   WordsDrillRoute: typeof WordsDrillRoute
   CoursesCourseSlugManageRoute: typeof CoursesCourseSlugManageRoute
   GroupsGroupIdCoursesRoute: typeof GroupsGroupIdCoursesRoute
@@ -633,6 +646,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OverviewLessonSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/temp-hovercard/$lessonSlug': {
+      id: '/temp-hovercard/$lessonSlug'
+      path: '/temp-hovercard/$lessonSlug'
+      fullPath: '/temp-hovercard/$lessonSlug'
+      preLoaderRoute: typeof TempHovercardLessonSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/words_/drill': {
       id: '/words_/drill'
       path: '/words/drill'
@@ -768,6 +788,7 @@ const rootRouteChildren: RootRouteChildren = {
   InviteTokenRoute: InviteTokenRoute,
   JournalPostIdRoute: JournalPostIdRoute,
   OverviewLessonSlugRoute: OverviewLessonSlugRoute,
+  TempHovercardLessonSlugRoute: TempHovercardLessonSlugRoute,
   WordsDrillRoute: WordsDrillRoute,
   CoursesCourseSlugManageRoute: CoursesCourseSlugManageRoute,
   GroupsGroupIdCoursesRoute: GroupsGroupIdCoursesRoute,
