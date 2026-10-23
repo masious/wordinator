@@ -31,8 +31,8 @@ import styles from "./CourseLessons.module.css";
 import { LessonReadingProgress, type ReadingTracking, saveLessonPosition, useResumeScroll } from "./LessonReadingProgress";
 import { typicalMinutes, useReadingTime } from "./LessonTime";
 import { CategoryBadge, entryStates, LessonIndex, lessonIndexEntries, LESSON_INDEX_MIN, stickyInset, useCurrentEntry, type LessonIndexEntry } from "./LessonIndex";
-import { LessonBox, LessonBoxActions, SectionActivities, type LessonActivitySuggestion, type LessonBoxLesson } from "./LessonBox";
-import { activityParts, activityPlacements, sectionActivities, useVisibleParts } from "./activitySections";
+import { LessonBox, LessonBoxActions, SectionActivities, type LessonBoxLesson } from "./LessonBox";
+import { activityPlacements } from "./activitySections";
 import { HeadingDot } from "./HeadingDot";
 import { LessonStickyHeader } from "./LessonStickyHeader";
 import { LessonWords, useVisibleWords, useWordsCollapsed, type LessonWordsPlacement } from "./LessonWords";
@@ -167,7 +167,7 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
   const practiceScope = { groupId: scope.groupId, courseId: scope.courseId, lessonId: lesson.id, accountId: scope.accountId };
   // The index and the headings it lists share each entry's state: current, passed, or locked until the reader reaches it. Behind
   // the start gate there is neither.
-  // The current entry is followed even when the index is too short to show, since Do more with AI follows it too.
+  // The current entry is followed even when the index is too short to show, since the sticky header names it too.
   const tracked = gate ? NO_ENTRIES : entries;
   const indexed = tracked.length >= LESSON_INDEX_MIN ? tracked : NO_ENTRIES;
   const current = useCurrentEntry(tracked, reading, side);
@@ -175,13 +175,8 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
   useEffect(() => setVisited((furthest) => Math.max(furthest, current)), [current]);
   const states = useMemo(() => entryStates(indexed, current, reachedStep, visited), [indexed, current, reachedStep, visited]);
   const badges = useMemo(() => new Map(indexed.flatMap((entry, index) => entry.color ? [] : [[entry.id, { category: entry.category, locked: states[index] === "locked" }] as const])), [indexed, states]);
-  // Do more with AI offers the current entry's section's activities, with only the grammar parts on screen
-  // (docs/lesson-activities.md#scope-and-entry-point). Every level-3 heading carries its colour dot, in the text as in the index.
-  const parts = useMemo(() => activityParts(tracked, allActivityDescriptors), [tracked, allActivityDescriptors]);
-  const visibleParts = useVisibleParts(parts, tracked, reading, side);
-  const section = sectionActivities(tracked, current, allActivityDescriptors, visibleParts);
-  const activitySuggestions: LessonActivitySuggestion[] = section.activities.flatMap(({ descriptor, part }) => descriptor.activityTypes.map((type) => ({ descriptor, type, part, done: doneActivities.has(`${descriptor.sourceId}:${type}`) })));
-  // Each source's activities also sit in the text, after its section's last block (docs/lesson-activities.md#in-the-text).
+  // Each source's activities sit in the text, after its section's last block (docs/lesson-activities.md#in-the-text). Every level-3
+  // heading carries its colour dot, in the text as in the index.
   const placements = useMemo(() => document ? activityPlacements(document, tracked, allActivityDescriptors) : new Map<string, never[]>(), [document, tracked, allActivityDescriptors]);
   // The lesson's word batches sit after the last section each one holds (docs/words.md#word-batches), once past the start gate.
   const batchAnchors = useMemo(() => new Set(document && !gate ? lessonWordBatches(document).map((batch) => batch.afterBlockId) : []), [document, gate]);
@@ -210,14 +205,14 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
   const lessonBox = <>
     {header && !gate && createPortal(<LessonStickyHeader title={box.title} cover={cover ?? null} entry={tracked[current]} section={sectionEntry} />, header)}
     {rail.box && createPortal(<LessonBox lesson={box} percent={percent} />, rail.box)}
-    {rail.actions && createPortal(<LessonBoxActions lesson={box} courseSlug={scope.courseSlug} lessonSlug={lesson.slug} suggestions={activitySuggestions} completedCount={doneActivities.size} sectionLabel={section.label} sectionCategory={section.category} />, rail.actions)}
+    {rail.actions && createPortal(<LessonBoxActions lesson={box} />, rail.actions)}
   </>;
   if (!document || !steps.length) return <div className={styles.body}><p className={styles.emptyLesson}>{t("courses.lessons.empty")}</p>{lessonBox}</div>;
   const hasWords = steps.some((step) => step.words.length > 0);
   // Where the vocabulary panel goes: the right rail on wide screens, under the text below 62em (or outside the frame), a sheet on phones.
   const placement = !hasWords ? null : phone ? "sheet" : !inline && rail.reference ? "rail" : "under";
   const docked = placement === "rail";
-  const actions = (compact: boolean) => <LessonBoxActions lesson={box} compact={compact} courseSlug={scope.courseSlug} lessonSlug={lesson.slug} suggestions={activitySuggestions} completedCount={doneActivities.size} sectionLabel={section.label} sectionCategory={section.category} />;
+  const actions = (compact: boolean) => <LessonBoxActions lesson={box} compact={compact} />;
   const words = (props: { placement: LessonWordsPlacement; collapsible?: boolean }) =>
     <LessonWords steps={steps} active={active} groupId={scope.groupId} collapsed={wordsCollapsed} onToggle={toggleWords}
       footer={railDrawer ? undefined : actions} {...props} />;

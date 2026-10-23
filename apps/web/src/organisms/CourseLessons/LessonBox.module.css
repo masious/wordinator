@@ -8,16 +8,8 @@
 .box[data-compact] .titleReveal{grid-template-rows:0fr;opacity:0}
 .box[data-compact]{gap:var(--space-3);padding-block:var(--space-3)}
 .title{display:-webkit-box;margin:0;overflow:hidden;color:var(--color-foreground);font-size:var(--text-md);font-weight:var(--weight-semibold);line-height:var(--line-compact);-webkit-box-orient:vertical;-webkit-line-clamp:3}
-/* The lesson's actions, above the profile row, outside the card. */
+/* The lesson's actions (Practise words), outside the card. */
 .actions{container-type:inline-size;display:grid;gap:var(--space-2)}
-.actionsHeading{display:flex;align-items:center;gap:var(--space-2);margin:0;color:var(--color-foreground-muted);font-size:var(--type-eyebrow);font-weight:var(--weight-bold);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase}
-.actionsHeading svg{width:1.5rem;height:1.5rem;flex:none;color:var(--color-action)}
-/* The section badge sits at the heading row's end, sized like a lesson index row (the badge is sized in em). */
-.sectionBadge{display:inline-flex;margin-inline-start:auto;font-size:var(--type-body);letter-spacing:normal;text-transform:none}
-/* The active section's name, once, under the heading: one line with an ellipsis (the full text is its title). */
-.section{margin:0;overflow:hidden;color:var(--color-foreground);font-size:var(--type-card-title);font-weight:var(--weight-semibold);line-height:var(--line-title);text-overflow:ellipsis;white-space:nowrap}
-/* Every action takes the full row, so its label never truncates against a neighbour; long labels wrap to a second line. */
-.pair{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-2)}
 .label{min-width:0;flex:1}
 /* The Done mark is a check only, in the success token; its word is visually hidden for assistive technology. */
 .done{display:inline-flex;flex:none;color:var(--color-success)}
@@ -34,17 +26,10 @@
 .action > svg:first-child{flex:none;box-sizing:content-box;align-self:stretch;width:1.125rem;height:auto;padding-inline:calc((var(--touch-target) - 1.125rem) / 2);color:var(--focus-accent);background:var(--focus-surface)}
 .action .label{padding:var(--space-2) var(--space-3)}
 .action .done{margin-inline-end:var(--space-3)}
-/* Compact: icons only, stacked; the label stays for assistive technology. */
+/* Compact: the icon only; the label stays for assistive technology. */
 .actions[data-compact]{justify-items:center}
-.actions[data-compact] .pair{grid-template-columns:minmax(0,1fr)}
-.actions[data-compact] .actionsHeading{justify-content:center}
-.actions[data-compact] .actionsHeading span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .actions[data-compact] .action{justify-content:center;width:var(--touch-target)}
-.actions[data-compact] .section,.actions[data-compact] .sectionBadge{display:none}
 .actions[data-compact] .label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-/* Compact Done: the check sits on a small success tint at the icon's corner. */
-.actions[data-compact] .done{position:absolute;inset-block-start:calc(var(--space-1) * -1);inset-inline-end:calc(var(--space-1) * -1);justify-content:center;background:var(--color-success-surface);border-radius:var(--radius-pill)}
-.actions[data-compact] .done svg{width:0.75rem;height:0.75rem}
 .note{margin:0;color:var(--color-foreground-faint);font-size:var(--text-xs);line-height:var(--line-compact)}
 @media(prefers-reduced-motion:reduce){.action,.heading,.titleReveal{transition:none}}
 /* A section's activities in the text, after its last block. A quiet card; links share the rail's action style and sit two

@@ -510,8 +510,6 @@ export const resources = {
           progress: "Progress",
           actions: "Lesson actions",
           doMoreWithAi: "Do more with AI",
-          activitiesDoneCount_one: "{{count}} activity completed",
-          activitiesDoneCount_other: "{{count}} activities completed",
           upNext: "Up next",
           practiseWords: "Practise words",
           askAi: "Ask AI",

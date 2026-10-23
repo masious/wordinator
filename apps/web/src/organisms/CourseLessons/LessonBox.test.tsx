@@ -2,10 +2,11 @@ import { MantineProvider } from "@mantine/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createMemoryHistory, createRootRoute, createRoute, createRouter, RouterProvider } from "@tanstack/react-router";
 import { cleanup, render, screen, within } from "@testing-library/react";
+import type { ReactNode } from "react";
 import { afterEach, describe, expect, it } from "vitest";
 import "../../i18n";
 import type { ActivityDescriptor, ActivityType } from "@wordinator/contracts/lesson-activities";
-import { LessonBoxActions, type LessonActivitySuggestion, type LessonBoxLesson } from "./LessonBox";
+import { LessonBoxActions, SectionActivities, type LessonActivitySuggestion, type LessonBoxLesson } from "./LessonBox";
 
 const lesson: LessonBoxLesson = { groupId: "20000000-0000-4000-8000-000000000001", courseId: "30000000-0000-4000-8000-000000000001", courseTitle: "Dutch Foundations", lessonId: "40000000-0000-4000-8000-000000000001", title: "Lesson title", number: 1 };
 const fingerprint = "b".repeat(64);
@@ -14,143 +15,81 @@ const grammar: ActivityDescriptor = { sourceId: "section-grammar", sourceKind: "
 
 afterEach(() => cleanup());
 
-// The rail's actions in a router, so the activity links resolve to the activity route.
-function renderActions(suggestions: LessonActivitySuggestion[], options: { compact?: boolean; completedCount?: number; sectionCategory?: "story" | "grammar" } = {}) {
+// In a router, so the links resolve to their routes.
+function renderInRouter(node: ReactNode) {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   const root = createRootRoute();
-  const route = createRoute({ getParentRoute: () => root, path: "$", component: () => <LessonBoxActions lesson={lesson} courseSlug="dutch-foundations" lessonSlug="lesson-title" suggestions={suggestions} {...options} /> });
+  const route = createRoute({ getParentRoute: () => root, path: "$", component: () => node });
   const router = createRouter({ routeTree: root.addChildren([route]), history: createMemoryHistory({ initialEntries: ["/"] }) });
   return render(<MantineProvider><QueryClientProvider client={queryClient}><RouterProvider router={router} /></QueryClientProvider></MantineProvider>);
 }
 
+const renderSection = (suggestions: LessonActivitySuggestion[]) =>
+  renderInRouter(<SectionActivities courseSlug="dutch-foundations" lessonSlug="lesson-title" suggestions={suggestions} />);
+
 describe("Lesson box actions", () => {
-  it("links each suggested activity to its own route, one link per descriptor and type", async () => {
-    renderActions([
+  it("offers Practise words alone, with no AI activities or Do more with AI heading", async () => {
+    renderInRouter(<LessonBoxActions lesson={lesson} />);
+    const group = await screen.findByRole("group", { name: "Lesson actions" });
+    expect(within(group).getByRole("link", { name: "Practise words" }).getAttribute("href")).toMatch(/^\/words\/drill\?/);
+    expect(within(group).getAllByRole("link")).toHaveLength(1);
+    expect(within(group).queryByText(/Do more with AI/i)).toBeNull();
+  });
+});
+
+describe("Section activities in the text", () => {
+  it("links each activity to its own route, one link per descriptor and type, each naming its source", async () => {
+    renderSection([
       { descriptor: story, type: "review_words" },
       { descriptor: story, type: "read_aloud" },
       { descriptor: grammar, type: "guided_grammar" },
     ]);
-    const group = await screen.findByRole("group", { name: "Lesson actions" });
-    const activityLinks = within(group).getAllByRole("link").filter((link) => link.getAttribute("href")?.includes("/activities/"));
-    expect(activityLinks.map((link) => link.getAttribute("href"))).toEqual([
+    const card = await screen.findByRole("complementary", { name: "Do more with AI" });
+    expect(within(card).getAllByRole("link").map((link) => link.getAttribute("href"))).toEqual([
       "/courses/dutch-foundations/lessons/lesson-title/activities/section-story/review_words",
       "/courses/dutch-foundations/lessons/lesson-title/activities/section-story/read_aloud",
       "/courses/dutch-foundations/lessons/lesson-title/activities/section-grammar/guided_grammar",
     ]);
-    // The first suggestion sits beside Practise words; the rest keep their section in the accessible name (visually it is the group's one title).
-    expect(within(group).getByText("Story", { selector: "p" })).toHaveAttribute("title", "Story");
-    expect(within(group).getByRole("link", { name: "Guided grammar · Grammar" })).toHaveTextContent(/^Guided grammar/);
-    expect(within(group).getByRole("link", { name: "Review words" })).toBeInTheDocument();
-    expect(within(group).getByRole("link", { name: "Read aloud · Story" })).toBeInTheDocument();
-    expect(within(group).getByRole("link", { name: "Guided grammar · Grammar" })).toBeInTheDocument();
+    expect(within(card).getByRole("link", { name: "Read aloud · Story" })).toHaveAttribute("data-category", "story");
+    expect(within(card).getByRole("link", { name: "Guided grammar · Grammar" })).toHaveAttribute("data-category", "grammar");
   });
 
-  it("ends a done suggestion with a Done badge that its accessible name includes, and leaves the others unmarked", async () => {
-    renderActions([
-      { descriptor: story, type: "review_words", done: true },
-      { descriptor: story, type: "read_aloud", done: false },
+  it("ends a done activity with a Done badge that its accessible name includes, and leaves the others unmarked", async () => {
+    renderSection([
+      { descriptor: story, type: "read_aloud", done: true },
       { descriptor: grammar, type: "guided_grammar" },
     ]);
-    const group = await screen.findByRole("group", { name: "Lesson actions" });
-    const done = within(group).getByRole("link", { name: "Review words Done" });
-    expect(within(done).getByText("Done")).toBeInTheDocument();
+    const card = await screen.findByRole("complementary", { name: "Do more with AI" });
+    const done = within(card).getByRole("link", { name: "Read aloud · Story Done" });
     expect(done.querySelector(".lucide-check")).not.toBeNull();
-    expect(within(group).getByRole("link", { name: "Read aloud · Story" })).not.toHaveTextContent("Done");
-    expect(within(group).getByRole("link", { name: "Guided grammar · Grammar" })).not.toHaveTextContent("Done");
-    expect(within(group).getAllByText("Done")).toHaveLength(1);
+    expect(within(card).getByRole("link", { name: "Guided grammar · Grammar" })).not.toHaveTextContent("Done");
+    expect(within(card).getAllByText("Done")).toHaveLength(1);
     // The full label stays discoverable through the title, since the visible label clamps to two lines.
-    expect(done).toHaveAttribute("title", "Review words · Story");
+    expect(done).toHaveAttribute("title", "Read aloud · Story");
   });
 
-  it("shows the section label once in the header, on one line with a title, and the links show only the type label", async () => {
-    const long = { ...story, sourceLabel: "Story: Een tafel bij het raam" };
-    renderActions([{ descriptor: long, type: "review_words" }, { descriptor: long, type: "read_aloud" }]);
-    const group = await screen.findByRole("group", { name: "Lesson actions" });
-    const header = within(group).getAllByText("Story: Een tafel bij het raam", { selector: "p" });
-    expect(header).toHaveLength(1);
-    expect(header[0]).toHaveAttribute("title", "Story: Een tafel bij het raam");
-    const link = within(group).getByRole("link", { name: "Read aloud · Story: Een tafel bij het raam" });
-    expect(link.querySelector("span")?.firstChild?.textContent).toBe("Read aloud");
-    expect(link).toHaveAttribute("data-category", "story");
-    expect(within(group).getByRole("link", { name: "Review words" })).toHaveAttribute("data-category", "words");
-  });
-
-  it("keeps the Done word for assistive technology in compact mode, where only the check shows", async () => {
-    renderActions([{ descriptor: grammar, type: "guided_grammar", done: true }], { compact: true });
-    const group = await screen.findByRole("group", { name: "Lesson actions" });
-    const done = within(group).getByRole("link", { name: "Guided grammar Done" });
-    expect(done.querySelector(".lucide-check")).not.toBeNull();
-    expect(within(done).getByText("Done")).toBeInTheDocument();
-    expect(done).toHaveAttribute("title", "Guided grammar · Grammar");
-  });
-
-  it("gives each of the five activity types its own icon, marked with data-icon", async () => {
+  it("gives each activity type its own icon, marked with data-icon", async () => {
     // The lucide class names come from the icon exports in activityIcons.ts; each type must render a different one.
     const expected: Record<ActivityType, string> = {
       guided_grammar: "lucide-footprints", tricky_grammar: "lucide-puzzle", mixed_practice: "lucide-shuffle",
       read_aloud: "lucide-mic", review_words: "lucide-book-open-check",
     };
     const types = Object.keys(expected) as ActivityType[];
-    renderActions(types.map((type) => ({ descriptor: story, type })));
-    const group = await screen.findByRole("group", { name: "Lesson actions" });
-    for (const type of types) {
-      const icon = group.querySelector(`[data-icon="${type}"]`);
-      expect(icon, type).toHaveClass(expected[type]);
-    }
-    expect(new Set(types.map((type) => group.querySelector(`[data-icon="${type}"]`)?.getAttribute("class"))).size).toBe(types.length);
+    renderSection(types.map((type) => ({ descriptor: story, type })));
+    const card = await screen.findByRole("complementary", { name: "Do more with AI" });
+    for (const type of types) expect(card.querySelector(`[data-icon="${type}"]`), type).toHaveClass(expected[type]);
+    expect(new Set(types.map((type) => card.querySelector(`[data-icon="${type}"]`)?.getAttribute("class"))).size).toBe(types.length);
   });
 
-  it("counts the lesson's completed activities in the header badge, not only this section's", async () => {
-    renderActions([
-      { descriptor: story, type: "review_words", done: true },
-      { descriptor: grammar, type: "guided_grammar" },
-    ], { completedCount: 3 });
-    const group = await screen.findByRole("group", { name: "Lesson actions" });
-    expect(within(group).getByLabelText("3 activities completed")).toHaveTextContent("3");
-  });
-
-  it("ends the heading row with the active section's category badge, and has none without a section category", async () => {
-    renderActions([{ descriptor: story, type: "review_words" }], { sectionCategory: "story" });
-    const heading = await screen.findByRole("heading", { name: /Do more with AI/i });
-    expect(heading.lastElementChild?.querySelector("[data-tone]")).not.toBeNull();
-    cleanup();
-    renderActions([{ descriptor: story, type: "review_words" }]);
-    expect((await screen.findByRole("heading", { name: /Do more with AI/i })).querySelector("[data-tone]")).toBeNull();
-  });
-
-  it("shows no completed badge when no suggestion is completed", async () => {
-    renderActions([
-      { descriptor: story, type: "review_words", done: false },
-      { descriptor: grammar, type: "guided_grammar" },
-    ], { completedCount: 0 });
-    const group = await screen.findByRole("group", { name: "Lesson actions" });
-    expect(within(group).queryByLabelText(/completed$/)).toBeNull();
-  });
-
-  it("names the section it is given, and marks a grammar part's activities with the part's dot and name, the first link too", async () => {
+  it("marks a grammar part's activities with the part's dot, and others with none", async () => {
     const part = { headingId: "50000000-0000-4000-8000-000000000009", label: "Asking permission", color: "violet" as const };
     const asking = { ...grammar, sourceId: "part-1", sourceLabel: "Asking permission", activityTypes: ["guided_grammar", "tricky_grammar"] as ActivityType[] };
     const end: ActivityDescriptor = { ...grammar, sourceId: "lesson_end", sourceKind: "lesson_end", sourceLabel: "Lesson title · End", activityTypes: ["mixed_practice"] };
-    renderActions([{ descriptor: asking, type: "guided_grammar", part }, { descriptor: asking, type: "tricky_grammar", part }]);
-    let group = await screen.findByRole("group", { name: "Lesson actions" });
+    renderSection([{ descriptor: asking, type: "guided_grammar", part }, { descriptor: asking, type: "tricky_grammar", part }, { descriptor: end, type: "mixed_practice" }]);
+    const card = await screen.findByRole("complementary", { name: "Do more with AI" });
     for (const name of ["Guided grammar · Asking permission", "Tricky grammar practice · Asking permission"]) {
-      expect(within(group).getByRole("link", { name }).querySelector('[data-color="violet"]')).not.toBeNull();
+      expect(within(card).getByRole("link", { name }).querySelector('[data-color="violet"]')).not.toBeNull();
     }
-    cleanup();
-    // A section without activities of its own is named after itself while it offers the lesson end.
-    const queryClient = new QueryClient();
-    const root = createRootRoute();
-    const route = createRoute({ getParentRoute: () => root, path: "$", component: () => <LessonBoxActions lesson={lesson} courseSlug="dutch-foundations" lessonSlug="lesson-title" suggestions={[{ descriptor: end, type: "mixed_practice" }]} sectionLabel="Words: in het restaurant" /> });
-    render(<MantineProvider><QueryClientProvider client={queryClient}><RouterProvider router={createRouter({ routeTree: root.addChildren([route]), history: createMemoryHistory({ initialEntries: ["/"] }) })} /></QueryClientProvider></MantineProvider>);
-    group = await screen.findByRole("group", { name: "Lesson actions" });
-    expect(within(group).getByText("Words: in het restaurant", { selector: "p" })).toBeInTheDocument();
-    expect(within(group).getByRole("link", { name: "Mixed lesson practice" }).querySelector("[data-color]")).toBeNull();
-  });
-
-  it("keeps Practise words and offers no activity links without suggestions", async () => {
-    renderActions([]);
-    const group = await screen.findByRole("group", { name: "Lesson actions" });
-    expect(within(group).getByRole("link", { name: "Practise words" }).getAttribute("href")).toMatch(/^\/words\/drill\?/);
-    expect(within(group).getAllByRole("link")).toHaveLength(1);
+    expect(within(card).getByRole("link", { name: "Mixed lesson practice · Lesson title · End" }).querySelector("[data-color]")).toBeNull();
   });
 });
