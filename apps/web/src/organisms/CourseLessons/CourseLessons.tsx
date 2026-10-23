@@ -20,7 +20,7 @@ import { AdaptiveDialog, Button, ButtonGroup, ConfirmDialog, EmptyState, ErrorSt
 import { LessonDocument } from "../LessonDocument/LessonDocument";
 import { LessonShareScope, ShareButton, useLessonShareScope } from "../LessonShare/LessonShare";
 import { useLessonBookmarkTarget, WordBookmarkScope } from "../WordBookmark/WordBookmark";
-import { WordBatches } from "../WordBatches/WordBatches";
+import { WordBatchButtons } from "../WordBatches/WordBatches";
 import { WordRecap } from "../WordRecap/WordRecap";
 import { RAIL_DRAWER_QUERY, useRailSlots } from "../GroupFrame/GroupFrame";
 import { CourseErrorMessage } from "./CourseErrorMessage";
@@ -178,18 +178,17 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
   // Each source's activities sit in the text, after its section's last block (docs/lesson-activities.md#in-the-text). Every level-3
   // heading carries its colour dot, in the text as in the index.
   const placements = useMemo(() => document ? activityPlacements(document, tracked, allActivityDescriptors) : new Map<string, never[]>(), [document, tracked, allActivityDescriptors]);
-  // The lesson's word batches sit after the last section each one holds (docs/words.md#word-batches), once past the start gate.
+  // Each of the lesson's word batches is a button in the Do more with AI box after the last section it holds (docs/words.md#word-batches),
+  // once past the start gate; a place without activities gets a box of its own.
   const batchAnchors = useMemo(() => new Set(document && !gate ? lessonWordBatches(document).map((batch) => batch.afterBlockId) : []), [document, gate]);
   const renderAfterBlock = (id: string) => {
     const placed = placements.get(id);
     const practices = slots?.afterBlock(id);
-    const batches = batchAnchors.has(id) && <section className={styles.batches} aria-label={t("words.batches.heading")}>
-      <p className={styles.batchesLabel}>{t("words.batches.inText")}</p>
-      <WordBatches scope={scope} lesson={lesson} title={box.title} afterBlock={id} />
-    </section>;
+    const batches = batchAnchors.has(id) ? (classes: { action: string; label: string }) =>
+      <WordBatchButtons scope={scope} lesson={lesson} title={box.title} afterBlock={id} classes={classes} /> : undefined;
     if (!placed?.length && !batches) return practices;
-    return <>{practices}{placed?.length ? <SectionActivities courseSlug={scope.courseSlug} lessonSlug={lesson.slug}
-      suggestions={placed.flatMap(({ descriptor, part }) => descriptor.activityTypes.map((type) => ({ descriptor, type, part, done: doneActivities.has(`${descriptor.sourceId}:${type}`) })))} /> : null}{batches}</>;
+    return <>{practices}<SectionActivities courseSlug={scope.courseSlug} lessonSlug={lesson.slug} extra={batches}
+      suggestions={(placed ?? []).flatMap(({ descriptor, part }) => descriptor.activityTypes.map((type) => ({ descriptor, type, part, done: doneActivities.has(`${descriptor.sourceId}:${type}`) })))} /></>;
   };
   const colors = useMemo(() => new Map(indexed.flatMap((entry) => entry.color ? [[entry.id, entry.color] as const] : [])), [indexed]);
   const renderHeadingBadge = useCallback((id: string) => {

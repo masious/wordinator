@@ -142,7 +142,7 @@ export const resources = {
         drillWeak: "Drill these words",
         batches: {
           heading: "Words in batches",
-          inText: "Review the new words so far",
+          review: "Review batch {{number}} words of this lesson",
           batch: "Batch {{number}}",
           words_one: "{{count}} word",
           words_other: "{{count}} words",
@@ -159,6 +159,7 @@ export const resources = {
           peekNamed: "Peek at batch {{number}}",
           peekTitle: "Batch {{number}} of {{title}}",
           peekDone: "Back to batches",
+          peekBack: "Back to the lesson",
           knownFor: "I know {{term}}",
           knownFailed: "That word could not be marked. Try again.",
           drill: "Drill",

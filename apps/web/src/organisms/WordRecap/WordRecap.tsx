@@ -122,10 +122,11 @@ export type MoreWords = { hasMore: boolean; loading: boolean; onLoad: () => void
 // the reader is a page away from the end, and the total is not shown until every word has loaded. Nothing is graded, recorded,
 // or counted. Callers render it only when there is at least one word. Inside a speech recognition scope (the Words tab only),
 // each card also offers saying its term aloud. `action` puts one control at the start of each card's footer (a Peek's "I know this
-// word"); it takes the place a microphone would, so it is for surfaces outside a recognition scope.
-export function WordRecap({ words, doneLabel, onDone, source, more, action }: {
+// word"); it takes the place a microphone would, so it is for surfaces outside a recognition scope. `finish` adds controls before
+// the done action on the last page (a Peek's Drill and Practice).
+export function WordRecap({ words, doneLabel, onDone, source, more, action, finish }: {
   words: readonly RecapWord[]; doneLabel?: string; onDone?: () => void; source?: (word: RecapWord) => string | null; more?: MoreWords;
-  action?: (word: RecapWord) => ReactNode;
+  action?: (word: RecapWord) => ReactNode; finish?: ReactNode;
 }) {
   const { t } = useTranslation();
   const { recapRef, gridRef, size } = useGridFit();
@@ -169,7 +170,7 @@ export function WordRecap({ words, doneLabel, onDone, source, more, action }: {
     <div className={styles.nav}>
       <Button variant="quiet" disabled={start === 0} onClick={() => go(Math.max(0, start - size))}>{t("common.back")}</Button>
       {last && doneLabel && onDone
-        ? <Button onClick={onDone}>{doneLabel}</Button>
+        ? <span className={styles.finish}>{finish}<Button onClick={onDone}>{doneLabel}</Button></span>
         // While the next words are loading, Next waits for them.
         : <Button disabled={loadedEnd} loading={loadedEnd && more?.loading} onClick={() => go(start + size)}>{t("common.next")}</Button>}
     </div>

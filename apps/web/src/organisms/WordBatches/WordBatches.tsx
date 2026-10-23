@@ -5,7 +5,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { Popover } from "@mantine/core";
 import { Check, ChevronLeft, ChevronRight, Layers, Sparkles } from "lucide-react";
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { apiRequest, wordBatchesKey, wordBatchesQueryOptions } from "../../api";
 import { PlainText } from "../../molecules/PlainText";
@@ -117,9 +117,44 @@ function BatchWords({ number, words }: { number: number; words: readonly RecapWo
   </div>;
 }
 
+// A batch's Drill (a mixed drill of just the batch) and Practice (a tutor word practice of it, opening the conversation).
+function useBatchActions(lesson: CourseLesson) {
+  const navigate = useNavigate();
+  const drill = (batch: Batch) => { void navigate({ to: "/words/drill", search: { source: "lesson", lesson: lesson.id, batch: batch.number, direction: "mixed" } }); };
+  const practice = useMutation({
+    mutationFn: (batch: Batch) => apiRequest("/api/ai/conversations", tutorConversationResponseSchema, {
+      method: "POST",
+      body: JSON.stringify({ wordPractice: batch.words.slice(0, TUTOR_WORD_PRACTICE_MAX).map((word) => ({ lessonId: lesson.id, wordId: word.id, source: "batch" as const })) } satisfies CreateTutorConversationRequest),
+    }),
+    onSuccess: (response) => { void navigate({ to: "/ai", search: { conversation: response.conversation.id } }); },
+  });
+  return { drill, practice };
+}
+
+// A batch's Drill and Practice buttons; `variant` sets their weight.
+function BatchActions({ batch, actions, variant }: { batch: Batch; actions: ReturnType<typeof useBatchActions>; variant: "quiet" | "secondary" }) {
+  const { t } = useTranslation();
+  const named = { number: batch.number }; const { drill, practice } = actions;
+  return <>
+    <Button variant={variant} aria-label={t("words.batches.drillNamed", named)} onClick={() => drill(batch)}>{t("words.batches.drill")}</Button>
+    <Button variant={variant} aria-label={t("words.batches.practiceNamed", named)} loading={practice.isPending && practice.variables?.number === batch.number}
+      disabled={practice.isPending} onClick={() => practice.mutate(batch)}><Sparkles aria-hidden="true" className={styles.ai} />{t("words.batches.practice")}</Button>
+  </>;
+}
+
+// The lesson's batches, numbered from 1, with their words as recap cards.
+function useLessonBatches(lesson: CourseLesson) {
+  return useMemo<Batch[]>(() => {
+    const document = playableDocument(lesson); const byId = new Map(runWords(lessonSteps(lesson)).map((word) => [word.id, word]));
+    return document ? lessonWordBatches(document).map((batch, index) => ({ number: index + 1, headings: batch.headings, afterBlockId: batch.afterBlockId, words: batch.wordIds.flatMap((id) => byId.get(id) ?? []) })) : [];
+  }, [lesson]);
+}
+
 // A Peek: the batch as word cards. Opening it counts each word as seen once, and each card can mark its word known, which counts
-// it Strong; the toggles start off with each Peek.
-function Peek({ scope, lesson, batch, recorded, onDone }: { scope: PlayerScope; lesson: CourseLesson; batch: Batch; recorded: boolean; onDone: () => void }) {
+// it Strong; the toggles start off with each Peek. `finish` sits before the done action on the last page, labelled `doneLabel`.
+function Peek({ scope, lesson, batch, recorded, onDone, finish, doneLabel }: {
+  scope: PlayerScope; lesson: CourseLesson; batch: Batch; recorded: boolean; onDone: () => void; finish?: ReactNode; doneLabel?: string;
+}) {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
   const lessonPath = `/api/groups/${encodeURIComponent(scope.groupId)}/courses/${encodeURIComponent(scope.courseId)}/lessons/${encodeURIComponent(lesson.id)}`;
@@ -147,43 +182,33 @@ function Peek({ scope, lesson, batch, recorded, onDone }: { scope: PlayerScope; 
   } : undefined;
   return <div className={styles.peek}>
     {failure && <p className={styles.error} role="alert">{t("words.batches.knownFailed")}</p>}
-    <WordRecap words={batch.words} doneLabel={t("words.batches.peekDone")} onDone={onDone} action={action} />
+    <WordRecap words={batch.words} doneLabel={doneLabel ?? t("words.batches.peekDone")} onDone={onDone} action={action} finish={finish} />
   </div>;
 }
 
 // A lesson's word batches (docs/words.md#word-batches) as compact tiles, each with its memory bands and three actions: Peek opens
 // its words as cards, Drill opens a drill of just the batch, and Practice starts a tutor word practice of it. Drill, Practice, and
 // what a Peek records need the published lesson; an editor's preview of an unpublished lesson offers Peek alone. `peekIn` says
-// whether a Peek replaces the tiles (inside a dialog) or opens its own dialog (on a page). `afterBlock` shows only the batches
-// placed after that top-level block, as the lesson page does at the end of each batch's last section.
-export function WordBatches({ scope, lesson, peekIn = "dialog", title, afterBlock }: {
-  scope: PlayerScope; lesson: CourseLesson; peekIn?: "inline" | "dialog"; title?: string; afterBlock?: string;
+// whether a Peek replaces the tiles (inside a dialog) or opens its own dialog (on a page). A Peek's last page offers Drill and
+// Practice too.
+export function WordBatches({ scope, lesson, peekIn = "dialog", title }: {
+  scope: PlayerScope; lesson: CourseLesson; peekIn?: "inline" | "dialog"; title?: string;
 }) {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const published = lesson.document !== null;
-  const batches = useMemo<Batch[]>(() => {
-    const document = playableDocument(lesson); const byId = new Map(runWords(lessonSteps(lesson)).map((word) => [word.id, word]));
-    return document ? lessonWordBatches(document).map((batch, index) => ({ number: index + 1, headings: batch.headings, afterBlockId: batch.afterBlockId, words: batch.wordIds.flatMap((id) => byId.get(id) ?? []) })) : [];
-  }, [lesson]);
-  const shown = afterBlock === undefined ? batches : batches.filter((batch) => batch.afterBlockId === afterBlock);
+  const batches = useLessonBatches(lesson);
   const stats = useQuery({ ...wordBatchesQueryOptions(scope.groupId, scope.courseId, lesson.id), enabled: published && batches.length > 0 });
   const [peeking, setPeeking] = useState<Batch | null>(null);
-  const practice = useMutation({
-    mutationFn: (batch: Batch) => apiRequest("/api/ai/conversations", tutorConversationResponseSchema, {
-      method: "POST",
-      body: JSON.stringify({ wordPractice: batch.words.slice(0, TUTOR_WORD_PRACTICE_MAX).map((word) => ({ lessonId: lesson.id, wordId: word.id, source: "batch" as const })) } satisfies CreateTutorConversationRequest),
-    }),
-    onSuccess: (response) => { void navigate({ to: "/ai", search: { conversation: response.conversation.id } }); },
-  });
+  const actions = useBatchActions(lesson);
   const bookmarkTarget = useLessonBookmarkTarget(scope.groupId, scope.courseId, lesson.id, lesson.document);
   const speech = useMemo(() => lessonSpeech(lesson), [lesson]);
   const resolveSpeech = useCallback((key: string) => speech[key] ?? null, [speech]);
-  if (!shown.length) return null;
-  const peek = peeking && <Peek scope={scope} lesson={lesson} batch={peeking} recorded={published} onDone={() => setPeeking(null)} />;
+  if (!batches.length) return null;
+  const peek = peeking && <Peek scope={scope} lesson={lesson} batch={peeking} recorded={published} onDone={() => setPeeking(null)}
+    finish={published && <BatchActions batch={peeking} actions={actions} variant="secondary" />} />;
   return <WordBookmarkScope resolve={bookmarkTarget}><SpeechScope resolve={resolveSpeech}>
     {peekIn === "inline" && peek ? peek : <div className={styles.view}>
-      <ol className={styles.batches}>{shown.map((batch) => {
+      <ol className={styles.batches}>{batches.map((batch) => {
         const named = { number: batch.number };
         const standing = stats.data?.batches[batch.number - 1];
         return <li key={batch.number} className={styles.batch} aria-label={t("words.batches.batch", named)}>
@@ -196,16 +221,43 @@ export function WordBatches({ scope, lesson, peekIn = "dialog", title, afterBloc
           {standing && <BandBar stats={standing} />}
           <div className={styles.actions} role="group" aria-label={t("words.batches.actions", named)}>
             <Button variant="secondary" onClick={() => setPeeking(batch)} aria-label={t("words.batches.peekNamed", named)}>{t("words.batches.peek")}</Button>
-            {published && <Button variant="quiet" aria-label={t("words.batches.drillNamed", named)}
-              onClick={() => { void navigate({ to: "/words/drill", search: { source: "lesson", lesson: lesson.id, batch: batch.number, direction: "mixed" } }); }}>{t("words.batches.drill")}</Button>}
-            {published && <Button variant="quiet" aria-label={t("words.batches.practiceNamed", named)} loading={practice.isPending && practice.variables?.number === batch.number}
-              disabled={practice.isPending} onClick={() => practice.mutate(batch)}><Sparkles aria-hidden="true" className={styles.ai} />{t("words.batches.practice")}</Button>}
+            {published && <BatchActions batch={batch} actions={actions} variant="quiet" />}
           </div>
         </li>;
       })}</ol>
-      {practice.isError && <p className={styles.error} role="alert">{t("words.batches.practiceFailed")}</p>}
+      {actions.practice.isError && <p className={styles.error} role="alert">{t("words.batches.practiceFailed")}</p>}
     </div>}
     {peekIn === "dialog" && <AdaptiveDialog opened={Boolean(peeking)} onClose={() => setPeeking(null)}
       title={peeking ? t("words.batches.peekTitle", { number: peeking.number, title: title ?? lesson.title }) : ""}>{peek}</AdaptiveDialog>}
   </SpeechScope></WordBookmarkScope>;
+}
+
+// The lesson page's batch actions (docs/words.md#word-batches): one button per batch placed after the top-level block
+// `afterBlock`, inside that section's Do more with AI box and styled by its `classes`. A button opens the batch's Peek in a dialog,
+// whose last page offers Drill and Practice.
+export function WordBatchButtons({ scope, lesson, title, afterBlock, classes }: {
+  scope: PlayerScope; lesson: CourseLesson; title: string; afterBlock: string; classes: { action: string; label: string };
+}) {
+  const { t } = useTranslation();
+  const published = lesson.document !== null;
+  const shown = useLessonBatches(lesson).filter((batch) => batch.afterBlockId === afterBlock);
+  const [peeking, setPeeking] = useState<Batch | null>(null);
+  const actions = useBatchActions(lesson);
+  const bookmarkTarget = useLessonBookmarkTarget(scope.groupId, scope.courseId, lesson.id, lesson.document);
+  const speech = useMemo(() => lessonSpeech(lesson), [lesson]);
+  const resolveSpeech = useCallback((key: string) => speech[key] ?? null, [speech]);
+  if (!shown.length) return null;
+  return <>
+    {shown.map((batch) => <button key={batch.number} type="button" className={classes.action} data-category="words" onClick={() => setPeeking(batch)}
+      title={batch.headings.join(" · ") || undefined}>
+      <Layers aria-hidden="true" /><span className={classes.label}>{t("words.batches.review", { number: batch.number })}</span>
+    </button>)}
+    <AdaptiveDialog opened={Boolean(peeking)} onClose={() => setPeeking(null)} title={peeking ? t("words.batches.peekTitle", { number: peeking.number, title }) : ""}>
+      {peeking && <WordBookmarkScope resolve={bookmarkTarget}><SpeechScope resolve={resolveSpeech}>
+        <Peek scope={scope} lesson={lesson} batch={peeking} recorded={published} onDone={() => setPeeking(null)} doneLabel={t("words.batches.peekBack")}
+          finish={published && <BatchActions batch={peeking} actions={actions} variant="secondary" />} />
+        {actions.practice.isError && <p className={styles.error} role="alert">{t("words.batches.practiceFailed")}</p>}
+      </SpeechScope></WordBookmarkScope>}
+    </AdaptiveDialog>
+  </>;
 }

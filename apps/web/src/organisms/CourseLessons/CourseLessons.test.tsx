@@ -259,7 +259,7 @@ describe("Course lessons", () => {
     expect(observed.map((element) => element.getAttribute("data-block-id"))).toEqual([first.id, second.id]);
   });
 
-  it("places each word batch after the last section it holds, whose Peek opens the batch's cards", async () => {
+  it("offers each word batch in a Do more with AI box after its last section, opening its cards with Drill and Practice at the end", async () => {
     const word = (n: number, term: string) => ({ id: `70000000-0000-4000-8000-0000000000${String(n).padStart(2, "0")}`, term, meaning: `meaning of ${term}` });
     const vocabulary = (n: number, ...words: unknown[]): LessonTopBlock => ({ id: `50000000-0000-4000-8000-00000000002${n}`, type: "vocabulary", props: { data: JSON.stringify({ words }) }, children: [] });
     const section = (n: number, title: string): LessonTopBlock => ({ id: `50000000-0000-4000-8000-00000000004${n}`, type: "heading", props: { textColor: "default", backgroundColor: "default", level: 2 }, content: text(title), children: [] });
@@ -267,21 +267,26 @@ describe("Course lessons", () => {
     const animals = Array.from({ length: 9 }, (_, index) => word(index + 3, `dier ${index + 1}`));
     // A finished lesson: an unstarted one shows its start gate instead of the text and the batches.
     finished = [lessonId(1)];
-    renderLesson({ course: course(false), outline: [summary(1)], lessons: [lesson(1, [section(1, "Groeten"), example("50000000-0000-4000-8000-000000000011", "De hond blaft."),
+    const { router } = renderLesson({ course: course(false), outline: [summary(1)], lessons: [lesson(1, [section(1, "Groeten"), example("50000000-0000-4000-8000-000000000011", "De hond blaft."),
       vocabulary(1, word(1, "de hond"), word(2, "de kat")), section(2, "Dieren"), vocabulary(2, ...animals)])] });
     await waitFor(() => expect(vi.mocked(fetch).mock.calls.some(([path]) => String(path).endsWith("/progress"))).toBe(true));
-    const sections = await screen.findAllByRole("region", { name: "Words in batches" });
-    expect(sections).toHaveLength(2);
+    const boxes = await screen.findAllByRole("complementary", { name: "Do more with AI" });
+    expect(boxes).toHaveLength(2);
     const heading = screen.getByRole("heading", { name: "Dieren" });
-    expect(sections[0]!.compareDocumentPosition(heading) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
-    expect(within(sections[1]!).getByRole("listitem", { name: "Batch 2" })).toHaveTextContent("9 words");
-    const batch = within(sections[0]!).getByRole("listitem", { name: "Batch 1" });
-    expect(batch).toHaveTextContent("2 words");
-    expect(within(sections[0]!).queryByRole("listitem", { name: "Batch 2" })).not.toBeInTheDocument();
-    fireEvent.click(within(batch).getByRole("button", { name: "Peek at batch 1" }));
+    expect(boxes[0]!.compareDocumentPosition(heading) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    // The box offers the batch alone, without its words.
+    expect(within(boxes[0]!).getAllByRole("button").map((button) => button.textContent)).toEqual(["Review batch 1 words of this lesson"]);
+    expect(within(boxes[0]!).queryByText("de hond")).not.toBeInTheDocument();
+    expect(within(boxes[1]!).getByRole("button", { name: "Review batch 2 words of this lesson" })).toBeInTheDocument();
+    fireEvent.click(within(boxes[0]!).getByRole("button", { name: "Review batch 1 words of this lesson" }));
     const peek = await screen.findByRole("dialog", { name: "Batch 1 of Lesson title 1" });
     expect(within(peek).getByRole("article", { name: "de hond" })).toBeInTheDocument();
-    expect(within(batch).getByRole("button", { name: "Drill batch 1" })).toBeInTheDocument();
+    // Drill and Practice wait on the last page, beside Back to the lesson.
+    while (within(peek).queryByRole("button", { name: "Next" })) fireEvent.click(within(peek).getByRole("button", { name: "Next" }));
+    expect(within(peek).getByRole("button", { name: "Practice batch 1 with the tutor" })).toBeInTheDocument();
+    expect(within(peek).getByRole("button", { name: "Back to the lesson" })).toBeInTheDocument();
+    fireEvent.click(within(peek).getByRole("button", { name: "Drill batch 1" }));
+    await waitFor(() => expect(landed(router)).toEqual({ path: "/words/drill", search: { source: "lesson", lesson: lessonId(1), batch: 1, direction: "mixed" } }));
   });
 
   it("docks the new words in the right rail on wide screens", async () => {

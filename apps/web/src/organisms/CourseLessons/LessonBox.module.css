@@ -22,6 +22,7 @@
 .action[data-category="story"]{--focus-accent:var(--color-category-story-accent);--focus-surface:var(--color-category-story-surface)}
 .action[data-category="words"]{--focus-accent:var(--color-category-words-accent);--focus-surface:var(--color-category-words-surface)}
 .action:hover{border-color:var(--focus-accent)}
+button.action{width:100%;padding:0;font-family:inherit;text-align:start;cursor:pointer}
 .action[data-category="words"]:hover{border-color:var(--color-category-words-deep)}
 .action > svg:first-child{flex:none;box-sizing:content-box;align-self:stretch;width:1.125rem;height:auto;padding-inline:calc((var(--touch-target) - 1.125rem) / 2);color:var(--focus-accent);background:var(--focus-surface)}
 .action .label{padding:var(--space-2) var(--space-3)}

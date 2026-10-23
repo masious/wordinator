@@ -34,6 +34,8 @@
 .speak{display:inline-flex;grid-row:1;grid-column:1;justify-self:start;margin-left:var(--space-1)}
 .speech{margin-inline-start:var(--space-2)}
 .nav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--space-3)}
+/* The last page's end: a caller's controls, then the done action. */
+.finish{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:var(--space-2)}
 @keyframes cardIn{from{opacity:0;transform:translateY(var(--space-2))}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.card{animation:none}.faces,.front,.back{transition:none}}
 /* Phones: one column of cards, and Back and Next fill the width. */

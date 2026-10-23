@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { Check, Dumbbell, Sparkles } from "lucide-react";
-import { useId } from "react";
+import { useId, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import type { TypicalTime } from "@wordinator/contracts/learning";
 import { lessonActivityFocus, type ActivityDescriptor, type ActivityType } from "@wordinator/contracts/lesson-activities";
@@ -109,13 +109,16 @@ function useActivityLink(courseSlug: string, lessonSlug: string) {
 }
 
 // A source's activities in the text, after the last block of the section they come from, under a small
-// Do more with AI heading. Every link keeps its source in its accessible name.
-export function SectionActivities({ suggestions, courseSlug, lessonSlug }: { suggestions: readonly LessonActivitySuggestion[]; courseSlug: string; lessonSlug: string }) {
+// Do more with AI heading. Every link keeps its source in its accessible name. `extra` adds actions styled like the links (the
+// lesson's word batches that close at this place), given the action and label classes.
+export function SectionActivities({ suggestions, courseSlug, lessonSlug, extra }: {
+  suggestions: readonly LessonActivitySuggestion[]; courseSlug: string; lessonSlug: string; extra?: (classes: { action: string; label: string }) => ReactNode;
+}) {
   const { t } = useTranslation();
   const activityLink = useActivityLink(courseSlug, lessonSlug);
   return <aside className={styles.inline} aria-label={t("courses.lessonBox.doMoreWithAi")}>
     <p className={styles.inlineHeading}><Sparkles aria-hidden="true" />{t("courses.lessonBox.doMoreWithAi")}</p>
-    <div className={styles.inlineLinks}>{suggestions.map(activityLink)}</div>
+    <div className={styles.inlineLinks}>{suggestions.map(activityLink)}{extra?.({ action: styles.action, label: styles.label })}</div>
   </aside>;
 }
 
