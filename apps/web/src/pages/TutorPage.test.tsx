@@ -25,7 +25,7 @@ const session = () => ({
 });
 const conversation = (conversationId: string, title: string, archivedAt: number | null = null): TutorConversation => ({ id: conversationId, title, titleSource: "auto", archivedAt, provider: null, createdAt: 1, updatedAt: 2, tokens: 2_500 });
 const message = (messageId: string, role: "user" | "assistant", parts: TutorPart[], status: TutorMessage["status"] = "complete"): TutorMessage =>
-  ({ id: messageId, conversationId: c1, role, status, parts, provider: role === "assistant" ? "workers_ai" : null, model: null, createdAt: Number(messageId.slice(-4)) });
+  ({ id: messageId, conversationId: c1, role, status, parts, provider: role === "assistant" ? "azure" : null, model: null, createdAt: Number(messageId.slice(-4)) });
 const text = (value: string, spans: { start: number; end: number }[] = []): TutorPart => ({ type: "text", text: value, spans });
 
 let conversations: TutorConversation[];
@@ -77,7 +77,7 @@ beforeEach(() => {
   resetOnDemandSpeech();
   conversations = [conversation(c1, "What next?")];
   archivedConversations = [];
-  models = [{ provider: "openrouter", model: "openai/gpt-oss-120b:free" }, { provider: "workers_ai", model: "@cf/meta/llama-4-scout-17b-16e-instruct" }];
+  models = [{ provider: "openrouter", model: "openai/gpt-oss-120b:free" }, { provider: "azure", model: "gpt-4.1-mini" }];
   messages = { [c1]: [message(id(1), "user", [text("What next?")])] };
   turn = () => json({ error: { code: "UNEXPECTED", message: "No turn scripted." } }, 500);
   speech = () => json({ url: "https://media.test/clip.mp3" });
@@ -515,12 +515,12 @@ it("cancels a card and shows an answered card as a muted line", async () => {
     const picker = await screen.findByRole("combobox", { name: "Model for this conversation" });
     // Closed, the picker shows short model names; the open list names Default or the provider above each.
     expect(picker).toHaveValue("gpt-oss-120b · Default");
-    await choose(picker, /^Workers AI/);
-    await waitFor(() => expect(picker).toHaveValue("llama-4-scout-17b-16e-instruct"));
+    await choose(picker, /^Azure/);
+    await waitFor(() => expect(picker).toHaveValue("gpt-4.1-mini"));
     await choose(picker, /^Default/);
     await waitFor(() => expect(patches()).toHaveLength(2));
     expect(patches()).toEqual([
-      { path: `/api/ai/conversations/${c1}`, body: { provider: "workers_ai" } },
+      { path: `/api/ai/conversations/${c1}`, body: { provider: "azure" } },
       { path: `/api/ai/conversations/${c1}`, body: { provider: null } },
     ]);
   });
@@ -529,11 +529,11 @@ it("cancels a card and shows an answered card as a muted line", async () => {
     turn = () => sse([{ type: "start", messageId: id(11) }, { type: "done", message: { ...message(id(11), "assistant", [text("Hoi.")]), conversationId: c2 } }]).response;
     renderPage(null);
     const picker = await screen.findByRole("combobox", { name: "Model for this conversation" });
-    await choose(picker, /^Workers AI/);
+    await choose(picker, /^Azure/);
     expect(patches()).toEqual([]);
     sendText("Start");
     expect(await screen.findByText("Hoi.")).toBeInTheDocument();
-    expect(patches()).toEqual([{ path: `/api/ai/conversations/${c2}`, body: { provider: "workers_ai" } }]);
+    expect(patches()).toEqual([{ path: `/api/ai/conversations/${c2}`, body: { provider: "azure" } }]);
     expect(posts().map((entry) => entry.path)).toEqual(["/api/ai/conversations", `/api/ai/conversations/${c2}/messages`]);
     cleanup();
     models = models.slice(0, 1);

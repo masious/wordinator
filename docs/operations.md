@@ -46,7 +46,7 @@ It needs no API or database: every story uses contract-parsed fixtures.
 ## Local setup
 
 1. Run `pnpm install`.
-2. Copy `apps/api/.dev.vars.example` to the ignored `apps/api/.dev.vars` and replace the placeholder with a strong local cookie-signing secret. For the [AI tutor](ai-tutor.md), also set `OPENROUTER_API_KEY`, and optionally `AZURE_AI_ENDPOINT` and `AZURE_AI_KEY`; `wrangler dev` reaches Workers AI through the remote `AI` binding, which needs `wrangler login`. For [lesson speech](speech.md), also set `AZURE_SPEECH_KEY` there; without it the speech worker does nothing. `AZURE_SPEECH_REGION` is a plain variable in `wrangler.jsonc`. `wrangler dev` does not fire cron triggers on its own: start it with `--test-scheduled` and request `/__scheduled?cron=*+*+*+*+*` to run the speech worker once.
+2. Copy `apps/api/.dev.vars.example` to the ignored `apps/api/.dev.vars` and replace the placeholder with a strong local cookie-signing secret. For the [AI tutor](ai-tutor.md), also set `OPENROUTER_API_KEY`, and optionally `AZURE_AI_ENDPOINT` and `AZURE_AI_KEY`. Every binding is local, so `wrangler dev` needs no Cloudflare login. For [lesson speech](speech.md), also set `AZURE_SPEECH_KEY` there; without it the speech worker does nothing. `AZURE_SPEECH_REGION` is a plain variable in `wrangler.jsonc`. `wrangler dev` does not fire cron triggers on its own: start it with `--test-scheduled` and request `/__scheduled?cron=*+*+*+*+*` to run the speech worker once.
 3. Run `pnpm db:migrate:local` to create and migrate a fresh local D1 database.
 4. Run `pnpm bootstrap --local` and enter the first account and library language.
 5. Run `pnpm dev`.
@@ -62,7 +62,7 @@ Production needs:
 2. An R2 bucket configured for public object reads and bound to the API Worker.
 3. A strong cookie-signing secret stored with Wrangler secret management.
 4. An Azure AI Speech resource (currently in `germanywestcentral`), whose key is the `AZURE_SPEECH_KEY` Worker secret (`pnpm --filter @wordinator/api exec wrangler secret put AZURE_SPEECH_KEY`) and whose region is the `AZURE_SPEECH_REGION` variable in `apps/api/wrangler.jsonc`. The same key also issues the short-lived tokens of the Microsoft [speech recognizer](words.md#recognizers), so recognition usage counts against the same resource. Rotate the key in the Azure portal and put the new one; never commit it.
-5. For the [AI tutor](ai-tutor.md) (C14): the `AI` Workers AI binding in `apps/api/wrangler.jsonc` (no secret; usage is billed to the Cloudflare account), an OpenRouter API key as the `OPENROUTER_API_KEY` secret, and an Azure AI Foundry deployment whose endpoint and key are the `AZURE_AI_ENDPOINT` and `AZURE_AI_KEY` secrets. The endpoint is the resource URL (`https://<resource>.services.ai.azure.com` or `https://<resource>.openai.azure.com`); the API calls its OpenAI v1 chat completions at `/openai/v1/chat/completions` with the `api-key` header, and the model in the AI settings is the deployment name. Put each with `pnpm --filter @wordinator/api exec wrangler secret put <NAME>`. A missing key or binding takes that provider out of the fallback order; with none configured the tutor answers `503 AI_UNAVAILABLE`. The Azure AI Foundry resource is separate from the Azure AI Speech resource. Rotate keys at the provider and put the new value; never commit them.
+5. For the [AI tutor](ai-tutor.md) (C14): an OpenRouter API key as the `OPENROUTER_API_KEY` secret, and an Azure AI Foundry deployment whose endpoint and key are the `AZURE_AI_ENDPOINT` and `AZURE_AI_KEY` secrets. The endpoint is the resource URL (`https://<resource>.services.ai.azure.com` or `https://<resource>.openai.azure.com`); the API calls its OpenAI v1 chat completions at `/openai/v1/chat/completions` with the `api-key` header, and the model in the AI settings is the deployment name. Put each with `pnpm --filter @wordinator/api exec wrangler secret put <NAME>`. A missing key takes that provider out of the fallback order; with none configured the tutor answers `503 AI_UNAVAILABLE`. The Azure AI Foundry resource is separate from the Azure AI Speech resource. Rotate keys at the provider and put the new value; never commit them.
 6. An API Worker route for `/api/*` on the application hostname.
 7. A web Worker using Workers Static Assets with SPA fallback for all other routes.
 
@@ -97,6 +97,28 @@ pnpm --filter @wordinator/api exec wrangler d1 execute wordinator --remote --com
 ```
 
 Use `--local` instead of `--remote` for the local database. The same statement re-queues every lesson if clips ever need regenerating, for example after the speech schema version changes. Word IPA reaches `course_lesson_words` only when a lesson is next published, so the term clips of words with an IPA override in a published lesson come from the published document either way.
+
+### Stored AI model
+
+The AI settings are a row in the database, so changing the [default model](ai-tutor.md#providers-and-fallback) in code changes nothing where settings are stored. On 2026-10-22 Azure's `gpt-5.6-luna` deployment was made the leading model. This statement sets Azure's model, turns Azure on and moves it first, and keeps every other provider entry and the caps as they are. Save it to a file and run it against the target explicitly:
+
+```sql
+UPDATE platform_metadata SET value = json_set(value, '$.providers', json((
+  SELECT json_group_array(json(entry)) FROM (
+    SELECT CASE WHEN json_extract(e.value, '$.provider') = 'azure'
+      THEN json_set(e.value, '$.model', 'gpt-5.6-luna', '$.enabled', json('true')) ELSE e.value END AS entry
+    FROM json_each(platform_metadata.value, '$.providers') AS e
+    ORDER BY json_extract(e.value, '$.provider') = 'azure' DESC, CAST(e.key AS INTEGER)
+  )
+))) WHERE key = 'ai_settings' AND json_valid(value);
+```
+
+```sh
+pnpm --filter @wordinator/api exec wrangler d1 execute wordinator --remote --file luna.sql
+pnpm --filter @wordinator/api exec wrangler d1 execute wordinator --remote --command "SELECT value FROM platform_metadata WHERE key = 'ai_settings'"
+```
+
+Use `--local` for the local database (applied 2026-10-22). The production run needs `CLOUDFLARE_API_TOKEN`; without a stored row, the code default already leads with Luna. The superuser's AI settings page makes the same change.
 
 ## Bootstrap CLI
 

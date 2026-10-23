@@ -1,11 +1,11 @@
 import type { AiProvider, AiSettings } from "@wordinator/contracts/ai";
-import { abortable, sseJson } from "./stream";
+import { sseJson } from "./stream";
 
-// The three chat-completions targets (docs/ai-tutor.md#providers-and-fallback). Each opens one streamed request and hands
+// The two chat-completions targets (docs/ai-tutor.md#providers-and-fallback). Each opens one streamed request and hands
 // back its JSON chunks; the client in `client.ts` owns fallback, metering, and logging. Formats verified in AI_PLAN.md (C14f
 // notes).
 
-export type AiEnv = Pick<Env, "AI" | "OPENROUTER_API_KEY" | "AZURE_AI_ENDPOINT" | "AZURE_AI_KEY">;
+export type AiEnv = Pick<Env, "OPENROUTER_API_KEY" | "AZURE_AI_ENDPOINT" | "AZURE_AI_KEY">;
 
 // OpenAI chat-completions messages and tools, the shape every target accepts.
 export type AiChatMessage =
@@ -80,44 +80,10 @@ function httpTarget(provider: AiProvider, model: string, url: string, headers: R
   };
 }
 
-// Workers AI through the `AI` binding: OpenAI-format messages and tools with `stream: true`, which resolves to an event
-// stream. The binding takes no abort signal, so the call and every read race the signal instead. A thrown binding error
-// carries no HTTP status; it is retryable unless it says the input was invalid.
-function workersAiTarget(model: string, binding: WorkersAiBinding): ProviderTarget {
-  return {
-    provider: "workers_ai", model,
-    async open(request, signal) {
-      const tools = openAiTools(request.tools);
-      let result: unknown;
-      try {
-        result = await abortable(binding.run(model, {
-          messages: request.messages, stream: true,
-          ...(tools ? { tools } : {}),
-          ...(request.maxTokens ? { max_tokens: request.maxTokens } : {}),
-          ...(request.temperature !== undefined ? { temperature: request.temperature } : {}),
-        }), signal);
-      } catch (error) {
-        if (signal.aborted) throw error;
-        const message = error instanceof Error ? error.message : "";
-        const invalid = /invalid input|input validation|\b(5006|5007|8001)\b/i.test(message);
-        return { ok: false, status: invalid ? 400 : null, retryable: !invalid };
-      }
-      if (result instanceof ReadableStream) return { ok: true, status: 200, chunks: sseJson(result as ReadableStream<Uint8Array>, signal) };
-      if (result instanceof Response) {
-        if (!result.ok || !result.body) return { ok: false, status: result.status, retryable: isRetryableStatus(result.status) };
-        return { ok: true, status: result.status, chunks: sseJson(result.body, signal) };
-      }
-      return { ok: true, status: 200, chunks: [result] };
-    },
-  };
-}
-
 // The enabled providers that have credentials, in the configured order: what a learner may choose for a conversation.
 export function availableProviders(env: AiEnv, settings: AiSettings): Array<{ provider: AiProvider; model: string }> {
   return settings.providers.filter(({ provider, enabled }) => enabled && (
-    provider === "openrouter" ? Boolean(env.OPENROUTER_API_KEY)
-      : provider === "workers_ai" ? Boolean(env.AI)
-      : Boolean(env.AZURE_AI_ENDPOINT && env.AZURE_AI_KEY)
+    provider === "openrouter" ? Boolean(env.OPENROUTER_API_KEY) : Boolean(env.AZURE_AI_ENDPOINT && env.AZURE_AI_KEY)
   )).map(({ provider, model }) => ({ provider, model }));
 }
 
@@ -136,8 +102,6 @@ export function configuredTargets(env: AiEnv, settings: AiSettings, fetcher: typ
     if (!enabled) continue;
     if (provider === "openrouter" && env.OPENROUTER_API_KEY) {
       targets.push(httpTarget(provider, model, OPENROUTER_URL, { Authorization: `Bearer ${env.OPENROUTER_API_KEY}`, "X-Title": "Wordinator" }, fetcher));
-    } else if (provider === "workers_ai" && env.AI) {
-      targets.push(workersAiTarget(model, env.AI));
     } else if (provider === "azure" && env.AZURE_AI_ENDPOINT && env.AZURE_AI_KEY) {
       targets.push(httpTarget(provider, model, azureChatUrl(env.AZURE_AI_ENDPOINT), { "api-key": env.AZURE_AI_KEY }, fetcher));
     }

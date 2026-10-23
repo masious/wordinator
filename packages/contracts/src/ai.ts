@@ -3,12 +3,12 @@ import { z } from "zod";
 // AI tutor provider settings and metering (C14f). docs/settings-and-administration.md#ai-settings owns the settings,
 // docs/ai-tutor.md#usage-and-limits the caps, and docs/data-model.md the `ai_usage` and `speech_usage` rows.
 
-export const AI_PROVIDERS = ["openrouter", "workers_ai", "azure"] as const;
+export const AI_PROVIDERS = ["openrouter", "azure"] as const;
 export const aiProviderSchema = z.enum(AI_PROVIDERS);
 export type AiProvider = z.infer<typeof aiProviderSchema>;
 
-// The API checks a model ID's format, never the model's abilities: OpenRouter IDs (`vendor/model:free`), Workers AI IDs
-// (`@cf/vendor/model`), and Azure deployment names all fit.
+// The API checks a model ID's format, never the model's abilities: OpenRouter IDs (`vendor/model:free`) and Azure deployment
+// names both fit.
 export const aiModelIdSchema = z.string().trim().min(1).max(200).regex(/^[A-Za-z0-9@][A-Za-z0-9@._:/-]*$/);
 
 export const aiProviderSettingSchema = z.object({
@@ -33,13 +33,12 @@ export const aiSettingsSchema = z.object({
 export type AiSettings = z.infer<typeof aiSettingsSchema>;
 
 // Defaults used when the row is missing or invalid. The models are starting points the superuser replaces; each one
-// supports tool calling at its provider. Azure leads because it calls tools most reliably; the free OpenRouter model is
-// rate-limited, and Workers AI is the last fallback. Small models such as Llama 4 Scout tend to write tool calls as text.
+// supports tool calling at its provider. Azure's GPT-5.6 Luna deployment leads every AI request, tutor and activities alike
+// (2026-10-22); the free OpenRouter model is rate-limited, so it is the fallback.
 export const DEFAULT_AI_SETTINGS: AiSettings = {
   providers: [
-    { provider: "azure", enabled: true, model: "gpt-4.1-mini" },
+    { provider: "azure", enabled: true, model: "gpt-5.6-luna" },
     { provider: "openrouter", enabled: true, model: "openai/gpt-oss-120b:free" },
-    { provider: "workers_ai", enabled: true, model: "@cf/openai/gpt-oss-120b" },
   ],
   dailyTurnCap: 40,
   dailySpeechCharCap: 5_000,
@@ -107,7 +106,7 @@ export type AiProviderTestRequest = z.infer<typeof aiProviderTestRequestSchema>;
 export const AI_PROVIDER_TEST_MESSAGE_MAX = 300;
 export const aiProviderTestResponseSchema = z.object({
   ok: z.boolean(),
-  // The HTTP status the provider answered with, or null when no HTTP answer came (network, timeout, binding error).
+  // The HTTP status the provider answered with, or null when no HTTP answer came (network or timeout).
   status: z.number().int().nullable(),
   latencyMs: z.number().int().nonnegative(),
   // On success the start of the reply (at most 40 characters); on failure the provider's error message, redacted and cut.

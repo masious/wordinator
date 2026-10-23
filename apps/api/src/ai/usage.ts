@@ -11,9 +11,6 @@ export const nextUtcMidnight = (now: number) => utcDayStart(now) + DAY_MS;
 // cost of each request, which wins over this table; `:free` models cost nothing; a model missing here is metered at 0.
 // Azure entries are keyed by deployment name. Approximate list prices, kept small on purpose; update with the settings.
 export const AI_MODEL_PRICES: Readonly<Record<string, readonly [number, number]>> = {
-  "@cf/meta/llama-4-scout-17b-16e-instruct": [0.27, 0.85],
-  "@cf/openai/gpt-oss-120b": [0.35, 0.75],
-  "@cf/openai/gpt-oss-20b": [0.2, 0.3],
   "gpt-4.1-mini": [0.4, 1.6],
   "gpt-4.1-nano": [0.1, 0.4],
 };

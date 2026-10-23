@@ -20,7 +20,6 @@ const CREDENTIAL_SHAPES = [/Bearer\s+\S+/gi, /\bsk-[A-Za-z0-9_-]{6,}/g, /[A-Za-z
 export function aiProviderStatuses(env: AiEnv): AiProviderStatus[] {
   return [
     { provider: "openrouter", credentialsPresent: Boolean(env.OPENROUTER_API_KEY), endpointHost: null },
-    { provider: "workers_ai", credentialsPresent: Boolean(env.AI), endpointHost: null },
     { provider: "azure", credentialsPresent: Boolean(env.AZURE_AI_ENDPOINT && env.AZURE_AI_KEY), endpointHost: endpointHost(env.AZURE_AI_ENDPOINT) },
   ];
 }
@@ -85,20 +84,6 @@ function withErrorText(captured: { error: string | null }): typeof fetch {
   }) as typeof fetch;
 }
 
-// The Workers AI binding throws its own message; the target only sees that a call failed, so the message is kept here.
-function bindingWithErrorText(binding: WorkersAiBinding, captured: { error: string | null }): WorkersAiBinding {
-  return {
-    run: async (model, inputs, options) => {
-      try {
-        return await binding.run(model, inputs, options);
-      } catch (error) {
-        captured.error = error instanceof Error ? error.message : null;
-        throw error;
-      }
-    },
-  };
-}
-
 // Sends the fixed test request to one provider, with the model given, and answers its outcome. Logs `ai.provider_test` only.
 export async function testAiProvider(env: AiEnv, provider: AiProvider, model: string, now: () => number = Date.now): Promise<AiProviderTestResponse> {
   const started = now();
@@ -114,8 +99,7 @@ export async function testAiProvider(env: AiEnv, provider: AiProvider, model: st
   // One provider only: no fallback. The target is built from that provider's settings alone, so the request uses the same code
   // as the tutor's requests.
   const settings: AiSettings = { providers: [{ provider, enabled: true, model }], dailyTurnCap: 0, dailySpeechCharCap: 0 };
-  const scoped: AiEnv = { ...env, AI: env.AI ? bindingWithErrorText(env.AI, captured) : undefined };
-  const [target] = configuredTargets(scoped, settings, withErrorText(captured));
+  const [target] = configuredTargets(env, settings, withErrorText(captured));
   if (!target) return finish(false, null, "No credentials are set for this provider.");
 
   const controller = new AbortController();

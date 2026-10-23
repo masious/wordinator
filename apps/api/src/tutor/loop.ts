@@ -23,8 +23,7 @@ export const TUTOR_COMPONENTS_MAX = 6;
 // No further model request starts after this long; the turn then ends with a `TURN_LIMIT` error part.
 export const TUTOR_TURN_DEADLINE_MS = 100_000;
 const MAX_MODEL_REQUESTS = TUTOR_TOOL_CALLS_MAX + 2;
-// Each model request's output cap. Workers AI otherwise stops at 256 tokens, which cuts off answers and tool arguments, and
-// reasoning models spend part of the cap before they write.
+// Each model request's output cap. Reasoning models spend part of the cap before they write.
 export const TUTOR_MAX_OUTPUT_TOKENS = 2_000;
 // The stored message history sent with each turn.
 const HISTORY_MESSAGES = 40;

@@ -14,7 +14,7 @@ describe("on-demand synthesis", () => {
     const { learner } = await seedLibrary();
     const ai = scriptedAi([say("Zeg [[Fijne dag nog!]]")]);
     const conversationId = await newConversation(learner);
-    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Speak" }, { AI: ai.binding }));
+    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Speak" }, { ...ai.env }));
     const done = events.find((event) => event.type === "done");
     const messageId = done?.type === "done" ? done.message.id : "";
     const azure = vi.spyOn(globalThis, "fetch").mockImplementation(async (input, init) => {

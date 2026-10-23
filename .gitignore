@@ -5,7 +5,6 @@ playwright-report/
 test-results/
 .wrangler/
 .dev.vars
-apps/api/wrangler.e2e.json
 *.tsbuildinfo
 .DS_Store
 

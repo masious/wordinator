@@ -5,7 +5,7 @@ import { errorCode, resetDatabase, seedUser, signIn } from "./courseApi";
 import { fetchWorker } from "./worker";
 
 // Superuser provider status and connection test (docs/settings-and-administration.md#ai-providers). Provider HTTP is stubbed
-// with fetch or a Workers AI binding stub; no real provider is called.
+// with a fetch stub; no real provider is called.
 
 const AZURE_KEY = "AZ-KEY-VALUE-0123456789abcdef";
 const OPENROUTER_KEY = "sk-or-test-key-1234567890";
@@ -85,18 +85,16 @@ describe("GET /api/admin/ai-providers", () => {
     const body = aiProvidersResponseSchema.parse(JSON.parse(text));
     expect(body.providers).toEqual([
       { provider: "openrouter", credentialsPresent: true, endpointHost: null },
-      { provider: "workers_ai", credentialsPresent: false, endpointHost: null },
       { provider: "azure", credentialsPresent: true, endpointHost: "wordinator-foundry.services.ai.azure.com" },
     ]);
   });
 
   it("reports missing credentials, and Azure without its key as absent", async () => {
     const { cookie } = await superuser();
-    const response = await call("GET", "/api/admin/ai-providers", { cookie, extraEnv: { AZURE_AI_ENDPOINT: ENDPOINT, AI: { run: async () => null } } });
+    const response = await call("GET", "/api/admin/ai-providers", { cookie, extraEnv: { AZURE_AI_ENDPOINT: ENDPOINT } });
     const body = aiProvidersResponseSchema.parse(await response.json());
     expect(body.providers).toEqual([
       { provider: "openrouter", credentialsPresent: false, endpointHost: null },
-      { provider: "workers_ai", credentialsPresent: true, endpointHost: null },
       { provider: "azure", credentialsPresent: false, endpointHost: "wordinator-foundry.services.ai.azure.com" },
     ]);
   });
@@ -166,13 +164,6 @@ describe("POST /api/admin/ai-providers/test", () => {
     expect(fetched).toHaveLength(0);
   });
 
-  it("shows the Workers AI binding's own error message", async () => {
-    const { cookie } = await superuser();
-    const AI = { run: async () => { throw new Error("Model not found in this account"); } };
-    const result = aiProviderTestResponseSchema.parse(await (await call("POST", "/api/admin/ai-providers/test", { cookie, body: { provider: "workers_ai", model: "@cf/nope/nope" }, extraEnv: { AI } })).json());
-    expect(result).toMatchObject({ ok: false, status: null, message: "Model not found in this account" });
-  });
-
   it("refuses a model ID that is not in the ID format with 400 and calls nothing", async () => {
     const { cookie } = await superuser();
     stubFetch(replyOk);
@@ -181,6 +172,8 @@ describe("POST /api/admin/ai-providers/test", () => {
       expect(response.status, model).toBe(400);
       expect(await errorCode(response)).toBe("VALIDATION_ERROR");
     }
+    const retired = await call("POST", "/api/admin/ai-providers/test", { cookie, body: { provider: "workers_ai", model: "@cf/openai/gpt-oss-120b" }, extraEnv: keys });
+    expect(retired.status).toBe(400);
     const unknown = await call("POST", "/api/admin/ai-providers/test", { cookie, body: { provider: "anthropic", model: "claude" }, extraEnv: keys });
     expect(unknown.status).toBe(400);
     expect(await errorCode(unknown)).toBe("VALIDATION_ERROR");

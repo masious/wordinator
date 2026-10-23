@@ -31,5 +31,5 @@ export function ModelPicker({ value, onChange, disabled, error }: {
     onChange={(next) => onChange(next ? items.find((item) => item.provider === next)?.provider ?? null : null)} />;
 }
 
-// A model ID without its vendor path and tag: `openai/gpt-oss-120b:free` and `@cf/openai/gpt-oss-120b` read `gpt-oss-120b`.
+// A model ID without its vendor path and tag: `openai/gpt-oss-120b:free` reads `gpt-oss-120b`.
 export const shortModel = (model: string) => (model.split("/").pop() ?? model).replace(/:[^:]*$/, "") || model;

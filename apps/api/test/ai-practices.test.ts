@@ -12,7 +12,7 @@ import { blocks, coursePath, documentOf, errorCode, lessonPath, publishLesson, r
 import { call, callTool, newConversation, readEvents, say, scriptedAi, seedLibrary } from "./tutorApi";
 
 // AI practices (C14h, docs/courses.md#ai-practices): saving with anchor validation, the lesson page's read, answer, speech, and
-// removal routes, counts, and lesson deletion. Model calls go to a scripted Workers AI binding only.
+// removal routes, counts, and lesson deletion. Model calls go to a scripted model endpoint only.
 
 beforeEach(resetDatabase);
 
@@ -99,10 +99,10 @@ describe("saving", () => {
     const practice = { kind: "choice", payload: { question: "Wat is een huis?", options: ["house", "mouse", "horse"], correct: 0 } };
     const ai = scriptedAi([callTool("save_ai_practice", { practice, lessons: [{ lessonId: s.lessons.first.id, afterBlockId: s.anchors.example }] }), say("Saved.")]);
     const conversationId = await newConversation(s.learner);
-    const asked = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, s.learner, { text: "Save it" }, { AI: ai.binding }));
+    const asked = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, s.learner, { text: "Save it" }, { ...ai.env }));
     const card = asked.find((event): event is Extract<TutorStreamEvent, { type: "confirmation" }> => event.type === "confirmation")!.part;
     expect(await count("SELECT COUNT(*) AS n FROM ai_practices")).toBe(0);
-    const confirmed = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/tool-calls/${card.toolCallId}/respond`, s.learner, { type: "confirmation", confirmed: true }, { AI: ai.binding }));
+    const confirmed = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/tool-calls/${card.toolCallId}/respond`, s.learner, { type: "confirmation", confirmed: true }, { ...ai.env }));
     expect(confirmed.find((event) => event.type === "answered")).toMatchObject({ part: { answer: "confirmed", outcome: { ok: true, error: null } } });
     expect(await env.DB.prepare("SELECT conversation_id AS conversationId, created_by_user_id AS userId FROM ai_practices").first()).toEqual({ conversationId, userId: s.learnerId });
     const read = await practicesOf(s.firstPath, s.rival);
@@ -113,9 +113,9 @@ describe("saving", () => {
     const s = await setup();
     const ai = scriptedAi([callTool("save_ai_practice", { practice: choice(), lessons: [{ lessonId: s.lessons.first.id, afterBlockId: crypto.randomUUID() }] }), say("Sorry.")]);
     const conversationId = await newConversation(s.learner);
-    const asked = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, s.learner, { text: "Save it" }, { AI: ai.binding }));
+    const asked = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, s.learner, { text: "Save it" }, { ...ai.env }));
     const card = asked.find((event): event is Extract<TutorStreamEvent, { type: "confirmation" }> => event.type === "confirmation")!.part;
-    const confirmed = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/tool-calls/${card.toolCallId}/respond`, s.learner, { type: "confirmation", confirmed: true }, { AI: ai.binding }));
+    const confirmed = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/tool-calls/${card.toolCallId}/respond`, s.learner, { type: "confirmation", confirmed: true }, { ...ai.env }));
     expect(confirmed.find((event) => event.type === "answered")).toMatchObject({ part: { outcome: { ok: false, error: "ANCHOR_NOT_FOUND" } } });
     expect(await count("SELECT COUNT(*) AS n FROM ai_practices")).toBe(0);
   });
@@ -239,12 +239,12 @@ describe("answering", () => {
     const path = `${s.firstPath}/ai-practices/${id}/answer`;
     const answer = { answer: { kind: "translate", text: "In Utrecht woon ik." } };
     const ai = scriptedAi([say('{"verdict": "acceptable", "note": "Inversion is fine."}')]);
-    const judged = aiPracticeAnswerResponseSchema.parse(await (await call("POST", path, s.learner, answer, { AI: ai.binding })).json());
+    const judged = aiPracticeAnswerResponseSchema.parse(await (await call("POST", path, s.learner, answer, { ...ai.env })).json());
     expect(judged.grade).toMatchObject({ correct: true, matched: false, verdict: "acceptable", note: "Inversion is fine.", reference: "Ik woon in Utrecht." });
     expect(JSON.stringify(ai.calls[0])).toContain("In Utrecht woon ik.");
     expect(await env.DB.prepare("SELECT turn_start AS turnStart, conversation_id AS conversationId, ok FROM ai_usage").first()).toEqual({ turnStart: 0, conversationId: null, ok: 1 });
     // A matching answer never reaches the model.
-    const matched = aiPracticeAnswerResponseSchema.parse(await (await call("POST", path, s.learner, { answer: { kind: "translate", text: "ik woon in utrecht" } }, { AI: ai.binding })).json());
+    const matched = aiPracticeAnswerResponseSchema.parse(await (await call("POST", path, s.learner, { answer: { kind: "translate", text: "ik woon in utrecht" } }, { ...ai.env })).json());
     expect(matched.grade).toMatchObject({ correct: true, matched: true, verdict: null });
     // Without a provider the answer is stored without a verdict and not accepted.
     const unavailable = aiPracticeAnswerResponseSchema.parse(await (await request(path, s.learner, answer)).json());
@@ -252,7 +252,7 @@ describe("answering", () => {
     // At the daily turn cap the judge is skipped.
     await writeAiSettings(env.DB, { ...DEFAULT_AI_SETTINGS, dailyTurnCap: 0 });
     const capped = scriptedAi([say('{"verdict": "acceptable", "note": null}')]);
-    const skipped = aiPracticeAnswerResponseSchema.parse(await (await call("POST", path, s.learner, answer, { AI: capped.binding })).json());
+    const skipped = aiPracticeAnswerResponseSchema.parse(await (await call("POST", path, s.learner, answer, { ...capped.env })).json());
     expect(skipped.grade).toMatchObject({ correct: false, verdict: null });
     expect(capped.calls).toHaveLength(0);
     const verdicts = await env.DB.prepare("SELECT ai_verdict AS verdict, ai_note AS note FROM practice_attempts ORDER BY created_at").all();

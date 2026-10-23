@@ -3,9 +3,9 @@ import { expect } from "vitest";
 import { addLesson, blocks, createCourse, documentOf, join, seedGroup, seedUser, signIn, word } from "./courseApi";
 import { fetchWorker } from "./worker";
 
-// Shared helpers for the tutor suites (C14g): requests to the Worker entry point with a stubbed Workers AI binding (the only
-// configured provider in tests, since no provider keys are set), scripted model replies, and a server-sent-event reader. No
-// test reaches a real provider.
+// Shared helpers for the tutor suites (C14g): requests to the Worker entry point with a scripted Azure AI Foundry endpoint (the
+// only configured provider in tests, since no other provider key is set), scripted model replies, and a server-sent-event
+// reader. No test reaches a real provider.
 
 const encoder = new TextEncoder();
 type Chunk = Record<string, unknown>;
@@ -32,24 +32,44 @@ export const callTool = (name: string, args: unknown, extra: Array<{ name: strin
   { choices: [{ index: 0, delta: {}, finish_reason: "tool_calls" }] },
 ];
 
-export function scriptedAi(script: ModelReply[]) {
+// Each scripted model answers at its own fake Azure host, so a request only reaches the script whose `env` it was given. One
+// `fetch` stub serves every host and passes any other request through.
+const scriptedHosts = new Map<string, (body: Record<string, unknown>) => Promise<Response>>();
+let fetchStubbed = false;
+function installScriptedFetch() {
+  if (fetchStubbed) return;
+  fetchStubbed = true;
+  const passThrough = globalThis.fetch;
+  globalThis.fetch = (async (input: RequestInfo | URL, init?: RequestInit) => {
+    const url = new URL(input instanceof Request ? input.url : String(input));
+    const handler = scriptedHosts.get(url.host);
+    if (!handler) return passThrough(input, init);
+    return handler(JSON.parse(String(init?.body ?? "{}")) as Record<string, unknown>);
+  }) as typeof fetch;
+}
+
+const sseResponse = (chunks: Chunk[]) => new Response(new ReadableStream<Uint8Array>({
+  start(controller) {
+    for (const chunk of chunks) controller.enqueue(encoder.encode(`data: ${JSON.stringify(chunk)}\n\n`));
+    controller.enqueue(encoder.encode("data: [DONE]\n\n"));
+    controller.close();
+  },
+}), { headers: { "content-type": "text/event-stream" } });
+
+// A model that answers from a script, reached as Azure through `env`. `calls` holds each request body; a request past the
+// end of the script fails like an unreachable provider. `failing` makes every request fail that way.
+export function scriptedAi(script: ModelReply[] | "failing") {
+  installScriptedFetch();
+  const host = `scripted-${crypto.randomUUID()}.test`;
   const calls: Array<Record<string, unknown>> = [];
-  const binding: WorkersAiBinding = {
-    run: async (_model, inputs) => {
-      calls.push(inputs);
-      const next = script.shift();
-      if (!next) throw new Error("unexpected model call");
-      const chunks = typeof next === "function" ? next(inputs) : next;
-      return new ReadableStream<Uint8Array>({
-        start(controller) {
-          for (const chunk of chunks) controller.enqueue(encoder.encode(`data: ${JSON.stringify(chunk)}\n\n`));
-          controller.enqueue(encoder.encode("data: [DONE]\n\n"));
-          controller.close();
-        },
-      });
-    },
-  };
-  return { binding, calls, remaining: () => script.length };
+  scriptedHosts.set(host, async (body) => {
+    calls.push(body);
+    const next = script === "failing" ? undefined : script.shift();
+    if (!next) throw new TypeError("unexpected model call");
+    return sseResponse(typeof next === "function" ? next(body) : next);
+  });
+  const env: Partial<Env> = { AZURE_AI_ENDPOINT: `https://${host}`, AZURE_AI_KEY: "scripted-key" };
+  return { env, calls, remaining: () => (script === "failing" ? 0 : script.length) };
 }
 
 type ModelMessage = { role: string; content: string | null; tool_call_id?: string };

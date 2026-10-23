@@ -13,7 +13,7 @@ import { call, callTool, modelMessages, newConversation, readEvents, say, script
 // The default setting of one provider, by name: the default order may change.
 const preset = (provider: string) => DEFAULT_AI_SETTINGS.providers.find((item) => item.provider === provider)!;
 
-// The AI tutor API (C14g, docs/ai-tutor.md#api) against a stubbed Workers AI binding.
+// The AI tutor API (C14g, docs/ai-tutor.md#api) against a scripted model endpoint (tutorApi.ts).
 
 beforeEach(resetDatabase);
 
@@ -54,7 +54,7 @@ describe("access", () => {
     const { learner, rival } = await seedLibrary();
     const ai = scriptedAi([callTool("ask_choice", { question: "Wat is een huis?", options: ["house", "mouse", "horse"], correct: 0 })]);
     const conversationId = await newConversation(learner);
-    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Quiz me" }, { AI: ai.binding }));
+    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Quiz me" }, { ...ai.env }));
     const toolCallId = ofType(events, "component")[0]!.part.toolCallId;
     const messageId = ofType(events, "done")[0]!.message.id;
     const base = `/api/ai/conversations/${conversationId}`;
@@ -64,7 +64,7 @@ describe("access", () => {
       ["POST", `${base}/messages`, { text: "Hi" }], ["POST", `${base}/tool-calls/${toolCallId}/respond`, { type: "component", answer: { kind: "choice", choice: 0 } }],
       ["POST", `${base}/messages/${messageId}/speech`, { spanIndex: 0 }],
     ] as Array<[string, string, unknown?]>) {
-      const response = await call(method, path, rival, body, { AI: ai.binding });
+      const response = await call(method, path, rival, body, { ...ai.env });
       expect(response.status, `${method} ${path}`).toBe(404);
       expect(await errorCode(response)).toBe("CONVERSATION_NOT_FOUND");
     }
@@ -89,7 +89,7 @@ describe("conversations", () => {
     expect((await list(false)).map((item) => item.id)).toEqual([second, first]);
 
     const ai = scriptedAi([say("Hallo!")]);
-    await readEvents(await call("POST", `/api/ai/conversations/${first}/messages`, learner, { text: "  Teach me   the\nnext lesson please  " }, { AI: ai.binding }));
+    await readEvents(await call("POST", `/api/ai/conversations/${first}/messages`, learner, { text: "  Teach me   the\nnext lesson please  " }, { ...ai.env }));
     const titled = await list(false);
     expect(titled.map((item) => item.id)).toEqual([first, second]);
     expect(titled[0]!.title).toBe("Teach me the next lesson please");
@@ -99,7 +99,7 @@ describe("conversations", () => {
     expect((await list(false)).map((item) => item.id)).toEqual([second]);
     expect((await list(true)).map((item) => item.id)).toEqual([first]);
     expect((await messagesOf(learner, first)).items).toHaveLength(2);
-    const refused = await call("POST", `/api/ai/conversations/${first}/messages`, learner, { text: "More" }, { AI: ai.binding });
+    const refused = await call("POST", `/api/ai/conversations/${first}/messages`, learner, { text: "More" }, { ...ai.env });
     expect(refused.status).toBe(409);
     expect(await errorCode(refused)).toBe("CONVERSATION_ARCHIVED");
 
@@ -114,7 +114,7 @@ describe("conversations", () => {
     const conversationId = await newConversation(learner);
     const ai = scriptedAi(Array.from({ length: 16 }, (_, index) => say(`Antwoord ${index}`)));
     for (let index = 0; index < 16; index += 1) {
-      await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: `Vraag ${index}` }, { AI: ai.binding }));
+      await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: `Vraag ${index}` }, { ...ai.env }));
     }
     const page = await messagesOf(learner, conversationId);
     expect(page.items).toHaveLength(30);
@@ -145,7 +145,7 @@ describe("titles and usage", () => {
       expect(await errorCode(invalid)).toBe("VALIDATION_ERROR");
     }
     // The first message no longer replaces a title the learner chose.
-    await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Hoi" }, { AI: scriptedAi([say("Hallo!")]).binding }));
+    await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Hoi" }, { ...scriptedAi([say("Hallo!")]).env }));
     expect(await title(learner, conversationId)).toMatchObject({ title: "Separable verbs", titleSource: "user" });
   });
 
@@ -153,14 +153,14 @@ describe("titles and usage", () => {
     const { learner } = await seedLibrary();
     const conversationId = await newConversation(learner);
     const first = scriptedAi([callTool("set_conversation_title", { title: "\"Greetings practice\"" }), say("Let's go.")]);
-    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Teach me greetings" }, { AI: first.binding }));
+    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Teach me greetings" }, { ...first.env }));
     expect(ofType(events, "tool_result")[0]!.part).toMatchObject({ ok: true, detail: { title: "Greetings practice" } });
     expect(await title(learner, conversationId)).toMatchObject({ title: "Greetings practice", titleSource: "tutor" });
     expect(String(modelMessages(first.calls[0]).find((message) => message.role === "system")?.content)).toContain("still the learner's first message");
 
     await call("PATCH", `/api/ai/conversations/${conversationId}`, learner, { title: "My greetings" });
     const second = scriptedAi([callTool("set_conversation_title", { title: "Other" }), say("Ok.")]);
-    const refused = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "More" }, { AI: second.binding }));
+    const refused = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "More" }, { ...second.env }));
     expect(ofType(refused, "tool_result")[0]!.part).toMatchObject({ ok: false, error: "TITLE_SET_BY_LEARNER" });
     expect(await title(learner, conversationId)).toMatchObject({ title: "My greetings", titleSource: "user" });
     expect(String(modelMessages(second.calls[0]).find((message) => message.role === "system")?.content)).toContain("Never call set_conversation_title");
@@ -175,7 +175,7 @@ describe("titles and usage", () => {
     const rivalId = (await env.DB.prepare("SELECT user_id AS id FROM ai_conversations WHERE id = ?").bind(rivalConversation).first<{ id: string }>())!.id;
     const now = Date.now(); const yesterday = now - 26 * 60 * 60 * 1000;
     const usage = (userId: string, conversation: string | null, tokensIn: number, tokensOut: number, turnStart: boolean, createdAt: number) =>
-      env.DB.prepare("INSERT INTO ai_usage (id, user_id, conversation_id, provider, model, turn_start, tokens_in, tokens_out, cost_microusd, ok, created_at) VALUES (?, ?, ?, 'workers_ai', 'm', ?, ?, ?, 0, 1, ?)")
+      env.DB.prepare("INSERT INTO ai_usage (id, user_id, conversation_id, provider, model, turn_start, tokens_in, tokens_out, cost_microusd, ok, created_at) VALUES (?, ?, ?, 'azure', 'm', ?, ?, ?, 0, 1, ?)")
         .bind(crypto.randomUUID(), userId, conversation, turnStart ? 1 : 0, tokensIn, tokensOut, createdAt);
     await env.DB.batch([
       usage(learnerId, conversationId, 1000, 200, true, now), usage(learnerId, conversationId, 500, 50, false, now),
@@ -201,36 +201,36 @@ describe("titles and usage", () => {
 });
 
 describe("model choice", () => {
-  const settings = {
-    ...DEFAULT_AI_SETTINGS,
-    providers: [preset("openrouter"), preset("workers_ai"), { ...preset("azure"), enabled: false }],
-  };
-  const reachable = { OPENROUTER_API_KEY: "or-test-key", AZURE_AI_ENDPOINT: "https://azure.test", AZURE_AI_KEY: "az-test-key" };
+  const settings = { ...DEFAULT_AI_SETTINGS, providers: [preset("openrouter"), preset("azure")] };
+  const reachable = { OPENROUTER_API_KEY: "or-test-key" };
 
   it("lists only enabled providers the API can reach, in the configured order", async () => {
     const { learner } = await seedLibrary();
     await writeAiSettings(env.DB, settings);
     const models = async (extra: Partial<Env>) => (await (await call("GET", "/api/ai/models", learner, undefined, extra)).json()) as { items: Array<{ provider: string; model: string }> };
-    expect((await models({ ...reachable, AI: scriptedAi([]).binding })).items).toEqual([
+    expect((await models({ ...reachable, ...scriptedAi([]).env })).items).toEqual([
       { provider: "openrouter", model: preset("openrouter").model },
-      { provider: "workers_ai", model: preset("workers_ai").model },
+      { provider: "azure", model: preset("azure").model },
     ]);
-    expect((await models({ AI: scriptedAi([]).binding })).items.map((item) => item.provider)).toEqual(["workers_ai"]);
+    expect((await models({ ...scriptedAi([]).env })).items.map((item) => item.provider)).toEqual(["azure"]);
+    await writeAiSettings(env.DB, { ...settings, providers: [preset("openrouter"), { ...preset("azure"), enabled: false }] });
+    expect((await models({ ...reachable, ...scriptedAi([]).env })).items.map((item) => item.provider)).toEqual(["openrouter"]);
   });
 
   it("sets and clears a conversation's model, refusing an unavailable or unknown provider", async () => {
     const { learner } = await seedLibrary();
     await writeAiSettings(env.DB, settings);
     const conversationId = await newConversation(learner);
-    const patch = (body: unknown) => call("PATCH", `/api/ai/conversations/${conversationId}`, learner, body, { ...reachable, AI: scriptedAi([]).binding });
+    const patch = (body: unknown, extra: Partial<Env> = reachable) => call("PATCH", `/api/ai/conversations/${conversationId}`, learner, body, { ...extra, ...scriptedAi([]).env });
     const provider = async (response: Response) => ((await response.json()) as { conversation: { provider: string | null } }).conversation.provider;
 
-    expect(await provider(await patch({ provider: "workers_ai" }))).toBe("workers_ai");
-    expect(await provider(await call("GET", `/api/ai/conversations/${conversationId}`, learner))).toBe("workers_ai");
-    const disabled = await patch({ provider: "azure" });
-    expect(disabled.status).toBe(409);
-    expect(await errorCode(disabled)).toBe("AI_PROVIDER_UNAVAILABLE");
-    for (const body of [{ provider: "anthropic" }, {}, { provider: "workers_ai", extra: true }]) {
+    expect(await provider(await patch({ provider: "azure" }))).toBe("azure");
+    expect(await provider(await call("GET", `/api/ai/conversations/${conversationId}`, learner))).toBe("azure");
+    // OpenRouter is enabled but has no key here.
+    const unavailable = await patch({ provider: "openrouter" }, {});
+    expect(unavailable.status).toBe(409);
+    expect(await errorCode(unavailable)).toBe("AI_PROVIDER_UNAVAILABLE");
+    for (const body of [{ provider: "anthropic" }, { provider: "workers_ai" }, {}, { provider: "azure", extra: true }]) {
       const invalid = await patch(body);
       expect(invalid.status, JSON.stringify(body)).toBe(400);
       expect(await errorCode(invalid)).toBe("VALIDATION_ERROR");
@@ -243,11 +243,11 @@ describe("model choice", () => {
     await writeAiSettings(env.DB, settings);
     const conversationId = await newConversation(learner);
     const ai = scriptedAi([say("Hallo!")]);
-    await call("PATCH", `/api/ai/conversations/${conversationId}`, learner, { provider: "workers_ai" }, { ...reachable, AI: ai.binding });
+    await call("PATCH", `/api/ai/conversations/${conversationId}`, learner, { provider: "azure" }, { ...reachable, ...ai.env });
     // OpenRouter leads the configured order and has a key, but the conversation's choice goes first.
-    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Hoi" }, { ...reachable, AI: ai.binding }));
-    expect(ofType(events, "done")[0]!.message).toMatchObject({ provider: "workers_ai", model: preset("workers_ai").model });
-    expect(await count("SELECT COUNT(*) AS n FROM ai_usage WHERE provider <> 'workers_ai'")).toBe(0);
+    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Hoi" }, { ...reachable, ...ai.env }));
+    expect(ofType(events, "done")[0]!.message).toMatchObject({ provider: "azure", model: preset("azure").model });
+    expect(await count("SELECT COUNT(*) AS n FROM ai_usage WHERE provider <> 'azure'")).toBe(0);
   });
 });
 
@@ -257,7 +257,7 @@ describe("turns", () => {
     await writeAiSettings(env.DB, { ...DEFAULT_AI_SETTINGS, dailyTurnCap: 0 });
     const ai = scriptedAi([say("never")]);
     const conversationId = await newConversation(learner);
-    const response = await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Hoi" }, { AI: ai.binding });
+    const response = await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Hoi" }, { ...ai.env });
     expect(response.status).toBe(429);
     expect(((await response.json()) as { error: { code: string; resetsAt: number } }).error).toMatchObject({ code: "AI_DAILY_LIMIT", resetsAt: expect.any(Number) });
     expect(ai.calls).toHaveLength(0);
@@ -268,14 +268,14 @@ describe("turns", () => {
     const { learner } = await seedLibrary();
     const ai = scriptedAi([say("Zeg [[Goedemorgen]]! Dat betekent good morning.")]);
     const conversationId = await newConversation(learner);
-    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Hoe zeg ik good morning?" }, { AI: ai.binding }));
+    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Hoe zeg ik good morning?" }, { ...ai.env }));
     expect(types(events)).toEqual(["user_message", "start", "text", "done"]);
     expect(ofType(events, "text")[0]!.delta).toContain("[[Goedemorgen]]");
     const done = ofType(events, "done")[0]!.message;
-    expect(done).toMatchObject({ role: "assistant", status: "complete", provider: "workers_ai", model: preset("workers_ai").model });
+    expect(done).toMatchObject({ role: "assistant", status: "complete", provider: "azure", model: preset("azure").model });
     expect(done.parts).toEqual([{ type: "text", text: "Zeg Goedemorgen! Dat betekent good morning.", spans: [{ start: 4, end: 15 }] }]);
     expect(ofType(events, "start")[0]!.messageId).toBe(done.id);
-    // Workers AI stops at 256 tokens without a cap.
+    // Every request carries the output cap.
     expect(ai.calls[0]).toMatchObject({ max_tokens: TUTOR_MAX_OUTPUT_TOKENS });
     const page = await messagesOf(learner, conversationId);
     expect(page.items.map((item) => item.role)).toEqual(["assistant", "user"]);
@@ -294,7 +294,7 @@ describe("turns", () => {
     const { learner, lessons, words } = await seedLibrary();
     const ai = scriptedAi([callTool("get_lesson", { lessonId: "next" }), say("Let's study Greetings.")]);
     const conversationId = await newConversation(learner);
-    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "What next?" }, { AI: ai.binding }));
+    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "What next?" }, { ...ai.env }));
     expect(types(events)).toEqual(["user_message", "start", "tool_call", "tool_result", "text", "done"]);
     const result = ofType(events, "tool_result")[0]!.part;
     expect(result).toMatchObject({ name: "get_lesson", ok: true, detail: { lessonId: lessons.first.id, lessonTitle: "Greetings", next: true, summary: "Running get_lesson" } });
@@ -324,7 +324,7 @@ describe("turns", () => {
       callTool("get_weak_words", { summary: undefined }, [{ name: "search_words", args: { summary: "  Looking up   huis ", query: "huis" } }]),
       say("Done."),
     ]);
-    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Words?" }, { AI: ai.binding }));
+    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Words?" }, { ...ai.env }));
     const [missing, found] = ofType(events, "tool_result").map((event) => event.part);
     expect(missing).toMatchObject({ name: "get_weak_words", ok: false, error: "INVALID_ARGUMENTS", detail: {} });
     expect(toolMessages(ai.calls[1])[0]!.content).toContain("summary");
@@ -336,19 +336,19 @@ describe("turns", () => {
     const conversationId = await newConversation(learner);
     for (const lesson of [lessons.unpublished, lessons.hidden, lessons.foreign]) {
       const ai = scriptedAi([callTool("get_lesson", { lessonId: lesson.id }), say("Not there.")]);
-      const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Read it" }, { AI: ai.binding }));
+      const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Read it" }, { ...ai.env }));
       expect(ofType(events, "tool_result")[0]!.part).toMatchObject({ ok: false, error: "LESSON_NOT_FOUND" });
       expect(toolMessages(ai.calls[1])[0]!.content).not.toContain(lesson.title);
     }
     // Searching words and completing lessons are scoped the same way.
     const ai = scriptedAi([callTool("search_words", { query: "fiets" }, [{ name: "complete_lesson", args: { lessonId: lessons.foreign.id } }]), say("Nothing.")]);
-    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Search" }, { AI: ai.binding }));
+    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Search" }, { ...ai.env }));
     const results = ofType(events, "tool_result").map((event) => event.part);
     expect(results[0]).toMatchObject({ ok: true, detail: { count: 0 } });
     expect(results[1]).toMatchObject({ ok: false, error: "LESSON_NOT_FOUND" });
     expect(ofType(events, "confirmation")).toHaveLength(0);
     const found = scriptedAi([callTool("search_words", { query: "huis" }), say("Found.")]);
-    await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Search" }, { AI: found.binding }));
+    await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Search" }, { ...found.env }));
     expect(toolMessages(found.calls[1]).at(-1)!.content).toContain(words.huis.id);
   });
 
@@ -359,22 +359,22 @@ describe("turns", () => {
       say("Goed zo!"),
     ]);
     const conversationId = await newConversation(learner);
-    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Quiz me" }, { AI: ai.binding }));
+    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Quiz me" }, { ...ai.env }));
     expect(types(events), JSON.stringify(ofType(events, "tool_result"))).toEqual(["user_message", "start", "tool_call", "component", "done"]);
     const component = ofType(events, "component")[0]!.part;
     expect(component.view).toEqual({ kind: "fill_in", prompt: "Ik woon in … .", blanks: 1, translation: null });
     expect(JSON.stringify(events)).not.toContain("het huis");
     expect(ofType(events, "done")[0]!.message.status).toBe("awaiting_user");
 
-    const blocked = await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Skip" }, { AI: ai.binding });
+    const blocked = await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Skip" }, { ...ai.env });
     expect(blocked.status).toBe(409);
     expect(await errorCode(blocked)).toBe("TURN_IN_PROGRESS");
     const path = `/api/ai/conversations/${conversationId}/tool-calls/${component.toolCallId}/respond`;
-    const wrongKind = await call("POST", path, learner, { type: "component", answer: { kind: "choice", choice: 0 } }, { AI: ai.binding });
+    const wrongKind = await call("POST", path, learner, { type: "component", answer: { kind: "choice", choice: 0 } }, { ...ai.env });
     expect(await errorCode(wrongKind)).toBe("ANSWER_INVALID");
     expect(await count("SELECT COUNT(*) AS n FROM practice_attempts")).toBe(0);
 
-    const answered = await readEvents(await call("POST", path, learner, { type: "component", answer: { kind: "fill_in", blanks: ["Het huis"] } }, { AI: ai.binding }));
+    const answered = await readEvents(await call("POST", path, learner, { type: "component", answer: { kind: "fill_in", blanks: ["Het huis"] } }, { ...ai.env }));
     expect(types(answered)).toEqual(["answered", "start", "text", "done"]);
     expect(ofType(answered, "answered")[0]!.part).toMatchObject({ answer: { kind: "fill_in", blanks: ["Het huis"] }, grade: { correct: true, matched: true, reference: "het huis" } });
     const graded = JSON.parse(toolMessages(ai.calls[1]).at(-1)!.content!) as { status: string; grade: { correct: boolean } };
@@ -389,7 +389,7 @@ describe("turns", () => {
     expect(review).toMatchObject({ user_id: learnerId, word_id: words.huis.id, source: "ai_chat", result: "got", direction: "produce", conversation_id: conversationId });
     expect(await count("SELECT COUNT(*) AS n FROM word_memory WHERE user_id = ?", learnerId)).toBe(1);
 
-    const again = await call("POST", path, learner, { type: "component", answer: { kind: "fill_in", blanks: ["het huis"] } }, { AI: ai.binding });
+    const again = await call("POST", path, learner, { type: "component", answer: { kind: "fill_in", blanks: ["het huis"] } }, { ...ai.env });
     expect(again.status).toBe(409);
     expect(await errorCode(again)).toBe("TOOL_CALL_ANSWERED");
     expect(await count("SELECT COUNT(*) AS n FROM practice_attempts")).toBe(1);
@@ -408,7 +408,7 @@ describe("turns", () => {
       say("Two of three, well done."),
     ]);
     const conversationId = await newConversation(learner);
-    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Quiz me" }, { AI: ai.binding }));
+    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Quiz me" }, { ...ai.env }));
     const [choice, fillIn, article] = ofType(events, "component").map((event) => event.part.toolCallId);
     const messageId = ofType(events, "done")[0]!.message.id;
     const path = `/api/ai/conversations/${conversationId}/messages/${messageId}/answers`;
@@ -418,7 +418,7 @@ describe("turns", () => {
       { toolCallId: article, skip: true },
     ];
     const refused = async (body: unknown, status: number, code: string, cookie = learner) => {
-      const response = await call("POST", path, cookie, body, { AI: ai.binding });
+      const response = await call("POST", path, cookie, body, { ...ai.env });
       expect(response.status, JSON.stringify(body)).toBe(status);
       expect(await errorCode(response)).toBe(code);
     };
@@ -431,7 +431,7 @@ describe("turns", () => {
     expect(await count("SELECT COUNT(*) AS n FROM practice_attempts")).toBe(0);
     expect(ai.calls).toHaveLength(1);
 
-    const answered = await readEvents(await call("POST", path, learner, { answers: full }, { AI: ai.binding }));
+    const answered = await readEvents(await call("POST", path, learner, { answers: full }, { ...ai.env }));
     expect(types(answered)).toEqual(["answered", "answered", "answered", "start", "text", "done"]);
     expect(ofType(answered, "answered").map((event) => event.part.type === "component" ? event.part.grade?.correct ?? "skipped" : event.part.type)).toEqual([true, true, "skipped"]);
     const results = toolMessages(ai.calls[1]).map((message) => JSON.parse(message.content!) as { status?: string });
@@ -452,7 +452,7 @@ describe("turns", () => {
       say("Two of three, well done."),
     ]);
     const conversationId = await newConversation(learner);
-    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Quiz me" }, { AI: ai.binding }));
+    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Quiz me" }, { ...ai.env }));
     const components = ofType(events, "component").map((event) => event.part);
     expect(components.map((part) => part.kind)).toEqual(["choice", "fill_in", "article"]);
     // Display fields keep the marks; answer fields and nouns are stored without them.
@@ -464,18 +464,18 @@ describe("turns", () => {
     const path = (index: number) => `/api/ai/conversations/${conversationId}/tool-calls/${components[index]!.toolCallId}/respond`;
 
     const [first, second] = await Promise.all([
-      readEvents(await call("POST", path(0), learner, { type: "component", answer: { kind: "choice", choice: 0 } }, { AI: ai.binding })),
-      readEvents(await call("POST", path(2), learner, { type: "component", skip: true }, { AI: ai.binding })),
+      readEvents(await call("POST", path(0), learner, { type: "component", answer: { kind: "choice", choice: 0 } }, { ...ai.env })),
+      readEvents(await call("POST", path(2), learner, { type: "component", skip: true }, { ...ai.env })),
     ]);
     for (const partial of [first, second]) {
       expect(types(partial)).toEqual(["answered", "done"]);
       expect(ofType(partial, "done")[0]!.message.status).toBe("awaiting_user");
     }
     expect(ai.calls).toHaveLength(1);
-    const blocked = await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Next" }, { AI: ai.binding });
+    const blocked = await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Next" }, { ...ai.env });
     expect(await errorCode(blocked)).toBe("TURN_IN_PROGRESS");
 
-    const last = await readEvents(await call("POST", path(1), learner, { type: "component", answer: { kind: "fill_in", blanks: ["het huis"] } }, { AI: ai.binding }));
+    const last = await readEvents(await call("POST", path(1), learner, { type: "component", answer: { kind: "fill_in", blanks: ["het huis"] } }, { ...ai.env }));
     expect(types(last)).toEqual(["answered", "start", "text", "done"]);
     expect(ofType(last, "answered")[0]!.part).toMatchObject({ grade: { correct: true, reference: "het huis" } });
     const results = toolMessages(ai.calls[1]).map((message) => JSON.parse(message.content!) as { status?: string; error?: string });
@@ -498,7 +498,7 @@ describe("turns", () => {
       say("Found them."),
     ]);
     const conversationId = await newConversation(learner);
-    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Lessons of the first course" }, { AI: ai.binding }));
+    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Lessons of the first course" }, { ...ai.env }));
     expect(ofType(events, "tool_result").map((event) => event.part.error)).toEqual([null, null, null, "REPEATED_CALL"]);
     const [byCourse, byTitle] = toolMessages(ai.calls[1]).map((message) => JSON.parse(message.content!) as { lessons: Array<Record<string, unknown>> });
     expect(byCourse!.lessons).toEqual([
@@ -523,7 +523,7 @@ describe("turns", () => {
       say("You needed one hint."),
     ]);
     const conversationId = await newConversation(learner);
-    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Quiz me" }, { AI: ai.binding }));
+    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Quiz me" }, { ...ai.env }));
     // A hint word outside the readable index is refused like any word; the model never supplies the hint's Dutch.
     expect(ofType(events, "tool_result")[0]!.part).toMatchObject({ name: "ask_translate", error: "WORD_NOT_FOUND" });
     const component = ofType(events, "component")[0]!.part;
@@ -532,10 +532,10 @@ describe("turns", () => {
       { ...tafel, cue: "the table", term: "de tafel" },
     ] });
     const path = `/api/ai/conversations/${conversationId}/tool-calls/${component.toolCallId}/respond`;
-    const foreign = await call("POST", path, learner, { type: "component", answer: { kind: "fill_in", blanks: ["het huis", "de tafel"], hintsUsed: [{ lessonId: lessons.first.id, wordId: words.stoel.id }] } }, { AI: ai.binding });
+    const foreign = await call("POST", path, learner, { type: "component", answer: { kind: "fill_in", blanks: ["het huis", "de tafel"], hintsUsed: [{ lessonId: lessons.first.id, wordId: words.stoel.id }] } }, { ...ai.env });
     expect(await errorCode(foreign)).toBe("ANSWER_INVALID");
 
-    const answered = await readEvents(await call("POST", path, learner, { type: "component", answer: { kind: "fill_in", blanks: ["het huis", "de tafel"], hintsUsed: [tafel] } }, { AI: ai.binding }));
+    const answered = await readEvents(await call("POST", path, learner, { type: "component", answer: { kind: "fill_in", blanks: ["het huis", "de tafel"], hintsUsed: [tafel] } }, { ...ai.env }));
     expect(ofType(answered, "answered")[0]!.part).toMatchObject({ grade: { correct: true }, answer: { hintsUsed: [tafel] } });
     expect(JSON.parse(toolMessages(ai.calls[1]).at(-1)!.content!)).toMatchObject({ status: "answered", hintsOpened: ["the table"] });
     expect(await env.DB.prepare("SELECT hints_used AS n FROM practice_attempts WHERE user_id = ?").bind(learnerId).first<{ n: number }>()).toEqual({ n: 1 });
@@ -554,12 +554,12 @@ describe("turns", () => {
         say("Sorry."),
       ]);
       const conversationId = await newConversation(learner);
-      await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Lesson 3" }, { AI: ai.binding }));
+      await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Lesson 3" }, { ...ai.env }));
       const logged = warn.mock.calls.map(([line]) => JSON.parse(String(line)) as Record<string, unknown>).filter((entry) => entry.event === "ai.tool_failed");
       expect(logged.map((entry) => [entry.tool, entry.errorCode, entry.category])).toEqual([
         ["get_lesson", "INVALID_ARGUMENTS", "model"], ["get_lesson", "LESSON_NOT_FOUND", "model"], ["no_such_tool", "UNKNOWN_TOOL", "model"],
       ]);
-      expect(logged[0]).toMatchObject({ level: "warn", area: "ai_tutor", toolKind: "other", conversationId, provider: "workers_ai", argumentKeys: "summary,lessonId", request: 0 });
+      expect(logged[0]).toMatchObject({ level: "warn", area: "ai_tutor", toolKind: "other", conversationId, provider: "azure", argumentKeys: "summary,lessonId", request: 0 });
       expect(String(logged[0]!.issues)).toContain("lessonId");
       expect(JSON.stringify(logged)).not.toContain("secret title");
     });
@@ -572,10 +572,10 @@ describe("turns", () => {
       say("No problem, let's move on."),
     ]);
     const conversationId = await newConversation(learner);
-    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Let me speak" }, { AI: ai.binding }));
+    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Let me speak" }, { ...ai.env }));
     const component = ofType(events, "component")[0]!.part;
     const path = `/api/ai/conversations/${conversationId}/tool-calls/${component.toolCallId}/respond`;
-    const skipped = await readEvents(await call("POST", path, learner, { type: "component", skip: true }, { AI: ai.binding }));
+    const skipped = await readEvents(await call("POST", path, learner, { type: "component", skip: true }, { ...ai.env }));
     expect(types(skipped)).toEqual(["answered", "start", "text", "done"]);
     expect(ofType(skipped, "answered")[0]!.part).toMatchObject({ skipped: true, answer: null, grade: null });
     expect(ofType(skipped, "answered")[0]!.part.answeredAt).not.toBeNull();
@@ -584,11 +584,11 @@ describe("turns", () => {
     expect(await count("SELECT COUNT(*) AS n FROM word_reviews")).toBe(0);
     expect(await count("SELECT COUNT(*) AS n FROM pronunciation_attempts")).toBe(0);
 
-    const again = await call("POST", path, learner, { type: "component", skip: true }, { AI: ai.binding });
+    const again = await call("POST", path, learner, { type: "component", skip: true }, { ...ai.env });
     expect(await errorCode(again)).toBe("TOOL_CALL_ANSWERED");
-    const answerAfter = await call("POST", path, learner, { type: "component", answer: { kind: "say_it", scores: { overall: 90, accuracy: 90, fluency: 90, completeness: 100, words: [{ word: "huis", accuracy: 90, error: "none" }] } } }, { AI: ai.binding });
+    const answerAfter = await call("POST", path, learner, { type: "component", answer: { kind: "say_it", scores: { overall: 90, accuracy: 90, fluency: 90, completeness: 100, words: [{ word: "huis", accuracy: 90, error: "none" }] } } }, { ...ai.env });
     expect(await errorCode(answerAfter)).toBe("TOOL_CALL_ANSWERED");
-    const free = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Next" }, { AI: scriptedAi([say("Sure.")]).binding }));
+    const free = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Next" }, { ...scriptedAi([say("Sure.")]).env }));
     expect(types(free)[0]).toBe("user_message");
   });
 
@@ -596,9 +596,9 @@ describe("turns", () => {
     const { learner, lessons } = await seedLibrary();
     const ai = scriptedAi([callTool("complete_lesson", { lessonId: lessons.first.id })]);
     const conversationId = await newConversation(learner);
-    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Done" }, { AI: ai.binding }));
+    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Done" }, { ...ai.env }));
     const card = ofType(events, "confirmation")[0]!.part;
-    const skipped = await call("POST", `/api/ai/conversations/${conversationId}/tool-calls/${card.toolCallId}/respond`, learner, { type: "component", skip: true }, { AI: ai.binding });
+    const skipped = await call("POST", `/api/ai/conversations/${conversationId}/tool-calls/${card.toolCallId}/respond`, learner, { type: "component", skip: true }, { ...ai.env });
     expect(await errorCode(skipped)).toBe("ANSWER_INVALID");
   });
 
@@ -610,10 +610,10 @@ describe("turns", () => {
       say("Great."),
     ]);
     const conversationId = await newConversation(learner);
-    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Translate" }, { AI: ai.binding }));
+    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Translate" }, { ...ai.env }));
     const toolCallId = ofType(events, "component")[0]!.part.toolCallId;
     const answered = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/tool-calls/${toolCallId}/respond`, learner,
-      { type: "component", answer: { kind: "translate", text: "Ik ben in Utrecht woonachtig." } }, { AI: ai.binding }));
+      { type: "component", answer: { kind: "translate", text: "Ik ben in Utrecht woonachtig." } }, { ...ai.env }));
     expect(ofType(answered, "answered")[0]!.part).toHaveProperty("grade");
     expect((ofType(answered, "answered")[0]!.part as { grade: unknown }).grade).toMatchObject({ correct: true, matched: false, verdict: "acceptable", note: "Natural, just different." });
     const judge = modelMessages(ai.calls[1]);
@@ -630,7 +630,7 @@ describe("turns", () => {
     const review = { lessonId: lessons.first.id, wordId: words.tafel.id, direction: "understand", result: "again" };
     const conversationId = await newConversation(learner);
     const first = scriptedAi([callTool("record_word_review", review), say("Hm.")]);
-    const refused = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "I forgot tafel" }, { AI: first.binding }));
+    const refused = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "I forgot tafel" }, { ...first.env }));
     expect(ofType(refused, "tool_result")[0]!.part).toMatchObject({ ok: false, error: "WORD_NOT_TESTED" });
     expect(await count("SELECT COUNT(*) AS n FROM word_reviews")).toBe(0);
 
@@ -638,19 +638,19 @@ describe("turns", () => {
       callTool("ask_choice", { question: "Wat is de tafel?", options: ["table", "chair", "house"], correct: 0, words: [{ lessonId: lessons.first.id, wordId: words.tafel.id }] }),
       say("Right."), callTool("record_word_review", review), say("Recorded."),
     ]);
-    const asked = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Quiz" }, { AI: quiz.binding }));
+    const asked = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Quiz" }, { ...quiz.env }));
     // An unanswered component does not count as tested yet.
     expect(ofType(asked, "component")).toHaveLength(1);
     await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/tool-calls/${ofType(asked, "component")[0]!.part.toolCallId}/respond`, learner,
-      { type: "component", answer: { kind: "choice", choice: 0 } }, { AI: quiz.binding }));
-    const accepted = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Actually I forgot it" }, { AI: quiz.binding }));
+      { type: "component", answer: { kind: "choice", choice: 0 } }, { ...quiz.env }));
+    const accepted = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Actually I forgot it" }, { ...quiz.env }));
     expect(ofType(accepted, "tool_result")[0]!.part).toMatchObject({ ok: true, detail: { result: "again" } });
     const rows = await env.DB.prepare("SELECT direction, result, source FROM word_reviews WHERE user_id = ? ORDER BY result").bind(learnerId).all();
     expect(rows.results).toEqual([{ direction: "understand", result: "again", source: "ai_chat" }, { direction: "understand", result: "got", source: "ai_chat" }]);
     // Another conversation's tested words do not count.
     const other = await newConversation(learner);
     const elsewhere = scriptedAi([callTool("record_word_review", review), say("No.")]);
-    const outside = await readEvents(await call("POST", `/api/ai/conversations/${other}/messages`, learner, { text: "Record it" }, { AI: elsewhere.binding }));
+    const outside = await readEvents(await call("POST", `/api/ai/conversations/${other}/messages`, learner, { text: "Record it" }, { ...elsewhere.env }));
     expect(ofType(outside, "tool_result")[0]!.part).toMatchObject({ ok: false, error: "WORD_NOT_TESTED" });
   });
 
@@ -658,7 +658,7 @@ describe("turns", () => {
     const { learner, learnerId, lessons } = await seedLibrary();
     const ai = scriptedAi([callTool("complete_lesson", { lessonId: lessons.first.id }), say("Well done.")]);
     const conversationId = await newConversation(learner);
-    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "I'm done" }, { AI: ai.binding }));
+    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "I'm done" }, { ...ai.env }));
     expect(types(events)).toEqual(["user_message", "start", "tool_call", "confirmation", "done"]);
     const card = ofType(events, "confirmation")[0]!.part;
     expect(card.summary).toEqual({ action: "complete_lesson", course: expect.objectContaining({ title: "Dutch foundations" }), lesson: { id: lessons.first.id, title: "Greetings" } });
@@ -666,7 +666,7 @@ describe("turns", () => {
     const path = `/api/ai/conversations/${conversationId}/tool-calls/${card.toolCallId}/respond`;
     expect(await errorCode(await call("POST", path, learner, { type: "component", answer: { kind: "choice", choice: 0 } }))).toBe("ANSWER_INVALID");
 
-    const confirmed = await readEvents(await call("POST", path, learner, { type: "confirmation", confirmed: true }, { AI: ai.binding }));
+    const confirmed = await readEvents(await call("POST", path, learner, { type: "confirmation", confirmed: true }, { ...ai.env }));
     expect(ofType(confirmed, "answered")[0]!.part).toMatchObject({ answer: "confirmed", outcome: { ok: true, error: null } });
     expect(await count("SELECT COUNT(*) AS n FROM course_lesson_completions WHERE user_id = ? AND lesson_id = ?", learnerId, lessons.first.id)).toBe(1);
     expect(await env.DB.prepare("SELECT actor, kind, conversation_id AS conversationId FROM progress_events").first()).toEqual({ actor: "agent", kind: "lesson_completed", conversationId });
@@ -674,10 +674,10 @@ describe("turns", () => {
     expect(await errorCode(await call("POST", path, learner, { type: "confirmation", confirmed: true }))).toBe("TOOL_CALL_ANSWERED");
 
     const reset = scriptedAi([callTool("reset_lesson", { lessonId: lessons.first.id }), say("Kept.")]);
-    const asked = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Reset it" }, { AI: reset.binding }));
+    const asked = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Reset it" }, { ...reset.env }));
     const resetCard = ofType(asked, "confirmation")[0]!.part;
     expect(resetCard.summary).toMatchObject({ action: "reset_lesson", deletes: { completion: true, position: false, attempts: 0, reviews: 0 } });
-    const cancelled = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/tool-calls/${resetCard.toolCallId}/respond`, learner, { type: "confirmation", confirmed: false }, { AI: reset.binding }));
+    const cancelled = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/tool-calls/${resetCard.toolCallId}/respond`, learner, { type: "confirmation", confirmed: false }, { ...reset.env }));
     expect(ofType(cancelled, "answered")[0]!.part).toMatchObject({ answer: "cancelled", outcome: null });
     expect(JSON.parse(toolMessages(reset.calls[1]).at(-1)!.content!)).toMatchObject({ status: "cancelled" });
     expect(await count("SELECT COUNT(*) AS n FROM course_lesson_completions")).toBe(1);
@@ -689,10 +689,10 @@ describe("turns", () => {
     const practice = { kind: "choice", payload: { question: "Wat is een huis?", options: ["house", "mouse", "horse"], correct: 0 } };
     const ai = scriptedAi([callTool("save_ai_practice", { practice, lessons: [{ lessonId: lessons.first.id, afterBlockId: example.id }] }), say("Saved.")]);
     const conversationId = await newConversation(learner);
-    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Save it" }, { AI: ai.binding }));
+    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Save it" }, { ...ai.env }));
     const card = ofType(events, "confirmation")[0]!.part;
     expect(card.summary).toMatchObject({ action: "save_ai_practice", view: { kind: "choice", options: ["house", "mouse", "horse"] }, lessons: [{ lesson: { id: lessons.first.id }, afterBlockId: example.id }] });
-    const confirmed = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/tool-calls/${card.toolCallId}/respond`, learner, { type: "confirmation", confirmed: true }, { AI: ai.binding }));
+    const confirmed = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/tool-calls/${card.toolCallId}/respond`, learner, { type: "confirmation", confirmed: true }, { ...ai.env }));
     expect(ofType(confirmed, "answered")[0]!.part).toMatchObject({ answer: "confirmed", outcome: { ok: true, error: null } });
     expect(await count("SELECT COUNT(*) AS n FROM ai_practice_lessons WHERE lesson_id = ? AND after_block_id = ?", lessons.first.id, example.id)).toBe(1);
   });
@@ -700,8 +700,8 @@ describe("turns", () => {
   it("ends a failed turn with an error part and keeps what was written", async () => {
     const { learner } = await seedLibrary();
     const conversationId = await newConversation(learner);
-    const failing: WorkersAiBinding = { run: async () => { throw new Error("capacity"); } };
-    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Hoi" }, { AI: failing }));
+    const failing = scriptedAi("failing");
+    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Hoi" }, { ...failing.env }));
     expect(types(events)).toEqual(["user_message", "start", "error", "done"]);
     expect(ofType(events, "error")[0]!.code).toBe("AI_UNAVAILABLE");
     expect(ofType(events, "done")[0]!.message).toMatchObject({ status: "error", parts: [{ type: "error", code: "AI_UNAVAILABLE" }] });
@@ -712,7 +712,7 @@ describe("turns", () => {
     const { learner } = await seedLibrary();
     const conversationId = await newConversation(learner);
     const ai = scriptedAi([...Array.from({ length: 8 }, () => callTool("get_weak_words", {})), (inputs) => { expect(inputs.tools).toBeUndefined(); return say("Done looking."); }]);
-    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Look" }, { AI: ai.binding }));
+    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Look" }, { ...ai.env }));
     expect(ofType(events, "tool_result")).toHaveLength(8);
     expect(ofType(events, "done")[0]!.message.status).toBe("complete");
     expect(ai.remaining()).toBe(0);
@@ -729,7 +729,7 @@ describe("learner context and more components", () => {
       .bind(crypto.randomUUID(), learnerId, course.id, lessons.first.id, crypto.randomUUID(), Date.now()).run();
     const ai = scriptedAi([callTool("get_lesson", { lessonId: "next" }, [{ name: "get_recent_mistakes", args: {} }, { name: "get_course_progress", args: { courseId: course.id } }]), say("Furniture next.")]);
     const conversationId = await newConversation(learner);
-    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Next?" }, { AI: ai.binding }));
+    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Next?" }, { ...ai.env }));
     const results = ofType(events, "tool_result").map((event) => event.part);
     expect(results[0]).toMatchObject({ ok: true, detail: { lessonId: lessons.second.id, lessonTitle: "Furniture" } });
     expect(results[1]).toMatchObject({ ok: true, detail: { count: 1 } });
@@ -750,21 +750,21 @@ describe("learner context and more components", () => {
       say("Nice."),
     ]);
     const conversationId = await newConversation(learner);
-    const review = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Review" }, { AI: ai.binding }));
+    const review = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Review" }, { ...ai.env }));
     const card = ofType(review, "component")[0]!.part;
     expect(card.view).toEqual({ kind: "quick_review", cards: [
       expect.objectContaining({ wordId: words.huis.id, term: "het huis", meaning: "meaning of het huis", direction: "produce" }),
       expect.objectContaining({ wordId: words.stoel.id, term: "de stoel", direction: "understand" }),
     ] });
-    await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/tool-calls/${card.toolCallId}/respond`, learner, { type: "component", answer: { kind: "quick_review", results: ["got", "again"] } }, { AI: ai.binding }));
+    await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/tool-calls/${card.toolCallId}/respond`, learner, { type: "component", answer: { kind: "quick_review", results: ["got", "again"] } }, { ...ai.env }));
     const reviews = await env.DB.prepare("SELECT word_id AS wordId, direction, result FROM word_reviews WHERE user_id = ? ORDER BY result DESC").bind(learnerId).all();
     expect(reviews.results).toEqual([{ wordId: words.huis.id, direction: "produce", result: "got" }, { wordId: words.stoel.id, direction: "understand", result: "again" }]);
     expect(await count("SELECT COUNT(*) AS n FROM practice_attempts")).toBe(0);
 
-    const sayIt = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Speak" }, { AI: ai.binding }));
+    const sayIt = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Speak" }, { ...ai.env }));
     const prompt = ofType(sayIt, "component")[0]!.part;
     const scores = { overall: 81, accuracy: 80, fluency: 90, completeness: 100, words: [{ word: "huis", accuracy: 75, error: "none" }] };
-    const answered = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/tool-calls/${prompt.toolCallId}/respond`, learner, { type: "component", answer: { kind: "say_it", scores } }, { AI: ai.binding }));
+    const answered = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/tool-calls/${prompt.toolCallId}/respond`, learner, { type: "component", answer: { kind: "say_it", scores } }, { ...ai.env }));
     expect(ofType(answered, "answered")[0]!.part).toMatchObject({ grade: { correct: true, score: 81 } });
     expect(await env.DB.prepare("SELECT surface, reference_text AS referenceText, word_id AS wordId, overall FROM pronunciation_attempts WHERE user_id = ?").bind(learnerId).first())
       .toEqual({ surface: "ai_chat", referenceText: "Het huis is groot.", wordId: words.huis.id, overall: 81 });
@@ -778,13 +778,13 @@ describe("learner context and more components", () => {
       say("Not quite."), callTool("reset_lesson", { lessonId: lessons.first.id }), say("Reset."),
     ]);
     const conversationId = await newConversation(learner);
-    const asked = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Quiz" }, { AI: ai.binding }));
-    await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/tool-calls/${ofType(asked, "component")[0]!.part.toolCallId}/respond`, learner, { type: "component", answer: { kind: "choice", choice: 0 } }, { AI: ai.binding }));
+    const asked = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Quiz" }, { ...ai.env }));
+    await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/tool-calls/${ofType(asked, "component")[0]!.part.toolCallId}/respond`, learner, { type: "component", answer: { kind: "choice", choice: 0 } }, { ...ai.env }));
     expect(await count("SELECT COUNT(*) AS n FROM practice_attempts WHERE user_id = ?", learnerId)).toBe(1);
-    const card = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Start over" }, { AI: ai.binding }));
+    const card = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Start over" }, { ...ai.env }));
     const confirmation = ofType(card, "confirmation")[0]!.part;
     expect(confirmation.summary).toMatchObject({ deletes: { attempts: 1, reviews: 1 } });
-    await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/tool-calls/${confirmation.toolCallId}/respond`, learner, { type: "confirmation", confirmed: true }, { AI: ai.binding }));
+    await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/tool-calls/${confirmation.toolCallId}/respond`, learner, { type: "confirmation", confirmed: true }, { ...ai.env }));
     expect(await count("SELECT COUNT(*) AS n FROM practice_attempts")).toBe(0);
     expect(await count("SELECT COUNT(*) AS n FROM word_reviews")).toBe(0);
     expect(await env.DB.prepare("SELECT actor, kind, conversation_id AS conversationId FROM progress_events").first()).toEqual({ actor: "agent", kind: "lesson_reset", conversationId });
@@ -796,7 +796,7 @@ describe("on-demand speech", () => {
   async function spokenMessage(learner: string, text = "Zeg [[Goedemorgen]] en [[Tot ziens]].") {
     const ai = scriptedAi([say(text)]);
     const conversationId = await newConversation(learner);
-    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Speak" }, { AI: ai.binding }));
+    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Speak" }, { ...ai.env }));
     return { conversationId, messageId: ofType(events, "done")[0]!.message.id };
   }
   const clipHash = async (text: string) => (await hashSpeechItems([{ key: "x", voice: speechNarrator("nl"), text: spokenText(text), ipa: null }]))[0]!.hash;
@@ -846,7 +846,7 @@ describe("on-demand speech", () => {
     const { learner } = await seedLibrary();
     const ai = scriptedAi([callTool("ask_dictation", { sentence: "Ik woon in Utrecht." })]);
     const conversationId = await newConversation(learner);
-    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Dictation" }, { AI: ai.binding }));
+    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Dictation" }, { ...ai.env }));
     const component = ofType(events, "component")[0]!.part;
     expect(component.view).toEqual({ kind: "dictation", translation: null });
     const hash = await clipHash("Ik woon in Utrecht.");
@@ -873,11 +873,11 @@ describe("tutor profile", () => {
 
     const ai = scriptedAi([callTool("update_tutor_notes", { notes: "Mixes up de and het." }), say("Noted.")]);
     const conversationId = await newConversation(learner);
-    await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Remember" }, { AI: ai.binding }));
+    await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Remember" }, { ...ai.env }));
     expect(await read(learner)).toMatchObject({ nativeLanguage: "fa", notes: "Mixes up de and het." });
     // The notes and profile reach the next turn's snapshot.
     const next = scriptedAi([say("Hoi")]);
-    await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Hi" }, { AI: next.binding }));
+    await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Hi" }, { ...next.env }));
     expect(modelMessages(next.calls[0])[0]!.content).toContain("Mixes up de and het.");
     expect(modelMessages(next.calls[0])[0]!.content).toContain("Persian");
 

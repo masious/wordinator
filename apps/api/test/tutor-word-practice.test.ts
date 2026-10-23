@@ -84,7 +84,7 @@ describe("word practice conversations", () => {
       say("Let's practise [[{{tafels|2}}]] again."),
     ]);
     const base = `/api/ai/conversations/${conversation.id}`;
-    const events = await readEvents(await call("POST", `${base}/messages`, learner, { text: "Let's practise my words." }, { AI: ai.binding }));
+    const events = await readEvents(await call("POST", `${base}/messages`, learner, { text: "Let's practise my words." }, { ...ai.env }));
     const system = modelMessages(ai.calls[0])[0]!.content!;
     expect(system).toContain("short word practice");
     expect(system).toContain(`"wordId":"${words.huis.id}","term":"het huis","source":"drill"`);
@@ -104,9 +104,9 @@ describe("word practice conversations", () => {
         expect.objectContaining({ wordId: words.tafel.id, term: "de tafel" }), expect.objectContaining({ wordId: words.stoel.id, term: "de stoel" }),
       ],
     });
-    const wrongLength = await call("POST", `${base}/tool-calls/${part.toolCallId}/respond`, learner, { type: "component", answer: { kind: "spot_words", known: [true] } }, { AI: ai.binding });
+    const wrongLength = await call("POST", `${base}/tool-calls/${part.toolCallId}/respond`, learner, { type: "component", answer: { kind: "spot_words", known: [true] } }, { ...ai.env });
     expect(wrongLength.status).toBe(400);
-    const answered = await readEvents(await call("POST", `${base}/tool-calls/${part.toolCallId}/respond`, learner, { type: "component", answer: { kind: "spot_words", known: [true, false, true] } }, { AI: ai.binding }));
+    const answered = await readEvents(await call("POST", `${base}/tool-calls/${part.toolCallId}/respond`, learner, { type: "component", answer: { kind: "spot_words", known: [true, false, true] } }, { ...ai.env }));
     const reply = ofType(answered, "done")[0]!.message.parts.find((entry) => entry.type === "text");
     expect(reply).toEqual({ type: "text", text: "Let's practise tafels again.", spans: [{ start: 15, end: 21 }], words: [{ start: 15, end: 21, index: 1 }] });
     expect(ofType(answered, "answered")[0]!.part).toMatchObject({ grade: { correct: false, items: [{ ok: true }, { ok: false, given: "not recognised" }, { ok: true }] } });

@@ -14,8 +14,7 @@ let saveStatus = 200;
 let testResult: AiProviderTestResponse = { ok: true, status: 200, latencyMs: 412, message: "OK" };
 let providers = [
   { provider: "openrouter", credentialsPresent: true, endpointHost: null },
-  { provider: "workers_ai", credentialsPresent: false, endpointHost: null },
-  { provider: "azure", credentialsPresent: true, endpointHost: "wordinator-foundry.services.ai.azure.com" },
+    { provider: "azure", credentialsPresent: true, endpointHost: "wordinator-foundry.services.ai.azure.com" },
 ];
 
 const session = () => ({
@@ -41,8 +40,7 @@ beforeEach(() => {
   testResult = { ok: true, status: 200, latencyMs: 412, message: "OK" };
   providers = [
     { provider: "openrouter", credentialsPresent: true, endpointHost: null },
-    { provider: "workers_ai", credentialsPresent: false, endpointHost: null },
-    { provider: "azure", credentialsPresent: true, endpointHost: "wordinator-foundry.services.ai.azure.com" },
+        { provider: "azure", credentialsPresent: true, endpointHost: "wordinator-foundry.services.ai.azure.com" },
   ];
   vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
     const path = String(input);
@@ -73,12 +71,15 @@ describe("AI providers and models page", () => {
   });
 
   it("shows each provider's credentials status and the Azure endpoint host", async () => {
+    providers = [
+      { provider: "openrouter", credentialsPresent: false, endpointHost: null },
+      { provider: "azure", credentialsPresent: true, endpointHost: "wordinator-foundry.services.ai.azure.com" },
+    ];
     renderPage();
     expect(await screen.findByRole("heading", { name: "AI providers and models" })).toBeVisible();
-    const openrouter = await row("OpenRouter");
-    expect(within(openrouter).getByText("Credentials set")).toBeVisible();
-    expect(within(await row("Workers AI")).getByText("Credentials missing")).toBeVisible();
+    expect(within(await row("OpenRouter")).getByText("Credentials missing")).toBeVisible();
     const azure = await row("Azure");
+    expect(within(azure).getByText("Credentials set")).toBeVisible();
     expect(within(azure).getByText("Endpoint wordinator-foundry.services.ai.azure.com")).toBeVisible();
   });
 
@@ -96,7 +97,6 @@ describe("AI providers and models page", () => {
       providers: [
         { provider: "openrouter", enabled: false, model: "openai/gpt-oss-120b:free" },
         { provider: "azure", enabled: true, model: "gpt-4.1-nano" },
-        { provider: "workers_ai", enabled: true, model: "@cf/openai/gpt-oss-120b" },
       ],
       dailyTurnCap: 12,
       dailySpeechCharCap: 5000,
@@ -106,7 +106,7 @@ describe("AI providers and models page", () => {
 
   it("refuses to save with every provider off or a cap out of range", async () => {
     renderPage();
-    for (const provider of ["OpenRouter", "Workers AI", "Azure"]) fireEvent.click(await screen.findByRole("switch", { name: `${provider} on` }));
+    for (const provider of ["OpenRouter", "Azure"]) fireEvent.click(await screen.findByRole("switch", { name: `${provider} on` }));
     fireEvent.click(screen.getByRole("button", { name: "Save AI settings" }));
     expect(await screen.findByRole("alert")).toHaveTextContent("Turn on at least one provider.");
     fireEvent.click(screen.getByRole("switch", { name: "Azure on" }));
@@ -176,10 +176,10 @@ describe("connection test", () => {
 
   it("refuses an invalid model ID without sending a request", async () => {
     renderPage();
-    const workers = await row("Workers AI");
-    fireEvent.change(within(workers).getByLabelText("Workers AI model"), { target: { value: "has space" } });
-    fireEvent.click(within(workers).getByRole("button", { name: "Test connection" }));
-    expect(await within(workers).findByText("Enter a valid model ID before testing.")).toBeVisible();
+    const openrouter = await row("OpenRouter");
+    fireEvent.change(within(openrouter).getByLabelText("OpenRouter model"), { target: { value: "has space" } });
+    fireEvent.click(within(openrouter).getByRole("button", { name: "Test connection" }));
+    expect(await within(openrouter).findByText("Enter a valid model ID before testing.")).toBeVisible();
     expect(posted()).toHaveLength(0);
   });
 

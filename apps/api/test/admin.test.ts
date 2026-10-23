@@ -126,7 +126,7 @@ describe("analytics", () => {
       attempt(learnerId, "lesson", now), attempt(learnerId, "ai_chat", now), pronunciation(learnerId, now),
       db.prepare("INSERT INTO course_lesson_completions (group_id, course_id, lesson_id, user_id, completed_at) VALUES (?, ?, ?, ?, ?)").bind(setup.groupId, course.id, lesson.id, learnerId, now),
       usage(learnerId, "openrouter", "free/model:free", true, false, 10, 0, 0, now),
-      usage(learnerId, "workers_ai", "@cf/meta/llama", false, true, 100, 40, 50, now),
+      usage(learnerId, "azure", "gpt-4.1-nano", false, true, 100, 40, 50, now),
       usage(adminId, "azure", "gpt-4.1-mini", true, true, 1_000, 200, 720, now),
       speech(learnerId, 120, false, now), speech(learnerId, 120, true, now),
       // Two days ago: the admin saves a position (activity only) and does an AI practice; the learner drills once.
@@ -192,8 +192,8 @@ describe("analytics", () => {
     ]);
     expect(week.models).toEqual([
       { provider: "openrouter", model: "free/model:free", turns: 1, requests: 1, failures: 1, tokensIn: 10, tokensOut: 0, costMicroUsd: 0 },
-      { provider: "workers_ai", model: "@cf/meta/llama", turns: 0, requests: 1, failures: 0, tokensIn: 100, tokensOut: 40, costMicroUsd: 50 },
       { provider: "azure", model: "gpt-4.1-mini", turns: 1, requests: 1, failures: 0, tokensIn: 1_000, tokensOut: 200, costMicroUsd: 720 },
+      { provider: "azure", model: "gpt-4.1-nano", turns: 0, requests: 1, failures: 0, tokensIn: 100, tokensOut: 40, costMicroUsd: 50 },
     ]);
     const month = aiAnalyticsResponseSchema.parse(await json(await request("/api/admin/analytics/ai?days=30", admin)));
     expect(month.daily.find((row) => row.day === dayOf(tenDaysAgo))).toMatchObject({ turns: 1, requests: 1, tokensIn: 5 });
@@ -224,7 +224,6 @@ describe("AI settings", () => {
       providers: [
         { provider: "azure", enabled: true, model: "gpt-4.1-nano" },
         { provider: "openrouter", enabled: false, model: "qwen/qwen3-coder:free" },
-        { provider: "workers_ai", enabled: true, model: "@cf/openai/gpt-oss-20b" },
       ],
       dailyTurnCap: 12,
       dailySpeechCharCap: 0,
@@ -238,13 +237,14 @@ describe("AI settings", () => {
 
   it("refuses invalid settings with 400 AI_SETTINGS_INVALID and keeps the stored value", async () => {
     const { admin } = await accounts();
-    const [first, second, third] = DEFAULT_AI_SETTINGS.providers;
+    const [first, second] = DEFAULT_AI_SETTINGS.providers;
     const invalid: unknown[] = [
       { ...DEFAULT_AI_SETTINGS, providers: DEFAULT_AI_SETTINGS.providers.map((item) => ({ ...item, enabled: false })) },
-      { ...DEFAULT_AI_SETTINGS, providers: [first, first, second] },
-      { ...DEFAULT_AI_SETTINGS, providers: [first, second] },
-      { ...DEFAULT_AI_SETTINGS, providers: [first, second, { ...third, model: "bad model id" }] },
-      { ...DEFAULT_AI_SETTINGS, providers: [first, second, { ...third, model: "" }] },
+      { ...DEFAULT_AI_SETTINGS, providers: [first, first] },
+      { ...DEFAULT_AI_SETTINGS, providers: [first] },
+      { ...DEFAULT_AI_SETTINGS, providers: [first, second, { provider: "workers_ai", enabled: true, model: "@cf/openai/gpt-oss-120b" }] },
+      { ...DEFAULT_AI_SETTINGS, providers: [first, { ...second, model: "bad model id" }] },
+      { ...DEFAULT_AI_SETTINGS, providers: [first, { ...second, model: "" }] },
       { ...DEFAULT_AI_SETTINGS, dailyTurnCap: 501 },
       { ...DEFAULT_AI_SETTINGS, dailyTurnCap: -1 },
       { ...DEFAULT_AI_SETTINGS, dailySpeechCharCap: 100_001 },

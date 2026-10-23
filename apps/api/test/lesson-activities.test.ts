@@ -15,8 +15,8 @@ import { call, say, scriptedAi } from "./tutorApi";
 import { fetchWorker } from "./worker";
 
 // Lesson activities (docs/lesson-activities.md, LESSON_ACTIVITIES_PLAN.html sections 05, 06 and 09): the global lesson routes under
-// /api/courses/:courseId/lessons/:lessonId/activities. The provider is only ever the stubbed Workers AI binding that call() passes
-// in, so no real network call happens (the same approach as ai-practices.test.ts and ai-metering.test.ts).
+// /api/courses/:courseId/lessons/:lessonId/activities. The provider is only ever the scripted model endpoint that call() passes
+// in (tutorApi.ts), so no real network call happens (the same approach as ai-practices.test.ts and ai-metering.test.ts).
 
 type Ai = ReturnType<typeof scriptedAi>;
 type OpenBody = ReturnType<typeof activityOpenResponseSchema.parse>;
@@ -155,7 +155,7 @@ async function setup(options: { partner?: string; sofiaSpeaker?: string; image?:
 }
 // Opens an activity with the given stub; `ai` is the only model the route can reach.
 const openActivity = (cookie: string, base: string, source: ActivityDescriptor, type: ActivityType, ai?: Ai, fingerprint = source.fingerprint) =>
-  call("POST", `${base}/open`, cookie, { sourceId: source.sourceId, type, expectedFingerprint: fingerprint }, ai ? { AI: ai.binding } : {});
+  call("POST", `${base}/open`, cookie, { sourceId: source.sourceId, type, expectedFingerprint: fingerprint }, ai ? { ...ai.env } : {});
 
 async function readyOpen(response: Response): Promise<Ready> {
   const text = await response.clone().text();

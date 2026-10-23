@@ -1236,7 +1236,7 @@ export const resources = {
         ai: { title: "AI", description: "Tutor turns, model requests including fallbacks, tokens, and cost. Failed requests are counted separately." },
         speech: { title: "Speech", description: "On-demand speech requests and characters, split into cache hits and Azure calls." },
         time: { title: "Time", description: "Minutes of learning time by category. Each learner's days are their own local days, under the chosen range." },
-        providers: { openrouter: "OpenRouter", workers_ai: "Workers AI", azure: "Azure" },
+        providers: { openrouter: "OpenRouter", azure: "Azure" },
       },
       aiAdmin: {
         eyebrow: "Superuser",
@@ -1546,7 +1546,7 @@ export const resources = {
           default: "{{model}} · Default",
           defaultTitle: "Default",
           failed: "The model could not be changed.",
-          providers: { openrouter: "OpenRouter", workers_ai: "Workers AI", azure: "Azure" },
+          providers: { openrouter: "OpenRouter", azure: "Azure" },
         },
         tryAgain: "Try again",
         set: {

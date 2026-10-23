@@ -102,7 +102,7 @@ describe("AI settings row", () => {
 
   it("stores and reads back a valid value, and refuses to store an invalid one", async () => {
     const settings: AiSettings = {
-      providers: [{ provider: "azure", enabled: true, model: "my-deployment" }, { provider: "openrouter", enabled: false, model: "qwen/qwen3-coder:free" }, { provider: "workers_ai", enabled: true, model: "@cf/openai/gpt-oss-20b" }],
+      providers: [{ provider: "azure", enabled: true, model: "my-deployment" }, { provider: "openrouter", enabled: false, model: "qwen/qwen3-coder:free" }],
       dailyTurnCap: 10, dailySpeechCharCap: 0,
     };
     await writeAiSettings(env.DB, settings, NOON);

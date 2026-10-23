@@ -1,11 +1,9 @@
 // Parsing of streamed chat completions (C14f). Every target streams server-sent events; this module turns them into JSON
-// chunks and folds chunks of both shapes into text deltas, assembled tool calls, usage, and errors:
-// - OpenAI chat-completion chunks (OpenRouter, Azure AI Foundry v1, and Workers AI's newer models):
+// chunks and folds them into text deltas, assembled tool calls, usage, and errors:
+// - OpenAI chat-completion chunks (OpenRouter and Azure AI Foundry v1):
 //   `choices[0].delta.content`, `choices[0].delta.tool_calls[{ index, id, function: { name, arguments } }]` with the
 //   arguments split across chunks, `finish_reason`, and `usage` on a final chunk (Azure may send a first chunk with empty
 //   `choices`; OpenRouter repeats `finish_reason` on its usage chunk and adds `usage.cost` in USD).
-// - Workers AI's native chunks: `{ response, tool_calls, usage }`, where a tool call is either complete
-//   (`{ name, arguments }`, arguments as an object) or an OpenAI-style partial.
 // - A mid-stream error (OpenRouter): a top-level `error` object, with `choices[0].finish_reason: "error"`.
 
 export type AiToolCall = { id: string; name: string; arguments: string };
@@ -63,7 +61,7 @@ export async function* sseJson(stream: ReadableStream<Uint8Array>, signal?: Abor
   }
 }
 
-// Rejects with the signal's reason once it aborts, so a stalled read or a binding call without signal support stops.
+// Rejects with the signal's reason once it aborts, so a stalled read or a call without signal support stops.
 export function abortable<T>(promise: Promise<T>, signal?: AbortSignal): Promise<T> {
   if (!signal) return promise;
   if (signal.aborted) return Promise.reject(signal.reason);
@@ -79,7 +77,6 @@ export function abortable<T>(promise: Promise<T>, signal?: AbortSignal): Promise
 
 const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === "object" && value !== null && !Array.isArray(value);
 const asCount = (value: unknown) => (typeof value === "number" && Number.isFinite(value) && value > 0 ? Math.round(value) : 0);
-const argumentText = (value: unknown) => (typeof value === "string" ? value : value === undefined || value === null ? "" : JSON.stringify(value));
 
 type PartialCall = { id: string; name: string; arguments: string };
 
@@ -117,32 +114,22 @@ export class ChatStreamAccumulator {
           this.finishReason = choice.finish_reason;
         }
       }
-    } else {
-      // Workers AI native format. Some models send both formats in one chunk; reading both would double every token.
-      if (typeof chunk.response === "string") text += chunk.response;
-      if (Array.isArray(chunk.tool_calls)) this.pushToolCalls(chunk.tool_calls);
     }
     return { text, error: null };
   }
 
   private pushToolCalls(entries: unknown[]) {
+    // OpenAI-style partials: merged by index, arguments appended.
     entries.forEach((entry, position) => {
-      if (!isRecord(entry)) return;
-      if (isRecord(entry.function)) {
-        // OpenAI-style partial: merged by index, arguments appended.
-        const index = typeof entry.index === "number" ? entry.index : position;
-        const call = this.calls.get(index) ?? { id: "", name: "", arguments: "" };
-        if (typeof entry.id === "string" && entry.id) call.id = entry.id;
-        if (typeof entry.function.name === "string" && entry.function.name && !call.name) call.name = entry.function.name;
-        const args = entry.function.arguments;
-        if (typeof args === "string") call.arguments += args;
-        else if (args !== undefined && args !== null) call.arguments = JSON.stringify(args);
-        this.calls.set(index, call);
-      } else if (typeof entry.name === "string" && entry.name) {
-        // Workers AI native: a complete call.
-        const index = this.calls.size ? Math.max(...this.calls.keys()) + 1 : 0;
-        this.calls.set(index, { id: typeof entry.id === "string" ? entry.id : "", name: entry.name, arguments: argumentText(entry.arguments) });
-      }
+      if (!isRecord(entry) || !isRecord(entry.function)) return;
+      const index = typeof entry.index === "number" ? entry.index : position;
+      const call = this.calls.get(index) ?? { id: "", name: "", arguments: "" };
+      if (typeof entry.id === "string" && entry.id) call.id = entry.id;
+      if (typeof entry.function.name === "string" && entry.function.name && !call.name) call.name = entry.function.name;
+      const args = entry.function.arguments;
+      if (typeof args === "string") call.arguments += args;
+      else if (args !== undefined && args !== null) call.arguments = JSON.stringify(args);
+      this.calls.set(index, call);
     });
   }
 

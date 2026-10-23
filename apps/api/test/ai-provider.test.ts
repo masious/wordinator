@@ -6,11 +6,10 @@ import { resetDatabase, seedUser } from "./courseApi";
 
 // The default setting of one provider, by name: the default order may change.
 const preset = (provider: string) => DEFAULT_AI_SETTINGS.providers.find((item) => item.provider === provider)!;
-// The fallback tests walk OpenRouter, Workers AI, then Azure, whatever the default order is.
-const ordered: AiSettings = { ...DEFAULT_AI_SETTINGS, providers: [preset("openrouter"), preset("workers_ai"), preset("azure")] };
+// The fallback tests walk OpenRouter, then Azure, whatever the default order is.
+const ordered: AiSettings = { ...DEFAULT_AI_SETTINGS, providers: [preset("openrouter"), preset("azure")] };
 
-// The provider layer (C14f, docs/ai-tutor.md#providers-and-fallback) against stubbed fetch and a stubbed AI binding; no
-// real provider is ever called.
+// The provider layer (C14f, docs/ai-tutor.md#providers-and-fallback) against a stubbed fetch; no real provider is ever called.
 
 const encoder = new TextEncoder();
 const PROMPT = "secret prompt text";
@@ -51,15 +50,8 @@ function stubFetch(handler: (url: string, init: RequestInit) => Response | Promi
   return { calls, fetcher };
 }
 
-function stubBinding(run: (model: string, inputs: Record<string, unknown>) => Promise<unknown>) {
-  const calls: Array<{ model: string; inputs: Record<string, unknown> }> = [];
-  const binding: WorkersAiBinding = { run: async (model, inputs) => { calls.push({ model, inputs }); return run(model, inputs); } };
-  return { calls, binding };
-}
-
-const unusedBinding = () => stubBinding(async () => { throw new Error("binding should not be called"); });
 const AZURE_ENDPOINT = "https://wordinator-test.services.ai.azure.com";
-const fullEnv = (binding: WorkersAiBinding): AiEnv => ({ OPENROUTER_API_KEY: "or-test-key", AZURE_AI_ENDPOINT: AZURE_ENDPOINT, AZURE_AI_KEY: "az-test-key", AI: binding });
+const fullEnv = (): AiEnv => ({ OPENROUTER_API_KEY: "or-test-key", AZURE_AI_ENDPOINT: AZURE_ENDPOINT, AZURE_AI_KEY: "az-test-key" });
 
 let userId: string;
 const options = (aiEnv: AiEnv, fetcher: typeof fetch, extra: Partial<StreamChatOptions> = {}): StreamChatOptions => ({
@@ -94,7 +86,7 @@ describe("stream formats", () => {
       "data: [DONE]\n\n",
     ]));
     const events = [];
-    for await (const item of streamChat(request, options(fullEnv(unusedBinding().binding), fetcher))) events.push(item);
+    for await (const item of streamChat(request, options(fullEnv(), fetcher))) events.push(item);
     expect(events).toEqual([
       { type: "text", delta: "Hal" }, { type: "text", delta: "lo!" },
       { type: "tool_call", call: { id: "call_a", name: "get_lesson", arguments: "{\"lessonId\":\"l1\"}" } },
@@ -112,7 +104,8 @@ describe("stream formats", () => {
   });
 
   it("parses Azure AI Foundry's stream, with an empty first chunk and usage on a choice-less chunk", async () => {
-    const settings: AiSettings = { ...DEFAULT_AI_SETTINGS, providers: [preset("azure"), { ...preset("openrouter"), enabled: false }, { ...preset("workers_ai"), enabled: false }] };
+    // A priced deployment, so the cost is checked too.
+    const settings: AiSettings = { ...DEFAULT_AI_SETTINGS, providers: [{ ...preset("azure"), model: "gpt-4.1-mini" }, { ...preset("openrouter"), enabled: false }] };
     const { calls, fetcher } = stubFetch(() => sseResponse([
       event({ choices: [], prompt_filter_results: [{ prompt_index: 0, content_filter_results: {} }] }),
       event(delta({ role: "assistant", content: null, tool_calls: [{ index: 0, id: "call_1", type: "function", function: { name: "get_lesson", arguments: "" } }] })),
@@ -141,54 +134,6 @@ describe("stream formats", () => {
     expect(azureChatUrl("https://r.services.ai.azure.com/openai/v1/")).toBe("https://r.services.ai.azure.com/openai/v1/chat/completions");
     expect(azureChatUrl("https://r.services.ai.azure.com/openai/v1/chat/completions")).toBe("https://r.services.ai.azure.com/openai/v1/chat/completions");
   });
-
-  it("parses Workers AI's native stream with a complete tool call", async () => {
-    const { calls, binding } = stubBinding(async () => sseStream([
-      event({ response: "Goed", p: "abc" }), event({ response: " zo." }),
-      event({ response: "", tool_calls: [{ name: "get_lesson", arguments: { lessonId: "l3" } }] }),
-      event({ response: "", usage: { prompt_tokens: 50, completion_tokens: 8, total_tokens: 58 } }),
-      "data: [DONE]\n\n",
-    ]));
-    const llama = { ...preset("workers_ai"), model: "@cf/meta/llama-4-scout-17b-16e-instruct" };
-    const settings: AiSettings = { ...DEFAULT_AI_SETTINGS, providers: [llama, preset("openrouter"), preset("azure")] };
-    const result = await completeChat(request, options({ AI: binding }, stubFetch(() => { throw new Error("no fetch"); }).fetcher, { settings }));
-    expect(result).toMatchObject({ text: "Goed zo.", provider: "workers_ai", model: "@cf/meta/llama-4-scout-17b-16e-instruct", usage: { tokensIn: 50, tokensOut: 8, costUsd: null } });
-    expect(result.toolCalls).toHaveLength(1);
-    expect(result.toolCalls[0]).toMatchObject({ name: "get_lesson", arguments: "{\"lessonId\":\"l3\"}" });
-    expect(result.toolCalls[0]!.id).toMatch(/^call_/);
-    expect(calls[0]!.model).toBe("@cf/meta/llama-4-scout-17b-16e-instruct");
-    expect(calls[0]!.inputs).toMatchObject({ stream: true, messages: request.messages, tools: [{ type: "function", function: request.tools![0] }] });
-    // 50 × 0.27 + 8 × 0.85 = 20.3 micro-USD.
-    expect((await usageRows())[0]).toMatchObject({ provider: "workers_ai", cost_microusd: 20, ok: 1 });
-  });
-
-  it("parses Workers AI's OpenAI-format stream", async () => {
-    const { binding } = stubBinding(async () => sseStream([
-      event(delta({ content: "Hoi" })),
-      event(delta({ tool_calls: [{ index: 0, id: "chatcmpl-tool-1", type: "function", function: { name: "get_lesson", arguments: "{\"lessonId\": \"l4\"}" } }] })),
-      event({ choices: [{ index: 0, delta: {}, finish_reason: "tool_calls" }], usage: { prompt_tokens: 7, completion_tokens: 2 } }),
-      "data: [DONE]\n\n",
-    ]));
-    const settings: AiSettings = { ...DEFAULT_AI_SETTINGS, providers: [preset("workers_ai"), { ...preset("openrouter"), enabled: false }, { ...preset("azure"), enabled: false }] };
-    const result = await completeChat(request, options({ AI: binding }, fetch, { settings }));
-    expect(result).toMatchObject({ text: "Hoi", finishReason: "tool_calls", usage: { tokensIn: 7, tokensOut: 2 } });
-    expect(result.toolCalls).toEqual([{ id: "chatcmpl-tool-1", name: "get_lesson", arguments: "{\"lessonId\": \"l4\"}" }]);
-  });
-
-  it("reads a Workers AI chunk that carries both formats once", async () => {
-    const both = (response: string, choiceDelta: Record<string, unknown>, extra: Record<string, unknown> = {}) =>
-      event({ response, ...extra, choices: [{ index: 0, delta: choiceDelta }] });
-    const { binding } = stubBinding(async () => sseStream([
-      both("You", { content: "You" }), both(" **did**", { content: " **did**" }),
-      both("", { tool_calls: [{ index: 0, id: "chatcmpl-tool-2", type: "function", function: { name: "get_lesson", arguments: "{\"lessonId\":\"l5\"}" } }] },
-        { tool_calls: [{ name: "get_lesson", arguments: { lessonId: "l5" } }] }),
-      "data: [DONE]\n\n",
-    ]));
-    const settings: AiSettings = { ...DEFAULT_AI_SETTINGS, providers: [preset("workers_ai"), { ...preset("openrouter"), enabled: false }, { ...preset("azure"), enabled: false }] };
-    const result = await completeChat(request, options({ AI: binding }, fetch, { settings }));
-    expect(result.text).toBe("You **did**");
-    expect(result.toolCalls).toEqual([{ id: "chatcmpl-tool-2", name: "get_lesson", arguments: "{\"lessonId\":\"l5\"}" }]);
-  });
 });
 
 describe("request bodies by model family", () => {
@@ -197,7 +142,7 @@ describe("request bodies by model family", () => {
     const settings: AiSettings = { ...DEFAULT_AI_SETTINGS, providers: [{ ...preset(provider), model, enabled: true }] };
     const { calls, fetcher } = stubFetch(() => sseResponse(openAiTextStream("ok")));
     const tuned: AiChatRequest = { ...request, maxTokens: 100, temperature: 0.2 };
-    await completeChat(tuned, options(fullEnv(unusedBinding().binding), fetcher, { settings }));
+    await completeChat(tuned, options(fullEnv(), fetcher, { settings }));
     return JSON.parse(String(calls[0]!.init.body)) as Record<string, unknown>;
   }
 
@@ -223,75 +168,75 @@ describe("request bodies by model family", () => {
 });
 
 describe("fallback", () => {
-  it("moves through the configured order on 429 and a busy binding, recording every attempt", async () => {
+  it("moves through the configured order on 429, recording every attempt", async () => {
     const { calls, fetcher } = stubFetch((url) => url.startsWith("https://openrouter.ai")
       ? new Response(JSON.stringify({ error: { code: 429, message: "Rate limited" } }), { status: 429 })
       : sseResponse(openAiTextStream("Antwoord")));
-    const workers = stubBinding(async () => { throw new Error("3040: Capacity temporarily exceeded, please try again."); });
-    const result = await completeChat(request, options(fullEnv(workers.binding), fetcher));
+    const result = await completeChat(request, options(fullEnv(), fetcher));
     expect(result).toMatchObject({ text: "Antwoord", provider: "azure" });
     expect(calls.map((call) => new URL(call.url).hostname)).toEqual(["openrouter.ai", "wordinator-test.services.ai.azure.com"]);
-    expect(workers.calls).toHaveLength(1);
-    expect((await usageRows()).map((row) => [row.provider, row.ok, row.turn_start])).toEqual([["openrouter", 0, 1], ["workers_ai", 0, 0], ["azure", 1, 0]]);
-    expect(logEvents("ai.fallback")).toEqual([
-      expect.objectContaining({ from: "openrouter", to: "workers_ai", reason: "status", status: 429 }),
-      expect.objectContaining({ from: "workers_ai", to: "azure", reason: "status" }),
-    ]);
-    expect(logEvents("ai.request").map((line) => [line.provider, line.ok])).toEqual([["openrouter", false], ["workers_ai", false], ["azure", true]]);
-    expect(logEvents("ai.request")[2]).toMatchObject({ model: "gpt-4.1-mini", status: 200, tokensIn: 10, tokensOut: 3 });
-    expect(typeof logEvents("ai.request")[2]!.durationMs).toBe("number");
+    expect((await usageRows()).map((row) => [row.provider, row.ok, row.turn_start])).toEqual([["openrouter", 0, 1], ["azure", 1, 0]]);
+    expect(logEvents("ai.fallback")).toEqual([expect.objectContaining({ from: "openrouter", to: "azure", reason: "status", status: 429 })]);
+    expect(logEvents("ai.request").map((line) => [line.provider, line.ok])).toEqual([["openrouter", false], ["azure", true]]);
+    expect(logEvents("ai.request")[1]).toMatchObject({ model: preset("azure").model, status: 200, tokensIn: 10, tokensOut: 3 });
+    expect(typeof logEvents("ai.request")[1]!.durationMs).toBe("number");
     const all = logs.join("\n");
     for (const secret of [PROMPT, "Antwoord", "or-test-key", "az-test-key", "get_lesson"]) expect(all).not.toContain(secret);
   });
 
   it("falls back on a 5xx", async () => {
-    const { fetcher } = stubFetch(() => new Response("upstream error", { status: 503 }));
-    const workers = stubBinding(async () => sseStream(openAiTextStream("Van Workers AI")));
-    const result = await completeChat(request, options(fullEnv(workers.binding), fetcher));
-    expect(result).toMatchObject({ text: "Van Workers AI", provider: "workers_ai" });
-    expect((await usageRows()).map((row) => [row.provider, row.ok])).toEqual([["openrouter", 0], ["workers_ai", 1]]);
+    const { fetcher } = stubFetch((url) => url.startsWith("https://openrouter.ai") ? new Response("upstream error", { status: 503 }) : sseResponse(openAiTextStream("Van Azure")));
+    const result = await completeChat(request, options(fullEnv(), fetcher));
+    expect(result).toMatchObject({ text: "Van Azure", provider: "azure" });
+    expect((await usageRows()).map((row) => [row.provider, row.ok])).toEqual([["openrouter", 0], ["azure", 1]]);
   });
 
-  it("falls back when a provider times out before answering or stalls before its first event", async () => {
+  it("falls back when a provider times out before answering", async () => {
     const { fetcher } = stubFetch((url, init) => url.startsWith("https://openrouter.ai")
       ? new Promise<Response>((_, reject) => init.signal?.addEventListener("abort", () => reject(init.signal?.reason)))
       : sseResponse(openAiTextStream("Eindelijk")));
-    const stalled = stubBinding(async () => new ReadableStream<Uint8Array>({ start() {} }));
-    const result = await completeChat(request, options(fullEnv(stalled.binding), fetcher, { firstEventTimeoutMs: 30 }));
+    const result = await completeChat(request, options(fullEnv(), fetcher, { firstEventTimeoutMs: 30 }));
     expect(result).toMatchObject({ text: "Eindelijk", provider: "azure" });
-    expect((await usageRows()).map((row) => [row.provider, row.ok])).toEqual([["openrouter", 0], ["workers_ai", 0], ["azure", 1]]);
-    expect(logEvents("ai.request").slice(0, 2).map((line) => line.reason)).toEqual(["timeout", "timeout"]);
+    expect((await usageRows()).map((row) => [row.provider, row.ok])).toEqual([["openrouter", 0], ["azure", 1]]);
+    expect(logEvents("ai.request")[0]!.reason).toBe("timeout");
+  });
+
+  it("falls back when a provider stalls before its first event", async () => {
+    const { fetcher } = stubFetch((url) => url.startsWith("https://openrouter.ai")
+      ? sseResponse(openAiTextStream("Eindelijk"))
+      : new Response(new ReadableStream<Uint8Array>({ start() {} }), { headers: { "content-type": "text/event-stream" } }));
+    const settings: AiSettings = { ...DEFAULT_AI_SETTINGS, providers: [{ ...preset("azure"), model: "gpt-4.1-mini" }, preset("openrouter")] };
+    const result = await completeChat(request, options(fullEnv(), fetcher, { settings, firstEventTimeoutMs: 30 }));
+    expect(result).toMatchObject({ text: "Eindelijk", provider: "openrouter" });
+    expect((await usageRows()).map((row) => [row.provider, row.ok])).toEqual([["azure", 0], ["openrouter", 1]]);
+    expect(logEvents("ai.request")[0]!.reason).toBe("timeout");
   });
 
   it("falls back on a mid-stream error that arrives before any text", async () => {
     const { fetcher } = stubFetch((url) => url.startsWith("https://openrouter.ai")
       ? sseResponse([": OPENROUTER PROCESSING\n\n", event({ id: "x", object: "chat.completion.chunk", error: { code: 502, message: "Provider disconnected" }, choices: [{ index: 0, delta: { content: "" }, finish_reason: "error" }] })])
       : sseResponse(openAiTextStream("Azure")));
-    const result = await completeChat(request, options(fullEnv(unusedBinding().binding), fetcher, { settings: { ...DEFAULT_AI_SETTINGS, providers: [preset("openrouter"), { ...preset("workers_ai"), enabled: false }, preset("azure")] } }));
+    const result = await completeChat(request, options(fullEnv(), fetcher));
     expect(result.provider).toBe("azure");
   });
 
   it("falls back on a 404, such as a retired model slug or a missing Azure deployment", async () => {
     const { calls, fetcher } = stubFetch((url) => url.startsWith("https://openrouter.ai")
       ? new Response(JSON.stringify({ error: { code: 404, message: "No endpoints found for retired/model" } }), { status: 404 })
-      : sseResponse(openAiTextStream("Van Workers AI")));
-    const workers = stubBinding(async () => sseStream(openAiTextStream("Van Workers AI")));
-    const result = await completeChat(request, options(fullEnv(workers.binding), fetcher));
-    expect(result).toMatchObject({ text: "Van Workers AI", provider: "workers_ai" });
-    expect(calls.map((call) => new URL(call.url).hostname)).toEqual(["openrouter.ai"]);
-    expect(workers.calls).toHaveLength(1);
-    expect((await usageRows()).map((row) => [row.provider, row.ok])).toEqual([["openrouter", 0], ["workers_ai", 1]]);
-    expect(logEvents("ai.fallback")).toEqual([expect.objectContaining({ from: "openrouter", to: "workers_ai", reason: "status", status: 404 })]);
+      : sseResponse(openAiTextStream("Van Azure")));
+    const result = await completeChat(request, options(fullEnv(), fetcher));
+    expect(result).toMatchObject({ text: "Van Azure", provider: "azure" });
+    expect(calls.map((call) => new URL(call.url).hostname)).toEqual(["openrouter.ai", "wordinator-test.services.ai.azure.com"]);
+    expect((await usageRows()).map((row) => [row.provider, row.ok])).toEqual([["openrouter", 0], ["azure", 1]]);
+    expect(logEvents("ai.fallback")).toEqual([expect.objectContaining({ from: "openrouter", to: "azure", reason: "status", status: 404 })]);
   });
 
   it("does not fall back on a 400 and reports the request failed", async () => {
     const { calls, fetcher } = stubFetch(() => new Response(JSON.stringify({ error: { code: 400, message: "Invalid tools" } }), { status: 400 }));
-    const workers = unusedBinding();
-    const error = await completeChat(request, options(fullEnv(workers.binding), fetcher)).catch((caught: unknown) => caught);
+    const error = await completeChat(request, options(fullEnv(), fetcher)).catch((caught: unknown) => caught);
     expect(error).toBeInstanceOf(AiRequestError);
     expect(error).toMatchObject({ code: "AI_REQUEST_FAILED", status: 400, partial: false });
     expect(calls).toHaveLength(1);
-    expect(workers.calls).toHaveLength(0);
     expect((await usageRows()).map((row) => [row.provider, row.ok, row.turn_start])).toEqual([["openrouter", 0, 1]]);
     expect(logEvents("ai.fallback")).toEqual([]);
   });
@@ -300,7 +245,7 @@ describe("fallback", () => {
     const { calls, fetcher } = stubFetch(() => sseResponse([event(delta({ content: "Half" })), event({ error: { code: 502, message: "gone" }, choices: [{ index: 0, delta: {}, finish_reason: "error" }] })]));
     const seen: string[] = [];
     const error = await (async () => {
-      for await (const item of streamChat(request, options(fullEnv(unusedBinding().binding), fetcher))) if (item.type === "text") seen.push(item.delta);
+      for await (const item of streamChat(request, options(fullEnv(), fetcher))) if (item.type === "text") seen.push(item.delta);
     })().catch((caught: unknown) => caught);
     expect(seen).toEqual(["Half"]);
     expect(error).toMatchObject({ code: "AI_REQUEST_FAILED", partial: true });
@@ -325,16 +270,7 @@ describe("fallback", () => {
 
   it("is unavailable when every provider fails with a retryable error", async () => {
     const { fetcher } = stubFetch(() => new Response("busy", { status: 429 }));
-    const workers = stubBinding(async () => { throw new Error("3040: Capacity temporarily exceeded"); });
-    await expect(completeChat(request, options(fullEnv(workers.binding), fetcher))).rejects.toBeInstanceOf(AiUnavailableError);
-    expect((await usageRows()).map((row) => [row.provider, row.ok])).toEqual([["openrouter", 0], ["workers_ai", 0], ["azure", 0]]);
-  });
-
-  it("does not fall back when the binding refuses the input", async () => {
-    const workers = stubBinding(async () => { throw new Error("5006: Error: oneOf at '/' not met, Invalid input"); });
-    const { calls, fetcher } = stubFetch(() => sseResponse(openAiTextStream("never")));
-    const settings: AiSettings = { ...DEFAULT_AI_SETTINGS, providers: [preset("workers_ai"), preset("openrouter"), preset("azure")] };
-    await expect(completeChat(request, options(fullEnv(workers.binding), fetcher, { settings }))).rejects.toMatchObject({ code: "AI_REQUEST_FAILED", status: 400 });
-    expect(calls).toHaveLength(0);
+    await expect(completeChat(request, options(fullEnv(), fetcher))).rejects.toBeInstanceOf(AiUnavailableError);
+    expect((await usageRows()).map((row) => [row.provider, row.ok])).toEqual([["openrouter", 0], ["azure", 0]]);
   });
 });

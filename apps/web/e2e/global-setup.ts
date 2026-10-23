@@ -27,7 +27,6 @@ export default function globalSetup() {
     providers: [
       { provider: "azure", enabled: true, model: AI_STUB_MODEL },
       { provider: "openrouter", enabled: false, model: "openai/gpt-oss-120b:free" },
-      { provider: "workers_ai", enabled: false, model: "@cf/meta/llama-4-scout-17b-16e-instruct" },
     ],
     dailyTurnCap: 500,
     dailySpeechCharCap: 5000,

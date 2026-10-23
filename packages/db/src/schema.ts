@@ -724,7 +724,7 @@ export const aiUsage = sqliteTable(
     id: text("id").primaryKey(),
     userId: text("user_id").notNull().references(() => users.id),
     conversationId: text("conversation_id"),
-    provider: text("provider", { enum: ["openrouter", "workers_ai", "azure"] }).notNull(),
+    provider: text("provider", { enum: ["openrouter", "azure"] }).notNull(),
     model: text("model").notNull(),
     turnStart: integer("turn_start", { mode: "boolean" }).notNull().default(false),
     tokensIn: integer("tokens_in").notNull().default(0),
@@ -737,7 +737,7 @@ export const aiUsage = sqliteTable(
     index("ai_usage_user_created_idx").on(table.userId, table.createdAt),
     index("ai_usage_created_idx").on(table.createdAt),
     index("ai_usage_conversation_idx").on(table.conversationId),
-    check("ai_usage_provider_check", sql`${table.provider} in ('openrouter', 'workers_ai', 'azure')`),
+    check("ai_usage_provider_check", sql`${table.provider} in ('openrouter', 'azure')`),
   ],
 );
 
@@ -770,7 +770,9 @@ export const aiConversations = sqliteTable(
     title: text("title").notNull().default(""),
     titleSource: text("title_source", { enum: ["auto", "tutor", "user"] }).notNull().default("auto"),
     archivedAt: integer("archived_at"),
-    provider: text("provider", { enum: ["openrouter", "workers_ai", "azure"] }),
+    // The database check still allows the retired `workers_ai`: rebuilding this table would cascade-delete its messages.
+    // Migration 0040 cleared every such value, and the contracts accept neither it nor any other provider.
+    provider: text("provider", { enum: ["openrouter", "azure"] }),
     // A word practice conversation's words, JSON `[{ lessonId, wordId, term, source }]`; null otherwise.
     wordPractice: text("word_practice"),
     createdAt: integer("created_at").notNull(),
