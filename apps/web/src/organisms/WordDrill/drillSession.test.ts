@@ -4,17 +4,19 @@ import { averageScore, blankExample, drillDuration, drillTier, gradeDrill, readL
 const blanked = (example: string, term: string) => blankExample(example, term)?.map((segment) => segment.blank ? "___" : segment.text).join("") ?? null;
 
 describe("drill queue", () => {
-  it("puts a card back three to five cards later, or at the end, and keeps only its first grade", () => {
-    let state = startDrill(8);
-    state = gradeDrill(state, "again", () => 0);
-    expect(state.queue).toEqual([1, 2, 3, 0, 4, 5, 6, 7]);
-    state = gradeDrill(startDrill(8), "again", () => 0.99);
-    expect(state.queue).toEqual([1, 2, 3, 4, 5, 0, 6, 7]);
-    state = gradeDrill(startDrill(3), "again", () => 0);
-    expect(state.queue).toEqual([1, 2, 0]);
+  it("puts a card back at the end, after every card not yet seen, and keeps only its first grade", () => {
+    let state = startDrill(4);
+    state = gradeDrill(state, "again");
+    expect(state.queue).toEqual([1, 2, 3, 0]);
+    state = gradeDrill(state, "again");
+    expect(state.queue).toEqual([2, 3, 0, 1]);
+    state = gradeDrill(gradeDrill(state, "got"), "got");
+    // A second miss sends the card to the end again.
+    state = gradeDrill(state, "again");
+    expect(state.queue).toEqual([1, 0]);
     expect(state.first.get(0)).toBe("again");
-    state = gradeDrill(gradeDrill(gradeDrill(state, "got"), "got"), "got");
-    expect(state).toMatchObject({ queue: [], retired: 3 });
+    state = gradeDrill(gradeDrill(state, "got"), "got");
+    expect(state).toMatchObject({ queue: [], retired: 4, done: [2, 3, 1, 0] });
     expect(state.first.get(0)).toBe("again");
   });
 });

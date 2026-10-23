@@ -1,0 +1,38 @@
+/* The drill table: Up next and Coming back on the start side, the current card in the middle, Got it on the end side. */
+.table{display:grid;grid-template-columns:var(--size-drill-place) minmax(0,var(--width-conversation)) var(--size-drill-place);grid-template-rows:auto minmax(0,1fr);grid-template-areas:"deck stage got" "again stage got";column-gap:var(--space-6);row-gap:var(--space-6);justify-content:center;align-items:start}
+.stage{grid-area:stage;display:grid;gap:var(--space-4);min-width:0}
+.deck{grid-area:deck}
+.again{grid-area:again}
+.got{grid-area:got}
+/* The places line up with the card, below the toolbar. */
+.deck,.got{margin-top:calc(var(--control-height) + var(--space-4))}
+.place{display:grid;justify-items:center;align-content:start;gap:var(--space-3);min-width:0}
+.label{display:inline-flex;align-items:center;gap:var(--space-2);margin:0;color:var(--color-foreground-muted);font:var(--weight-medium) var(--type-badge)/1 var(--font-mono);letter-spacing:.06em;text-transform:uppercase}
+.count{min-width:1.6em;padding:var(--space-1);border-radius:var(--radius-pill);background:var(--color-wash);color:var(--color-foreground);text-align:center;font-variant-numeric:tabular-nums}
+/* A pile is one card's slot; each card under the top one shows a step of its edge. An empty pile shows a dashed slot. */
+.pile{position:relative;width:var(--size-drill-mini-card);aspect-ratio:var(--aspect-drill-card);margin:calc(var(--size-drill-pile-step) * 6) 0 0 calc(var(--size-drill-pile-step) * 6);border:1px dashed var(--color-separator);border-radius:var(--radius-md)}
+.pile .mini{position:absolute;inset:calc(var(--depth) * var(--size-drill-pile-step) * -1) auto auto calc(var(--depth) * var(--size-drill-pile-step) * -1);width:100%;height:100%}
+.slot{display:grid}
+.current{min-width:0}
+/* The card arrives by the table's flight, so its own rise-in is left out here. */
+.current>article{animation:none}
+/* A small card: the drill card's shape at the table's size. */
+.mini{display:grid;place-items:center;box-sizing:border-box;width:var(--size-drill-mini-card);aspect-ratio:var(--aspect-drill-card);border-radius:var(--radius-md);border:var(--ring-hairline);box-shadow:var(--shadow-card);overflow:hidden}
+/* Face down: the word and its meaning are hidden; an accent wash with a fine diagonal weave. */
+.faceDown{background:repeating-linear-gradient(135deg,transparent 0 var(--space-1),color-mix(in srgb,var(--color-action) 10%,transparent) var(--space-1) var(--space-2)),var(--color-action-soft)}
+.retired{background:repeating-linear-gradient(135deg,transparent 0 var(--space-1),color-mix(in srgb,var(--color-success) 12%,transparent) var(--space-1) var(--space-2)),var(--color-success-surface);color:var(--color-success)}
+/* Face up: the back left showing, the term over its meaning, on the card paper with a warm edge. */
+.faceUp{align-content:center;justify-items:start;gap:var(--space-1);padding:var(--space-2) var(--space-3);background:var(--color-core);border-inline-start:3px solid var(--color-highlight);text-align:start}
+.miniTerm,.miniMeaning{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.miniTerm{font-weight:var(--weight-semibold);font-size:var(--text-sm);color:var(--color-foreground)}
+.miniMeaning{font-size:var(--text-xs);color:var(--color-foreground-muted)}
+.returning{display:grid;gap:var(--space-3);margin:0;padding:0;list-style:none}
+.returning:empty{width:var(--size-drill-mini-card);aspect-ratio:var(--aspect-drill-card);border:1px dashed var(--color-separator);border-radius:var(--radius-md)}
+.returning li{display:grid;justify-items:center;gap:var(--space-1)}
+.after{color:var(--color-foreground-muted);font:var(--type-badge)/1 var(--font-mono)}
+/* Phones: the two piles share a row above the card, and Coming back runs in a row below it. */
+@media(max-width:48em){
+  .table{grid-template-columns:1fr 1fr;grid-template-rows:none;grid-template-areas:"deck got" "stage stage" "again again"}
+  .deck,.got{margin-top:0}
+  .returning{display:flex;flex-wrap:wrap;justify-content:center}
+}

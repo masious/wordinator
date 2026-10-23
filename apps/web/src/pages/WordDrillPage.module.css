@@ -1,12 +1,12 @@
 .center{min-height:100dvh;display:grid;place-items:center;padding:var(--space-6)}
 /* The page column is a size container, so the card can grow when the column is narrow (see WordDrillCard.module.css). */
-/* One card at a time, centred in a conversation-width column, wide enough for the back to split. */
-.page{container-type:inline-size;display:grid;gap:var(--space-6);width:min(100%,var(--width-conversation));margin-inline:auto;animation:wordinator-enter var(--motion-reveal) var(--ease-physical) both}
+/* One card at a time on the drill table: a conversation-width card column, wide enough for the back to split, between the table's
+   places (see DrillTable.module.css). */
+.page{container-type:inline-size;display:grid;gap:var(--space-6);width:min(100%,calc(var(--width-conversation) + 2 * (var(--size-drill-place) + var(--space-6))));margin-inline:auto;animation:wordinator-enter var(--motion-reveal) var(--ease-physical) both}
 /* The Lumen page header, centred over the card: eyebrow, title, and the settings line as the intro. */
 .header{display:grid;justify-items:center;gap:var(--space-2);text-align:center}
 .title{margin:0;font-family:var(--font-display);font-size:var(--type-page-title);font-weight:var(--weight-semibold);line-height:var(--line-heading);letter-spacing:var(--tracking-display)}
 .settings{margin:0;color:var(--color-foreground-muted);font-size:var(--type-page-intro)}
-.session{display:grid;gap:var(--space-4)}
 .toolbar{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);min-height:var(--control-height)}
 .status{display:inline-flex;align-items:center;gap:var(--space-4)}
 .counter{margin:0;color:var(--color-foreground-muted);font:var(--type-metadata)/1 var(--font-mono);font-variant-numeric:tabular-nums}

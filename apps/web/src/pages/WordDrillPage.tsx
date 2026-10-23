@@ -1,6 +1,7 @@
 import { opaqueIdSchema } from "@wordinator/contracts";
-import { wordDrillGradeResponseSchema, wordDrillModeSchema, wordDrillSourceSchema, type WordDrillCard as DrillCard, type WordDrillGradeRequest, type WordDrillResult } from "@wordinator/contracts/lesson-document";
+import { wordDrillBatchSchema, wordDrillGradeResponseSchema, wordDrillModeSchema, wordDrillSourceSchema, type WordDrillCard as DrillCard, type WordDrillGradeRequest, type WordDrillResult } from "@wordinator/contracts/lesson-document";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useReducedMotion } from "motion/react";
 import { useCallback, useEffect, useMemo, useRef, useState, type RefObject } from "react";
 import { useTranslation } from "react-i18next";
 import { apiRequest, ApiError, sessionQueryOptions, speechRecognitionTokenSource, wordDrillQueryOptions, type WordDrillSettings } from "../api";
@@ -11,6 +12,7 @@ import { sendPronunciationAttempt } from "../molecules/learningAttempts";
 import { unscored } from "../molecules/SpeakControls";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import { DrillResults, type FinishedDrill } from "../organisms/WordDrill/DrillResults";
+import { DRILL_FLIGHT_MS, DrillTable } from "../organisms/WordDrill/DrillTable";
 import { averageScore, gradeDrill, readLastDrill, startDrill, writeLastDrill } from "../organisms/WordDrill/drillSession";
 import { WordDrillCard } from "../organisms/WordDrill/WordDrillCard";
 import { Button, EmptyState, ErrorState, Eyebrow, LoadingState, Surface } from "../ui";
@@ -25,7 +27,10 @@ export function validateWordDrillSearch(search: Record<string, unknown>): WordDr
   const lesson = opaqueIdSchema.safeParse(search.lesson);
   const course = opaqueIdSchema.safeParse(search.course);
   const mode = direction.success ? direction.data : "mixed";
-  if (source.success && source.data === "lesson" && lesson.success) return { source: "lesson", lesson: lesson.data, direction: mode };
+  if (source.success && source.data === "lesson" && lesson.success) {
+    const batch = wordDrillBatchSchema.safeParse(search.batch);
+    return { source: "lesson", lesson: lesson.data, ...(batch.success ? { batch: batch.data } : {}), direction: mode };
+  }
   if (source.success && source.data === "course" && course.success) return { source: "course", course: course.data, direction: mode };
   return { source: "weak", direction: mode };
 }
@@ -33,6 +38,7 @@ export function validateWordDrillSearch(search: Record<string, unknown>): WordDr
 // One session's cards, shown one at a time. The first grade of each card is sent once, as soon as it is given; a failed save is
 // kept to retry, and a word that is gone (404) finishes from the session's copy with its grade ignored. The session is timed from
 // its first card to its last grade; with the pronunciation scores heard meanwhile, that is kept locally as the last session.
+// The cards sit on the drill table; the results wait for the last card's flight to its place.
 function DrillRun({ groupId, accountId, cards, language, scores, course, onAgain, onBack, onPractice }: {
   groupId: string; accountId: string; cards: readonly DrillCard[]; language: string; scores: RefObject<number[]>; course: string | undefined; onAgain: () => void; onBack: () => void;
   onPractice?: (conversationId: string) => void;
@@ -41,6 +47,14 @@ function DrillRun({ groupId, accountId, cards, language, scores, course, onAgain
   const [state, setState] = useState(() => startDrill(cards.length));
   const [startedAt] = useState(() => Date.now());
   const [finished, setFinished] = useState<FinishedDrill | null>(null);
+  const [landed, setLanded] = useState(false);
+  const still = useReducedMotion();
+  useEffect(() => {
+    if (state.queue.length) return;
+    if (still) { setLanded(true); return; }
+    const timer = setTimeout(() => setLanded(true), DRILL_FLIGHT_MS);
+    return () => clearTimeout(timer);
+  }, [state.queue.length, still]);
   useEffect(() => { scores.current = []; }, [scores]);
   const [revealed, setRevealed] = useState(false);
   const [unsaved, setUnsaved] = useState<ReadonlyMap<number, WordDrillResult>>(new Map());
@@ -81,22 +95,18 @@ function DrillRun({ groupId, accountId, cards, language, scores, course, onAgain
     {t("drill.unsaved", { count: unsaved.size })} <Button variant="quiet" onClick={retry}>{t("common.retry")}</Button>
   </p>;
   const current = state.queue[0];
-  if (current === undefined) {
+  if (current === undefined && landed) {
     return <DrillResults groupId={groupId} cards={cards} first={state.first} finished={finished ?? { durationMs: Date.now() - startedAt, pronunciation: null, previous: null }}
       failure={failure} onAgain={onAgain} onBack={onBack} onPractice={onPractice} />;
   }
-  return <div className={styles.session}>
-    <div className={styles.toolbar}>
-      <span className={styles.status}>
-        <p className={styles.counter}>{t("drill.counter", { retired: state.retired, total: cards.length })}</p>
-        <RevealSoundToggle />
-      </span>
-      <Button variant="quiet" onClick={onBack}>{t("drill.backToWords")}</Button>
-    </div>
-    <WordDrillCard key={state.shown} card={cards[current]!} language={language} revealed={revealed} autoFocus={state.shown > 0}
-      onReveal={() => setRevealed(true)} onGrade={grade} />
-    {failure}
-  </div>;
+  return <DrillTable cards={cards} state={state} footer={failure} toolbar={<div className={styles.toolbar}>
+    <span className={styles.status}>
+      <p className={styles.counter}>{t("drill.counter", { retired: state.retired, total: cards.length })}</p>
+      <RevealSoundToggle />
+    </span>
+    <Button variant="quiet" onClick={onBack}>{t("drill.backToWords")}</Button>
+  </div>} card={current !== undefined && <WordDrillCard card={cards[current]!} language={language} revealed={revealed} autoFocus={state.shown > 0}
+    onReveal={() => setRevealed(true)} onGrade={grade} />} />;
 }
 
 // A session: its deck, fetched once, then the cards; Drill again starts the next session with a fresh deck.
@@ -149,7 +159,7 @@ export function WordDrillPage({ groupId, settings, onBack, onPractice }: { group
         <h1 className={styles.title}>{t("drill.title")}</h1>
         <p className={styles.settings}>{t("drill.settings", { source: subtitle, direction })}</p>
       </header>
-      <SpeechRecognitionScope locale={recognitionLocale} token={token} onAssessment={onAssessment}><DrillSession key={`${run}:${settings.source}:${settings.lesson ?? settings.course ?? ""}:${settings.direction}`} groupId={groupId} accountId={session.data.user.id} settings={settings} run={run}
+      <SpeechRecognitionScope locale={recognitionLocale} token={token} onAssessment={onAssessment}><DrillSession key={`${run}:${settings.source}:${settings.lesson ?? settings.course ?? ""}:${settings.batch ?? ""}:${settings.direction}`} groupId={groupId} accountId={session.data.user.id} settings={settings} run={run}
         language={language} scores={scores} onAgain={() => setRun((value) => value + 1)} onBack={onBack} onPractice={onPractice} /></SpeechRecognitionScope>
     </div>
   </GroupFrame>;

@@ -340,28 +340,27 @@ describe("Spoken answers", () => {
 });
 
 describe("Drill session", () => {
-  it("requeues a card three to five cards later after Again and sends only its first grade", async () => {
-    vi.spyOn(Math, "random").mockReturnValue(0);
+  it("brings a card back after Again only once every other card was seen, and sends only its first grade", async () => {
     decks = [[1, 2, 3, 4, 5].map((n) => card(n))];
     renderPage();
     await screen.findByRole("article", { name: "Drill card" });
     expect(shownTerm()).toBe("woord 1");
     reveal(); gradeAs("Again");
+    // It waits on the table, face up, until it comes back.
+    expect(within(screen.getByRole("region", { name: "Coming back" })).getByText("woord 1")).toBeInTheDocument();
     const seen: Array<string | null> = [];
-    for (let step = 0; step < 3; step += 1) { seen.push(shownTerm()); reveal(); gradeAs("Got it"); }
-    expect(seen).toEqual(["woord 2", "woord 3", "woord 4"]);
-    // Three cards later the word comes back; Got it now only retires it.
+    for (let step = 0; step < 4; step += 1) { seen.push(shownTerm()); reveal(); gradeAs("Got it"); }
+    expect(seen).toEqual(["woord 2", "woord 3", "woord 4", "woord 5"]);
+    // After the whole deck the word comes back; Got it now only retires it.
     expect(shownTerm()).toBe("woord 1");
-    expect(screen.getByText("3 of 5 done")).toBeInTheDocument();
-    reveal(); gradeAs("Got it");
     expect(screen.getByText("4 of 5 done")).toBeInTheDocument();
-    await waitFor(() => expect(grades()).toHaveLength(4));
+    reveal(); gradeAs("Got it");
+    await waitFor(() => expect(grades()).toHaveLength(5));
     expect(grades().filter((call) => call.path === gradePath(1))).toEqual([{ path: gradePath(1), method: "PUT", body: JSON.stringify({ result: "again" }) }]);
     expect(grades().find((call) => call.path === gradePath(2))?.body).toBe(JSON.stringify({ result: "got" }));
   });
 
   it("puts a card at the end when fewer cards remain", async () => {
-    vi.spyOn(Math, "random").mockReturnValue(0.99);
     renderPage();
     await screen.findByRole("article", { name: "Drill card" });
     reveal(); gradeAs("Again");
@@ -373,7 +372,6 @@ describe("Drill session", () => {
   });
 
   it("reveals with Space and grades with 1 and 2", async () => {
-    vi.spyOn(Math, "random").mockReturnValue(0);
     renderPage();
     await screen.findByRole("article", { name: "Drill card" });
     // Grades wait for the answer.
@@ -391,7 +389,6 @@ describe("Drill session", () => {
   });
 
   it("summarises the first tries and starts a fresh deck with Drill again", async () => {
-    vi.spyOn(Math, "random").mockReturnValue(0);
     decks = [[card(1), card(2)], [card(3)]];
     renderPage();
     await screen.findByRole("article", { name: "Drill card" });
@@ -410,12 +407,11 @@ describe("Drill session", () => {
     expect(JSON.parse(localStorage.getItem(`wordinator:drill:last:v1:${id(2)}`)!)).toMatchObject({ version: 1, accuracy: 50, pronunciation: null });
     fireEvent.click(screen.getByRole("button", { name: "Drill again" }));
     expect(await screen.findByText("0 of 1 done")).toBeInTheDocument();
-    expect(shownTerm()).toBe("woord 3");
+    await waitFor(() => expect(shownTerm()).toBe("woord 3"));
     expect(fetchCalls().filter((call) => call.path === deckPath)).toHaveLength(2);
   });
 
   it("marks a word that needed Again as known from the results", async () => {
-    vi.spyOn(Math, "random").mockReturnValue(0);
     renderPage();
     await screen.findByRole("article", { name: "Drill card" });
     reveal(); gradeAs("Again");
@@ -498,6 +494,10 @@ describe("Drill route search", () => {
     expect(validateWordDrillSearch({ source: "lesson", direction: "sideways" })).toEqual({ source: "weak", direction: "mixed" });
     expect(validateWordDrillSearch({ source: "weak", lesson: lessonId, direction: "understand" })).toEqual({ source: "weak", direction: "understand" });
     expect(validateWordDrillSearch({ source: "lesson", lesson: lessonId, direction: "produce" })).toEqual({ source: "lesson", lesson: lessonId, direction: "produce" });
+    // A batch is kept only for a lesson drill, and only when it is a whole number from 1.
+    expect(validateWordDrillSearch({ source: "lesson", lesson: lessonId, batch: 2 })).toEqual({ source: "lesson", lesson: lessonId, batch: 2, direction: "mixed" });
+    expect(validateWordDrillSearch({ source: "lesson", lesson: lessonId, batch: 0 })).toEqual({ source: "lesson", lesson: lessonId, direction: "mixed" });
+    expect(validateWordDrillSearch({ source: "weak", batch: 2 })).toEqual({ source: "weak", direction: "mixed" });
   });
 
   it("keeps a course drill only with a valid course", () => {

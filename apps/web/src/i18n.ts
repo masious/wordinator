@@ -242,6 +242,13 @@ export const resources = {
         emptyLesson: "This lesson has no published words to drill yet.",
         emptyCourse: "This course has no published words to drill yet.",
         counter: "{{retired}} of {{total}} done",
+        table: {
+          upcoming: "Up next",
+          again: "Coming back",
+          got: "Got it",
+          after_one: "after {{count}} card",
+          after_other: "after {{count}} cards"
+        },
         card: "Drill card",
         prompt: { understand: "What does it mean?", produce: "How do you say it in {{language}}?" },
         blank: "blank",

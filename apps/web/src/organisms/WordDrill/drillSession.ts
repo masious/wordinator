@@ -2,24 +2,24 @@ import { wordSearchKey, type WordDrillResult } from "@wordinator/contracts/lesso
 
 // A drill session's queue (docs/words.md#a-card). Cards are indices into the session's deck; the first in `queue` is shown.
 // `first` holds each card's first grade, the only one sent; `shown` counts presentations, so a card shown again remounts.
+// `done` lists the retired cards in the order they were retired (the Got it pile, last on top).
 export type DrillState = {
   readonly queue: readonly number[];
   readonly retired: number;
+  readonly done: readonly number[];
   readonly first: ReadonlyMap<number, WordDrillResult>;
   readonly shown: number;
 };
 
-export const startDrill = (size: number): DrillState => ({ queue: Array.from({ length: size }, (_, index) => index), retired: 0, first: new Map(), shown: 0 });
+export const startDrill = (size: number): DrillState => ({ queue: Array.from({ length: size }, (_, index) => index), retired: 0, done: [], first: new Map(), shown: 0 });
 
-// Again puts the card back three to five cards later (at the end when fewer remain); Got it retires it.
-export function gradeDrill(state: DrillState, result: WordDrillResult, random: () => number = Math.random): DrillState {
+// Again puts the card at the end of the queue, so it comes back once every card ahead of it has been seen; Got it retires it.
+export function gradeDrill(state: DrillState, result: WordDrillResult): DrillState {
   const [card, ...rest] = state.queue;
   if (card === undefined) return state;
   const first = state.first.has(card) ? state.first : new Map(state.first).set(card, result);
-  if (result === "got") return { queue: rest, retired: state.retired + 1, first, shown: state.shown + 1 };
-  const later = 3 + Math.min(2, Math.floor(random() * 3));
-  rest.splice(Math.min(later, rest.length), 0, card);
-  return { queue: rest, retired: state.retired, first, shown: state.shown + 1 };
+  if (result === "got") return { queue: rest, retired: state.retired + 1, done: [...state.done, card], first, shown: state.shown + 1 };
+  return { queue: [...rest, card], retired: state.retired, done: state.done, first, shown: state.shown + 1 };
 }
 
 // The results page's headline tier (docs/words.md#end-of-session), by the share of cards Got it on the first try.

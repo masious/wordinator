@@ -220,7 +220,7 @@ Cards are one layer: paper, a line border, `--radius-lg`, and `--shadow-card`; l
 
 ## Motion
 
-Durations are `140ms` for press feedback, `180ms` for ordinary transitions, `320ms` for overlays, and `820ms` for one-time reveals. All use `--ease-physical: cubic-bezier(0.32, 0.72, 0, 1)`. Animation is limited to transform and opacity; entrance effects must use `IntersectionObserver`, must not replay during feed refreshes, and become effectively instant under `prefers-reduced-motion`. Continuous parallax and layout-property animation are prohibited.
+Durations are `140ms` for press feedback, `180ms` for ordinary transitions, `320ms` for overlays, and `820ms` for one-time reveals. All use `--ease-physical: cubic-bezier(0.32, 0.72, 0, 1)`. Animation is limited to transform and opacity; entrance effects must use `IntersectionObserver`, must not replay during feed refreshes, and become effectively instant under `prefers-reduced-motion`. Continuous parallax and layout-property animation are prohibited. Shared-element moves (the [drill table](words.md#the-table)) use the `motion` library's layout animations, which animate transforms (FLIP), never layout properties, under `MotionConfig reducedMotion="user"`.
 
 ## Responsive behavior
 
