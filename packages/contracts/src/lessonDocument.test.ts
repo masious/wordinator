@@ -1,9 +1,9 @@
 import { randomUUID } from "node:crypto";
 import { describe, expect, it } from "vitest";
 import fixture from "../../../test/fixtures/courses/dutch-foundations-part-iii.json";
-import { COURSE_BLOCKS_MAX, COURSE_WORDS_PER_BLOCK_MAX, practicePayloadSchema } from ".";
+import { COURSE_BLOCKS_MAX, COURSE_WORDS_PER_BLOCK_MAX, dialoguePayloadSchema, practicePayloadSchema } from ".";
 import {
-  collectImageUrls, collectLessonWords, lessonWordBatches, splitWordBatches, WORD_BATCH_MAX, WORD_BATCH_MIN, collectPracticeIds, courseWordsResponseSchema, findPublishProblems, flattenToSteps, inlineText, isReadingStep, readingReached,
+  collectImageUrls, collectLessonWords, lessonWordBatches, groupWordSections, collectPracticeIds, courseWordsResponseSchema, findPublishProblems, flattenToSteps, inlineText, isReadingStep, readingReached,
   LESSON_DOCUMENT_SCHEMA_VERSION, lessonDocumentSchema, lessonNotReadySchema, lessonPositionRequestSchema, lessonStepKey, mapImageUrls,
   parseStoredLessonDocument, readPracticeBlock, readVocabularyBlock, resolveStepIndex, saveLessonDraftRequestSchema, toLearnerDocument,
   upgradeLegacyBlocks, vocabularyPayloadSchema,
@@ -86,6 +86,7 @@ describe("lesson document schema", () => {
   });
 
   it("validates structured dialogue and practice data", () => {
+    expect(dialoguePayloadSchema.parse({ turns: [{ speaker: "A", text: "Hoi", translation: "Hi" }] }).turns[0]?.translation).toBe("Hi");
     rejects({ ...practice(), props: { data: "{" } });
     rejects({ ...practice(), props: { data: JSON.stringify({ instruction: "x", items: [] }) } });
     rejects({ ...dialogue(), props: { turns: JSON.stringify([]) } });
@@ -380,38 +381,34 @@ describe("legacy block upgrade", () => {
 });
 
 describe("word batches", () => {
-  const sizes = (sections: number[]) => splitWordBatches(sections).map(([start, end]) => end - start);
+  const groups = (counts: number[]) => groupWordSections(counts).map(({ from, to, parts }) => parts > 1 ? `${from}-${to}x${parts}` : `${from}-${to}`);
 
-  it("makes three to five batches of six to ten words where the words allow, and fewer or more otherwise", () => {
-    const flat = (count: number) => Array.from({ length: count }, () => 0);
-    expect(sizes(flat(0))).toEqual([]);
-    expect(sizes(flat(4))).toEqual([4]);
-    expect(sizes(flat(9))).toEqual([9]);
-    expect(sizes(flat(11))).toEqual([6, 5]);
-    expect(sizes(flat(18))).toEqual([6, 6, 6]);
-    expect(sizes(flat(32))).toEqual([8, 8, 8, 8]);
-    expect(sizes(flat(50))).toEqual([10, 10, 10, 10, 10]);
-    const many = sizes(flat(73));
-    expect(many.length).toBeGreaterThan(5);
-    expect(many.every((size) => size >= WORD_BATCH_MIN && size <= WORD_BATCH_MAX)).toBe(true);
+  it("gathers sections until the next one would bring the batch to ten words", () => {
+    expect(groups([])).toEqual([]);
+    expect(groups([4])).toEqual(["0-0"]);
+    // Four, then two: the batch waits while the next section has three words, and closes before one with four.
+    expect(groups([4, 2, 3, 5])).toEqual(["0-2", "3-3"]);
+    expect(groups([4, 2, 4, 5])).toEqual(["0-1", "2-3"]);
+    expect(groups([10, 1])).toEqual(["0-0", "1-1"]);
+    expect(groups([3, 3, 3, 3, 3, 3])).toEqual(["0-2", "3-5"]);
   });
 
-  it("cuts where sections are furthest apart, keeping a section's words together", () => {
-    // Seven words in section 1, then nine in section 2, then eight in section 5: the cuts fall on the section changes.
-    const sections = [...Array(7).fill(1), ...Array(9).fill(2), ...Array(8).fill(5)];
-    expect(sizes(sections)).toEqual([7, 9, 8]);
-    // Two cuts are possible at sizes 8 and 9; the one between distant sections wins over the one between neighbours.
-    expect(sizes([...Array(8).fill(1), 2, ...Array(8).fill(4)])).toEqual([9, 8]);
+  it("cuts a section of more than ten words into even batches of its own", () => {
+    expect(groups([2, 23, 1])).toEqual(["0-0", "1-1x3", "2-2"]);
   });
 
-  it("reads batches from a lesson's top-level headings and words in document order", () => {
-    const first = Array.from({ length: 6 }, (_, index) => word(`een ${index}`));
-    const second = Array.from({ length: 6 }, (_, index) => word(`twee ${index}`));
-    const third = Array.from({ length: 6 }, (_, index) => word(`drie ${index}`));
-    const document = parse(heading("Hallo", 1), heading("Groeten"), vocabulary(...first), heading("Getallen"), paragraph("Tel mee."),
-      columns(column(vocabulary(...second.slice(0, 3))), column(vocabulary(...second.slice(3)))), heading("Dagen"), vocabulary(...third));
+  it("reads sections from a lesson's level-1 and level-2 headings and places each batch after its last section", () => {
+    const greetings = Array.from({ length: 6 }, (_, index) => word(`een ${index}`));
+    const numbers = Array.from({ length: 3 }, (_, index) => word(`twee ${index}`));
+    const days = Array.from({ length: 6 }, (_, index) => word(`drie ${index}`));
+    const counting = columns(column(vocabulary(...numbers.slice(0, 2))), column(vocabulary(...numbers.slice(2))));
+    const dayWords = vocabulary(...days);
+    // A level-3 heading stays inside its section; the last section has no words and takes no batch.
+    const document = parse(heading("Hallo", 1), heading("Groeten"), vocabulary(...greetings.slice(0, 4)), heading("Formeel", 3), vocabulary(...greetings.slice(4)),
+      heading("Getallen"), paragraph("Tel mee."), counting, heading("Dagen"), dayWords, heading("Slot"), paragraph("Tot ziens."));
     const batches = lessonWordBatches(document);
-    expect(batches.map((batch) => batch.wordIds)).toEqual([first, second, third].map((words) => words.map((entry) => entry.id)));
-    expect(batches.map((batch) => batch.headings)).toEqual([["Groeten"], ["Getallen"], ["Dagen"]]);
+    expect(batches.map((batch) => batch.wordIds)).toEqual([[...greetings, ...numbers], days].map((words) => words.map((entry) => entry.id)));
+    expect(batches.map((batch) => batch.headings)).toEqual([["Groeten", "Getallen"], ["Dagen"]]);
+    expect(batches.map((batch) => batch.afterBlockId)).toEqual([counting.id, dayWords.id]);
   });
 });

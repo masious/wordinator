@@ -17,7 +17,7 @@ import { useLessonBookmarkTarget, WordBookmarkScope } from "../WordBookmark/Word
 import { runWords, WordRecap, type RecapWord } from "../WordRecap/WordRecap";
 import styles from "./WordBatches.module.css";
 
-type Batch = { number: number; words: RecapWord[]; headings: string[] };
+type Batch = { number: number; words: RecapWord[]; headings: string[]; afterBlockId: string };
 
 // A batch's words in the memory bands, as the library dashboard draws them: Strong, Fading, then New.
 function BandBar({ stats }: { stats: WordBatchStats }) {
@@ -154,17 +154,19 @@ function Peek({ scope, lesson, batch, recorded, onDone }: { scope: PlayerScope; 
 // A lesson's word batches (docs/words.md#word-batches) as compact tiles, each with its memory bands and three actions: Peek opens
 // its words as cards, Drill opens a drill of just the batch, and Practice starts a tutor word practice of it. Drill, Practice, and
 // what a Peek records need the published lesson; an editor's preview of an unpublished lesson offers Peek alone. `peekIn` says
-// whether a Peek replaces the tiles (inside a dialog) or opens its own dialog (on a page).
-export function WordBatches({ scope, lesson, peekIn = "dialog", title }: {
-  scope: PlayerScope; lesson: CourseLesson; peekIn?: "inline" | "dialog"; title?: string;
+// whether a Peek replaces the tiles (inside a dialog) or opens its own dialog (on a page). `afterBlock` shows only the batches
+// placed after that top-level block, as the lesson page does at the end of each batch's last section.
+export function WordBatches({ scope, lesson, peekIn = "dialog", title, afterBlock }: {
+  scope: PlayerScope; lesson: CourseLesson; peekIn?: "inline" | "dialog"; title?: string; afterBlock?: string;
 }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const published = lesson.document !== null;
   const batches = useMemo<Batch[]>(() => {
     const document = playableDocument(lesson); const byId = new Map(runWords(lessonSteps(lesson)).map((word) => [word.id, word]));
-    return document ? lessonWordBatches(document).map((batch, index) => ({ number: index + 1, headings: batch.headings, words: batch.wordIds.flatMap((id) => byId.get(id) ?? []) })) : [];
+    return document ? lessonWordBatches(document).map((batch, index) => ({ number: index + 1, headings: batch.headings, afterBlockId: batch.afterBlockId, words: batch.wordIds.flatMap((id) => byId.get(id) ?? []) })) : [];
   }, [lesson]);
+  const shown = afterBlock === undefined ? batches : batches.filter((batch) => batch.afterBlockId === afterBlock);
   const stats = useQuery({ ...wordBatchesQueryOptions(scope.groupId, scope.courseId, lesson.id), enabled: published && batches.length > 0 });
   const [peeking, setPeeking] = useState<Batch | null>(null);
   const practice = useMutation({
@@ -177,11 +179,11 @@ export function WordBatches({ scope, lesson, peekIn = "dialog", title }: {
   const bookmarkTarget = useLessonBookmarkTarget(scope.groupId, scope.courseId, lesson.id, lesson.document);
   const speech = useMemo(() => lessonSpeech(lesson), [lesson]);
   const resolveSpeech = useCallback((key: string) => speech[key] ?? null, [speech]);
-  if (!batches.length) return null;
+  if (!shown.length) return null;
   const peek = peeking && <Peek scope={scope} lesson={lesson} batch={peeking} recorded={published} onDone={() => setPeeking(null)} />;
   return <WordBookmarkScope resolve={bookmarkTarget}><SpeechScope resolve={resolveSpeech}>
     {peekIn === "inline" && peek ? peek : <div className={styles.view}>
-      <ol className={styles.batches}>{batches.map((batch) => {
+      <ol className={styles.batches}>{shown.map((batch) => {
         const named = { number: batch.number };
         const standing = stats.data?.batches[batch.number - 1];
         return <li key={batch.number} className={styles.batch} aria-label={t("words.batches.batch", named)}>

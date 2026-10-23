@@ -13,7 +13,7 @@ async function setup() {
   const owner = await signIn("owner"); const reader = await signIn("reader");
   const course = await createCourse(groupId, owner);
   const path = coursePath(groupId, course.id);
-  // Eighteen words in two sections make three batches of six.
+  // Twelve words in one section cut into two batches of six, then six in the next section, one batch: three batches of six.
   const words = Array.from({ length: 18 }, (_, index) => word(`woord ${String(index).padStart(2, "0")}`));
   const lesson = await addLesson(groupId, course.id, owner, "Batched", {
     document: documentOf(blocks.heading("Een"), blocks.vocabulary(...words.slice(0, 12)), blocks.heading("Twee"), blocks.vocabulary(...words.slice(12))),

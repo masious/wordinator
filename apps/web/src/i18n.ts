@@ -142,6 +142,7 @@ export const resources = {
         drillWeak: "Drill these words",
         batches: {
           heading: "Words in batches",
+          inText: "Review the new words so far",
           batch: "Batch {{number}}",
           words_one: "{{count}} word",
           words_other: "{{count}} words",

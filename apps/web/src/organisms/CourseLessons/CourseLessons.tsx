@@ -1,7 +1,7 @@
 import {
   COURSE_TEXT_MAX, COURSE_TITLE_MAX, okResponseSchema, outlineResponseSchema, type CourseLessonSummary, type CourseProgressResponse, type LessonInput, type LessonPosition,
 } from "@wordinator/contracts";
-import { lessonResponseSchema, type CourseDetailResponse, type CourseLesson, type LessonDocument as LessonDocumentData } from "@wordinator/contracts/lesson-document";
+import { lessonResponseSchema, lessonWordBatches, type CourseDetailResponse, type CourseLesson, type LessonDocument as LessonDocumentData } from "@wordinator/contracts/lesson-document";
 import type { LessonAiPracticesResponse } from "@wordinator/contracts/tutor";
 import type { ActivityDescriptor } from "@wordinator/contracts/lesson-activities";
 import { Drawer } from "@mantine/core";
@@ -183,12 +183,18 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
   const activitySuggestions: LessonActivitySuggestion[] = section.activities.flatMap(({ descriptor, part }) => descriptor.activityTypes.map((type) => ({ descriptor, type, part, done: doneActivities.has(`${descriptor.sourceId}:${type}`) })));
   // Each source's activities also sit in the text, after its section's last block (docs/lesson-activities.md#in-the-text).
   const placements = useMemo(() => document ? activityPlacements(document, tracked, allActivityDescriptors) : new Map<string, never[]>(), [document, tracked, allActivityDescriptors]);
+  // The lesson's word batches sit after the last section each one holds (docs/words.md#word-batches), once past the start gate.
+  const batchAnchors = useMemo(() => new Set(document && !gate ? lessonWordBatches(document).map((batch) => batch.afterBlockId) : []), [document, gate]);
   const renderAfterBlock = (id: string) => {
     const placed = placements.get(id);
     const practices = slots?.afterBlock(id);
-    if (!placed?.length) return practices;
-    return <>{practices}<SectionActivities courseSlug={scope.courseSlug} lessonSlug={lesson.slug}
-      suggestions={placed.flatMap(({ descriptor, part }) => descriptor.activityTypes.map((type) => ({ descriptor, type, part, done: doneActivities.has(`${descriptor.sourceId}:${type}`) })))} /></>;
+    const batches = batchAnchors.has(id) && <section className={styles.batches} aria-label={t("words.batches.heading")}>
+      <p className={styles.batchesLabel}>{t("words.batches.inText")}</p>
+      <WordBatches scope={scope} lesson={lesson} title={box.title} afterBlock={id} />
+    </section>;
+    if (!placed?.length && !batches) return practices;
+    return <>{practices}{placed?.length ? <SectionActivities courseSlug={scope.courseSlug} lessonSlug={lesson.slug}
+      suggestions={placed.flatMap(({ descriptor, part }) => descriptor.activityTypes.map((type) => ({ descriptor, type, part, done: doneActivities.has(`${descriptor.sourceId}:${type}`) })))} /> : null}{batches}</>;
   };
   const colors = useMemo(() => new Map(indexed.flatMap((entry) => entry.color ? [[entry.id, entry.color] as const] : [])), [indexed]);
   const renderHeadingBadge = useCallback((id: string) => {
@@ -543,11 +549,6 @@ export function LessonView({ groupId, courseId, accountId, detail, lessonId, dat
         save: data.published && data.document !== null && !completed && !archived && progress.isSuccess,
         completed, position, practicesDone: progress.data?.practices[lessonId]?.done ?? 0, path: lessonPath, groupId, courseId, lessonId,
       }} />}
-    {/* The lesson's word batches (docs/words.md#word-batches) after its text: Peek, Drill, and Practice, each batch's memory bands. */}
-    {!editing && !gated && data && wordCount > 0 && <section className={styles.batches} aria-labelledby="lesson-word-batches">
-      <h2 id="lesson-word-batches" className={styles.batchesHeading}>{t("words.batches.heading")}</h2>
-      <WordBatches scope={scope} lesson={data} title={current.title} />
-    </section>}
     {/* The pager: Previous, the next lesson's title under Up next, and Next lesson. The links' names carry the titles. */}
     {(previous || next) && !gated && <nav className={styles.pager} aria-label={t("courses.lessons.pager")}>
       {previous ? <Link className={styles.previous} {...lessonLink(previous)} aria-label={t("courses.lessons.previous", { title: previous.title })}>

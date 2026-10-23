@@ -262,54 +262,27 @@ export function collectLessonWords(document: LessonDocument): LessonWord[] {
     }));
 }
 
-// Word batches (docs/words.md#word-batches): a lesson's new words split, in document order, into runs of `WORD_BATCH_MIN` to
-// `WORD_BATCH_MAX` words that can be reviewed and drilled on their own. Three to five batches where the words allow, about
-// `WORD_BATCH_TARGET` each; fewer words make fewer batches (under `WORD_BATCH_MIN` words, one) and more words make more. Batches
-// are cut where the lesson's sections are furthest apart, so words close together in the lesson tend to share a batch. They are
-// worked out from the published document alone, so every learner sees the same ones until the author republishes.
-export const WORD_BATCH_MIN = 6;
+// Word batches (docs/words.md#word-batches): a lesson's new words gathered, section by section, into batches that can be reviewed
+// and drilled on their own. Each level-1 or level-2 heading starts a section. A batch takes whole sections in document order and
+// closes once the next section with new words would bring it to `WORD_BATCH_MAX` words or more; a single section with more than
+// `WORD_BATCH_MAX` words is cut into even batches of its own. Each batch sits after the last section it holds (`afterBlockId`).
+// They are worked out from the published document alone, so every learner sees the same ones until the author republishes.
 export const WORD_BATCH_MAX = 10;
-export const WORD_BATCH_TARGET = 8;
-const WORD_BATCHES_PREFERRED = { fewest: 3, most: 5 };
-export type WordBatch = { wordIds: string[]; headings: string[] };
+export type WordBatch = { wordIds: string[]; headings: string[]; afterBlockId: string };
 
-// The number of batches for `count` words, and the sizes a batch may take.
-function batchShape(count: number) {
-  const fewest = Math.ceil(count / WORD_BATCH_MAX); const most = Math.floor(count / WORD_BATCH_MIN);
-  if (fewest > most) return { batches: Math.max(fewest, 1), min: Math.floor(count / Math.max(fewest, 1)), max: Math.ceil(count / Math.max(fewest, 1)) };
-  const low = Math.max(fewest, Math.min(WORD_BATCHES_PREFERRED.fewest, most)); const high = Math.max(fewest, Math.min(WORD_BATCHES_PREFERRED.most, most));
-  const batches = Math.min(high, Math.max(low, Math.round(count / WORD_BATCH_TARGET)));
-  return { batches, min: WORD_BATCH_MIN, max: WORD_BATCH_MAX };
-}
-
-// Cuts `sections` (each word's section number, in order) into contiguous batches. A cut between two words costs less the more
-// sections lie between them, and a batch costs a little for straying from the even size; the cheapest split wins.
-export function splitWordBatches(sections: readonly number[]): Array<[start: number, end: number]> {
-  const count = sections.length;
-  if (!count) return [];
-  const { batches, min, max } = batchShape(count);
-  const even = count / batches;
-  const cut = (index: number) => 1 / (1 + sections[index]! - sections[index - 1]!);
-  const size = (length: number) => 0.02 * (length - even) ** 2;
-  // best[j][i]: the cheapest split of the first i words into j batches, and where its last batch starts.
-  const best = Array.from({ length: batches + 1 }, () => Array.from({ length: count + 1 }, () => ({ cost: Infinity, from: -1 })));
-  best[0]![0] = { cost: 0, from: -1 };
-  for (let j = 1; j <= batches; j++) {
-    for (let i = j * min; i <= count; i++) {
-      for (let length = min; length <= max && length <= i; length++) {
-        const from = i - length; const before = best[j - 1]![from]!;
-        if (before.cost === Infinity) continue;
-        const cost = before.cost + size(length) + (from > 0 ? cut(from) : 0);
-        if (cost < best[j]![i]!.cost) best[j]![i] = { cost, from };
-      }
-    }
-  }
-  const ranges: Array<[number, number]> = [];
-  for (let j = batches, end = count; j > 0; j--) {
-    const from = best[j]![end]!.from;
-    ranges.unshift([from, end]); end = from;
-  }
-  return ranges;
+// Groups section word counts (sections without words left out) into batches: each range runs from its first to its last section
+// and `parts` says into how many even batches it is cut, more than one only for a single oversized section.
+export function groupWordSections(counts: readonly number[]): Array<{ from: number; to: number; parts: number }> {
+  const groups: Array<{ from: number; to: number; parts: number }> = [];
+  let from = 0; let size = 0;
+  counts.forEach((count, index) => {
+    size += count;
+    const next = counts[index + 1];
+    if (next !== undefined && size + next < WORD_BATCH_MAX) return;
+    groups.push({ from, to: index, parts: Math.max(1, Math.ceil(size / WORD_BATCH_MAX)) });
+    from = index + 1; size = 0;
+  });
+  return groups;
 }
 
 // A learner's standing in each of a lesson's batches (`GET .../lessons/:lessonId/word-batches`): the batch's words in the
@@ -326,20 +299,29 @@ export const wordExposuresRequestSchema = z.strictObject({
   wordIds: z.array(opaqueIdSchema).min(1).max(WORD_BATCH_MAX).refine((ids) => new Set(ids).size === ids.length, { message: "Name each word once." }),
 });
 
-// A lesson's word batches. Each top-level heading starts a section; a word keeps the first place it appears.
+// A lesson's word batches. Sections start at top-level level-1 and level-2 headings; a word keeps the first place it appears.
 export function lessonWordBatches(document: LessonDocument): WordBatch[] {
-  const words: Array<{ id: string; section: number; heading: string | null }> = []; const seen = new Set<string>();
-  let section = 0; let heading: string | null = null;
-  for (const { block, depth } of walkLessonBlocks(document.blocks)) {
-    if (block.type === "heading" && depth === 0) { section += 1; heading = inlineText(block.content).replace(/\s+/g, " ").trim() || null; continue; }
-    if (block.type !== "vocabulary") continue;
-    for (const word of readVocabularyBlock(block).words) {
-      if (!seen.has(word.id)) { seen.add(word.id); words.push({ id: word.id, section, heading }); }
+  type Section = { heading: string | null; wordIds: string[]; lastBlockId: string };
+  const sections: Section[] = []; const seen = new Set<string>();
+  for (const top of document.blocks) {
+    if (top.type === "heading" && top.props.level < 3) sections.push({ heading: inlineText(top.content).replace(/\s+/g, " ").trim() || null, wordIds: [], lastBlockId: top.id });
+    else if (!sections.length) sections.push({ heading: null, wordIds: [], lastBlockId: top.id });
+    const section = sections[sections.length - 1]!; section.lastBlockId = top.id;
+    for (const { block } of walkLessonBlocks([top])) {
+      if (block.type !== "vocabulary") continue;
+      for (const word of readVocabularyBlock(block).words) {
+        if (!seen.has(word.id)) { seen.add(word.id); section.wordIds.push(word.id); }
+      }
     }
   }
-  return splitWordBatches(words.map((word) => word.section)).map(([start, end]) => {
-    const batch = words.slice(start, end);
-    return { wordIds: batch.map((word) => word.id), headings: [...new Set(batch.flatMap((word) => word.heading ? [word.heading] : []))] };
+  const filled = sections.filter((section) => section.wordIds.length > 0);
+  return groupWordSections(filled.map((section) => section.wordIds.length)).flatMap(({ from, to, parts }) => {
+    const held = filled.slice(from, to + 1); const wordIds = held.flatMap((section) => section.wordIds);
+    const headings = [...new Set(held.flatMap((section) => section.heading ? [section.heading] : []))];
+    const afterBlockId = held[held.length - 1]!.lastBlockId;
+    return Array.from({ length: parts }, (_, part) => ({
+      wordIds: wordIds.slice(Math.round(part * wordIds.length / parts), Math.round((part + 1) * wordIds.length / parts)), headings, afterBlockId,
+    }));
   });
 }
 
@@ -684,8 +666,11 @@ export const wordDrillBatchSchema = z.coerce.number().int().min(1).max(WORD_BATC
 export const wordDrillQuerySchema = z.object({
   source: wordDrillSourceSchema, lessonId: opaqueIdSchema.optional(), courseId: opaqueIdSchema.optional(), direction: wordDrillModeSchema.default("mixed"),
   batch: wordDrillBatchSchema.optional(),
+  // A lesson activity source (docs/lesson-activities.md#review-words): the drill keeps that section's vocabulary words.
+  section: z.string().min(1).max(200).optional(),
 }).refine((query) => (query.source === "lesson") === (query.lessonId !== undefined), { message: "A lesson drill names one lesson; other drills name none.", path: ["lessonId"] })
   .refine((query) => query.batch === undefined || query.source === "lesson", { message: "Only a lesson drill names a batch.", path: ["batch"] })
+  .refine((query) => query.section === undefined || (query.source === "lesson" && query.batch === undefined), { message: "Only a lesson drill without a batch names a section.", path: ["section"] })
   .refine((query) => (query.source === "course") === (query.courseId !== undefined), { message: "A course drill names one course; other drills name none.", path: ["courseId"] });
 export type WordDrillQuery = z.infer<typeof wordDrillQuerySchema>;
 export const wordDrillCardSchema = z.object({

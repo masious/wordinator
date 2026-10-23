@@ -259,16 +259,25 @@ describe("Course lessons", () => {
     expect(observed.map((element) => element.getAttribute("data-block-id"))).toEqual([first.id, second.id]);
   });
 
-  it("ends the lesson with its word batches, whose Peek opens the batch's cards", async () => {
-    const word = (n: number, term: string) => ({ id: `70000000-0000-4000-8000-00000000000${n}`, term, meaning: `meaning of ${term}` });
+  it("places each word batch after the last section it holds, whose Peek opens the batch's cards", async () => {
+    const word = (n: number, term: string) => ({ id: `70000000-0000-4000-8000-0000000000${String(n).padStart(2, "0")}`, term, meaning: `meaning of ${term}` });
     const vocabulary = (n: number, ...words: unknown[]): LessonTopBlock => ({ id: `50000000-0000-4000-8000-00000000002${n}`, type: "vocabulary", props: { data: JSON.stringify({ words }) }, children: [] });
+    const section = (n: number, title: string): LessonTopBlock => ({ id: `50000000-0000-4000-8000-00000000004${n}`, type: "heading", props: { textColor: "default", backgroundColor: "default", level: 2 }, content: text(title), children: [] });
+    // Two words, then nine: the next section would bring the first batch to ten, so it closes after its own section.
+    const animals = Array.from({ length: 9 }, (_, index) => word(index + 3, `dier ${index + 1}`));
     // A finished lesson: an unstarted one shows its start gate instead of the text and the batches.
     finished = [lessonId(1)];
-    renderLesson({ course: course(false), outline: [summary(1)], lessons: [lesson(1, [example("50000000-0000-4000-8000-000000000011", "De hond blaft."), vocabulary(1, word(1, "de hond"), word(2, "de kat"))])] });
+    renderLesson({ course: course(false), outline: [summary(1)], lessons: [lesson(1, [section(1, "Groeten"), example("50000000-0000-4000-8000-000000000011", "De hond blaft."),
+      vocabulary(1, word(1, "de hond"), word(2, "de kat")), section(2, "Dieren"), vocabulary(2, ...animals)])] });
     await waitFor(() => expect(vi.mocked(fetch).mock.calls.some(([path]) => String(path).endsWith("/progress"))).toBe(true));
-    const section = await screen.findByRole("region", { name: "Words in batches" });
-    const batch = within(section).getByRole("listitem", { name: "Batch 1" });
+    const sections = await screen.findAllByRole("region", { name: "Words in batches" });
+    expect(sections).toHaveLength(2);
+    const heading = screen.getByRole("heading", { name: "Dieren" });
+    expect(sections[0]!.compareDocumentPosition(heading) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(within(sections[1]!).getByRole("listitem", { name: "Batch 2" })).toHaveTextContent("9 words");
+    const batch = within(sections[0]!).getByRole("listitem", { name: "Batch 1" });
     expect(batch).toHaveTextContent("2 words");
+    expect(within(sections[0]!).queryByRole("listitem", { name: "Batch 2" })).not.toBeInTheDocument();
     fireEvent.click(within(batch).getByRole("button", { name: "Peek at batch 1" }));
     const peek = await screen.findByRole("dialog", { name: "Batch 1 of Lesson title 1" });
     expect(within(peek).getByRole("article", { name: "de hond" })).toBeInTheDocument();
