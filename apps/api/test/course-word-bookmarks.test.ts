@@ -59,6 +59,9 @@ describe("Word bookmarks", () => {
       word: { id: hund.id, lessonId: lesson.lesson.id, term: "der Hund", forms: "die Hunde", example: null, note: null },
       course: { id: course.id, title: "Dutch foundations" }, lesson: { id: lesson.lesson.id, title: "Animals" },
     });
+    // Each bookmark carries its course and lesson slugs, so the Words tab links to the lesson.
+    expect(page.items[1]!.course.slug).toBeTruthy();
+    expect(page.items[1]!.lesson.slug).toBeTruthy();
     // Bookmarks are private to the member.
     expect(await keys(groupId, owner)).toEqual([]);
     expect((await list(groupId, owner)).items).toEqual([]);

@@ -2,7 +2,6 @@ import { expect, test } from "@playwright/test";
 import { registerAccount, uniqueTag } from "./auth";
 import { E2E_GROUP_ID } from "./global-setup";
 import { courseApi, example, openLesson, seedLesson, vocabulary } from "./lessonSeed";
-import { pageToWord } from "./wordRecap";
 
 test("a member bookmarks words on a lesson page and reviews them on the Words tab", async ({ page }, testInfo) => {
   test.setTimeout(60_000);
@@ -27,18 +26,17 @@ test("a member bookmarks words on a lesson page and reviews them on the Words ta
     await expect(panel.getByRole("button", { name: `Bookmark ${term}` })).toHaveAttribute("aria-pressed", "true");
   }
 
-  // On a lesson page the rail moves Words, Journal, and Tutor into its compact More navigation row.
-  await page.getByRole("navigation", { name: "More navigation" }).getByRole("link", { name: "Words", exact: true }).click();
+  await page.getByRole("navigation", { name: "Main navigation" }).getByRole("link", { name: "Words", exact: true }).click();
   await expect(page).toHaveURL(/\/words$/);
   await expect(page.getByRole("heading", { name: "Your words" })).toBeVisible();
-  // Newest first: the word bookmarked last leads.
-  await expect(page.getByRole("article").first()).toHaveAttribute("aria-label", `het spoor ${suffix}`);
-  const ticket = await pageToWord(page.locator("main"), `het kaartje ${suffix}`);
+  // Newest first: the word bookmarked last leads. Each row shows its meaning and links to its lesson.
+  const words = page.getByRole("list", { name: "Bookmarked words" });
+  await expect(words.getByRole("listitem").first()).toHaveAttribute("aria-label", `het spoor ${suffix}`);
+  const ticket = words.getByRole("listitem", { name: `het kaartje ${suffix}` });
   await expect(ticket).toContainText(`${suffix} course · ${lessonTitle}`);
-  await ticket.getByRole("button", { name: "Show meaning" }).click();
   await expect(ticket.getByText("the ticket")).toBeVisible();
 
-  // Removing a bookmark leaves the card where it is until the page is left.
+  // Removing a bookmark leaves the row where it is until the page is left.
   const toggle = ticket.getByRole("button", { name: `Bookmark het kaartje ${suffix}` });
   await toggle.click();
   await expect(toggle).toHaveAttribute("aria-pressed", "false");
@@ -46,19 +44,18 @@ test("a member bookmarks words on a lesson page and reviews them on the Words ta
   await expect(ticket).toBeVisible();
   await page.reload();
   await expect(page.getByRole("heading", { name: "Your words" })).toBeVisible();
-  await expect(page.getByRole("article", { name: `het spoor ${suffix}` })).toBeVisible();
-  await expect(page.getByRole("article", { name: `het kaartje ${suffix}` })).toHaveCount(0);
-  // The cards and Back and Next fit the first screen. One row of the Words tab's roomy cards needs about 730px under the header,
-  // so this checks a common laptop height rather than the default 720px window, where the one row the page always shows overflows.
-  await page.setViewportSize({ width: 1280, height: 800 });
-  await expect.poll(async () => { const next = await page.getByRole("button", { name: "Next" }).boundingBox(); return next!.y + next!.height; }).toBeLessThanOrEqual(800);
+  await expect(page.getByRole("listitem", { name: `het spoor ${suffix}` })).toBeVisible();
+  await expect(page.getByRole("listitem", { name: `het kaartje ${suffix}` })).toHaveCount(0);
 
   // The lesson filter narrows the tab to one lesson and keeps it in the URL across a reload.
   await page.getByRole("combobox", { name: "Lesson" }).click();
   await page.getByRole("option", { name: `${lessonTitle} (1)` }).click();
   await expect(page).toHaveURL(/\/words\?lesson=/);
-  await expect(page.getByRole("article", { name: `het spoor ${suffix}` })).toBeVisible();
+  await expect(page.getByRole("listitem", { name: `het spoor ${suffix}` })).toBeVisible();
   await page.reload();
   await expect(page.getByRole("combobox", { name: "Lesson" })).toHaveValue(`${lessonTitle} (1)`);
-  await expect(page.getByRole("article", { name: `het spoor ${suffix}` })).toBeVisible();
+  await expect(page.getByRole("listitem", { name: `het spoor ${suffix}` })).toBeVisible();
+  // The lesson link opens the word's lesson.
+  await page.getByRole("link", { name: `Open lesson ${lessonTitle}` }).first().click();
+  await expect(page).toHaveURL(/\/courses\/[^/]+\/lessons\//);
 });

@@ -6,10 +6,11 @@ import { compareWordWeakness, wordWeakness, type WordMemoryState } from "./wordM
 // WORD_WEAK_HORIZON_DAYS ahead, the ranking the Weak words view shares) is computed at.
 
 export type WordDrillMemory = Pick<WordMemoryState, "stability" | "lastReviewedAt" | "knownOverride"> & { recent?: string };
-export type WordDrillCandidate = { termKey: string; bookmarked: boolean; memory: Partial<Record<WordDrillDirection, WordDrillMemory>> };
+// `known` marks a word known without memory (a Peek's "I know this word", docs/words.md#word-batches).
+export type WordDrillCandidate = { termKey: string; bookmarked: boolean; known?: boolean; memory: Partial<Record<WordDrillDirection, WordDrillMemory>> };
 export type WordDrillDeckEntry<T> = { candidate: T; direction: WordDrillDirection };
 
-const isKnown = (candidate: WordDrillCandidate) => Boolean(candidate.memory.understand?.knownOverride || candidate.memory.produce?.knownOverride);
+const isKnown = (candidate: WordDrillCandidate) => Boolean(candidate.known || candidate.memory.understand?.knownOverride || candidate.memory.produce?.knownOverride);
 
 export function buildWordDrillDeck<T extends WordDrillCandidate>(
   candidates: readonly T[], mode: WordDrillMode, random: () => number, now: number, size = WORD_DRILL_SESSION_SIZE,

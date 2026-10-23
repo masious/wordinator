@@ -2,13 +2,12 @@ import { okResponseSchema } from "@wordinator/contracts";
 import { WORD_RECENT_RESULTS_SHOWN, type WordDrillResult } from "@wordinator/contracts/lesson-document";
 import type { WeakWord, WeakWordsPage } from "@wordinator/contracts/weak-words";
 import { useInfiniteQuery, useMutation, useQueryClient, type InfiniteData } from "@tanstack/react-query";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { apiRequest, weakWordsQueryOptions } from "../../api";
-import { PlainText } from "../../molecules/PlainText";
-import { SpeechButton } from "../../molecules/Speech";
 import { Button, EmptyState, ErrorState, LoadingState, Surface } from "../../ui";
 import { WordBookmarkScope, WordBookmarkToggle } from "../WordBookmark/WordBookmark";
+import { WordList, WordRow } from "../WordList/WordList";
 import styles from "./WeakWords.module.css";
 
 // Five dots for a word's last results, oldest left: success fill for Got it, danger fill for Again, hollow for missing ones.
@@ -29,33 +28,10 @@ export function RecentDots({ recent }: { recent: readonly WordDrillResult[] }) {
 
 function WeakWordRow({ item, onKnown }: { item: WeakWord; onKnown: () => void }) {
   const { t } = useTranslation();
-  return <li className={styles.row} aria-label={item.word.term}>
-    <div className={styles.word}>
-      <p className={styles.term}>{item.word.term}
-        <SpeechButton url={item.word.speech.term} label={t("courses.speech.term", { term: item.word.term })} className={styles.speech} /></p>
-      <p className={styles.meaning}><PlainText>{item.word.meaning}</PlainText></p>
-      <p className={styles.source}>{t("words.source", { course: item.course.title, lesson: item.lesson.title })}</p>
-    </div>
-    <RecentDots recent={item.recent} />
-    <div className={styles.actions}>
-      <WordBookmarkToggle wordId={item.word.id} lessonId={item.lesson.id} term={item.word.term} />
-      <Button variant="quiet" onClick={onKnown} aria-label={t("words.weak.knownFor", { term: item.word.term })}>{t("words.weak.known")}</Button>
-    </div>
-  </li>;
-}
-
-// Loads the next page as its marker scrolls into view; the button stays for keyboards and browsers without an observer.
-function MoreRows({ loading, onLoad }: { loading: boolean; onLoad: () => void }) {
-  const { t } = useTranslation();
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const node = ref.current;
-    if (!node || loading || typeof IntersectionObserver === "undefined") return;
-    const observer = new IntersectionObserver(([entry]) => { if (entry?.isIntersecting) onLoad(); }, { rootMargin: "0px 0px 20%" });
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, [loading, onLoad]);
-  return <div ref={ref} className={styles.more}><Button variant="quiet" loading={loading} onClick={onLoad}>{t("words.weak.more")}</Button></div>;
+  return <WordRow word={item.word} course={item.course} lesson={item.lesson} status={<RecentDots recent={item.recent} />} actions={<>
+    <WordBookmarkToggle wordId={item.word.id} lessonId={item.lesson.id} term={item.word.term} />
+    <Button variant="quiet" onClick={onKnown} aria-label={t("words.weak.knownFor", { term: item.word.term })}>{t("words.weak.known")}</Button>
+  </>} />;
 }
 
 type Pages = InfiniteData<WeakWordsPage, string | undefined>;
@@ -97,10 +73,9 @@ export function WeakWords({ groupId }: { groupId: string }) {
     {failure && <p className={styles.error} role="alert">{failure}</p>}
     {items.length || hasNextPage
       ? <WordBookmarkScope resolve={resolve}>
-          <ul className={styles.list} aria-label={t("words.weak.listLabel")}>
+          <WordList label={t("words.weak.listLabel")} more={{ hasMore: Boolean(hasNextPage), loading: isFetchingNextPage, onLoad }}>
             {items.map((item) => <WeakWordRow key={item.termKey} item={item} onKnown={() => known.mutate(item.termKey)} />)}
-          </ul>
-          {hasNextPage && <MoreRows loading={isFetchingNextPage} onLoad={onLoad} />}
+          </WordList>
         </WordBookmarkScope>
       : <Surface tone="quiet"><EmptyState title={t("words.weak.emptyTitle")}>{t("words.weak.emptyBody")}</EmptyState></Surface>}
   </div>;

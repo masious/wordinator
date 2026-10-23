@@ -1,8 +1,6 @@
 .center{min-height:100dvh;display:grid;place-items:center;padding:var(--space-6)}
-/* The cards fit below the header without scrolling, so the header and grid sit closer than the usual section rhythm. */
-/* The Words tab's cards carry a course · lesson line and a microphone, so they take the roomy card height. */
-.page{--size-word-card:var(--size-word-card-roomy);display:grid;gap:var(--space-6);animation:wordinator-enter var(--motion-reveal) var(--ease-physical) both}
-/* A compact Lumen header (eyebrow, title, intro) leaves the viewport to the cards. */
+.page{display:grid;gap:var(--space-6);animation:wordinator-enter var(--motion-reveal) var(--ease-physical) both}
+/* A compact Lumen header (eyebrow, title, intro) leaves the viewport to the words. */
 .header.header{padding-block:0;align-items:flex-end}
 /* The tools slot: the Bookmarks | Weak words switch, the lesson filter, and Drill on one row at control height, wrapping when
    the header runs out of room. */
@@ -13,6 +11,8 @@
 /* The field shows All lessons or the lesson, so its Lesson label is only read out; the tools stay one control high. */
 .filter label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 /* On phones the tools start at the left under the title and wrap: the switch on its own row, then the filter beside Drill. The
-   intro gives way to the cards; the empty state still explains how to bookmark. */
+   intro gives way to the words; the empty state still explains how to bookmark. */
 @media(max-width:48em){.page{gap:var(--space-4)}.header h1+p{display:none}
   .actions{justify-content:flex-start}.views{flex-basis:100%}.views>*{flex:1}.filter{flex:1 1 0}}
+/* A bookmarked word's microphone keeps its round shape among the row's actions. */
+.speak{display:inline-flex}

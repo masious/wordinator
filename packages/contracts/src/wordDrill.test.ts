@@ -21,6 +21,14 @@ describe("word drill contracts", () => {
     }
   });
 
+  it("names a word batch only for a lesson drill", () => {
+    const lessonId = id(); const courseId = id();
+    expect(wordDrillQuerySchema.parse({ source: "lesson", lessonId, batch: "2" })).toEqual({ source: "lesson", lessonId, batch: 2, direction: "mixed" });
+    for (const query of [{ source: "weak", batch: 1 }, { source: "course", courseId, batch: 1 }, { source: "lesson", lessonId, batch: 0 }, { source: "lesson", lessonId, batch: "x" }, { source: "lesson", lessonId, batch: 1.5 }]) {
+      expect(wordDrillQuerySchema.safeParse(query).success).toBe(false);
+    }
+  });
+
   it("caps a deck at the session size", () => {
     const lessonId = id();
     const card = {

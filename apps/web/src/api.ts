@@ -1,5 +1,5 @@
 import { accountSettingsResponseSchema, apiErrorSchema, courseContributorsResponseSchema, courseRefResponseSchema, courseSpeechCastResponseSchema, coursePageSchema, courseProgressResponseSchema, discussionResponseSchema, lessonProgressResponseSchema, groupShellResponseSchema, invitationResponseSchema, memberDirectoryResponseSchema, membershipAdminResponseSchema, notificationPageSchema, postPageSchema, postResponseSchema, profileResponseSchema, restrictedNotificationPageSchema, sessionResponseSchema, speechRecognitionTokenResponseSchema, type SpeechRecognitionTokenResponse } from "@wordinator/contracts";
-import { courseDetailResponseSchema, courseWordsResponseSchema, lessonResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBookmarkPageSchema, wordDrillDeckSchema, wordSearchPageSchema, type WordDrillMode, type WordDrillSource } from "@wordinator/contracts/lesson-document";
+import { courseDetailResponseSchema, courseWordsResponseSchema, lessonResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBatchesResponseSchema, wordBookmarkPageSchema, wordDrillDeckSchema, wordSearchPageSchema, type WordDrillMode, type WordDrillSource } from "@wordinator/contracts/lesson-document";
 import { lessonAiPracticesResponseSchema, tutorConversationPageSchema, tutorConversationResponseSchema, tutorMessagePageSchema, tutorModelsResponseSchema, tutorProfileResponseSchema, tutorUsageResponseSchema } from "@wordinator/contracts/tutor";
 import { courseDashboardResponseSchema, learningActivityResponseSchema, learningGoalSchema, lessonMetricsResponseSchema, type LearningActivityRange, type LearningActivityResponse, type LearningTimeEntry } from "@wordinator/contracts/learning";
 import { withSentTime } from "./learningActivity";
@@ -207,13 +207,24 @@ export const wordBookmarkLessonsQueryOptions = (groupId: string) => queryOptions
   retry: false,
 });
 
+// A lesson's word batches with the viewer's standing in each (docs/words.md#word-batches). Peeks, drills, and tutor practice change
+// it, so it is read fresh whenever its surface mounts.
+export const wordBatchesKey = (groupId: string, courseId: string, lessonId: string) => ["word-batches", groupId, courseId, lessonId] as const;
+export const wordBatchesQueryOptions = (groupId: string, courseId: string, lessonId: string) => queryOptions({
+  queryKey: wordBatchesKey(groupId, courseId, lessonId),
+  queryFn: () => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/courses/${encodeURIComponent(courseId)}/lessons/${encodeURIComponent(lessonId)}/word-batches`, wordBatchesResponseSchema),
+  staleTime: 0, retry: false,
+});
+
 // A drill session's deck (C12e). Each session fetches its deck once: `run` tells sessions with the same settings apart, so Drill
 // again draws a fresh deck, and the deck is never refetched in the background or kept once the session's page is left.
-export type WordDrillSettings = { source: WordDrillSource; lesson?: string; course?: string; direction: WordDrillMode };
-const drillTarget = (settings: WordDrillSettings) => settings.source === "lesson" && settings.lesson ? `&lessonId=${encodeURIComponent(settings.lesson)}`
+// `batch` (1-based) narrows a lesson drill to one of the lesson's word batches (docs/words.md#word-batches).
+export type WordDrillSettings = { source: WordDrillSource; lesson?: string; batch?: number; course?: string; direction: WordDrillMode };
+const drillTarget = (settings: WordDrillSettings) => settings.source === "lesson" && settings.lesson
+  ? `&lessonId=${encodeURIComponent(settings.lesson)}${settings.batch ? `&batch=${settings.batch}` : ""}`
   : settings.source === "course" && settings.course ? `&courseId=${encodeURIComponent(settings.course)}` : "";
 export const wordDrillQueryOptions = (groupId: string, settings: WordDrillSettings, run: number) => queryOptions({
-  queryKey: ["word-drill", groupId, settings.source, settings.lesson ?? settings.course ?? null, settings.direction, run] as const,
+  queryKey: ["word-drill", groupId, settings.source, settings.lesson ?? settings.course ?? null, settings.batch ?? null, settings.direction, run] as const,
   queryFn: () => apiRequest(
     `/api/groups/${encodeURIComponent(groupId)}/word-drill?source=${settings.source}${drillTarget(settings)}&direction=${settings.direction}`,
     wordDrillDeckSchema,

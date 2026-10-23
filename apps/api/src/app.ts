@@ -67,12 +67,13 @@ import {
   lessonShareKey,
   lessonShareQuestionSnapshotSchema,
   updateLessonShareRequestSchema,
+  opaqueIdSchema,
   slugify,
   SLUG_MAX_LENGTH,
   speechRecognitionTokenResponseSchema, SPEECH_RECOGNITION_TOKEN_TTL_MS,
 } from "@wordinator/contracts";
 import {
-  LESSON_DOCUMENT_SCHEMA_VERSION, collectImageUrls, collectLessonWords, collectPracticeIds, courseDetailResponseSchema, courseWordsResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBookmarkPageSchema, wordBookmarksQuerySchema, wordSearchKey, wordSearchPageSchema, wordSearchQuerySchema, wordDrillDeckSchema, wordDrillDirectionSchema, wordDrillGradeRequestSchema, wordDrillGradeResponseSchema, wordDrillQuerySchema, findPublishProblems, flattenToSteps, readingReached, lessonDraftSavedResponseSchema, lessonImageUploadResponseSchema,
+  LESSON_DOCUMENT_SCHEMA_VERSION, collectImageUrls, collectLessonWords, collectPracticeIds, courseDetailResponseSchema, courseWordsResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBookmarkPageSchema, wordBookmarksQuerySchema, wordSearchKey, wordSearchPageSchema, wordSearchQuerySchema, wordDrillDeckSchema, wordDrillDirectionSchema, wordDrillGradeRequestSchema, wordDrillGradeResponseSchema, wordDrillQuerySchema, lessonWordBatches, wordBatchesResponseSchema, wordExposuresRequestSchema, findPublishProblems, flattenToSteps, readingReached, lessonDraftSavedResponseSchema, lessonImageUploadResponseSchema,
   lessonPositionRequestSchema, lessonResponseSchema, lessonStepKey, mapImageUrls, parseStoredLessonDocument, publishLessonRequestSchema, readPracticeBlock, saveLessonDraftRequestSchema,
   toLearnerDocument, walkLessonBlocks, type CourseLesson, type CourseWord, type LessonBlockOf, type LessonDocument,
 } from "@wordinator/contracts/lesson-document";
@@ -104,6 +105,7 @@ import { registerAttemptRoutes } from "./learning/attempts";
 import { practiceSecondsSql, readCourseTypicalTimes, readLessonTime, registerLearningTimeRoutes, typicalFields } from "./learning/time";
 import { registerAiPracticeRoutes } from "./learning/aiPracticeRoutes";
 import { registerLearningActivityRoutes } from "./learning/activity";
+import { peekKnownTermsSql, termBands, type BandMemoryRow } from "./learning/wordBands";
 import { registerLessonActivityRoutes, type ActivityLesson } from "./lessonActivities/routes";
 import { aiPracticeCounts, lessonAiPracticeDeletion } from "./tutor/aiPractices";
 import { recentResults } from "./wordMemory";
@@ -2312,19 +2314,19 @@ app.get("/api/groups/:groupId/word-bookmarks", requireGroupAccess, async (contex
   if (cursor) { clauses.push("(b.created_at, b.lesson_id, b.word_id) < (?, ?, ?)"); values.push(cursor.createdAt, cursorLesson!, cursorWord!); }
   const rows = await context.env.DB.prepare(
     `SELECT b.created_at AS bookmarkedAt, w.word_id AS id, w.lesson_id AS lessonId, w.term, w.meaning, w.forms, w.example, w.note, w.ipa,
-       c.id AS courseId, c.title AS courseTitle, l.title AS lessonTitle
+       c.id AS courseId, c.slug AS courseSlug, c.title AS courseTitle, l.slug AS lessonSlug, l.title AS lessonTitle
      FROM course_word_bookmarks b
      JOIN course_lesson_words w ON w.group_id = b.group_id AND w.course_id = b.course_id AND w.lesson_id = b.lesson_id AND w.word_id = b.word_id
      JOIN course_lessons l ON l.id = b.lesson_id AND l.group_id = b.group_id AND l.course_id = b.course_id AND l.published_doc IS NOT NULL
      JOIN courses c ON c.id = b.course_id AND c.group_id = b.group_id
      WHERE ${clauses.join(" AND ")}
      ORDER BY b.created_at DESC, b.lesson_id DESC, b.word_id DESC LIMIT ?`,
-  ).bind(...values, parsed.data.limit + 1).all<IndexedWord & { bookmarkedAt: number; courseId: string; courseTitle: string; lessonTitle: string }>();
+  ).bind(...values, parsed.data.limit + 1).all<IndexedWord & { bookmarkedAt: number; courseId: string; courseSlug: string; courseTitle: string; lessonSlug: string; lessonTitle: string }>();
   const page = rows.results.slice(0, parsed.data.limit); const tail = page.at(-1);
   const spoken = await withWordSpeech(context.env.DB, page, group.language, context.env.PUBLIC_MEDIA_BASE_URL);
   return context.json(wordBookmarkPageSchema.parse({
-    items: spoken.map(({ bookmarkedAt, courseId, courseTitle, lessonTitle, ...word }) => ({
-      word, course: { id: courseId, title: courseTitle }, lesson: { id: word.lessonId, title: lessonTitle }, bookmarkedAt,
+    items: spoken.map(({ bookmarkedAt, courseId, courseSlug, courseTitle, lessonSlug, lessonTitle, ...word }) => ({
+      word, course: { id: courseId, slug: courseSlug, title: courseTitle }, lesson: { id: word.lessonId, slug: lessonSlug, title: lessonTitle }, bookmarkedAt,
     })),
     nextCursor: rows.results.length > parsed.data.limit && tail ? encodeCursor({ createdAt: tail.bookmarkedAt, id: `${tail.lessonId} ${tail.id}` }) : null,
   }));
@@ -2406,14 +2408,14 @@ async function drillLesson(context: Context<AppEnvironment>, lessonId: string) {
   if (!course || !courseVisible(course, user.id, group.creatorUserId)) return missing;
   const [lesson] = await readLessonRows(db, course, [lessonId]);
   if (!lesson || (!lesson.published && !seesCourseDrafts(course, user.id))) return missing;
-  return { course };
+  return { course, lesson };
 }
 
 // The deck: eligible indexed words (Weak words: the viewer's visible bookmarks, like the bookmark list, and every visible
 // occurrence of a term they have memory for; Lesson: the lesson's published words) with the viewer's word memory of the term
 // in both directions, ordered and capped by the pure deck builder. Speech is attached to the chosen cards only.
 type DrillRow = IndexedWord & {
-  termKey: string | null; courseId: string; courseSlug: string; courseTitle: string; lessonSlug: string; lessonTitle: string; bookmarked: number;
+  termKey: string | null; courseId: string; courseSlug: string; courseTitle: string; lessonSlug: string; lessonTitle: string; bookmarked: number; peekKnown: number;
   understandStability: number | null; understandAt: number | null; understandKnown: number | null; understandRecent: string | null;
   produceStability: number | null; produceAt: number | null; produceKnown: number | null; produceRecent: string | null;
 };
@@ -2442,6 +2444,12 @@ app.get("/api/groups/:groupId/word-drill", requireGroupAccess, async (context) =
   if (parsed.data.source === "lesson") {
     const lesson = await drillLesson(context, parsed.data.lessonId!); if ("error" in lesson) return lesson.error;
     source = { sql: "w.group_id = ? AND w.course_id = ? AND w.lesson_id = ?", values: [group.id, lesson.course.id, parsed.data.lessonId!] };
+    // A batch drill (docs/words.md#word-batches) keeps the batch's words; a batch the published lesson does not have is an empty deck.
+    if (parsed.data.batch !== undefined) {
+      const batches = lesson.lesson.publishedDoc === null ? [] : lessonWordBatches(storedDocument(lesson.lesson.publishedDoc, lesson.lesson.id));
+      source.sql += " AND w.word_id IN (SELECT value FROM json_each(?))";
+      source.values.push(jsonList(batches[parsed.data.batch - 1]?.wordIds ?? []));
+    }
   } else if (parsed.data.source === "course") {
     // A course drill takes the published words of every lesson of one visible course; any miss is the course read's 404.
     const course = await readCourseRow(db, user.id, group.id, parsed.data.courseId!);
@@ -2464,6 +2472,7 @@ app.get("/api/groups/:groupId/word-drill", requireGroupAccess, async (context) =
     `SELECT w.word_id AS id, w.lesson_id AS lessonId, w.term, w.meaning, w.forms, w.example, w.note, w.ipa, w.term_key AS termKey,
        c.id AS courseId, c.slug AS courseSlug, c.title AS courseTitle, l.slug AS lessonSlug, l.title AS lessonTitle,
        EXISTS (SELECT 1 FROM course_word_bookmarks bm WHERE bm.user_id = ? AND bm.lesson_id = w.lesson_id AND bm.word_id = w.word_id) AS bookmarked,
+       EXISTS (SELECT 1 FROM word_exposures x WHERE x.user_id = ? AND x.term_key = w.term_key AND x.known_at IS NOT NULL) AS peekKnown,
        u.stability AS understandStability, u.last_reviewed_at AS understandAt, u.known_override AS understandKnown, u.recent AS understandRecent,
        p.stability AS produceStability, p.last_reviewed_at AS produceAt, p.known_override AS produceKnown, p.recent AS produceRecent
      FROM course_lesson_words w
@@ -2472,9 +2481,9 @@ app.get("/api/groups/:groupId/word-drill", requireGroupAccess, async (context) =
      ${memory("u", "understand")}
      ${memory("p", "produce")}
      WHERE ${source.sql}`,
-  ).bind(user.id, user.id, user.id, ...source.values).all<DrillRow>();
+  ).bind(user.id, user.id, user.id, user.id, ...source.values).all<DrillRow>();
   const deck = buildWordDrillDeck(rows.results.map((row) => ({
-    row, termKey: row.termKey ?? wordSearchKey(row.term), bookmarked: row.bookmarked === 1,
+    row, termKey: row.termKey ?? wordSearchKey(row.term), bookmarked: row.bookmarked === 1, known: row.peekKnown === 1,
     memory: {
       understand: drillMemory(row.understandStability, row.understandAt, row.understandKnown, row.understandRecent),
       produce: drillMemory(row.produceStability, row.produceAt, row.produceKnown, row.produceRecent),
@@ -2483,7 +2492,7 @@ app.get("/api/groups/:groupId/word-drill", requireGroupAccess, async (context) =
   const spoken = await withWordSpeech(db, deck.map((entry) => entry.candidate.row), group.language, context.env.PUBLIC_MEDIA_BASE_URL);
   return context.json(wordDrillDeckSchema.parse({
     cards: spoken.map(({
-      termKey: _termKey, courseId, courseSlug, courseTitle, lessonSlug, lessonTitle, bookmarked: _bookmarked,
+      termKey: _termKey, courseId, courseSlug, courseTitle, lessonSlug, lessonTitle, bookmarked: _bookmarked, peekKnown: _peekKnown,
       understandStability: _us, understandAt: _ua, understandKnown: _uk, understandRecent: _ur, produceStability: _ps, produceAt: _pa, produceKnown: _pk, produceRecent: _pr, ...word
     }, index) => ({
       word, direction: deck[index]!.direction,
@@ -2543,6 +2552,80 @@ app.on(["PUT", "DELETE"], "/api/groups/:groupId/word-memory/:termKey/known", req
   const known = context.req.method === "PUT";
   const rows = await setWordKnown(context.env.DB, context.get("user")!.id, termKey.data, known);
   if (known && !rows) return apiError(context, 404, "WORD_NOT_FOUND", "This word is not available.");
+  return context.json({ ok: true } as const);
+});
+
+// Word batches (docs/words.md#word-batches). The batch counts, a Peek's exposures, and a Peek's "I know this word" all need the
+// published lesson; a word must be in its published index.
+async function publishedBatchLesson(context: Context<AppEnvironment>) {
+  const found = await visibleCourse(context); if (found.error) return { error: found.error };
+  const lesson = await visibleLesson(context, found.row); if (lesson.error) return { error: lesson.error };
+  if (lesson.lesson.publishedDoc === null) return { error: apiError(context, 409, "LESSON_UNPUBLISHED", "Only published lessons have word batches.") };
+  return { course: found.row, lesson: lesson.lesson, document: storedDocument(lesson.lesson.publishedDoc, lesson.lesson.id) };
+}
+
+// The viewer's standing in each batch: its words in the memory bands, counted per word (a term repeated in the batch counts each
+// time), and how many of them a Peek has shown.
+app.get(`${lessonPath}/word-batches`, requireGroupAccess, async (context) => {
+  const found = await publishedBatchLesson(context); if ("error" in found) return found.error;
+  const db = context.env.DB; const userId = context.get("user")!.id; const lessonId = found.lesson.id; const now = Date.now();
+  await fillWordSearchKeys(db);
+  const terms = "SELECT term_key FROM course_lesson_words WHERE lesson_id = ?2 AND term_key IS NOT NULL";
+  const [words, memory, known, seen] = await db.batch([
+    db.prepare("SELECT word_id AS wordId, term_key AS termKey FROM course_lesson_words WHERE lesson_id = ?").bind(lessonId),
+    db.prepare(`SELECT term_key AS termKey, stability, last_reviewed_at AS lastReviewedAt, known_override AS known
+      FROM word_memory WHERE user_id = ?1 AND term_key IN (${terms})`).bind(userId, lessonId),
+    db.prepare(peekKnownTermsSql(terms)).bind(userId, lessonId),
+    db.prepare("SELECT word_id AS wordId FROM word_exposures WHERE user_id = ? AND lesson_id = ? AND seen_count > 0").bind(userId, lessonId),
+  ]);
+  const termOf = new Map(((words?.results ?? []) as Array<{ wordId: string; termKey: string | null }>).map((row) => [row.wordId, row.termKey]));
+  const bands = termBands((memory?.results ?? []) as BandMemoryRow[], ((known?.results ?? []) as Array<{ termKey: string }>).map((row) => row.termKey), now);
+  const shown = new Set(((seen?.results ?? []) as Array<{ wordId: string }>).map((row) => row.wordId));
+  return context.json(wordBatchesResponseSchema.parse({
+    batches: lessonWordBatches(found.document).map(({ wordIds }) => {
+      const band = (wordId: string) => { const termKey = termOf.get(wordId); return termKey ? bands.get(termKey) : undefined; };
+      const strong = wordIds.filter((wordId) => band(wordId) === "strong").length;
+      const fading = wordIds.filter((wordId) => band(wordId) === "fading").length;
+      return { strong, fading, new: wordIds.length - strong - fading, total: wordIds.length, seen: wordIds.filter((wordId) => shown.has(wordId)).length };
+    }),
+  }));
+});
+
+// A Peek counts each word it showed once; exposure never changes word memory.
+app.post(`${lessonPath}/word-exposures`, requireGroupAccess, async (context) => {
+  const parsed = wordExposuresRequestSchema.safeParse(await context.req.json().catch(() => undefined));
+  if (!parsed.success) return apiError(context, 400, "INVALID_WORDS", "The words are invalid.");
+  const found = await publishedBatchLesson(context); if ("error" in found) return found.error;
+  const db = context.env.DB; await fillWordSearchKeys(db);
+  await db.prepare(
+    `INSERT INTO word_exposures (user_id, course_id, lesson_id, word_id, term_key, seen_count, last_seen_at)
+     SELECT ?1, w.course_id, w.lesson_id, w.word_id, w.term_key, 1, ?4 FROM course_lesson_words w
+     WHERE w.course_id = ?2 AND w.lesson_id = ?3 AND w.term_key IS NOT NULL AND w.word_id IN (SELECT value FROM json_each(?5))
+     ON CONFLICT (user_id, lesson_id, word_id) DO UPDATE SET seen_count = seen_count + 1, last_seen_at = excluded.last_seen_at, term_key = excluded.term_key`,
+  ).bind(context.get("user")!.id, found.course.id, found.lesson.id, Date.now(), JSON.stringify(parsed.data.wordIds)).run();
+  return context.json({ ok: true } as const);
+});
+
+// A Peek's "I know this word": marks the term known in memory where there is memory, and on the word's exposure for a term without
+// memory yet. Clearing it clears both, like the Weak words view's route.
+app.on(["PUT", "DELETE"], `${lessonPath}/words/:wordId/known`, requireGroupAccess, async (context) => {
+  const wordId = opaqueIdSchema.safeParse(context.req.param("wordId"));
+  if (!wordId.success) return apiError(context, 400, "INVALID_WORD", "This word is invalid.");
+  const found = await publishedBatchLesson(context); if ("error" in found) return found.error;
+  const db = context.env.DB; const userId = context.get("user")!.id; await fillWordSearchKeys(db);
+  const word = await db.prepare("SELECT term_key AS termKey FROM course_lesson_words WHERE course_id = ? AND lesson_id = ? AND word_id = ? AND term_key IS NOT NULL")
+    .bind(found.course.id, found.lesson.id, wordId.data).first<{ termKey: string }>();
+  if (!word) return apiError(context, 404, "WORD_NOT_FOUND", "This word is not available.");
+  if (context.req.method === "PUT") {
+    await db.batch([
+      db.prepare(`INSERT INTO word_exposures (user_id, course_id, lesson_id, word_id, term_key, known_at) VALUES (?, ?, ?, ?, ?, ?)
+        ON CONFLICT (user_id, lesson_id, word_id) DO UPDATE SET known_at = excluded.known_at, term_key = excluded.term_key`)
+        .bind(userId, found.course.id, found.lesson.id, wordId.data, word.termKey, Date.now()),
+      db.prepare("UPDATE word_memory SET known_override = 1 WHERE user_id = ? AND term_key = ?").bind(userId, word.termKey),
+    ]);
+  } else {
+    await setWordKnown(db, userId, word.termKey, false);
+  }
   return context.json({ ok: true } as const);
 });
 
@@ -2613,6 +2696,7 @@ app.delete(lessonPath, requireGroupAccess, async (context) => {
     db.prepare("DELETE FROM course_lesson_positions WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM course_lesson_words WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM course_word_bookmarks WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
+    db.prepare("DELETE FROM word_exposures WHERE course_id = ? AND lesson_id = ?").bind(courseId, lessonId),
     db.prepare("DELETE FROM word_reviews WHERE course_id = ? AND lesson_id = ?").bind(courseId, lessonId),
     db.prepare("DELETE FROM practice_attempts WHERE course_id = ? AND lesson_id = ?").bind(courseId, lessonId),
     db.prepare("DELETE FROM learning_time WHERE lesson_id = ?").bind(lessonId),

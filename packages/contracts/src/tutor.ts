@@ -610,9 +610,10 @@ export const TUTOR_TITLE_SOURCES = ["auto", "tutor", "user"] as const;
 export const tutorTitleSourceSchema = z.enum(TUTOR_TITLE_SOURCES);
 export type TutorTitleSource = z.infer<typeof tutorTitleSourceSchema>;
 // A word practice conversation (experimental): up to 15 words the learner picked after a drill, each with where it came from:
-// missed in the drill, weak in memory, or never practised. The tutor reads their details with `get_words`.
+// missed in the drill, weak in memory, or never practised; or a lesson's word batch the learner chose to practise
+// (docs/words.md#word-batches). The tutor reads their details with `get_words`.
 export const TUTOR_WORD_PRACTICE_MAX = 15;
-export const WORD_PRACTICE_SOURCES = ["drill", "weak", "new"] as const;
+export const WORD_PRACTICE_SOURCES = ["drill", "weak", "new", "batch"] as const;
 export const wordPracticeSourceSchema = z.enum(WORD_PRACTICE_SOURCES);
 export type WordPracticeSource = z.infer<typeof wordPracticeSourceSchema>;
 // The word's card (meaning, forms, example, note) is kept for the web's highlights; the prompt carries only the reference and term.

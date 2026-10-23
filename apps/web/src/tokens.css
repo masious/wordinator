@@ -304,13 +304,21 @@
   --size-rail-nav-min: 10rem;
   /* Word cards (C9a): every card has one height so a page of them can be fitted to the viewport. */
   --size-word-card: 15rem;
-  /* Words tab cards: room for the course · lesson line, a long term with forms, and the microphone without scrolling. */
+  /* Roomier word cards (the practice word popover, the tutor's review cards): a long term with forms and its details. */
   --size-word-card-roomy: 18rem;
   --size-word-card-min: 15rem;
+  /* A word batch tile's narrowest width: its name, count, memory bar, and Peek, Drill, and Practice on one or two lines. */
+  --size-word-batch: 14rem;
   /* The Words tab's lesson filter (C12a): wide enough for a lesson title and its count. */
   --size-words-filter: 18rem;
   /* A drill card (C12e): one card at a time, tall enough for a full word without scrolling in most cases. */
-  --size-drill-card: 36rem;
+  --size-drill-card: 28rem;
+  /* The drill table's small cards (Up next, Coming back, Got it), in the drill card's shape on a wide page; a pile shows a step of
+     each card's edge under the top one, and a place is a small card plus the room for those steps. */
+  --aspect-drill-card: 3 / 2;
+  --size-drill-mini-card: 7rem;
+  --size-drill-pile-step: 3px;
+  --size-drill-place: 8.5rem;
   --lesson-column-gap: var(--space-6);
   --lesson-callout-icon: 1.25rem;
   /* Icon-only controls (bookmark, speaker): the glyph; the hit area is --touch-target. */

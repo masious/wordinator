@@ -216,6 +216,9 @@ test("mobile word recap stays within the viewport", async ({ page }) => {
   await page.goto(`/courses/${course.id}`, { waitUntil: "networkidle" });
   await page.getByRole("button", { name: "Review the words of lesson 1: Op het station" }).click();
   const recap = page.getByRole("dialog", { name: "Words of lesson 1" });
+  await expect(recap.getByRole("listitem", { name: "Batch 1" })).toContainText("2 words");
+  await expectNoHorizontalOverflow(page, "lesson word batches");
+  await recap.getByRole("button", { name: "Peek at batch 1" }).click();
   const platform = recap.getByRole("article", { name: "het perron" });
   await platform.getByRole("button", { name: "Show meaning" }).click();
   await expect(platform.getByText("the platform", { exact: true })).toBeVisible();
@@ -279,7 +282,7 @@ test("mobile lesson reader stacks columns", async ({ page }) => {
   if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-lesson-columns.png` });
 });
 
-test("mobile Words tab opens from the navigation drawer and fits its cards without scrolling", async ({ page }, testInfo) => {
+test("mobile Words tab opens from the navigation drawer and lists its words without overflow", async ({ page }, testInfo) => {
   // A fresh account keeps other tests' bookmarks off this one's Words tab.
   await registerAccount(page, testInfo, "mwords");
   const api = courseApi(page);
@@ -299,19 +302,13 @@ test("mobile Words tab opens from the navigation drawer and fits its cards witho
   await page.getByRole("button", { name: "Open navigation" }).click();
   await page.getByRole("dialog", { name: "Main navigation" }).getByRole("link", { name: "Words", exact: true }).click();
   await expect(page).toHaveURL(/\/words$/);
-  // Newest first, and a narrow phone fits one card per page, so page to the first bookmarked word.
-  const card = page.getByRole("article", { name: "het perron" }).filter({ hasText: courseTitle });
+  // Each word is a row with its meaning shown and its lesson linked.
+  const row = page.getByRole("listitem", { name: "het perron" }).filter({ hasText: courseTitle });
   await expect(page.getByRole("heading", { name: "Your words" })).toBeVisible();
-  await expect(page.getByRole("article").first()).toBeVisible();
-  for (let pages = 0; pages < 20 && !await card.isVisible(); pages += 1) await page.getByRole("button", { name: "Next" }).click();
-  await expect(card).toContainText(`${courseTitle} · Op het station`);
-  await card.getByRole("button", { name: "Show meaning" }).click();
-  await expect(card.getByText("the platform", { exact: true })).toBeVisible();
+  await expect(row).toContainText(`${courseTitle} · Op het station`);
+  await expect(row.getByText("the platform", { exact: true })).toBeVisible();
+  await expect(row.getByRole("link", { name: "Open lesson Op het station" })).toBeVisible();
   await expectNoHorizontalOverflow(page, "words tab");
-  // The cards, counter, and Back and Next fit the first screen without scrolling.
-  await page.waitForTimeout(600);
-  const next = await page.getByRole("button", { name: /^(Next)$/ }).boundingBox();
-  expect(next!.y + next!.height).toBeLessThanOrEqual(page.viewportSize()!.height);
   if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-words-tab.png` });
 });
 

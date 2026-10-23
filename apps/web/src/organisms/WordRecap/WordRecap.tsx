@@ -1,5 +1,5 @@
 import type { CourseWord, LessonStep } from "@wordinator/contracts/lesson-document";
-import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useId, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { PlainText } from "../../molecules/PlainText";
 import { ListeningPill, PassingVerdict, SpeakButton } from "../../molecules/SpeakControls";
@@ -58,7 +58,8 @@ type SpokenOutcome = SpokenAnswer | "noSpeech" | "blocked" | "failed";
 // Saying the term aloud on a word card (docs/words.md#spoken-answers): a round microphone in the footer, and the outcome floating
 // over the card for a moment, after which the term is spoken under the reveal sound toggle, right or wrong. It neither flips the
 // card nor grades it; only a Microsoft assessment is stored, through the scope. Only a surface inside a recognition scope (the Words tab) listens.
-function WordSpeak({ term, word, onAnswer }: { term: string; word: AssessedWord | undefined; onAnswer: () => void }) {
+// The Words tab's word rows use it too, placing the microphone with `className`.
+export function WordSpeak({ term, word, onAnswer, className = styles.speak }: { term: string; word: AssessedWord | undefined; onAnswer: () => void; className?: string }) {
   const [outcome, setOutcome] = useState<SpokenOutcome | null>(null);
   const spoken = useSpokenAnswer(term, (answer) => { setOutcome(answer); onAnswer(); }, word);
   const { status } = spoken;
@@ -66,13 +67,13 @@ function WordSpeak({ term, word, onAnswer }: { term: string; word: AssessedWord 
   const listen = () => { if (!isListening(status)) setOutcome(null); spoken.listen(); };
   if (!spoken.available) return null;
   return <>
-    <span className={styles.speak}><SpeakButton compact term={term} state={spoken} onListen={listen} /></span>
+    <span className={className}><SpeakButton compact term={term} state={spoken} onListen={listen} /></span>
     {isListening(status) && <ListeningPill state={spoken} />}
     {outcome && <PassingVerdict outcome={outcome} onGone={() => setOutcome(null)} />}
   </>;
 }
 
-function WordCard({ word, source, shown, opened, onToggle }: { word: RecapWord; source: string | null; shown: boolean; opened: boolean; onToggle: () => void }) {
+function WordCard({ word, source, shown, opened, action, onToggle }: { word: RecapWord; source: string | null; shown: boolean; opened: boolean; action?: ReactNode; onToggle: () => void }) {
   const { t } = useTranslation();
   // Indexed words (course recap, Words tab) carry their clips; a lesson run's words take them from the lesson's speech scope.
   const resolve = useSpeechResolver();
@@ -106,6 +107,7 @@ function WordCard({ word, source, shown, opened, onToggle }: { word: RecapWord; 
     <div className={styles.footer}>
       <Button variant="secondary" onClick={toggle}>{shown ? t("courses.words.hideMeaning") : t("courses.words.showMeaning")}</Button>
       <span className={styles.bookmark}><WordBookmarkToggle wordId={word.id} lessonId={word.lessonId} term={word.term} /></span>
+      {action && <span className={styles.speak}>{action}</span>}
       <WordSpeak term={word.term} word={word.lessonId ? { lessonId: word.lessonId, wordId: word.id } : undefined} onAnswer={() => playRevealSpeech(termOwner, termSpeech)} />
     </div>
   </article>;
@@ -119,9 +121,11 @@ export type MoreWords = { hasMore: boolean; loading: boolean; onLoad: () => void
 // Back and Next move by a page; the last page offers the done action when there is one. With `more`, the next words load while
 // the reader is a page away from the end, and the total is not shown until every word has loaded. Nothing is graded, recorded,
 // or counted. Callers render it only when there is at least one word. Inside a speech recognition scope (the Words tab only),
-// each card also offers saying its term aloud.
-export function WordRecap({ words, doneLabel, onDone, source, more }: {
+// each card also offers saying its term aloud. `action` puts one control at the start of each card's footer (a Peek's "I know this
+// word"); it takes the place a microphone would, so it is for surfaces outside a recognition scope.
+export function WordRecap({ words, doneLabel, onDone, source, more, action }: {
   words: readonly RecapWord[]; doneLabel?: string; onDone?: () => void; source?: (word: RecapWord) => string | null; more?: MoreWords;
+  action?: (word: RecapWord) => ReactNode;
 }) {
   const { t } = useTranslation();
   const { recapRef, gridRef, size } = useGridFit();
@@ -159,7 +163,7 @@ export function WordRecap({ words, doneLabel, onDone, source, more }: {
     <div className={styles.grid} ref={gridRef}>
       {page.map((word, index) => {
         const key = wordKey(word);
-        return <WordCard key={`${start + index}:${key}`} word={word} source={source?.(word) ?? null} shown={shown.has(key)} opened={opened.has(key)} onToggle={() => reveal([key], !shown.has(key))} />;
+        return <WordCard key={`${start + index}:${key}`} word={word} source={source?.(word) ?? null} shown={shown.has(key)} opened={opened.has(key)} action={action?.(word)} onToggle={() => reveal([key], !shown.has(key))} />;
       })}
     </div>
     <div className={styles.nav}>

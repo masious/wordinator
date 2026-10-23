@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import fixture from "../../../test/fixtures/courses/dutch-foundations-part-iii.json";
 import { COURSE_BLOCKS_MAX, COURSE_WORDS_PER_BLOCK_MAX, practicePayloadSchema } from ".";
 import {
-  collectImageUrls, collectLessonWords, collectPracticeIds, courseWordsResponseSchema, findPublishProblems, flattenToSteps, inlineText, isReadingStep, readingReached,
+  collectImageUrls, collectLessonWords, lessonWordBatches, splitWordBatches, WORD_BATCH_MAX, WORD_BATCH_MIN, collectPracticeIds, courseWordsResponseSchema, findPublishProblems, flattenToSteps, inlineText, isReadingStep, readingReached,
   LESSON_DOCUMENT_SCHEMA_VERSION, lessonDocumentSchema, lessonNotReadySchema, lessonPositionRequestSchema, lessonStepKey, mapImageUrls,
   parseStoredLessonDocument, readPracticeBlock, readVocabularyBlock, resolveStepIndex, saveLessonDraftRequestSchema, toLearnerDocument,
   upgradeLegacyBlocks, vocabularyPayloadSchema,
@@ -376,5 +376,42 @@ describe("legacy block upgrade", () => {
 
   it("rejects unknown legacy kinds", () => {
     expect(() => upgradeLegacyBlocks([{ id: randomUUID(), kind: "poll", payload: {} }])).toThrow();
+  });
+});
+
+describe("word batches", () => {
+  const sizes = (sections: number[]) => splitWordBatches(sections).map(([start, end]) => end - start);
+
+  it("makes three to five batches of six to ten words where the words allow, and fewer or more otherwise", () => {
+    const flat = (count: number) => Array.from({ length: count }, () => 0);
+    expect(sizes(flat(0))).toEqual([]);
+    expect(sizes(flat(4))).toEqual([4]);
+    expect(sizes(flat(9))).toEqual([9]);
+    expect(sizes(flat(11))).toEqual([6, 5]);
+    expect(sizes(flat(18))).toEqual([6, 6, 6]);
+    expect(sizes(flat(32))).toEqual([8, 8, 8, 8]);
+    expect(sizes(flat(50))).toEqual([10, 10, 10, 10, 10]);
+    const many = sizes(flat(73));
+    expect(many.length).toBeGreaterThan(5);
+    expect(many.every((size) => size >= WORD_BATCH_MIN && size <= WORD_BATCH_MAX)).toBe(true);
+  });
+
+  it("cuts where sections are furthest apart, keeping a section's words together", () => {
+    // Seven words in section 1, then nine in section 2, then eight in section 5: the cuts fall on the section changes.
+    const sections = [...Array(7).fill(1), ...Array(9).fill(2), ...Array(8).fill(5)];
+    expect(sizes(sections)).toEqual([7, 9, 8]);
+    // Two cuts are possible at sizes 8 and 9; the one between distant sections wins over the one between neighbours.
+    expect(sizes([...Array(8).fill(1), 2, ...Array(8).fill(4)])).toEqual([9, 8]);
+  });
+
+  it("reads batches from a lesson's top-level headings and words in document order", () => {
+    const first = Array.from({ length: 6 }, (_, index) => word(`een ${index}`));
+    const second = Array.from({ length: 6 }, (_, index) => word(`twee ${index}`));
+    const third = Array.from({ length: 6 }, (_, index) => word(`drie ${index}`));
+    const document = parse(heading("Hallo", 1), heading("Groeten"), vocabulary(...first), heading("Getallen"), paragraph("Tel mee."),
+      columns(column(vocabulary(...second.slice(0, 3))), column(vocabulary(...second.slice(3)))), heading("Dagen"), vocabulary(...third));
+    const batches = lessonWordBatches(document);
+    expect(batches.map((batch) => batch.wordIds)).toEqual([first, second, third].map((words) => words.map((entry) => entry.id)));
+    expect(batches.map((batch) => batch.headings)).toEqual([["Groeten"], ["Getallen"], ["Dagen"]]);
   });
 });

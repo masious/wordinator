@@ -604,6 +604,29 @@ export const wordMemory = sqliteTable(
   ],
 );
 
+// What a learner has looked at in a Peek of a word batch (docs/words.md#word-batches), per lesson word: how often, when last, and
+// whether they marked it known there. Exposure never changes word memory; `known_at` stands for "I know this word" on a word that
+// has no memory yet. Migration 0041.
+export const wordExposures = sqliteTable(
+  "word_exposures",
+  {
+    userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
+    lessonId: text("lesson_id").notNull().references(() => courseLessons.id, { onDelete: "cascade" }),
+    wordId: text("word_id").notNull(),
+    termKey: text("term_key").notNull(),
+    seenCount: integer("seen_count").notNull().default(0),
+    lastSeenAt: integer("last_seen_at"),
+    knownAt: integer("known_at"),
+  },
+  (table) => [
+    primaryKey({ columns: [table.userId, table.lessonId, table.wordId] }),
+    index("word_exposures_user_term_idx").on(table.userId, table.termKey),
+    index("word_exposures_lesson_idx").on(table.lessonId),
+    check("word_exposures_seen_check", sql`${table.seenCount} >= 0`),
+  ],
+);
+
 export const practiceAttempts = sqliteTable(
   "practice_attempts",
   {

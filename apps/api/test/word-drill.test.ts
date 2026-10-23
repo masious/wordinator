@@ -223,6 +223,20 @@ describe("Word drill deck", () => {
     expect((await deck(groupId, reader, "source=weak")).cards.map((card) => card.word.id)).toEqual([again.id]);
   });
 
+  it("narrows a lesson drill to one word batch, with an empty deck for a batch the lesson does not have", async () => {
+    const { groupId, owner, reader, course } = await setup();
+    // Eighteen words make three batches of six, in document order.
+    const words = Array.from({ length: 18 }, (_, index) => word(`woord ${String(index).padStart(2, "0")}`));
+    const batched = await addLesson(groupId, course.id, owner, "Batched", { document: documentOf(blocks.vocabulary(...words)) });
+    const second = await deck(groupId, reader, `source=lesson&lessonId=${batched.lesson.id}&batch=2`);
+    expect(second.cards.map((card) => card.word.id).sort()).toEqual(words.slice(6, 12).map((entry) => entry.id).sort());
+    expect((await deck(groupId, reader, `source=lesson&lessonId=${batched.lesson.id}&batch=4`)).cards).toEqual([]);
+    // Only a lesson drill names a batch.
+    const refused = await request(`/api/groups/${groupId}/word-drill?source=weak&batch=1`, reader);
+    expect(refused.status).toBe(400);
+    expect(await errorCode(refused)).toBe("INVALID_DRILL");
+  });
+
   it("orders by recall probability over real rows, capping the session", async () => {
     const { groupId, owner, readerId, reader, course } = await setup();
     const words = Array.from({ length: WORD_DRILL_SESSION_SIZE + 2 }, (_, index) => word(`woord ${String(index).padStart(2, "0")}`));

@@ -35,16 +35,25 @@ vi.mock("microsoft-cognitiveservices-speech-sdk", () => ({
   },
 }));
 
-// jsdom has no layout, so the cards' page size is set here.
-const fit = vi.hoisted(() => ({ value: { columns: 2, rows: 1 } }));
-vi.mock("../organisms/WordRecap/fitGrid", async (importOriginal) => ({ ...await importOriginal<typeof import("../organisms/WordRecap/fitGrid")>(), measureFit: () => fit.value }));
+// A lesson read for the drill setup's batch select: fourteen words in two sections, so two batches of seven.
+vi.mock("../api", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("../api")>();
+  const { queryOptions } = await import("@tanstack/react-query");
+  const section = (title: string) => ({ id: crypto.randomUUID(), type: "heading", props: { level: 2 }, content: [{ type: "text", text: title, styles: {} }], children: [] });
+  const words = (from: number) => ({ id: crypto.randomUUID(), type: "vocabulary", children: [],
+    props: { data: JSON.stringify({ words: Array.from({ length: 7 }, (_, index) => ({ id: crypto.randomUUID(), term: `woord ${from + index}`, meaning: "m" })) }) } });
+  const document = { schemaVersion: 1, blocks: [section("Groeten"), words(1), section("Getallen"), words(8)] };
+  return { ...actual, lessonQueryOptions: (groupId: string, courseId: string, lessonId: string) => queryOptions({
+    queryKey: ["course-lesson", groupId, courseId, lessonId] as const, queryFn: async () => ({ lesson: { document } }) as never,
+  }) };
+});
 
 const id = (n: number) => `90000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 const groupId = id(1); const userId = id(2); const courseId = id(3);
 const session = { status: "signedIn", user: { id: userId, displayName: "Ada", avatarUrl: null, mustChangePassword: false }, groups: [{ id: groupId, name: "Study", language: "nl", role: "member", icon: "🇳🇱", iconUrl: null }], requests: [], deletedGroups: [] };
 const item = (n: number, lesson = id(40)) => ({
   word: { id: id(100 + n), lessonId: lesson, term: `woord ${n}`, meaning: `meaning ${n}`, forms: null, example: null, note: null, speech: { term: null, example: null } },
-  course: { id: courseId, title: "Dutch foundations" }, lesson: { id: lesson, title: `Lesson ${lesson.slice(-2)}` }, bookmarkedAt: 1000 - n,
+  course: { id: courseId, slug: "dutch-foundations", title: "Dutch foundations" }, lesson: { id: lesson, slug: `lesson-${lesson.slice(-2)}`, title: `Lesson ${lesson.slice(-2)}` }, bookmarkedAt: 1000 - n,
 });
 const listPath = `/api/groups/${groupId}/word-bookmarks?limit=100`;
 const keysPath = `/api/groups/${groupId}/word-bookmarks/keys`;
@@ -111,7 +120,7 @@ beforeEach(() => {
     return response({ ok: true });
   }));
 });
-afterEach(() => { act(() => stopSpeech()); cleanup(); vi.unstubAllGlobals(); vi.restoreAllMocks(); fit.value = { columns: 2, rows: 1 }; localStorage.clear(); resetRevealSound(); });
+afterEach(() => { act(() => stopSpeech()); cleanup(); vi.unstubAllGlobals(); vi.restoreAllMocks(); localStorage.clear(); resetRevealSound(); });
 
 // Mantine keeps a Select's options mounted; the open one is found through the listbox its combobox controls.
 async function open(combobox: HTMLElement) {
@@ -129,81 +138,77 @@ async function choose(combobox: HTMLElement, option: string) {
 }
 
 describe("Words tab", () => {
-  it("shows bookmarked words newest first with their course and lesson", async () => {
+  it("lists bookmarked words newest first, each with its meaning and a link to its lesson", async () => {
     renderPage();
     expect(await screen.findByRole("heading", { name: "Your words" })).toBeInTheDocument();
-    expect(await screen.findByText("Words 1–2 of 3")).toBeInTheDocument();
-    const first = screen.getByRole("article", { name: "woord 1" });
+    const list = await screen.findByRole("list", { name: "Bookmarked words" });
+    expect(within(list).getAllByRole("listitem").map((row) => row.getAttribute("aria-label"))).toEqual(["woord 1", "woord 2", "woord 3"]);
+    const first = screen.getByRole("listitem", { name: "woord 1" });
+    expect(first).toHaveTextContent("meaning 1");
     expect(first).toHaveTextContent("Dutch foundations · Lesson 40");
-    // The Words tab's cards carry the shared reveal sound toggle.
-    expect(screen.getByRole("button", { name: "Speak words when revealed" })).toHaveAttribute("aria-pressed", "true");
-    expect(screen.getAllByRole("article").map((card) => card.getAttribute("aria-label"))).toEqual(["woord 1", "woord 2"]);
-    // The last page has no done action.
-    fireEvent.click(screen.getByRole("button", { name: "Next" }));
-    expect(screen.getByRole("article", { name: "woord 3" })).toHaveTextContent("Lesson 41");
-    expect(screen.getByRole("button", { name: "Next" })).toBeDisabled();
+    expect(within(first).getByRole("link", { name: "Open lesson Lesson 40" })).toHaveAttribute("href", "/courses/dutch-foundations/lessons/lesson-40");
+    expect(within(screen.getByRole("listitem", { name: "woord 3" })).getByRole("link", { name: "Open lesson Lesson 41" })).toHaveAttribute("href", "/courses/dutch-foundations/lessons/lesson-41");
+    // Meanings are shown, so there is nothing to reveal or page through.
+    expect(screen.queryByRole("button", { name: "Show meaning" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Next" })).not.toBeInTheDocument();
   });
 
-  it("keeps a card in place after its bookmark is removed, and lets it be bookmarked again", async () => {
+  it("keeps a row in place after its bookmark is removed, and lets it be bookmarked again", async () => {
     renderPage();
-    const card = await screen.findByRole("article", { name: "woord 1" });
-    const toggle = within(card).getByRole("button", { name: "Bookmark woord 1" });
+    const row = await screen.findByRole("listitem", { name: "woord 1" });
+    const toggle = within(row).getByRole("button", { name: "Bookmark woord 1" });
     await waitFor(() => expect(toggle).toHaveAttribute("aria-pressed", "true"));
     fireEvent.click(toggle);
     await waitFor(() => expect(fetch).toHaveBeenCalledWith(expect.stringContaining(`/words/${id(101)}/bookmark`), expect.objectContaining({ method: "DELETE" })));
-    // The list refetches without the word, but its card stays where it was.
+    // The list refetches without the word, but its row stays where it was.
     await waitFor(() => expect(vi.mocked(fetch).mock.calls.filter(([path]) => String(path) === listPath).length).toBeGreaterThan(1));
-    expect(screen.getAllByRole("article").map((entry) => entry.getAttribute("aria-label"))).toEqual(["woord 1", "woord 2"]);
-    expect(within(screen.getByRole("article", { name: "woord 1" })).getByRole("button", { name: "Bookmark woord 1" })).toHaveAttribute("aria-pressed", "false");
-    fireEvent.click(within(screen.getByRole("article", { name: "woord 1" })).getByRole("button", { name: "Bookmark woord 1" }));
+    expect(screen.getAllByRole("listitem").map((entry) => entry.getAttribute("aria-label"))).toEqual(["woord 1", "woord 2", "woord 3"]);
+    expect(within(screen.getByRole("listitem", { name: "woord 1" })).getByRole("button", { name: "Bookmark woord 1" })).toHaveAttribute("aria-pressed", "false");
+    fireEvent.click(within(screen.getByRole("listitem", { name: "woord 1" })).getByRole("button", { name: "Bookmark woord 1" }));
     await waitFor(() => expect(fetch).toHaveBeenCalledWith(expect.stringContaining(`/words/${id(101)}/bookmark`), expect.objectContaining({ method: "PUT" })));
   });
 
-  it("loads the next page before the reader reaches it, without a total until everything has loaded", async () => {
-    fit.value = { columns: 1, rows: 1 };
+  it("loads further pages of bookmarks from Show more words", async () => {
     pages = {
       [listPath]: { items: [item(1), item(2)], nextCursor: "next" },
       [`${listPath}&cursor=next`]: { items: [item(3)], nextCursor: null },
     };
     renderPage();
-    // Two words loaded and a page of one: the next page is a page away, so it loads at once.
-    await waitFor(() => expect(vi.mocked(fetch).mock.calls.map(([path]) => String(path))).toContain(`${listPath}&cursor=next`));
-    await act(async () => {});
-    expect(await screen.findByText("Word 1 of 3")).toBeInTheDocument();
-    fireEvent.click(screen.getByRole("button", { name: "Next" }));
-    fireEvent.click(screen.getByRole("button", { name: "Next" }));
-    expect(screen.getByRole("article", { name: "woord 3" })).toBeInTheDocument();
+    await screen.findByRole("listitem", { name: "woord 2" });
+    fireEvent.click(screen.getByRole("button", { name: "Show more words" }));
+    expect(await screen.findByRole("listitem", { name: "woord 3" })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Show more words" })).not.toBeInTheDocument();
   });
 
   it("explains how to bookmark when there is nothing yet, without a lesson filter", async () => {
     pages = { [listPath]: { items: [], nextCursor: null } }; lessons = [];
     renderPage();
     expect(await screen.findByText("No bookmarked words yet")).toBeInTheDocument();
-    expect(screen.queryByRole("article")).not.toBeInTheDocument();
+    expect(screen.queryByRole("listitem")).not.toBeInTheDocument();
     expect(screen.queryByRole("combobox", { name: "Lesson" })).not.toBeInTheDocument();
   });
 
-  it("narrows the cards to one lesson through the filter and keeps it in the URL", async () => {
+  it("narrows the words to one lesson through the filter and keeps it in the URL", async () => {
     const router = renderPage();
-    await screen.findByRole("article", { name: "woord 1" });
+    await screen.findByRole("listitem", { name: "woord 1" });
     const filter = await screen.findByRole("combobox", { name: "Lesson" });
     expect(filter).toHaveValue("All lessons");
     // Lessons are grouped by course, each with its bookmark count.
     expect(await options(filter)).toEqual(["All lessons", "Lesson 40 (2)", "Lesson 41 (1)"]);
     await choose(filter, "Lesson 41 (1)");
     await waitFor(() => expect(router.state.location.search).toEqual({ lesson: id(41) }));
-    expect(await screen.findByText("Word 1 of 1")).toBeInTheDocument();
-    expect(screen.getAllByRole("article").map((card) => card.getAttribute("aria-label"))).toEqual(["woord 3"]);
+    await waitFor(() => expect(screen.getAllByRole("listitem").map((row) => row.getAttribute("aria-label"))).toEqual(["woord 3"]));
     expect(fetch).toHaveBeenCalledWith(`${listPath}&lessonId=${id(41)}`, expect.anything());
     // Back to every lesson.
     await choose(screen.getByRole("combobox", { name: "Lesson" }), "All lessons");
     await waitFor(() => expect(router.state.location.search).toEqual({}));
-    expect(await screen.findByText("Words 1–2 of 3")).toBeInTheDocument();
+    expect(await screen.findByRole("listitem", { name: "woord 1" })).toBeInTheDocument();
+    expect(screen.getAllByRole("listitem")).toHaveLength(3);
   });
 
-  it("keeps the chosen lesson and its card after its last bookmark is removed", async () => {
+  it("keeps the chosen lesson and its row after its last bookmark is removed", async () => {
     const router = renderPage(`/words?lesson=${id(41)}`);
-    const card = await screen.findByRole("article", { name: "woord 3" });
+    const card = await screen.findByRole("listitem", { name: "woord 3" });
     const toggle = within(card).getByRole("button", { name: "Bookmark woord 3" });
     await waitFor(() => expect(toggle).toHaveAttribute("aria-pressed", "true"));
     lessons = [lessonEntry(id(40), 2)]; pages[`${listPath}&lessonId=${id(41)}`] = { items: [], nextCursor: null };
@@ -211,20 +216,20 @@ describe("Words tab", () => {
     await waitFor(() => expect(vi.mocked(fetch).mock.calls.filter(([path]) => String(path) === lessonsPath).length).toBeGreaterThan(1));
     await waitFor(() => expect(toggle).toHaveAttribute("aria-pressed", "false"));
     expect(router.state.location.search).toEqual({ lesson: id(41) });
-    expect(screen.getByRole("article", { name: "woord 3" })).toBeInTheDocument();
+    expect(screen.getByRole("listitem", { name: "woord 3" })).toBeInTheDocument();
     expect(screen.getByRole("combobox", { name: "Lesson" })).toHaveValue("Lesson 41 (0)");
   });
 
   it("opens on the lesson named in the URL", async () => {
     renderPage(`/words?lesson=${id(41)}`);
-    expect(await screen.findByRole("article", { name: "woord 3" })).toBeInTheDocument();
+    expect(await screen.findByRole("listitem", { name: "woord 3" })).toBeInTheDocument();
     expect(await screen.findByRole("combobox", { name: "Lesson" })).toHaveValue("Lesson 41 (1)");
   });
 
   it("falls back to every lesson when the URL names a lesson that is not available", async () => {
     const router = renderPage(`/words?lesson=${id(99)}`);
     await waitFor(() => expect(router.state.location.search).toEqual({}));
-    expect(await screen.findByText("Words 1–2 of 3")).toBeInTheDocument();
+    expect(await screen.findByRole("listitem", { name: "woord 1" })).toBeInTheDocument();
     // Anything that is not a lesson ID is dropped by the route.
     await router.navigate({ to: "/words", search: { lesson: "nonsense" } as never });
     expect(router.state.location.search).toEqual({});
@@ -252,9 +257,9 @@ class FakeRecognition {
 describe("Saying a word", () => {
   beforeEach(() => { FakeRecognition.last = null; vi.stubGlobal("webkitSpeechRecognition", FakeRecognition); });
 
-  it("listens for the card's term and shows a passing verdict without flipping the card or saving anything", async () => {
+  it("listens for the row's term and shows a passing verdict without saving anything", async () => {
     renderPage();
-    const first = await screen.findByRole("article", { name: "woord 1" });
+    const first = await screen.findByRole("listitem", { name: "woord 1" });
     fireEvent.click(within(first).getByRole("button", { name: "Say woord 1" }));
     expect(FakeRecognition.last!.lang).toBe("nl-NL");
     expect(within(first).getByRole("button", { name: "Stop listening" })).toHaveAttribute("aria-pressed", "true");
@@ -262,7 +267,6 @@ describe("Saying a word", () => {
     FakeRecognition.last!.hear("Woord 1");
     const verdict = within(first).getByRole("status");
     expect(verdict).toHaveTextContent("Matches!You said “Woord 1”");
-    expect(within(first).getByRole("button", { name: "Show meaning" })).toBeInTheDocument();
     expect(vi.mocked(fetch).mock.calls.length).toBe(calls);
     // Clicking dismisses it once its fade ends.
     fireEvent.click(verdict);
@@ -270,9 +274,9 @@ describe("Saying a word", () => {
     expect(within(first).queryByRole("status")).not.toBeInTheDocument();
   });
 
-  it("shows what the microphone is doing over the card while it listens", async () => {
+  it("shows what the microphone is doing over the row while it listens", async () => {
     renderPage();
-    const first = await screen.findByRole("article", { name: "woord 1" });
+    const first = await screen.findByRole("listitem", { name: "woord 1" });
     fireEvent.click(within(first).getByRole("button", { name: "Say woord 1" }));
     expect(first).toHaveTextContent("Starting the microphone…");
     FakeRecognition.last!.ready();
@@ -286,7 +290,7 @@ describe("Saying a word", () => {
 
   it("shows a miss and a missed listen the same passing way", async () => {
     renderPage();
-    const first = await screen.findByRole("article", { name: "woord 1" });
+    const first = await screen.findByRole("listitem", { name: "woord 1" });
     fireEvent.click(within(first).getByRole("button", { name: "Say woord 1" }));
     FakeRecognition.last!.hear("woord 2");
     expect(within(first).getByRole("status")).toHaveTextContent("Not quiteYou said “woord 2”");
@@ -302,7 +306,7 @@ describe("Saying a word", () => {
     vi.spyOn(HTMLMediaElement.prototype, "pause").mockImplementation(() => undefined);
     vi.spyOn(HTMLMediaElement.prototype, "load").mockImplementation(() => undefined);
     renderPage();
-    const first = await screen.findByRole("article", { name: "woord 1" });
+    const first = await screen.findByRole("listitem", { name: "woord 1" });
     fireEvent.click(within(first).getByRole("button", { name: "Say woord 1" }));
     FakeRecognition.last!.hear("woord 1");
     expect(play).toHaveBeenCalledTimes(1);
@@ -326,7 +330,7 @@ describe("Saying a word", () => {
     azure.configs = [];
     azure.next = { reason: 3, text: "Woord 1.", properties: { getProperty: () => JSON.stringify({ NBest: [{ Display: "Woord 1.", Lexical: "woord een" }] }) } };
     renderPage();
-    const first = await screen.findByRole("article", { name: "woord 1" });
+    const first = await screen.findByRole("listitem", { name: "woord 1" });
     fireEvent.click(within(first).getByRole("button", { name: "Say woord 1" }));
     expect(await within(first).findByRole("status")).toHaveTextContent("Matches!You said “Woord 1.”");
     expect(FakeRecognition.last).toBeNull();
@@ -349,7 +353,7 @@ describe("Saying a word", () => {
       Words: [{ Word: "woord", PronunciationAssessment: { AccuracyScore: 58, ErrorType: "Mispronunciation" } }, { Word: "1", PronunciationAssessment: { AccuracyScore: 95, ErrorType: "None" } }],
     }] }) } };
     renderPage();
-    const first = await screen.findByRole("article", { name: "woord 1" });
+    const first = await screen.findByRole("listitem", { name: "woord 1" });
     fireEvent.click(within(first).getByRole("button", { name: "Say woord 1" }));
     const verdict = await within(first).findByRole("status");
     expect(azure.assessments).toEqual([{ referenceText: "woord 1", gradingSystem: "HundredMark", granularity: "Word", enableMiscue: true }]);
@@ -390,7 +394,7 @@ describe("Saying a word", () => {
       ? response({ token: "azure-token", region: "germanywestcentral", expiresAt: Date.now() + 60_000 }) : original(input, init));
     azure.next = "wait"; azure.respond = null; azure.written = 0; azure.pushClosed = false;
     renderPage();
-    const first = await screen.findByRole("article", { name: "woord 1" });
+    const first = await screen.findByRole("listitem", { name: "woord 1" });
     fireEvent.click(within(first).getByRole("button", { name: "Say woord 1" }));
     await waitFor(() => expect(azure.respond).not.toBeNull());
     act(() => ports[0]!.onmessage?.({ data: new Float32Array(480).fill(0.2) }));
@@ -411,7 +415,7 @@ describe("Saying a word", () => {
       ? response({ token: "azure-token", region: "germanywestcentral", expiresAt: Date.now() + 60_000 }) : original(input, init));
     azure.next = { reason: 0 };
     renderPage();
-    const first = await screen.findByRole("article", { name: "woord 1" });
+    const first = await screen.findByRole("listitem", { name: "woord 1" });
     fireEvent.click(within(first).getByRole("button", { name: "Say woord 1" }));
     expect(await within(first).findByRole("status")).toHaveTextContent("Didn't catch that. Try again.");
     getUserMedia.mockRejectedValueOnce(new DOMException("Denied", "NotAllowedError"));
@@ -422,7 +426,7 @@ describe("Saying a word", () => {
   it("offers no microphone where the browser cannot recognize speech", async () => {
     vi.stubGlobal("webkitSpeechRecognition", undefined);
     renderPage();
-    const first = await screen.findByRole("article", { name: "woord 1" });
+    const first = await screen.findByRole("listitem", { name: "woord 1" });
     expect(within(first).queryByRole("button", { name: /Say/ })).not.toBeInTheDocument();
   });
 });
@@ -430,7 +434,7 @@ describe("Saying a word", () => {
 describe("Drill setup", () => {
   it("starts a mixed Weak words drill by default, with directions named after the library language", async () => {
     const router = renderPage();
-    await screen.findByRole("article", { name: "woord 1" });
+    await screen.findByRole("listitem", { name: "woord 1" });
     fireEvent.click(screen.getByRole("button", { name: "Drill" }));
     const dialog = await screen.findByRole("dialog", { name: "Drill words" });
     expect(within(dialog).getByRole("radio", { name: "Weak words" })).toBeChecked();
@@ -445,9 +449,25 @@ describe("Drill setup", () => {
     expect(await screen.findByText("Drill page")).toBeInTheDocument();
   });
 
+  it("drills one batch of a lesson's words, chosen from its batches", async () => {
+    const router = renderPage(`/words?lesson=${id(41)}`);
+    await screen.findByRole("listitem", { name: "woord 3" });
+    fireEvent.click(screen.getByRole("button", { name: "Drill" }));
+    const dialog = await screen.findByRole("dialog", { name: "Drill words" });
+    fireEvent.click(within(dialog).getByRole("radio", { name: "Lesson" }));
+    const batch = within(dialog).getByRole("combobox", { name: "Batch" });
+    expect(batch).toHaveValue("All words");
+    await waitFor(() => expect(batch).toBeEnabled());
+    expect(await options(batch)).toEqual(["All words", "Batch 1 · 7 words · Groeten", "Batch 2 · 7 words · Getallen"]);
+    await choose(batch, "Batch 2 · 7 words · Getallen");
+    fireEvent.click(within(dialog).getByRole("button", { name: "Start" }));
+    await waitFor(() => expect(router.state.location.pathname).toBe("/words/drill"));
+    expect(router.state.location.search).toEqual({ source: "lesson", lesson: id(41), batch: 2, direction: "mixed" });
+  });
+
   it("drills the filter's lesson by default, in the chosen direction", async () => {
     const router = renderPage(`/words?lesson=${id(41)}`);
-    await screen.findByRole("article", { name: "woord 3" });
+    await screen.findByRole("listitem", { name: "woord 3" });
     fireEvent.click(screen.getByRole("button", { name: "Drill" }));
     const dialog = await screen.findByRole("dialog", { name: "Drill words" });
     fireEvent.click(within(dialog).getByRole("radio", { name: "Lesson" }));
@@ -477,14 +497,14 @@ describe("Drill setup", () => {
 describe("Weak words view", () => {
   it("switches views in the URL, dropping the lesson filter", async () => {
     const router = renderPage(`/words?lesson=${id(41)}`);
-    await screen.findByRole("article", { name: "woord 3" });
+    await screen.findByRole("listitem", { name: "woord 3" });
     fireEvent.click(within(screen.getByRole("group", { name: "Show" })).getByText("Weak words"));
     await waitFor(() => expect(router.state.location.search).toEqual({ view: "weak" }));
     expect(await screen.findByRole("listitem", { name: "zwak 1" })).toBeInTheDocument();
     expect(screen.queryByRole("combobox", { name: "Lesson" })).not.toBeInTheDocument();
     fireEvent.click(within(screen.getByRole("group", { name: "Show" })).getByText("Bookmarks"));
     await waitFor(() => expect(router.state.location.search).toEqual({}));
-    expect(await screen.findByRole("article", { name: "woord 1" })).toBeInTheDocument();
+    expect(await screen.findByRole("listitem", { name: "woord 1" })).toBeInTheDocument();
     // Unknown views fall back to Bookmarks, and a weak view keeps no lesson.
     expect(validateWordsSearch({ view: "other", lesson: id(41) })).toEqual({ lesson: id(41) });
     expect(validateWordsSearch({ view: "weak", lesson: id(41) })).toEqual({ view: "weak" });

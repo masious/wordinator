@@ -1,12 +1,11 @@
 import { sharePercent, type CourseDashboardResponse } from "@wordinator/contracts/learning";
 import { courseVisibleClause } from "../courseVisibility";
-import { recallProbability } from "../wordMemory";
 import { lessonShareColumns, shareOfRow, type LessonShareInputs } from "./lessonShare";
 import { readLessonMetrics } from "./metrics";
+import { peekKnownTermsSql, termBands, type BandMemoryRow } from "./wordBands";
 
 const RECENT_LESSONS_MAX = 9;
 const RECENT_WORD_WINDOW_MS = 7 * 86_400_000;
-const DASHBOARD_STRONG_RECALL = 0.9;
 
 type CourseRow = {
   id: string; slug: string; title: string; summary: string; level: string | null; coverKey: string | null;
@@ -15,7 +14,6 @@ type CourseRow = {
 type LessonRow = LessonShareInputs & {
   id: string; slug: string; title: string; position: number; imageKey: string | null; courseId: string; activityAt: number;
 };
-type MemoryRow = { termKey: string; stability: number; lastReviewedAt: number; known: number };
 const rowsOf = <T,>(result: D1Result | undefined) => (result?.results ?? []) as T[];
 
 const mediaUrl = (base: string, key: string | null) => key
@@ -43,22 +41,21 @@ function lessonView(lesson: LessonRow, total: number, base: string) {
 
 async function dashboardMetrics(db: D1Database, lessonId: string, userId: string, now: number) {
   const terms = "SELECT DISTINCT term_key FROM course_lesson_words WHERE lesson_id = ?2 AND term_key IS NOT NULL";
-  const [reviews, memory] = await db.batch([
+  const [reviews, memory, known] = await db.batch([
     db.prepare(`SELECT MAX(created_at) AS lastReviewedAt,
       COUNT(DISTINCT CASE WHEN created_at >= ?3 THEN term_key END) AS recent
       FROM word_reviews WHERE user_id = ?1 AND term_key IN (${terms})`).bind(userId, lessonId, now - RECENT_WORD_WINDOW_MS),
     db.prepare(`SELECT term_key AS termKey, stability, last_reviewed_at AS lastReviewedAt, known_override AS known
       FROM word_memory WHERE user_id = ?1 AND term_key IN (${terms})`).bind(userId, lessonId),
+    db.prepare(peekKnownTermsSql(terms)).bind(userId, lessonId),
   ]);
   const lesson = await readLessonMetrics(db, lessonId, userId, now);
-  const byTerm = new Map<string, MemoryRow[]>();
-  for (const row of rowsOf<MemoryRow>(memory)) byTerm.set(row.termKey, [...byTerm.get(row.termKey) ?? [], row]);
-  const strong = [...byTerm.values()].filter((rows) => rows.some((row) => row.known === 1)
-    || rows.every((row) => recallProbability(row, now) >= DASHBOARD_STRONG_RECALL)).length;
+  const bands = [...termBands(rowsOf<BandMemoryRow>(memory), rowsOf<{ termKey: string }>(known).map((row) => row.termKey), now).values()];
+  const strong = bands.filter((band) => band === "strong").length; const fading = bands.length - strong;
   const review = rowsOf<{ lastReviewedAt: number | null; recent: number }>(reviews)[0];
   return {
     wordRecency: { lastReviewedAt: review?.lastReviewedAt ?? null, recent: review?.recent ?? 0, total: lesson.words.total },
-    memory: { strong, fading: byTerm.size - strong, new: lesson.words.total - byTerm.size, total: lesson.words.total },
+    memory: { strong, fading, new: lesson.words.total - bands.length, total: lesson.words.total },
     pronunciation: lesson.pronunciation,
   };
 }

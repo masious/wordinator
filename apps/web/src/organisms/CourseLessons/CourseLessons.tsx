@@ -20,6 +20,7 @@ import { AdaptiveDialog, Button, ButtonGroup, ConfirmDialog, EmptyState, ErrorSt
 import { LessonDocument } from "../LessonDocument/LessonDocument";
 import { LessonShareScope, ShareButton, useLessonShareScope } from "../LessonShare/LessonShare";
 import { useLessonBookmarkTarget, WordBookmarkScope } from "../WordBookmark/WordBookmark";
+import { WordBatches } from "../WordBatches/WordBatches";
 import { WordRecap } from "../WordRecap/WordRecap";
 import { RAIL_DRAWER_QUERY, useRailSlots } from "../GroupFrame/GroupFrame";
 import { CourseErrorMessage } from "./CourseErrorMessage";
@@ -542,6 +543,11 @@ export function LessonView({ groupId, courseId, accountId, detail, lessonId, dat
         save: data.published && data.document !== null && !completed && !archived && progress.isSuccess,
         completed, position, practicesDone: progress.data?.practices[lessonId]?.done ?? 0, path: lessonPath, groupId, courseId, lessonId,
       }} />}
+    {/* The lesson's word batches (docs/words.md#word-batches) after its text: Peek, Drill, and Practice, each batch's memory bands. */}
+    {!editing && !gated && data && wordCount > 0 && <section className={styles.batches} aria-labelledby="lesson-word-batches">
+      <h2 id="lesson-word-batches" className={styles.batchesHeading}>{t("words.batches.heading")}</h2>
+      <WordBatches scope={scope} lesson={data} title={current.title} />
+    </section>}
     {/* The pager: Previous, the next lesson's title under Up next, and Next lesson. The links' names carry the titles. */}
     {(previous || next) && !gated && <nav className={styles.pager} aria-label={t("courses.lessons.pager")}>
       {previous ? <Link className={styles.previous} {...lessonLink(previous)} aria-label={t("courses.lessons.previous", { title: previous.title })}>

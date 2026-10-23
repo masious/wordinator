@@ -45,8 +45,9 @@
 .compact[data-match]{animation-delay:0s,var(--motion-press)}
 .compact .verdictIcon{width:22px;height:22px;animation-delay:var(--motion-press)}
 
-/* A word card's verdict floats over the card's lower edge and fades away; clicking it dismisses it early. */
-.passing{position:absolute;inset-inline:var(--space-3);bottom:calc(var(--control-height) + var(--space-6));z-index:var(--z-transient);display:flex;justify-content:center;cursor:pointer}
+/* A word card's verdict floats over the card's lower edge and fades away; clicking it dismisses it early. A word row lowers it with
+   --passing-bottom. */
+.passing{position:absolute;inset-inline:var(--space-3);bottom:var(--passing-bottom,calc(var(--control-height) + var(--space-6)));z-index:var(--z-transient);display:flex;justify-content:center;cursor:pointer}
 .passing[data-leaving]{animation:fadeAway var(--motion-overlay) var(--ease-physical) forwards}
 .passingStatus{margin:0;padding:var(--space-1) var(--space-3);font-size:var(--type-metadata);color:var(--color-foreground-muted);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-pill);box-shadow:var(--shadow-raised);animation:verdictIn var(--motion-overlay) var(--ease-physical) both}
 /* Microsoft's assessment (docs/words.md#pronunciation-assessment). Bands: good (success), fair (warm), weak (danger), each with
@@ -85,7 +86,7 @@
 /* On a word card the verdict with a score is a button that opens the panel. */
 .verdictButton{padding:0;background:none;border:0;border-radius:var(--radius-pill);cursor:pointer}
 .verdictButton:focus-visible{outline-offset:2px}
-.panel{position:absolute;inset-inline:var(--space-3);bottom:calc(var(--control-height) + var(--space-4));z-index:var(--z-transient);display:grid;gap:var(--space-3);max-height:calc(100% - var(--control-height) - var(--space-6));overflow-y:auto;padding:var(--space-3);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-lg);box-shadow:var(--shadow-raised);animation:verdictIn var(--motion-overlay) var(--ease-physical) both}
+.panel{position:absolute;inset-inline:var(--space-3);top:var(--panel-top,auto);bottom:var(--panel-bottom,calc(var(--control-height) + var(--space-4)));z-index:var(--z-transient);display:grid;gap:var(--space-3);max-height:var(--panel-max-height,calc(100% - var(--control-height) - var(--space-6)));overflow-y:auto;padding:var(--space-3);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-lg);box-shadow:var(--shadow-raised);animation:verdictIn var(--motion-overlay) var(--ease-physical) both}
 .panelHead{display:flex;align-items:center;justify-content:space-between;gap:var(--space-2)}
 .panel .verdict{animation:none}
 .panel .meters{gap:var(--space-2)}

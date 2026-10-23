@@ -74,6 +74,9 @@ export async function recordWordReviews(db: D1Database, userId: string, reviews:
     ...upsertMemoryStatements(db, [...updated.values()]),
     // "I know this word" belongs to the term: an Again in one direction clears it in the other too (C14d).
     ...cleared.length ? [db.prepare("UPDATE word_memory SET known_override = 0 WHERE user_id = ? AND term_key IN (SELECT value FROM json_each(?))")
+      .bind(userId, JSON.stringify(cleared)),
+    // So does a Peek's mark on the term (docs/words.md#word-batches).
+    db.prepare("UPDATE word_exposures SET known_at = NULL WHERE user_id = ? AND term_key IN (SELECT value FROM json_each(?))")
       .bind(userId, JSON.stringify(cleared))] : [],
   ]);
   return new Map([...updated.values()].map(({ userId: _userId, termKey, direction, ...state }) => [`${termKey}\n${direction}`, state]));

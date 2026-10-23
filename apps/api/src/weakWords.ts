@@ -102,6 +102,10 @@ async function recentByTerm(db: D1Database, userId: string, termKeys: readonly s
 
 /** Sets or clears "I know this word" on both directions of the viewer's memory of a term; returns how many rows it holds. */
 export async function setWordKnown(db: D1Database, userId: string, termKey: string, known: boolean): Promise<number> {
-  const result = await db.prepare("UPDATE word_memory SET known_override = ? WHERE user_id = ? AND term_key = ?").bind(known ? 1 : 0, userId, termKey).run();
-  return result.meta.changes ?? 0;
+  const [result] = await db.batch([
+    db.prepare("UPDATE word_memory SET known_override = ? WHERE user_id = ? AND term_key = ?").bind(known ? 1 : 0, userId, termKey),
+    // Clearing also clears a Peek's mark on the term (docs/words.md#word-batches).
+    ...known ? [] : [db.prepare("UPDATE word_exposures SET known_at = NULL WHERE user_id = ? AND term_key = ?").bind(userId, termKey)],
+  ]);
+  return result?.meta.changes ?? 0;
 }

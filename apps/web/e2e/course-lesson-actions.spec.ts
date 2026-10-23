@@ -26,11 +26,19 @@ test("each lesson on the course page starts or continues, reviews its words, and
   await expect(page.getByRole("button", { name: `Review the words of lesson 2: ${suffix} second` })).toHaveCount(0);
   await expect(page.getByRole("button", { name: `Practice lesson 2: ${suffix} second` })).toHaveCount(0);
 
-  // Review words shows the lesson's own words as cards.
+  // Review words lists the lesson's words in batches with their memory bands; a batch's Peek shows its words as cards.
   await page.getByRole("button", { name: `Review the words of lesson 1: ${first}` }).click();
   const recap = page.getByRole("dialog", { name: "Words of lesson 1" });
+  const batch = recap.getByRole("listitem", { name: "Batch 1" });
+  await expect(batch.getByRole("img", { name: /0 strong, 0 fading, 2 new of 2 words/ })).toBeVisible();
+  await recap.getByRole("button", { name: "Peek at batch 1" }).click();
   await expect(recap.getByRole("article", { name: "de appel" })).toBeVisible();
-  await expect(recap.getByRole("article", { name: "duur" })).toBeVisible();
+  // Marking a word known in a Peek counts it Strong.
+  await recap.getByRole("button", { name: "I know de appel" }).click();
+  await expect(recap.getByRole("button", { name: "I know de appel" })).toHaveAttribute("aria-pressed", "true");
+  for (let pages = 0; pages < 5 && await recap.getByRole("button", { name: "Next" }).isVisible(); pages += 1) await recap.getByRole("button", { name: "Next" }).click();
+  await recap.getByRole("button", { name: "Back to batches" }).click();
+  await expect(batch).toContainText("1 of 2 strong · 2 seen");
   await page.keyboard.press("Escape");
   await expect(recap).toHaveCount(0);
 

@@ -5,11 +5,9 @@ import { useCallback, useMemo, useState, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { lessonQueryOptions } from "../../api";
 import { PlainText } from "../../molecules/PlainText";
-import { lessonSpeech, SpeechScope } from "../../molecules/Speech";
 import { AdaptiveDialog, Button, ButtonGroup, ErrorState, LoadingState } from "../../ui";
 import { LessonShareScope, useLessonShareScope } from "../LessonShare/LessonShare";
-import { useLessonBookmarkTarget, WordBookmarkScope } from "../WordBookmark/WordBookmark";
-import { runWords, WordRecap } from "../WordRecap/WordRecap";
+import { WordBatches } from "../WordBatches/WordBatches";
 import { lessonSteps, type PlayerScope } from "./LessonPlayer";
 import { typicalMinutes } from "./LessonTime";
 import styles from "./LessonActions.module.css";
@@ -31,17 +29,11 @@ function LoadedLesson({ scope, lessonId, children }: { scope: PlayerScope; lesso
   return children(lesson.data.lesson);
 }
 
-// The lesson's new words as word cards, exactly like the player's lesson recap: once each, in step order.
-function LessonRecap({ scope, lesson, onDone }: { scope: PlayerScope; lesson: CourseLesson; onDone: () => void }) {
+// The lesson's new words as [word batches](docs/words.md#word-batches); a Peek replaces the tiles inside the dialog.
+function LessonRecap({ scope, lesson }: { scope: PlayerScope; lesson: CourseLesson }) {
   const { t } = useTranslation();
-  const words = useMemo(() => runWords(lessonSteps(lesson)), [lesson]);
-  const bookmarkTarget = useLessonBookmarkTarget(scope.groupId, scope.courseId, lesson.id, lesson.document);
-  const speech = useMemo(() => lessonSpeech(lesson), [lesson]);
-  const resolveSpeech = useCallback((key: string) => speech[key] ?? null, [speech]);
-  if (!words.length) return <p className={styles.empty}>{t("courses.lessonActions.noWords")}</p>;
-  return <WordBookmarkScope resolve={bookmarkTarget}><SpeechScope resolve={resolveSpeech}>
-    <WordRecap words={words} doneLabel={t("courses.words.backToCourse")} onDone={onDone} />
-  </SpeechScope></WordBookmarkScope>;
+  if (!lessonSteps(lesson).some((step) => step.words.length)) return <p className={styles.empty}>{t("courses.lessonActions.noWords")}</p>;
+  return <WordBatches scope={scope} lesson={lesson} peekIn="inline" />;
 }
 
 // The practices of the published document, in document order (columns included).
@@ -109,7 +101,7 @@ export function LessonActions({ scope, summary, number, completed, position, pra
       {practices && <Button variant="quiet" onClick={() => setPractising(true)} aria-label={t(`courses.lessonActions.${practiceAction}Named`, named)}>{t(`courses.lessonActions.${practiceAction}`)}</Button>}
     </ButtonGroup>
     <AdaptiveDialog opened={reviewing} onClose={() => setReviewing(false)} title={t("courses.lessonActions.wordsTitle", named)}>
-      {reviewing && <LoadedLesson scope={scope} lessonId={summary.id}>{(lesson) => <LessonRecap scope={scope} lesson={lesson} onDone={() => setReviewing(false)} />}</LoadedLesson>}
+      {reviewing && <LoadedLesson scope={scope} lessonId={summary.id}>{(lesson) => <LessonRecap scope={scope} lesson={lesson} />}</LoadedLesson>}
     </AdaptiveDialog>
     <AdaptiveDialog opened={practising} onClose={closePractices} title={t("courses.lessonActions.practicesTitle", named)}>
       {practising && <LoadedLesson scope={scope} lessonId={summary.id}>

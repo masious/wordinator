@@ -262,6 +262,87 @@ export function collectLessonWords(document: LessonDocument): LessonWord[] {
     }));
 }
 
+// Word batches (docs/words.md#word-batches): a lesson's new words split, in document order, into runs of `WORD_BATCH_MIN` to
+// `WORD_BATCH_MAX` words that can be reviewed and drilled on their own. Three to five batches where the words allow, about
+// `WORD_BATCH_TARGET` each; fewer words make fewer batches (under `WORD_BATCH_MIN` words, one) and more words make more. Batches
+// are cut where the lesson's sections are furthest apart, so words close together in the lesson tend to share a batch. They are
+// worked out from the published document alone, so every learner sees the same ones until the author republishes.
+export const WORD_BATCH_MIN = 6;
+export const WORD_BATCH_MAX = 10;
+export const WORD_BATCH_TARGET = 8;
+const WORD_BATCHES_PREFERRED = { fewest: 3, most: 5 };
+export type WordBatch = { wordIds: string[]; headings: string[] };
+
+// The number of batches for `count` words, and the sizes a batch may take.
+function batchShape(count: number) {
+  const fewest = Math.ceil(count / WORD_BATCH_MAX); const most = Math.floor(count / WORD_BATCH_MIN);
+  if (fewest > most) return { batches: Math.max(fewest, 1), min: Math.floor(count / Math.max(fewest, 1)), max: Math.ceil(count / Math.max(fewest, 1)) };
+  const low = Math.max(fewest, Math.min(WORD_BATCHES_PREFERRED.fewest, most)); const high = Math.max(fewest, Math.min(WORD_BATCHES_PREFERRED.most, most));
+  const batches = Math.min(high, Math.max(low, Math.round(count / WORD_BATCH_TARGET)));
+  return { batches, min: WORD_BATCH_MIN, max: WORD_BATCH_MAX };
+}
+
+// Cuts `sections` (each word's section number, in order) into contiguous batches. A cut between two words costs less the more
+// sections lie between them, and a batch costs a little for straying from the even size; the cheapest split wins.
+export function splitWordBatches(sections: readonly number[]): Array<[start: number, end: number]> {
+  const count = sections.length;
+  if (!count) return [];
+  const { batches, min, max } = batchShape(count);
+  const even = count / batches;
+  const cut = (index: number) => 1 / (1 + sections[index]! - sections[index - 1]!);
+  const size = (length: number) => 0.02 * (length - even) ** 2;
+  // best[j][i]: the cheapest split of the first i words into j batches, and where its last batch starts.
+  const best = Array.from({ length: batches + 1 }, () => Array.from({ length: count + 1 }, () => ({ cost: Infinity, from: -1 })));
+  best[0]![0] = { cost: 0, from: -1 };
+  for (let j = 1; j <= batches; j++) {
+    for (let i = j * min; i <= count; i++) {
+      for (let length = min; length <= max && length <= i; length++) {
+        const from = i - length; const before = best[j - 1]![from]!;
+        if (before.cost === Infinity) continue;
+        const cost = before.cost + size(length) + (from > 0 ? cut(from) : 0);
+        if (cost < best[j]![i]!.cost) best[j]![i] = { cost, from };
+      }
+    }
+  }
+  const ranges: Array<[number, number]> = [];
+  for (let j = batches, end = count; j > 0; j--) {
+    const from = best[j]![end]!.from;
+    ranges.unshift([from, end]); end = from;
+  }
+  return ranges;
+}
+
+// A learner's standing in each of a lesson's batches (`GET .../lessons/:lessonId/word-batches`): the batch's words in the
+// dashboard's memory bands (Strong, Fading, New) and how many of them a Peek has shown. Counts only; recall stays private.
+export const wordBatchStatsSchema = z.strictObject({
+  strong: z.number().int().nonnegative(), fading: z.number().int().nonnegative(), new: z.number().int().nonnegative(),
+  total: z.number().int().nonnegative(), seen: z.number().int().nonnegative(),
+}).refine((value) => value.strong + value.fading + value.new === value.total && value.seen <= value.total, { message: "Batch counts must add up." });
+export type WordBatchStats = z.infer<typeof wordBatchStatsSchema>;
+export const wordBatchesResponseSchema = z.object({ batches: z.array(wordBatchStatsSchema) });
+export type WordBatchesResponse = z.infer<typeof wordBatchesResponseSchema>;
+// `POST .../lessons/:lessonId/word-exposures`: the words a Peek showed, each counted once per request.
+export const wordExposuresRequestSchema = z.strictObject({
+  wordIds: z.array(opaqueIdSchema).min(1).max(WORD_BATCH_MAX).refine((ids) => new Set(ids).size === ids.length, { message: "Name each word once." }),
+});
+
+// A lesson's word batches. Each top-level heading starts a section; a word keeps the first place it appears.
+export function lessonWordBatches(document: LessonDocument): WordBatch[] {
+  const words: Array<{ id: string; section: number; heading: string | null }> = []; const seen = new Set<string>();
+  let section = 0; let heading: string | null = null;
+  for (const { block, depth } of walkLessonBlocks(document.blocks)) {
+    if (block.type === "heading" && depth === 0) { section += 1; heading = inlineText(block.content).replace(/\s+/g, " ").trim() || null; continue; }
+    if (block.type !== "vocabulary") continue;
+    for (const word of readVocabularyBlock(block).words) {
+      if (!seen.has(word.id)) { seen.add(word.id); words.push({ id: word.id, section, heading }); }
+    }
+  }
+  return splitWordBatches(words.map((word) => word.section)).map(([start, end]) => {
+    const batch = words.slice(start, end);
+    return { wordIds: batch.map((word) => word.id), headings: [...new Set(batch.flatMap((word) => word.heading ? [word.heading] : []))] };
+  });
+}
+
 // Player steps. A heading is not a step; it labels the steps that follow. Consecutive prose (paragraphs, lists, images,
 // dividers) under one heading is one step, trimmed of leading and trailing dividers and blank paragraphs. Columns without interactive blocks are one step; otherwise they are read column by column.
 // Every step carries the new words it introduces (see `flattenToSteps`); a heading section holding only words is a `words` step.
@@ -543,7 +624,7 @@ export type WordBookmarkKey = z.infer<typeof wordBookmarkKeySchema>;
 export const wordBookmarkKeysResponseSchema = z.object({ keys: z.array(wordBookmarkKeySchema).max(WORD_BOOKMARKS_MAX) });
 export type WordBookmarkKeysResponse = z.infer<typeof wordBookmarkKeysResponseSchema>;
 export const wordBookmarkSchema = z.object({
-  word: courseWordSchema, course: z.object({ id: opaqueIdSchema, title: z.string() }), lesson: z.object({ id: opaqueIdSchema, title: z.string() }),
+  word: courseWordSchema, course: z.object({ id: opaqueIdSchema, slug: z.string(), title: z.string() }), lesson: z.object({ id: opaqueIdSchema, slug: z.string(), title: z.string() }),
   bookmarkedAt: z.number().int(),
 });
 export type WordBookmark = z.infer<typeof wordBookmarkSchema>;
@@ -597,9 +678,14 @@ export const wordDrillModeSchema = z.enum(["mixed", ...wordDrillDirectionSchema.
 export type WordDrillMode = z.infer<typeof wordDrillModeSchema>;
 export const wordDrillResultSchema = z.enum(["got", "again"]);
 export type WordDrillResult = z.infer<typeof wordDrillResultSchema>;
+// `batch` (1-based, lesson drills only) narrows a lesson drill to one of its word batches.
+export const WORD_BATCHES_MAX = 50;
+export const wordDrillBatchSchema = z.coerce.number().int().min(1).max(WORD_BATCHES_MAX);
 export const wordDrillQuerySchema = z.object({
   source: wordDrillSourceSchema, lessonId: opaqueIdSchema.optional(), courseId: opaqueIdSchema.optional(), direction: wordDrillModeSchema.default("mixed"),
+  batch: wordDrillBatchSchema.optional(),
 }).refine((query) => (query.source === "lesson") === (query.lessonId !== undefined), { message: "A lesson drill names one lesson; other drills name none.", path: ["lessonId"] })
+  .refine((query) => query.batch === undefined || query.source === "lesson", { message: "Only a lesson drill names a batch.", path: ["batch"] })
   .refine((query) => (query.source === "course") === (query.courseId !== undefined), { message: "A course drill names one course; other drills name none.", path: ["courseId"] });
 export type WordDrillQuery = z.infer<typeof wordDrillQuerySchema>;
 export const wordDrillCardSchema = z.object({

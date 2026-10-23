@@ -259,6 +259,22 @@ describe("Course lessons", () => {
     expect(observed.map((element) => element.getAttribute("data-block-id"))).toEqual([first.id, second.id]);
   });
 
+  it("ends the lesson with its word batches, whose Peek opens the batch's cards", async () => {
+    const word = (n: number, term: string) => ({ id: `70000000-0000-4000-8000-00000000000${n}`, term, meaning: `meaning of ${term}` });
+    const vocabulary = (n: number, ...words: unknown[]): LessonTopBlock => ({ id: `50000000-0000-4000-8000-00000000002${n}`, type: "vocabulary", props: { data: JSON.stringify({ words }) }, children: [] });
+    // A finished lesson: an unstarted one shows its start gate instead of the text and the batches.
+    finished = [lessonId(1)];
+    renderLesson({ course: course(false), outline: [summary(1)], lessons: [lesson(1, [example("50000000-0000-4000-8000-000000000011", "De hond blaft."), vocabulary(1, word(1, "de hond"), word(2, "de kat"))])] });
+    await waitFor(() => expect(vi.mocked(fetch).mock.calls.some(([path]) => String(path).endsWith("/progress"))).toBe(true));
+    const section = await screen.findByRole("region", { name: "Words in batches" });
+    const batch = within(section).getByRole("listitem", { name: "Batch 1" });
+    expect(batch).toHaveTextContent("2 words");
+    fireEvent.click(within(batch).getByRole("button", { name: "Peek at batch 1" }));
+    const peek = await screen.findByRole("dialog", { name: "Batch 1 of Lesson title 1" });
+    expect(within(peek).getByRole("article", { name: "de hond" })).toBeInTheDocument();
+    expect(within(batch).getByRole("button", { name: "Drill batch 1" })).toBeInTheDocument();
+  });
+
   it("docks the new words in the right rail on wide screens", async () => {
     const word = { id: "70000000-0000-4000-8000-000000000001", term: "de hond", meaning: "the dog" };
     const vocabulary: LessonTopBlock = { id: "50000000-0000-4000-8000-000000000021", type: "vocabulary", props: { data: JSON.stringify({ words: [word] }) }, children: [] };
@@ -650,24 +666,106 @@ describe("Lesson actions", () => {
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
 
-  it("reviews one lesson's words, loading the lesson only when asked", async () => {
-    const words = lesson(4, [example("50000000-0000-4000-8000-000000000001", "De hond blaft."), vocabulary(1, word(1, "de hond"), word(2, "de kat"))]);
+  it("shows one lesson's word batches with their memory bands, loading the lesson only when asked", async () => {
+    // Fourteen words in two sections make two batches of seven, cut between the sections.
+    const many = Array.from({ length: 14 }, (_, index) => ({ id: `70000000-0000-4000-8000-0000000001${String(index).padStart(2, "0")}`, term: `woord ${index + 1}`, meaning: `meaning ${index + 1}` }));
+    const section = (n: number, title: string): LessonTopBlock => ({ id: `50000000-0000-4000-8000-00000000004${n}`, type: "heading", props: { textColor: "default", backgroundColor: "default", level: 2 }, content: text(title), children: [] });
+    const words = lesson(4, [section(1, "Groeten"), vocabulary(1, ...many.slice(0, 7)), section(2, "Getallen"), vocabulary(2, ...many.slice(7))]);
     const original = vi.mocked(fetch).getMockImplementation()!;
-    vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith(`/lessons/${lessonId(4)}`) ? response({ lesson: words }) : original(input, init));
-    renderLessons({ course: course(false), outline: [summary(1), summary(4, true, { wordCount: 2 })], lessons: [lesson(1)] });
+    vi.mocked(fetch).mockImplementation(async (input, init) => {
+      const path = String(input);
+      if (path.endsWith(`/lessons/${lessonId(4)}`)) return response({ lesson: words });
+      if (path.endsWith("/word-batches")) return response({ batches: [{ strong: 2, fading: 1, new: 4, total: 7, seen: 3 }, { strong: 0, fading: 0, new: 7, total: 7, seen: 0 }] });
+      if (path.endsWith("/api/ai/conversations")) return response({ conversation: { id: "80000000-0000-4000-8000-000000000001", title: "Word practice", titleSource: "auto", archivedAt: null, provider: null, createdAt: 1, updatedAt: 1, tokens: 0 } });
+      return original(input, init);
+    });
+    const { router } = renderLessons({ course: course(false), outline: [summary(1), summary(4, true, { wordCount: 14 })], lessons: [lesson(1)] });
     const review = await screen.findByRole("button", { name: "Review the words of lesson 2: Lesson title 4" });
-    expect(screen.getAllByRole("button", { name: /^Review the words of lesson/ })).toHaveLength(1);
     expect(lessonReads()).toHaveLength(0);
     fireEvent.click(review);
     const dialog = await screen.findByRole("dialog", { name: "Words of lesson 2" });
-    expect(await within(dialog).findByText("Word 1 of 2")).toBeInTheDocument();
-    expect(within(dialog).getByRole("article", { name: "de hond" })).toBeInTheDocument();
+    const first = await within(dialog).findByRole("listitem", { name: "Batch 1" });
+    expect(first).toHaveTextContent("7 words");
+    expect(first).toHaveTextContent("Groeten");
+    // The tile lists its words; a word's meaning shows in a card on hover or focus.
+    const terms = within(first).getByRole("list", { name: "Words of batch 1" });
+    expect(within(terms).getAllByRole("listitem").map((item) => item.textContent)).toEqual(many.slice(0, 7).map((word) => word.term));
+    expect(first).not.toHaveTextContent("meaning 1");
+    fireEvent.focus(within(terms).getByText("woord 1"));
+    expect(await screen.findByText("meaning 1")).toBeInTheDocument();
+    fireEvent.blur(within(terms).getByText("woord 1"));
+    // There is no Back to the course; the dialog's close button closes it.
+    expect(within(dialog).queryByRole("button", { name: "Back to the course" })).not.toBeInTheDocument();
+    expect(await within(first).findByRole("img", { name: "2 strong, 1 fading, 4 new of 7 words" })).toBeInTheDocument();
+    expect(first).toHaveTextContent("2 of 7 strong · 3 seen");
+    expect(within(dialog).getByRole("listitem", { name: "Batch 2" })).toHaveTextContent("Getallen");
     expect(lessonReads()).toHaveLength(1);
-    fireEvent.click(within(dialog).getByRole("button", { name: "Next" }));
-    fireEvent.click(within(dialog).getByRole("button", { name: "Back to the course" }));
-    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
-    // Reviewing records nothing.
-    expect(vi.mocked(fetch).mock.calls.some(([, init]) => init?.method === "PUT")).toBe(false);
+    // Peek shows the batch as cards, counts its words as seen, and marks a word known.
+    fireEvent.click(within(dialog).getByRole("button", { name: "Peek at batch 2" }));
+    expect(await within(dialog).findByRole("article", { name: "woord 8" })).toBeInTheDocument();
+    await waitFor(() => expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/lessons/${lessonId(4)}/word-exposures`,
+      expect.objectContaining({ method: "POST", body: JSON.stringify({ wordIds: many.slice(7).map((word) => word.id) }) })));
+    const known = within(dialog).getByRole("button", { name: "I know woord 8" });
+    fireEvent.click(known);
+    await waitFor(() => expect(known).toHaveAttribute("aria-pressed", "true"));
+    expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/lessons/${lessonId(4)}/words/${many[7]!.id}/known`, expect.objectContaining({ method: "PUT" }));
+    while (within(dialog).queryByRole("button", { name: "Next" })) fireEvent.click(within(dialog).getByRole("button", { name: "Next" }));
+    fireEvent.click(within(dialog).getByRole("button", { name: "Back to batches" }));
+    // Drill opens a drill of just that batch.
+    fireEvent.click(within(dialog).getByRole("button", { name: "Drill batch 1" }));
+    await waitFor(() => expect(landed(router)).toEqual({ path: "/words/drill", search: { source: "lesson", lesson: lessonId(4), batch: 1, direction: "mixed" } }));
+  });
+
+  it("pages a batch's words two lines at a time, offering Back only past the first page", async () => {
+    const many = Array.from({ length: 8 }, (_, index) => ({ id: `70000000-0000-4000-8000-0000000001${String(index).padStart(2, "0")}`, term: `woord ${index + 1}`, meaning: `meaning ${index + 1}` }));
+    const words = lesson(4, [vocabulary(1, ...many)]);
+    // jsdom has no layout: 50px badges in a 200px tile make three a line, so eight words take two pages.
+    vi.spyOn(HTMLElement.prototype, "offsetWidth", "get").mockReturnValue(50);
+    vi.spyOn(HTMLElement.prototype, "clientWidth", "get").mockReturnValue(200);
+    const original = vi.mocked(fetch).getMockImplementation()!;
+    vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith(`/lessons/${lessonId(4)}`) ? response({ lesson: words }) : original(input, init));
+    renderLessons({ course: course(false), outline: [summary(1), summary(4, true, { wordCount: 8 })], lessons: [lesson(1)] });
+    fireEvent.click(await screen.findByRole("button", { name: "Review the words of lesson 2: Lesson title 4" }));
+    const tile = await within(await screen.findByRole("dialog", { name: "Words of lesson 2" })).findByRole("listitem", { name: "Batch 1" });
+    // Each page carries its own controls; only the page shown can be used (the others are inert).
+    const first = await within(tile).findByRole("list", { name: "Words of batch 1, page 1 of 2" });
+    const second = within(tile).getByRole("list", { name: "Words of batch 1, page 2 of 2" });
+    const terms = (list: HTMLElement) => within(list).getAllByRole("listitem").map((item) => item.textContent).filter(Boolean);
+    expect(terms(first)).toEqual(many.slice(0, 6).map((word) => word.term));
+    expect(terms(second)).toEqual(["woord 7", "woord 8"]);
+    expect(second).toHaveAttribute("inert");
+    // The first page has no Back; Next ends its bottom row, after the last word.
+    expect(within(first).queryByRole("button", { name: "Previous words of batch 1" })).not.toBeInTheDocument();
+    expect(within(first).getAllByRole("listitem").at(-1)).toContainElement(within(first).getByRole("button", { name: "More words of batch 1" }));
+    // The last page has no Next; Back starts its top row, before the first word.
+    expect(within(second).queryByRole("button", { name: "More words of batch 1" })).not.toBeInTheDocument();
+    expect(within(second).getAllByRole("listitem")[0]).toContainElement(within(second).getByRole("button", { name: "Previous words of batch 1" }));
+    fireEvent.click(within(first).getByRole("button", { name: "More words of batch 1" }));
+    await waitFor(() => expect(first).toHaveAttribute("inert"));
+    expect(second).not.toHaveAttribute("inert");
+    fireEvent.click(within(second).getByRole("button", { name: "Previous words of batch 1" }));
+    await waitFor(() => expect(second).toHaveAttribute("inert"));
+    vi.restoreAllMocks();
+  });
+
+  it("starts a tutor practice of one batch's words", async () => {
+    const many = Array.from({ length: 8 }, (_, index) => ({ id: `70000000-0000-4000-8000-0000000001${String(index).padStart(2, "0")}`, term: `woord ${index + 1}`, meaning: `meaning ${index + 1}` }));
+    const words = lesson(4, [vocabulary(1, ...many)]);
+    const conversation = "80000000-0000-4000-8000-000000000001";
+    const original = vi.mocked(fetch).getMockImplementation()!;
+    vi.mocked(fetch).mockImplementation(async (input, init) => {
+      const path = String(input);
+      if (path.endsWith(`/lessons/${lessonId(4)}`)) return response({ lesson: words });
+      if (path === "/api/ai/conversations") return response({ conversation: { id: conversation, title: "Word practice", titleSource: "auto", archivedAt: null, provider: null, createdAt: 1, updatedAt: 1, tokens: 0 } });
+      return original(input, init);
+    });
+    const { router } = renderLessons({ course: course(false), outline: [summary(1), summary(4, true, { wordCount: 8 })], lessons: [lesson(1)] });
+    fireEvent.click(await screen.findByRole("button", { name: "Review the words of lesson 2: Lesson title 4" }));
+    const dialog = await screen.findByRole("dialog", { name: "Words of lesson 2" });
+    fireEvent.click(await within(dialog).findByRole("button", { name: "Practice batch 1 with the tutor" }));
+    await waitFor(() => expect(landed(router)).toEqual({ path: "/ai", search: { conversation } }));
+    const started = vi.mocked(fetch).mock.calls.find(([path]) => String(path) === "/api/ai/conversations");
+    expect(JSON.parse(String(started![1]?.body))).toEqual({ wordPractice: many.map((word) => ({ lessonId: lessonId(4), wordId: word.id, source: "batch" })) });
   });
 
   it("tells how many of a lesson's practices remain and when the viewer last practiced it", async () => {

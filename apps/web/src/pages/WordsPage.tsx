@@ -2,17 +2,19 @@ import { opaqueIdSchema } from "@wordinator/contracts";
 import type { WordBookmark, WordBookmarkLesson } from "@wordinator/contracts/lesson-document";
 import { SegmentedControl } from "@mantine/core";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { sessionQueryOptions, speechRecognitionTokenSource, weakWordsQueryOptions, wordBookmarkLessonsQueryOptions, wordBookmarksQueryOptions, type WordDrillSettings } from "../api";
 import { useLearningClaim } from "../learningTime";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import { WeakWords } from "../organisms/WeakWords/WeakWords";
-import { WordBookmarkScope } from "../organisms/WordBookmark/WordBookmark";
+import { WordBookmarkScope, WordBookmarkToggle } from "../organisms/WordBookmark/WordBookmark";
+import { WordList, WordRow } from "../organisms/WordList/WordList";
 import { WordDrillSetup } from "../organisms/WordDrill/WordDrillSetup";
 import { RECOGNITION_LOCALES, SpeechRecognitionScope, type AssessmentHandler } from "../molecules/speechRecognition";
 import { sendPronunciationAttempt } from "../molecules/learningAttempts";
-import { WordRecap, type RecapWord } from "../organisms/WordRecap/WordRecap";
+import { WordSpeak } from "../organisms/WordRecap/WordRecap";
+import { playRevealSpeech, useStopSpeechOnUnmount } from "../molecules/Speech";
 import { Button, EmptyState, ErrorState, Eyebrow, LoadingState, PageHeader, SelectField, Surface } from "../ui";
 import styles from "./WordsPage.module.css";
 
@@ -29,7 +31,7 @@ const bookmarkKey = (lessonId: string, wordId: string) => `${lessonId}:${wordId}
 const ALL_LESSONS = "all";
 
 // Every bookmark this visit has shown, in the order first seen, with the latest text. A refetch after removing a bookmark leaves
-// its card in place (shown as not bookmarked), so the grid does not jump; leaving the page or changing the filter starts afresh.
+// its row in place (shown as not bookmarked), so the list does not jump; leaving the page or changing the filter starts afresh.
 function useStableBookmarks(pages: readonly { items: readonly WordBookmark[] }[] | undefined) {
   const seen = useRef(new Map<string, WordBookmark>());
   return useMemo(() => {
@@ -39,7 +41,7 @@ function useStableBookmarks(pages: readonly { items: readonly WordBookmark[] }[]
 }
 
 // The lesson filter's lessons (C12a). A lesson seen this visit stays listed after its last bookmark is removed, so the chosen
-// lesson's cards stay in place like any other removal; a lesson never seen is not available and falls back to All lessons.
+// lesson's rows stay in place like any other removal; a lesson never seen is not available and falls back to All lessons.
 function useFilterLessons(groupId: string, lessonId: string | null, onLesson: (next: string | null, replace?: boolean) => void) {
   const query = useQuery(wordBookmarkLessonsQueryOptions(groupId));
   const seen = useRef(new Map<string, WordBookmarkLesson>());
@@ -73,32 +75,40 @@ function LessonFilter({ lessons, lessonId, onLesson }: {
     onChange={(value) => onLesson(value && value !== ALL_LESSONS ? value : null)} />;
 }
 
-// One filter's cards; the page remounts it when the filter changes, which starts its stable list afresh.
+// A bookmarked word's row: the shared word row with saying the term aloud (docs/words.md#spoken-answers) and its bookmark toggle.
+// A recognized answer speaks the term under the reveal sound setting, on the row's speaker button.
+function BookmarkRow({ item }: { item: WordBookmark }) {
+  const owner = useId();
+  useStopSpeechOnUnmount(owner);
+  return <WordRow word={item.word} course={item.course} lesson={item.lesson} speechOwner={owner} actions={<>
+    <WordSpeak term={item.word.term} word={{ lessonId: item.lesson.id, wordId: item.word.id }} className={styles.speak}
+      onAnswer={() => playRevealSpeech(owner, item.word.speech.term)} />
+    <WordBookmarkToggle wordId={item.word.id} lessonId={item.lesson.id} term={item.word.term} />
+  </>} />;
+}
+
+// One filter's rows; the page remounts it when the filter changes, which starts its stable list afresh.
 function BookmarkedWords({ groupId, lessonId }: { groupId: string; lessonId: string | null }) {
   const { t } = useTranslation();
   const list = useInfiniteQuery(wordBookmarksQueryOptions(groupId, lessonId ?? undefined));
   const bookmarks = useStableBookmarks(list.data?.pages);
-  const words = useMemo<RecapWord[]>(() => bookmarks.map((item) => item.word), [bookmarks]);
-  const sources = useMemo(() => new Map(bookmarks.map((item) => [bookmarkKey(item.lesson.id, item.word.id), item])), [bookmarks]);
-  const source = useCallback((word: RecapWord) => {
-    const item = word.lessonId ? sources.get(bookmarkKey(word.lessonId, word.id)) : undefined;
-    return item ? t("words.source", { course: item.course.title, lesson: item.lesson.title }) : null;
-  }, [sources, t]);
   const resolve = useCallback((_wordId: string, lessonId?: string) => {
     const item = bookmarks.find((entry) => entry.lesson.id === lessonId);
     return item ? { groupId, courseId: item.course.id, lessonId: item.lesson.id } : null;
   }, [bookmarks, groupId]);
   const { hasNextPage, isFetchingNextPage, fetchNextPage } = list;
-  const onLoad = useCallback(() => { void fetchNextPage(); }, [fetchNextPage]);
+  const onLoad = useCallback(() => { if (!isFetchingNextPage) void fetchNextPage(); }, [fetchNextPage, isFetchingNextPage]);
   if (list.isPending) return <LoadingState label={t("words.loading")} />;
   if (list.isError) return <ErrorState title={t("words.unavailable")}><Button onClick={() => list.refetch()}>{t("common.retry")}</Button></ErrorState>;
-  if (!words.length) return <Surface tone="quiet"><EmptyState title={t("words.emptyTitle")}>{t("words.emptyBody")}</EmptyState></Surface>;
+  if (!bookmarks.length) return <Surface tone="quiet"><EmptyState title={t("words.emptyTitle")}>{t("words.emptyBody")}</EmptyState></Surface>;
   return <WordBookmarkScope resolve={resolve}>
-    <WordRecap words={words} source={source} more={{ hasMore: Boolean(hasNextPage), loading: isFetchingNextPage, onLoad }} />
+    <WordList label={t("words.listLabel")} more={{ hasMore: Boolean(hasNextPage), loading: isFetchingNextPage, onLoad }}>
+      {bookmarks.map((item) => <BookmarkRow key={bookmarkKey(item.lesson.id, item.word.id)} item={item} />)}
+    </WordList>
   </WordBookmarkScope>;
 }
 
-// The Words tab: the viewer's bookmarked words, newest bookmark first, as word cards, optionally of one lesson; or the Weak
+// The Words tab: the viewer's bookmarked words, newest bookmark first, as word rows, optionally of one lesson; or the Weak
 // words view (C14d). Nothing here is scheduled or scored; the Weak words dots are the only sign of how well a word is known.
 // Drill opens the drill setup (C12e); Drill these words starts a Weak words drill.
 export function WordsPage({ groupId, view = "bookmarks", lessonId, onView, onLesson, onDrill }: {
@@ -141,7 +151,7 @@ export function WordsPage({ groupId, view = "bookmarks", lessonId, onView, onLes
             <BookmarkedWords key={lessonId ?? ALL_LESSONS} groupId={groupId} lessonId={lessonId} />
           </SpeechRecognitionScope>}
     </div>
-    <WordDrillSetup opened={drillOpen} onClose={() => setDrillOpen(false)} lessons={lessons} lessonId={lessonId} hasMemory={hasMemory}
+    <WordDrillSetup opened={drillOpen} groupId={groupId} onClose={() => setDrillOpen(false)} lessons={lessons} lessonId={lessonId} hasMemory={hasMemory}
       language={libraryLanguage ? t(`languages.${libraryLanguage}`) : ""} onStart={(settings) => { setDrillOpen(false); onDrill(settings); }} />
   </GroupFrame>;
 }
