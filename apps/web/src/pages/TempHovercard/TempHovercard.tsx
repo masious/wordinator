@@ -19,7 +19,7 @@ type Tone = (typeof HOVERCARD_TONES)[number];
 // where the course's clips were generated; the local speech_clips table holds the same rows.
 const MEDIA_BASE = "https://taalk-images.masious.ir/";
 
-function useLessonSpeech(document: LessonDocument) {
+export function useLessonSpeech(document: LessonDocument) {
   const [speech, setSpeech] = useState<Record<string, string>>({});
   useEffect(() => {
     let live = true;

@@ -8,8 +8,9 @@ import { playSpeech, SpeechButton, useSpeechUrl } from "../../molecules/Speech";
 import styles from "./TempHovercard.module.css";
 
 // Prototype: a new word's hovercard. The demo page sets the tone (one of the vivid accents) and whether opening a card speaks its
-// term; cards portalled out of the page take the tone through `toneStyle`.
-export type HovercardDemo = { toneStyle: CSSProperties; sayWords: boolean; words: ReadonlyMap<string, VocabularyWord> };
+// term; cards portalled out of the page take the tone through `toneStyle`. `subtle` marks words with a light tint only, and
+// `clickOnly` opens cards on a click, tap, or Enter alone (the conversation page).
+export type HovercardDemo = { toneStyle: CSSProperties; sayWords: boolean; words: ReadonlyMap<string, VocabularyWord>; subtle?: boolean; clickOnly?: boolean };
 export const HovercardDemoContext = createContext<HovercardDemo>({ toneStyle: {}, sayWords: false, words: new Map() });
 export const useHovercardDemo = () => useContext(HovercardDemoContext);
 
@@ -60,7 +61,7 @@ const CLOSE_DELAY = 180;
 // A marked word in running text. Hovering opens its card after a short delay and leaving the word and the card closes it; a tap or
 // click toggles it, a keyboard focus opens it, and Escape or a click elsewhere closes it.
 export function HoverWord({ word, children }: { word: VocabularyWord; children: ReactNode }) {
-  const { toneStyle, sayWords } = useHovercardDemo();
+  const { toneStyle, sayWords, subtle, clickOnly } = useHovercardDemo();
   const [opened, setOpened] = useState(false);
   const timer = useRef<number | undefined>(undefined);
   const termSpeech = useSpeechUrl(`word:${word.id}`);
@@ -80,17 +81,18 @@ export function HoverWord({ word, children }: { word: VocabularyWord; children: 
     if (opened) setOpened(false); else open();
   };
   return (
-    <Popover opened={opened} onChange={setOpened} position="top" offset={8} width={300} withArrow arrowSize={12} arrowOffset={16}
+    <Popover opened={opened} onChange={setOpened} position="top" offset={8} withArrow arrowSize={12} arrowOffset={16}
       middlewares={{ flip: true, shift: { padding: 12 } }} returnFocus={false} classNames={{ dropdown: styles.dropdown, arrow: styles.arrow }}>
       <Popover.Target>
         <span role="button" tabIndex={0} className={styles.mark} style={toneStyle} aria-expanded={opened} data-open={opened || undefined}
-          onMouseEnter={() => later(open, OPEN_DELAY)} onMouseLeave={() => later(() => setOpened(false), CLOSE_DELAY)}
-          onFocus={(event) => { if (event.currentTarget.matches(":focus-visible")) open(); }}
+          data-subtle={subtle || undefined}
+          onMouseEnter={clickOnly ? undefined : () => later(open, OPEN_DELAY)} onMouseLeave={clickOnly ? undefined : () => later(() => setOpened(false), CLOSE_DELAY)}
+          onFocus={clickOnly ? undefined : (event) => { if (event.currentTarget.matches(":focus-visible")) open(); }}
           onClick={() => { if (opened) setOpened(false); else open(); }} onKeyDown={onKeyDown}>
           {children}
         </span>
       </Popover.Target>
-      <Popover.Dropdown style={toneStyle} onMouseEnter={clear} onMouseLeave={() => later(() => setOpened(false), CLOSE_DELAY)}>
+      <Popover.Dropdown style={toneStyle} onMouseEnter={clear} onMouseLeave={clickOnly ? undefined : () => later(() => setOpened(false), CLOSE_DELAY)}>
         <WordCard word={word} />
       </Popover.Dropdown>
     </Popover>

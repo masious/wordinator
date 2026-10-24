@@ -23,19 +23,21 @@
 /* A marked word in running text */
 .mark{border-radius:0.2em;padding-inline:0.08em;margin-inline:-0.08em;background:var(--hc-tint);box-shadow:inset 0 -2px 0 var(--hc-tone);cursor:pointer;-webkit-box-decoration-break:clone;box-decoration-break:clone;transition:background-color var(--motion-standard) var(--ease-out)}
 .mark:hover,.mark[data-open]{background:var(--hc-tint-strong)}
+/* Subtle: a light tint and no underline; it carries its own tints so it works outside this page */
+.mark[data-subtle]{--hc-tint:color-mix(in srgb,var(--hc-tone) 12%,transparent);--hc-tint-strong:color-mix(in srgb,var(--hc-tone) 24%,transparent);box-shadow:none}
 .mark:focus-visible{outline:var(--focus-ring-width) solid var(--color-focus);outline-offset:1px}
 .unshown{display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--space-1) var(--space-3);margin:calc(var(--space-2) * -1) 0 0;font-size:var(--text-sm)}
 .unshown>span:first-child{font-family:var(--font-mono);font-size:var(--type-eyebrow);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-foreground-muted)}
 .walkLink{justify-self:end;margin:calc(var(--space-1) * -1) 0 0;padding:0;font:inherit;font-size:var(--text-sm);font-weight:var(--weight-semibold);color:var(--hc-tone);background:none;border:0;cursor:pointer}
 
 /* The card, in a popover or over a dialogue line */
-.dropdown{padding:0;border:0;border-radius:var(--radius-lg);background:var(--color-core);box-shadow:var(--shadow-floating)}
+.dropdown{width:max-content;min-width:16rem;max-width:min(30rem,calc(100vw - 2rem));padding:0;border:0;border-radius:var(--radius-lg);background:var(--color-core);box-shadow:var(--shadow-floating)}
 .arrow{border:0;background:var(--color-core)}
 .card{display:grid;gap:var(--space-2);padding:var(--space-4);color:var(--color-foreground);border-radius:var(--radius-lg);box-shadow:inset 0 3px 0 var(--hc-tone);text-align:start}
 .card[data-compact]{gap:var(--space-1);padding:var(--space-3)}
 .cardHead{display:flex;align-items:center;gap:var(--space-1)}
-.cardTerm{display:flex;flex:1;flex-wrap:wrap;align-items:center;gap:var(--space-2);min-width:0;margin:0;font-size:var(--text-xl);font-weight:var(--weight-semibold);letter-spacing:var(--tracking-title);overflow-wrap:anywhere}
-.card[data-compact] .cardTerm{font-size:var(--text-lg)}
+.cardTerm{display:flex;flex:1;flex-wrap:wrap;align-items:center;gap:var(--space-2);min-width:0;margin:0;font-size:var(--text-lg);font-weight:var(--weight-semibold);letter-spacing:var(--tracking-title);overflow-wrap:anywhere}
+.card[data-compact] .cardTerm{font-size:var(--text-md)}
 .article{padding:0.15em 0.55em;font-family:var(--font-mono);font-size:var(--text-xs);font-weight:var(--weight-semibold);letter-spacing:0;color:var(--hc-on-tone);background:var(--hc-tone);border-radius:var(--radius-pill)}
 .bookmark{display:inline-grid;place-items:center;width:var(--control-height-sm);height:var(--control-height-sm);padding:0;color:var(--color-foreground-muted);background:none;border:0;border-radius:var(--radius-sm);cursor:pointer}
 .bookmark:hover{background:var(--color-wash)}
@@ -43,9 +45,9 @@
 .bookmark[aria-pressed="true"]{color:var(--hc-tone)}
 .bookmark[aria-pressed="true"] svg{fill:currentColor}
 .cardForms{display:flex;flex-wrap:wrap;gap:var(--space-1) var(--space-3);margin:0;font-family:var(--font-mono);font-size:var(--type-metadata);color:var(--color-foreground-muted)}
-.cardMeaning{margin:0;font-size:var(--text-md)}
-.cardExample{display:flex;align-items:center;gap:var(--space-2);margin:var(--space-1) 0 0;padding-inline-start:var(--space-3);font-style:italic;border-inline-start:2px solid var(--hc-tone)}
-.cardNote{margin:0;font-size:var(--text-sm);color:var(--color-foreground-muted)}
+.cardMeaning{margin:0;font-size:var(--text-sm)}
+.cardExample{display:flex;align-items:center;gap:var(--space-2);margin:var(--space-1) 0 0;padding-inline-start:var(--space-3);font-size:var(--text-sm);font-style:italic;border-inline-start:2px solid var(--hc-tone)}
+.cardNote{margin:0;font-size:var(--text-xs);color:var(--color-foreground-muted)}
 
 /* Dialogue walkthrough */
 .walkthrough{display:grid;gap:var(--space-4);padding:var(--space-4) var(--space-5);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-lg)}
