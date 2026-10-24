@@ -165,51 +165,63 @@
         "turns": [
           {
             "speaker": "Ober",
-            "text": "Goedenavond! Hebt u een reservering?"
+            "text": "Goedenavond! Hebt u een reservering?",
+            "translation": "Good evening! Do you have a reservation?"
           },
           {
             "speaker": "Daan",
-            "text": "Goedenavond. Ja, voor vier personen, op naam van De Vries."
+            "text": "Goedenavond. Ja, voor vier personen, op naam van De Vries.",
+            "translation": "Good evening. Yes, for four people, under the name De Vries."
           },
           {
             "speaker": "Sofia",
-            "text": "Mogen wij bij het raam zitten?"
+            "text": "Mogen wij bij het raam zitten?",
+            "translation": "May we sit by the window?"
           },
           {
             "speaker": "Ober",
-            "text": "Natuurlijk. Alstublieft, de kaart. Wat wilt u drinken?"
+            "text": "Natuurlijk. Alstublieft, de kaart. Wat wilt u drinken?",
+            "translation": "Of course. Here's the menu. What would you like to drink?"
           },
           {
             "speaker": "Noor",
-            "text": "Ik wil graag een glas witte wijn."
+            "text": "Ik wil graag een glas witte wijn.",
+            "translation": "I'd like a glass of white wine, please."
           },
           {
             "speaker": "Daan",
-            "text": "Voor mij een bier, alstublieft. En een fles rode wijn voor Sofia en Lotte."
+            "text": "Voor mij een bier, alstublieft. En een fles rode wijn voor Sofia en Lotte.",
+            "translation": "A beer for me, please. And a bottle of red wine for Sofia and Lotte."
           },
           {
             "speaker": "Ober",
-            "text": "Prima. En wat wilt u eten?"
+            "text": "Prima. En wat wilt u eten?",
+            "translation": "Fine. And what would you like to eat?"
           },
           {
             "speaker": "Sofia",
-            "text": "Daan en ik willen graag de vis."
+            "text": "Daan en ik willen graag de vis.",
+            "translation": "Daan and I would like the fish."
           },
           {
             "speaker": "Lotte",
-            "text": "Ik ben vegetarisch. Ik wil geen vlees en geen vis. Is de pasta vegetarisch?"
+            "text": "Ik ben vegetarisch. Ik wil geen vlees en geen vis. Is de pasta vegetarisch?",
+            "translation": "I'm vegetarian. I don't want meat or fish. Is the pasta vegetarian?"
           },
           {
             "speaker": "Ober",
-            "text": "Ja, de pasta met groente is vegetarisch."
+            "text": "Ja, de pasta met groente is vegetarisch.",
+            "translation": "Yes, the pasta with vegetables is vegetarian."
           },
           {
             "speaker": "Lotte",
-            "text": "Dan neem ik de pasta, alstublieft."
+            "text": "Dan neem ik de pasta, alstublieft.",
+            "translation": "Then I'll have the pasta, please."
           },
           {
             "speaker": "Noor",
-            "text": "En ik wil graag de kip met friet."
+            "text": "En ik wil graag de kip met friet.",
+            "translation": "And I'd like the chicken with fries."
           }
         ]
       },
@@ -2164,51 +2176,63 @@
         "turns": [
           {
             "speaker": "Ober",
-            "text": "Is alles goed? Wilt u nog een nagerecht?"
+            "text": "Is alles goed? Wilt u nog een nagerecht?",
+            "translation": "Is everything all right? Would you like a dessert?"
           },
           {
             "speaker": "Noor",
-            "text": "Ja! Ik wil graag de appeltaart met slagroom."
+            "text": "Ja! Ik wil graag de appeltaart met slagroom.",
+            "translation": "Yes! I'd like the apple pie with whipped cream."
           },
           {
             "speaker": "Daan",
-            "text": "Ik wil geen toetje. Mag ik een koffie?"
+            "text": "Ik wil geen toetje. Mag ik een koffie?",
+            "translation": "I don't want dessert. May I have a coffee?"
           },
           {
             "speaker": "Ober",
-            "text": "Natuurlijk."
+            "text": "Natuurlijk.",
+            "translation": "Of course."
           },
           {
             "speaker": "Lotte",
-            "text": "Mogen we de rekening, alstublieft?"
+            "text": "Mogen we de rekening, alstublieft?",
+            "translation": "May we have the bill, please?"
           },
           {
             "speaker": "Ober",
-            "text": "Alstublieft. Samen of apart?"
+            "text": "Alstublieft. Samen of apart?",
+            "translation": "Here you are. Together or separately?"
           },
           {
             "speaker": "Daan",
-            "text": "Apart, alstublieft. Maar Noor betaalt vanavond niet. Wij betalen voor Noor."
+            "text": "Apart, alstublieft. Maar Noor betaalt vanavond niet. Wij betalen voor Noor.",
+            "translation": "Separately, please. But Noor isn't paying tonight. We're paying for Noor."
           },
           {
             "speaker": "Noor",
-            "text": "Echt? Dank jullie wel!"
+            "text": "Echt? Dank jullie wel!",
+            "translation": "Really? Thank you all!"
           },
           {
             "speaker": "Sofia",
-            "text": "Graag gedaan! Mag ik pinnen?"
+            "text": "Graag gedaan! Mag ik pinnen?",
+            "translation": "You're welcome! May I pay by card?"
           },
           {
             "speaker": "Ober",
-            "text": "Ja, natuurlijk."
+            "text": "Ja, natuurlijk.",
+            "translation": "Yes, of course."
           },
           {
             "speaker": "Lotte",
-            "text": "Ik wil graag contant betalen. Alstublieft. De rest is voor u."
+            "text": "Ik wil graag contant betalen. Alstublieft. De rest is voor u.",
+            "translation": "I'd like to pay in cash. Here you are. The rest is for you."
           },
           {
             "speaker": "Ober",
-            "text": "Dank u wel! Nog een fijne avond!"
+            "text": "Dank u wel! Nog een fijne avond!",
+            "translation": "Thank you! Have a lovely evening!"
           }
         ]
       },

@@ -111,51 +111,63 @@
         "turns": [
           {
             "speaker": "Ingrid",
-            "text": "Goedemorgen, mevrouw Moreno. Welkom! Hier zijn de sleutels."
+            "text": "Goedemorgen, mevrouw Moreno. Welkom! Hier zijn de sleutels.",
+            "translation": "Good morning, Mrs Moreno. Welcome! Here are the keys."
           },
           {
             "speaker": "Sofia",
-            "text": "Goedemorgen, mevrouw Visser. Dank u wel! Twee sleutels?"
+            "text": "Goedemorgen, mevrouw Visser. Dank u wel! Twee sleutels?",
+            "translation": "Good morning, Mrs Visser. Thank you! Two keys?"
           },
           {
             "speaker": "Ingrid",
-            "text": "Ja. Deze is voor de voordeur beneden en die is voor het appartement."
+            "text": "Ja. Deze is voor de voordeur beneden en die is voor het appartement.",
+            "translation": "Yes. This one is for the downstairs front door, and that one is for the apartment."
           },
           {
             "speaker": "Sofia",
-            "text": "Prima. En waar is de meterkast?"
+            "text": "Prima. En waar is de meterkast?",
+            "translation": "Great. And where is the meter cupboard?"
           },
           {
             "speaker": "Ingrid",
-            "text": "De meterkast is hier, naast de deur. De meters zijn links."
+            "text": "De meterkast is hier, naast de deur. De meters zijn links.",
+            "translation": "The meter cupboard is here, next to the door. The meters are on the left."
           },
           {
             "speaker": "Sofia",
-            "text": "En waar zijn de containers voor het afval?"
+            "text": "En waar zijn de containers voor het afval?",
+            "translation": "And where are the containers for the rubbish?"
           },
           {
             "speaker": "Ingrid",
-            "text": "Ze zijn beneden, achter het gebouw."
+            "text": "Ze zijn beneden, achter het gebouw.",
+            "translation": "They are downstairs, behind the building."
           },
           {
             "speaker": "Sofia",
-            "text": "Dank u. En de lift is tegenover de trap, toch?"
+            "text": "Dank u. En de lift is tegenover de trap, toch?",
+            "translation": "Thank you. And the lift is opposite the stairs, right?"
           },
           {
             "speaker": "Ingrid",
-            "text": "Dat klopt. Hebt u nog vragen?"
+            "text": "Dat klopt. Hebt u nog vragen?",
+            "translation": "That's right. Do you have any other questions?"
           },
           {
             "speaker": "Sofia",
-            "text": "Nee, dank u. O, kijk! Daan is er al."
+            "text": "Nee, dank u. O, kijk! Daan is er al.",
+            "translation": "No, thank you. Oh, look! Daan is already here."
           },
           {
             "speaker": "Ingrid",
-            "text": "Prima. Veel succes met de verhuizing!"
+            "text": "Prima. Veel succes met de verhuizing!",
+            "translation": "Great. Good luck with the move!"
           },
           {
             "speaker": "Sofia",
-            "text": "Dank u wel. Tot ziens!"
+            "text": "Dank u wel. Tot ziens!",
+            "translation": "Thank you. Goodbye!"
           }
         ]
       },
@@ -2293,51 +2305,63 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Sofia, waar zijn de borden?"
+            "text": "Sofia, waar zijn de borden?",
+            "translation": "Sofia, where are the plates?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ze zijn in de doos naast de bank."
+            "text": "Ze zijn in de doos naast de bank.",
+            "translation": "They are in the box next to the sofa."
           },
           {
             "speaker": "Noor",
-            "text": "Welke doos? Hier zijn tien dozen!"
+            "text": "Welke doos? Hier zijn tien dozen!",
+            "translation": "Which box? There are ten boxes here!"
           },
           {
             "speaker": "Sofia",
-            "text": "Die grote doos, tussen de bank en het raam."
+            "text": "Die grote doos, tussen de bank en het raam.",
+            "translation": "That big box, between the sofa and the window."
           },
           {
             "speaker": "Daan",
-            "text": "En waar is de lamp van de markt?"
+            "text": "En waar is de lamp van de markt?",
+            "translation": "And where is the lamp from the market?"
           },
           {
             "speaker": "Sofia",
-            "text": "Het is in die kleine doos, op de stoel."
+            "text": "Het is in die kleine doos, op de stoel.",
+            "translation": "It's in that small box, on the chair."
           },
           {
             "speaker": "Noor",
-            "text": "Hij, Sofia. De lamp: hij is in die doos. Kijk, hier is hij!"
+            "text": "Hij, Sofia. De lamp: hij is in die doos. Kijk, hier is hij!",
+            "translation": "He, Sofia. The lamp: it is in that box. Look, here it is!"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, hij! Dank je. Maar waar is mijn tas? Mijn telefoon is in de tas."
+            "text": "Ja, hij! Dank je. Maar waar is mijn tas? Mijn telefoon is in de tas.",
+            "translation": "Yes, it! Thank you. But where is my bag? My phone is in the bag."
           },
           {
             "speaker": "Daan",
-            "text": "Hij is onder de tafel, naast de prullenbak."
+            "text": "Hij is onder de tafel, naast de prullenbak.",
+            "translation": "It's under the table, next to the bin."
           },
           {
             "speaker": "Sofia",
-            "text": "Super! En het kussen van de bank?"
+            "text": "Super! En het kussen van de bank?",
+            "translation": "Great! And the sofa cushion?"
           },
           {
             "speaker": "Noor",
-            "text": "Het is in de slaapkamer, op het bed."
+            "text": "Het is in de slaapkamer, op het bed.",
+            "translation": "It's in the bedroom, on the bed."
           },
           {
             "speaker": "Daan",
-            "text": "Mag ik de lege dozen meenemen? Ze zijn bij de deur."
+            "text": "Mag ik de lege dozen meenemen? Ze zijn bij de deur.",
+            "translation": "Can I take the empty boxes with me? They are by the door."
           }
         ]
       },

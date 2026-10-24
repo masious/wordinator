@@ -1,0 +1,430 @@
+[
+ {
+  "course": "dutch-foundations/part-vii",
+  "lesson": "37-een-klein-probleem",
+  "title": "Een klein probleem",
+  "dialogues": [
+   {
+    "blockId": "a83289eb-1681-4e36-8d54-b7c7a3af5807",
+    "turns": [
+     {
+      "speaker": "Sofia",
+      "text": "Hoi Ahmed! Heb je even tijd?"
+      ,"translation": "Hi Ahmed! Do you have a moment?"
+     },
+     {
+      "speaker": "Ahmed",
+      "text": "Hoi Sofia! Ja hoor. Wat is er?"
+      ,"translation": "Hi Sofia! Sure. What’s up?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Mijn fiets maakt een vreemd geluid."
+      ,"translation": "My bike is making a strange noise."
+     },
+     {
+      "speaker": "Ahmed",
+      "text": "Wanneer hoor je het geluid?"
+      ,"translation": "When do you hear the noise?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Vooral als ik fiets. Kun je ernaar luisteren?"
+      ,"translation": "Especially when I’m riding. Can you listen to it?"
+     },
+     {
+      "speaker": "Ahmed",
+      "text": "Ja, natuurlijk. Zet je fiets maar hier."
+      ,"translation": "Yes, of course. Just put your bike here."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dank je. Ik weet niet wat ik ermee moet doen."
+      ,"translation": "Thanks. I don’t know what to do about it."
+     },
+     {
+      "speaker": "Ahmed",
+      "text": "Geen probleem. Ik kijk er even naar."
+      ,"translation": "No problem. I’ll take a quick look at it."
+     }
+    ]
+   },
+   {
+    "blockId": "c6715475-68e5-416e-8f54-f121ebf6f430",
+    "turns": [
+     {
+      "speaker": "Sofia",
+      "text": "Hoi Henk. Zijn deze sleutels van jou?"
+      ,"translation": "Hi Henk. Are these keys yours?"
+     },
+     {
+      "speaker": "Henk",
+      "text": "Nee, die zijn van Ahmed."
+      ,"translation": "No, they belong to Ahmed."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik geef hem de sleutels straks."
+      ,"translation": "I’ll give him the keys later."
+     },
+     {
+      "speaker": "Henk",
+      "text": "Goed. Ik praat straks met hem."
+      ,"translation": "Okay. I’ll talk to him later."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "En deze fietspomp? Is die van jou?"
+      ,"translation": "And this bike pump? Is it yours?"
+     },
+     {
+      "speaker": "Henk",
+      "text": "Nee, de mijne is kleiner. Die pomp is van Noor."
+      ,"translation": "No, mine is smaller. That pump belongs to Noor."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik zet hem bij de deur."
+      ,"translation": "I’ll put it by the door."
+     },
+     {
+      "speaker": "Henk",
+      "text": "Dank je. Dan ziet Noor hem meteen."
+      ,"translation": "Thanks. Then Noor will see it right away."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-vii",
+  "lesson": "38-de-dokter-en-de-balie",
+  "title": "De dokter en de balie",
+  "dialogues": [
+   {
+    "blockId": "f1e16fc3-583b-4b7f-a34b-91f868203a44",
+    "turns": [
+     {
+      "speaker": "Marieke",
+      "text": "We oefenen twee gesprekken. Eerst bij de huisarts, daarna bij de balie."
+      ,"translation": "We’re practicing two conversations. First at the family doctor’s office, then at the desk."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik voel me niet lekker. Is dat goed Nederlands?"
+      ,"translation": "I don’t feel well. Is that correct Dutch?"
+     },
+     {
+      "speaker": "Marieke",
+      "text": "Ja. Je zegt: Ik voel me niet lekker."
+      ,"translation": "Yes. You say: I don’t feel well."
+     },
+     {
+      "speaker": "Piotr",
+      "text": "En als ik zeg: Ik ben ziek?"
+      ,"translation": "And what if I say: I’m sick?"
+     },
+     {
+      "speaker": "Marieke",
+      "text": "Dat kan ook. Dat is een andere zin."
+      ,"translation": "That works too. That’s a different sentence."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Kunt u mij helpen? Ik wil een afspraak maken."
+      ,"translation": "Can you help me? I’d like to make an appointment."
+     },
+     {
+      "speaker": "Marieke",
+      "text": "Goed. En vraag rustig om herhaling als iets niet duidelijk is."
+      ,"translation": "Good. And calmly ask for repetition if something isn’t clear."
+     },
+     {
+      "speaker": "Piotr",
+      "text": "Zou u dat kunnen herhalen, alstublieft?"
+      ,"translation": "Could you repeat that, please?"
+     },
+     {
+      "speaker": "Marieke",
+      "text": "Prima. Dit is een oefening; we bellen niemand."
+      ,"translation": "Great. This is just a practice exercise; we’re not calling anyone."
+     }
+    ]
+   },
+   {
+    "blockId": "a36426f8-8fd9-474a-a288-dfc204fb4ed9",
+    "turns": [
+     {
+      "speaker": "Marieke",
+      "text": "Nu oefenen jullie bij een gemeentelijke balie."
+      ,"translation": "Now you’re practicing at a municipal service desk."
+     },
+     {
+      "speaker": "Piotr",
+      "text": "Goedemiddag. Kunt u mij helpen?"
+      ,"translation": "Good afternoon. Can you help me?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Natuurlijk. Wat zoekt u?"
+      ,"translation": "Of course. What are you looking for?"
+     },
+     {
+      "speaker": "Piotr",
+      "text": "Ik zoek een formulier."
+      ,"translation": "I’m looking for a form."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Welk formulier zoekt u?"
+      ,"translation": "Which form are you looking for?"
+     },
+     {
+      "speaker": "Piotr",
+      "text": "Dat weet ik niet. Het gaat om een adres."
+      ,"translation": "I don’t know. It’s about an address."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Zou u de naam kunnen spellen?"
+      ,"translation": "Could you spell the name?"
+     },
+     {
+      "speaker": "Piotr",
+      "text": "Ja, natuurlijk. Kunt u dat herhalen?"
+      ,"translation": "Yes, of course. Could you repeat that?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "De naam van het formulier, alstublieft."
+      ,"translation": "The name of the form, please."
+     },
+     {
+      "speaker": "Piotr",
+      "text": "Dank u wel."
+      ,"translation": "Thank you."
+     },
+     {
+      "speaker": "Marieke",
+      "text": "Goed gedaan. Dit blijft een rollenspel."
+      ,"translation": "Well done. This is still a role-play."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-vii",
+  "lesson": "39-een-bericht-schrijven",
+  "title": "Een bericht schrijven",
+  "dialogues": [
+   {
+    "blockId": "4d7303f1-c43c-4539-be85-6ed8595500cb",
+    "turns": [
+     {
+      "speaker": "Sofia",
+      "text": "Ik schrijf Noor een bericht. Het is voor morgen."
+      ,"translation": "I’m writing Noor a message. It’s for tomorrow."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Begin maar met Hoi! Je schrijft aan mij."
+      ,"translation": "Just start with Hi! You’re writing to me."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Hoi Noor, ik ben iets later, want de bus rijdt langzaam."
+      ,"translation": "Hi Noor, I’m a little late because the bus is moving slowly."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Prima. Zet de reden in een korte zin."
+      ,"translation": "Great. Put the reason in a short sentence."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik neem mijn boek mee, terwijl ik op de bus wacht."
+      ,"translation": "I’m bringing my book while I wait for the bus."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Goed. De bijzin met terwijl staat achteraan."
+      ,"translation": "Good. The subordinate clause with while comes at the end."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "En de vraag: Ik wil graag weten of je tijd hebt."
+      ,"translation": "And the question: I’d like to know if you have time."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ja, dat is duidelijk. Sluit af met Groetjes!"
+      ,"translation": "Yes, that’s clear. End with Best wishes!"
+     }
+    ]
+   },
+   {
+    "blockId": "ec5f3044-9617-45f8-bb20-1a8d7661c2cb",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "Heb je het bericht aan de balie klaar?"
+      ,"translation": "Have you finished the message for the desk?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja. Ik vraag of ze mijn formulier kunnen invullen."
+      ,"translation": "Yes. I’m asking whether they can fill in my form."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Goed. Je schrijft aan een medewerker, dus gebruik u."
+      ,"translation": "Good. You’re writing to an employee, so use the formal ‘you.’"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Beste medewerker. Ik wil graag weten of u mij kunt helpen."
+      ,"translation": "Dear employee. I’d like to know if you can help me."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Dat is beleefd en duidelijk."
+      ,"translation": "That’s polite and clear."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik schrijf de vraag op, terwijl ik de e-mail lees."
+      ,"translation": "I’m writing down the question while I read the email."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Mooi. En je sluit af met Met vriendelijke groet."
+      ,"translation": "Good. And you end with Kind regards."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dank je. De toon past nu bij de ontvanger."
+      ,"translation": "Thanks. The tone now suits the recipient."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-vii",
+  "lesson": "40-sofia-vertelt-haar-verhaal",
+  "title": "Sofia vertelt haar verhaal",
+  "dialogues": [
+   {
+    "blockId": "b51e4cea-aa06-4b0e-8391-6d93c560cac2",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "Heb je je verhaal voor de les klaar?"
+      ,"translation": "Have you finished your story for the lesson?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Bijna. Ik wil vertellen over mijn eerste maanden in Utrecht."
+      ,"translation": "Almost. I want to talk about my first months in Utrecht."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Begin maar bij je aankomst."
+      ,"translation": "Just start with your arrival."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Op 1 september kwam ik op Utrecht Centraal aan. Jij stond daar."
+      ,"translation": "I arrived at Utrecht Central Station on September 1. You were there."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Daarna woonde je een tijd bij mij."
+      ,"translation": "After that, you lived with me for a while."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja. Op 17 oktober verhuisde ik naar mijn appartement in de Kastanjestraat."
+      ,"translation": "Yes. On October 17, I moved to my apartment on Kastanjestraat."
+     },
+     {
+      "speaker": "Noor",
+      "text": "En je werk en je Nederlandse les?"
+      ,"translation": "And your work and your Dutch classes?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik werk bij een klein IT-bedrijf en ik studeer Nederlands."
+      ,"translation": "I work for a small IT company and I’m studying Dutch."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Je hebt ook vrienden gemaakt."
+      ,"translation": "You’ve also made friends."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, en met kerst ben ik naar Valencia gegaan. Op 3 januari kwam ik terug."
+      ,"translation": "Yes, and I went to Valencia for Christmas. I came back on January 3."
+     }
+    ]
+   },
+   {
+    "blockId": "c3ceb5eb-d2d7-4bbd-b555-c5fa19286aa0",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "Lees je verhaal eens voor."
+      ,"translation": "Read your story aloud."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Eerst kwam ik naar Utrecht voor mijn werk."
+      ,"translation": "First, I came to Utrecht for my work."
+     },
+     {
+      "speaker": "Noor",
+      "text": "En waar woonde je toen?"
+      ,"translation": "And where did you live then?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Eerst woonde ik bij jou. Daarna vond ik een appartement in Lombok."
+      ,"translation": "At first, I lived with you. Then I found an apartment in Lombok."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Wat deed je met kerst?"
+      ,"translation": "What did you do for Christmas?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik ging naar Valencia. Ik kookte met mijn moeder en studeerde Nederlands."
+      ,"translation": "I went to Valencia. I cooked with my mother and studied Dutch."
+     },
+     {
+      "speaker": "Noor",
+      "text": "En toen je terug was?"
+      ,"translation": "And when you were back?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Op 3 januari kwam ik terug. Nu woon ik hier en leer ik nog steeds Nederlands."
+      ,"translation": "I came back on January 3. Now I live here and I’m still learning Dutch."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Wat is een mogelijke volgende stap?"
+      ,"translation": "What is a possible next step?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Misschien vertel ik mijn verhaal in de les. Als ik een woord niet weet, vraag ik om hulp."
+      ,"translation": "Maybe I’ll tell my story in class. If I don’t know a word, I’ll ask for help."
+     }
+    ]
+   }
+  ]
+ }
+]

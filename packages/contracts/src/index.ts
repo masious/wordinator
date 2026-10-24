@@ -445,7 +445,7 @@ export const examplePayloadSchema = z.object({
   note: optionalBlockText(COURSE_NOTE_MAX),
 });
 export const dialoguePayloadSchema = z.object({
-  turns: z.array(z.object({ speaker: requiredBlockText(COURSE_SPEAKER_MAX), text: requiredBlockText(COURSE_SENTENCE_MAX) })).min(1).max(COURSE_DIALOGUE_TURNS_MAX),
+  turns: z.array(z.object({ speaker: requiredBlockText(COURSE_SPEAKER_MAX), text: requiredBlockText(COURSE_SENTENCE_MAX), translation: optionalBlockText(COURSE_SENTENCE_MAX) })).min(1).max(COURSE_DIALOGUE_TURNS_MAX),
 });
 export const COURSE_INSTRUCTION_MAX = 2_000;
 export const COURSE_PRACTICE_ITEMS_MAX = 50;

@@ -158,43 +158,53 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Goedemorgen! Hoe gaat het met je moeder?"
+            "text": "Goedemorgen! Hoe gaat het met je moeder?",
+            "translation": "Good morning! How is your mother?"
           },
           {
             "speaker": "Sofia",
-            "text": "Goed, dank je! Kijk, een foto van mijn familie."
+            "text": "Goed, dank je! Kijk, een foto van mijn familie.",
+            "translation": "Good, thank you! Look, a photo of my family."
           },
           {
             "speaker": "Noor",
-            "text": "Wie is dit?"
+            "text": "Wie is dit?",
+            "translation": "Who is this?"
           },
           {
             "speaker": "Sofia",
-            "text": "Dit is mijn moeder. Ze heet Carmen."
+            "text": "Dit is mijn moeder. Ze heet Carmen.",
+            "translation": "This is my mother. Her name is Carmen."
           },
           {
             "speaker": "Noor",
-            "text": "En wie is de man op de foto?"
+            "text": "En wie is de man op de foto?",
+            "translation": "And who is the man in the photo?"
           },
           {
             "speaker": "Sofia",
-            "text": "Dit is mijn broer, Javier."
+            "text": "Dit is mijn broer, Javier.",
+            "translation": "This is my brother, Javier."
           },
           {
             "speaker": "Noor",
-            "text": "Hoe oud is je broer?"
+            "text": "Hoe oud is je broer?",
+            "translation": "How old is your brother?"
           },
           {
             "speaker": "Sofia",
-            "text": "Hij is eenendertig. Hij is kok."
+            "text": "Hij is eenendertig. Hij is kok.",
+            "translation": "He is thirty-one. He is a cook."
           },
           {
             "speaker": "Noor",
-            "text": "Woont je broer ook in Valencia?"
+            "text": "Woont je broer ook in Valencia?",
+            "translation": "Does your brother also live in Valencia?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja. Mijn familie woont in Valencia."
+            "text": "Ja. Mijn familie woont in Valencia.",
+            "translation": "Yes. My family lives in Valencia."
           }
         ]
       },
@@ -1516,43 +1526,53 @@
         "turns": [
           {
             "speaker": "Sofia",
-            "text": "En jouw familie, Noor? Heb jij een broer of een zus?"
+            "text": "En jouw familie, Noor? Heb jij een broer of een zus?",
+            "translation": "And your family, Noor? Do you have a brother or a sister?"
           },
           {
             "speaker": "Noor",
-            "text": "Ik heb een zus. Kijk, dit is Fleur!"
+            "text": "Ik heb een zus. Kijk, dit is Fleur!",
+            "translation": "I have a sister. Look, this is Fleur!"
           },
           {
             "speaker": "Sofia",
-            "text": "Woont je zus in Groningen, bij je ouders?"
+            "text": "Woont je zus in Groningen, bij je ouders?",
+            "translation": "Does your sister live in Groningen, with your parents?"
           },
           {
             "speaker": "Noor",
-            "text": "Nee. Mijn ouders zijn in Groningen, maar Fleur is nu in Australië."
+            "text": "Nee. Mijn ouders zijn in Groningen, maar Fleur is nu in Australië.",
+            "translation": "No. My parents are in Groningen, but Fleur is in Australia now."
           },
           {
             "speaker": "Sofia",
-            "text": "Australië? Echt? Hoe oud is ze?"
+            "text": "Australië? Echt? Hoe oud is ze?",
+            "translation": "Australia? Really? How old is she?"
           },
           {
             "speaker": "Noor",
-            "text": "Zevenentwintig. Ze surft heel goed!"
+            "text": "Zevenentwintig. Ze surft heel goed!",
+            "translation": "Twenty-seven. She surfs very well!"
           },
           {
             "speaker": "Sofia",
-            "text": "Super! En Els? Heeft Els familie in Utrecht?"
+            "text": "Super! En Els? Heeft Els familie in Utrecht?",
+            "translation": "Great! And Els? Does Els have family in Utrecht?"
           },
           {
             "speaker": "Noor",
-            "text": "Ja! Ze komt straks, met haar kleindochter."
+            "text": "Ja! Ze komt straks, met haar kleindochter.",
+            "translation": "Yes! She’s coming soon, with her granddaughter."
           },
           {
             "speaker": "Sofia",
-            "text": "Haar kleindochter? Hoe oud is ze?"
+            "text": "Haar kleindochter? Hoe oud is ze?",
+            "translation": "Her granddaughter? How old is she?"
           },
           {
             "speaker": "Noor",
-            "text": "Ongeveer zes. Gezellig!"
+            "text": "Ongeveer zes. Gezellig!",
+            "translation": "About six. How nice!"
           }
         ]
       },

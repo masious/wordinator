@@ -44,51 +44,63 @@
         "turns": [
           {
             "speaker": "Verkoopster",
-            "text": "Deze jas is warmer dan die jas."
+            "text": "Deze jas is warmer dan die jas.",
+            "translation": "This coat is warmer than that coat."
           },
           {
             "speaker": "Sofia",
-            "text": "Maar die is goedkoper. Welke jas is langer?"
+            "text": "Maar die is goedkoper. Welke jas is langer?",
+            "translation": "But that one is cheaper. Which coat is longer?"
           },
           {
             "speaker": "Verkoopster",
-            "text": "De blauwe jas is langer dan de zwarte jas. Hij is ook dikker."
+            "text": "De blauwe jas is langer dan de zwarte jas. Hij is ook dikker.",
+            "translation": "The blue coat is longer than the black coat. It is also thicker."
           },
           {
             "speaker": "Noor",
-            "text": "En de kwaliteit? Is de blauwe jas beter?"
+            "text": "En de kwaliteit? Is de blauwe jas beter?",
+            "translation": "And the quality? Is the blue coat better?"
           },
           {
             "speaker": "Verkoopster",
-            "text": "Ja, de kwaliteit is beter. Maar hij is ook zwaarder."
+            "text": "Ja, de kwaliteit is beter. Maar hij is ook zwaarder.",
+            "translation": "Yes, the quality is better. But it is also heavier."
           },
           {
             "speaker": "Sofia",
-            "text": "En de blauwe jas is duurder. Ik twijfel."
+            "text": "En de blauwe jas is duurder. Ik twijfel.",
+            "translation": "And the blue coat is more expensive. I cannot decide."
           },
           {
             "speaker": "Noor",
-            "text": "De zwarte jas is lichter en goedkoper, maar de winter hier is lang en koud."
+            "text": "De zwarte jas is lichter en goedkoper, maar de winter hier is lang en koud.",
+            "translation": "The black coat is lighter and cheaper, but winter here is long and cold."
           },
           {
             "speaker": "Verkoopster",
-            "text": "De blauwe jas is ook heel mooi."
+            "text": "De blauwe jas is ook heel mooi.",
+            "translation": "The blue coat is also very beautiful."
           },
           {
             "speaker": "Sofia",
-            "text": "Ik vergelijk de prijzen. De blauwe jas kost honderdtwintig euro en de zwarte jas kost tachtig euro."
+            "text": "Ik vergelijk de prijzen. De blauwe jas kost honderdtwintig euro en de zwarte jas kost tachtig euro.",
+            "translation": "I am comparing the prices. The blue coat costs one hundred and twenty euros, and the black coat costs eighty euros."
           },
           {
             "speaker": "Noor",
-            "text": "Dus is de blauwe jas veertig euro duurder, maar hij is warmer en praktischer."
+            "text": "Dus is de blauwe jas veertig euro duurder, maar hij is warmer en praktischer.",
+            "translation": "So the blue coat is forty euros more expensive, but it is warmer and more practical."
           },
           {
             "speaker": "Sofia",
-            "text": "Goed, ik kies de blauwe jas! Hij is mooier en warmer."
+            "text": "Goed, ik kies de blauwe jas! Hij is mooier en warmer.",
+            "translation": "All right, I choose the blue coat! It is nicer and warmer."
           },
           {
             "speaker": "Verkoopster",
-            "text": "Een goede keus! Wilt u deze nu meenemen?"
+            "text": "Een goede keus! Wilt u deze nu meenemen?",
+            "translation": "A good choice! Would you like to take it with you now?"
           }
         ]
       },
@@ -925,43 +937,53 @@
         "turns": [
           {
             "speaker": "Henk",
-            "text": "Zo, Sofia! Mooie jas! Die jas staat je goed."
+            "text": "Zo, Sofia! Mooie jas! Die jas staat je goed.",
+            "translation": "Well, Sofia! Nice coat! That coat suits you."
           },
           {
             "speaker": "Sofia",
-            "text": "Dank je, Henk! Deze donkerblauwe jas is nieuw. Hij is warmer dan mijn regenjas."
+            "text": "Dank je, Henk! Deze donkerblauwe jas is nieuw. Hij is warmer dan mijn regenjas.",
+            "translation": "Thanks, Henk! This dark-blue coat is new. It is warmer than my raincoat."
           },
           {
             "speaker": "Henk",
-            "text": "Prima! De winter hier is kouder dan in Spanje, hè?"
+            "text": "Prima! De winter hier is kouder dan in Spanje, hè?",
+            "translation": "Great! Winter here is colder than in Spain, right?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja! Utrecht is kouder dan Valencia, en de winter hier is ook langer."
+            "text": "Ja! Utrecht is kouder dan Valencia, en de winter hier is ook langer.",
+            "translation": "Yes! Utrecht is colder than Valencia, and winter here is longer too."
           },
           {
             "speaker": "Henk",
-            "text": "Mis je de zon?"
+            "text": "Mis je de zon?",
+            "translation": "Do you miss the sun?"
           },
           {
             "speaker": "Sofia",
-            "text": "Een beetje. Maar mijn appartement hier is gezelliger dan mijn oude kamer bij Noor."
+            "text": "Een beetje. Maar mijn appartement hier is gezelliger dan mijn oude kamer bij Noor.",
+            "translation": "A little. But my apartment here is cozier than my old room at Noor's."
           },
           {
             "speaker": "Henk",
-            "text": "Mooi! En je hebt nu ook een fiets en goede vrienden."
+            "text": "Mooi! En je hebt nu ook een fiets en goede vrienden.",
+            "translation": "Nice! And now you also have a bike and good friends."
           },
           {
             "speaker": "Sofia",
-            "text": "Precies. Mijn appartement is kleiner dan het huis in Valencia, maar het is net zo gezellig."
+            "text": "Precies. Mijn appartement is kleiner dan het huis in Valencia, maar het is net zo gezellig.",
+            "translation": "Exactly. My apartment is smaller than the house in Valencia, but it is just as cozy."
           },
           {
             "speaker": "Henk",
-            "text": "Dan kan de winter komen! Welkom thuis, Sofia!"
+            "text": "Dan kan de winter komen! Welkom thuis, Sofia!",
+            "translation": "Then winter can come! Welcome home, Sofia!"
           },
           {
             "speaker": "Sofia",
-            "text": "Dank je wel, Henk. Ik ben hier nu thuis."
+            "text": "Dank je wel, Henk. Ik ben hier nu thuis.",
+            "translation": "Thank you, Henk. I am at home here now."
           }
         ]
       },

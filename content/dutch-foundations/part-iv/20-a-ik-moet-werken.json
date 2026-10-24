@@ -130,43 +130,53 @@
         "turns": [
           {
             "speaker": "Karin",
-            "text": "Goedemorgen! We hebben een deadline: we moeten vrijdag klaar zijn met de app voor de klant in Amsterdam."
+            "text": "Goedemorgen! We hebben een deadline: we moeten vrijdag klaar zijn met de app voor de klant in Amsterdam.",
+            "translation": "Good morning! We have a deadline: we have to finish the app for the client in Amsterdam by Friday."
           },
           {
             "speaker": "Daan",
-            "text": "Oké. De presentatie is vrijdag om twee uur, toch?"
+            "text": "Oké. De presentatie is vrijdag om twee uur, toch?",
+            "translation": "Okay. The presentation is on Friday at two o'clock, right?"
           },
           {
             "speaker": "Karin",
-            "text": "Precies. Daan, jij moet de app nog testen."
+            "text": "Precies. Daan, jij moet de app nog testen.",
+            "translation": "Exactly. Daan, you still have to test the app."
           },
           {
             "speaker": "Daan",
-            "text": "Prima. Ik moet ook nog twee taken afmaken."
+            "text": "Prima. Ik moet ook nog twee taken afmaken.",
+            "translation": "Fine. I also still have to finish two tasks."
           },
           {
             "speaker": "Sofia",
-            "text": "En ik? Wat moet ik doen?"
+            "text": "En ik? Wat moet ik doen?",
+            "translation": "And me? What do I have to do?"
           },
           {
             "speaker": "Karin",
-            "text": "Jij moet de nieuwe schermen afmaken, Sofia. Kun je donderdag lang werken?"
+            "text": "Jij moet de nieuwe schermen afmaken, Sofia. Kun je donderdag lang werken?",
+            "translation": "You have to finish the new screens, Sofia. Can you work late on Thursday?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, dat kan. De app moet op tijd klaar zijn!"
+            "text": "Ja, dat kan. De app moet op tijd klaar zijn!",
+            "translation": "Yes, I can. The app has to be ready on time!"
           },
           {
             "speaker": "Karin",
-            "text": "Mooi. Ik moet de presentatie nog voorbereiden."
+            "text": "Mooi. Ik moet de presentatie nog voorbereiden.",
+            "translation": "Good. I still have to prepare the presentation."
           },
           {
             "speaker": "Daan",
-            "text": "We moeten dit echt samen doen. Het wordt een drukke week!"
+            "text": "We moeten dit echt samen doen. Het wordt een drukke week!",
+            "translation": "We really have to do this together. It will be a busy week!"
           },
           {
             "speaker": "Sofia",
-            "text": "Dat klopt! Kom op, we moeten beginnen!"
+            "text": "Dat klopt! Kom op, we moeten beginnen!",
+            "translation": "That is right! Come on, we have to start!"
           }
         ]
       },
@@ -1174,51 +1184,63 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Hoi Sofia! Alles goed?"
+            "text": "Hoi Sofia! Alles goed?",
+            "translation": "Hi Sofia! How are you?"
           },
           {
             "speaker": "Sofia",
-            "text": "Hoi Noor! Ja, maar ik heb het heel druk. Ik moet nog zo veel doen!"
+            "text": "Hoi Noor! Ja, maar ik heb het heel druk. Ik moet nog zo veel doen!",
+            "translation": "Hi Noor! Yes, but I am very busy. I still have so much to do!"
           },
           {
             "speaker": "Noor",
-            "text": "Wat moet je doen?"
+            "text": "Wat moet je doen?",
+            "translation": "What do you have to do?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ik moet de nieuwe schermen nog afmaken en ik moet de app ook testen, met Daan."
+            "text": "Ik moet de nieuwe schermen nog afmaken en ik moet de app ook testen, met Daan.",
+            "translation": "I still have to finish the new screens, and I also have to test the app with Daan."
           },
           {
             "speaker": "Noor",
-            "text": "Dat is veel!"
+            "text": "Dat is veel!",
+            "translation": "That is a lot!"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja! En vrijdag hebben we de presentatie voor de klant."
+            "text": "Ja! En vrijdag hebben we de presentatie voor de klant.",
+            "translation": "Yes! And on Friday we have the presentation for the client."
           },
           {
             "speaker": "Noor",
-            "text": "Joh, wat druk! Gaan we deze week naar de film?"
+            "text": "Joh, wat druk! Gaan we deze week naar de film?",
+            "translation": "Goodness, how busy! Shall we go to the movies this week?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ik wil wel, maar ik moet eerst in mijn agenda kijken."
+            "text": "Ik wil wel, maar ik moet eerst in mijn agenda kijken.",
+            "translation": "I would like to, but I have to check my calendar first."
           },
           {
             "speaker": "Noor",
-            "text": "Oké, geen probleem. Welke dag kun je niet?"
+            "text": "Oké, geen probleem. Welke dag kun je niet?",
+            "translation": "Okay, no problem. Which day can you not make it?"
           },
           {
             "speaker": "Sofia",
-            "text": "Donderdag kan ik niet. Dan moet ik overwerken."
+            "text": "Donderdag kan ik niet. Dan moet ik overwerken.",
+            "translation": "I cannot do Thursday. I have to work overtime then."
           },
           {
             "speaker": "Noor",
-            "text": "Oké, we praten morgen verder!"
+            "text": "Oké, we praten morgen verder!",
+            "translation": "Okay, we will talk more tomorrow!"
           },
           {
             "speaker": "Sofia",
-            "text": "Tot morgen!"
+            "text": "Tot morgen!",
+            "translation": "See you tomorrow!"
           }
         ]
       },

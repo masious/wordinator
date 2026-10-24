@@ -46,35 +46,43 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Hoi Sofia! Wat ben je aan het doen?"
+            "text": "Hoi Sofia! Wat ben je aan het doen?",
+            "translation": "Hi Sofia! What are you doing?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ik ben een gedicht aan het schrijven. Het is heel moeilijk!"
+            "text": "Ik ben een gedicht aan het schrijven. Het is heel moeilijk!",
+            "translation": "I am a poem writing. It is very difficult!"
           },
           {
             "speaker": "Noor",
-            "text": "O, leuk! Ik ben pepernoten aan het bakken."
+            "text": "O, leuk! Ik ben pepernoten aan het bakken.",
+            "translation": "O, leuk! I am pepernoten baking."
           },
           {
             "speaker": "Sofia",
-            "text": "En wat doet Fleur?"
+            "text": "En wat doet Fleur?",
+            "translation": "And what is Fleur?"
           },
           {
             "speaker": "Noor",
-            "text": "Zij is cadeautjes aan het inpakken."
+            "text": "Zij is cadeautjes aan het inpakken.",
+            "translation": "She is presents wrapping."
           },
           {
             "speaker": "Sofia",
-            "text": "Wat gezellig. Ik maak een surprise voor Daan."
+            "text": "Wat gezellig. Ik maak een surprise voor Daan.",
+            "translation": "How lovely. I’m making een surprise for Daan."
           },
           {
             "speaker": "Noor",
-            "text": "Wat ben je aan het maken?"
+            "text": "Wat ben je aan het maken?",
+            "translation": "What are you making?"
           },
           {
             "speaker": "Sofia",
-            "text": "Een fiets van karton. De nieuwe bel zit in de fiets!"
+            "text": "Een fiets van karton. De nieuwe bel zit in de fiets!",
+            "translation": "A cardboard bicycle. The new bell is inside the bicycle!"
           }
         ]
       },
@@ -702,43 +710,53 @@
         "turns": [
           {
             "speaker": "Henk",
-            "text": "Hoi Sofia! Wat ben je aan het maken?"
+            "text": "Hoi Sofia! Wat ben je aan het maken?",
+            "translation": "Hi Sofia! What are you making?"
           },
           {
             "speaker": "Sofia",
-            "text": "Een fiets van karton. Voor Daan!"
+            "text": "Een fiets van karton. Voor Daan!",
+            "translation": "A cardboard bicycle. Voor Daan!"
           },
           {
             "speaker": "Henk",
-            "text": "Wat een goed idee. Is de fiets al klaar?"
+            "text": "Wat een goed idee. Is de fiets al klaar?",
+            "translation": "What a good idea. Is de bike al klaar?"
           },
           {
             "speaker": "Sofia",
-            "text": "Nee, ik ben de bel aan het vastplakken."
+            "text": "Nee, ik ben de bel aan het vastplakken.",
+            "translation": "No, ik ben de bel ing vastplakken."
           },
           {
             "speaker": "Henk",
-            "text": "Zal ik even helpen?"
+            "text": "Zal ik even helpen?",
+            "translation": "Zal ik even helpen?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, graag. De lijm staat op de tafel."
+            "text": "Ja, graag. De lijm staat op de tafel.",
+            "translation": "Yes, graag. De lijm staat op de tafel."
           },
           {
             "speaker": "Henk",
-            "text": "En Tijger? Hij zit in de doos."
+            "text": "En Tijger? Hij zit in de doos.",
+            "translation": "En Tijger? Hij zit in de doos."
           },
           {
             "speaker": "Sofia",
-            "text": "Tijger is niet aan het helpen!"
+            "text": "Tijger is niet aan het helpen!",
+            "translation": "Tijger is niet ing helpen!"
           },
           {
             "speaker": "Henk",
-            "text": "Nee, hij kijkt alleen."
+            "text": "Nee, hij kijkt alleen.",
+            "translation": "No, hij kijkt alleen."
           },
           {
             "speaker": "Sofia",
-            "text": "Ik ben ook een gedicht aan het schrijven. Het is geheim!"
+            "text": "Ik ben ook een gedicht aan het schrijven. Het is geheim!",
+            "translation": "I am also writing a poem. It is a secret!"
           }
         ]
       },

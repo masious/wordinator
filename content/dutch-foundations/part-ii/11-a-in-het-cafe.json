@@ -194,47 +194,58 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Hoi! Gezellig! Wat willen jullie drinken?"
+            "text": "Hoi! Gezellig! Wat willen jullie drinken?",
+            "translation": "Hi! Nice to see you! What would you like to drink?"
           },
           {
             "speaker": "Sofia",
-            "text": "Hoi Noor! Ik wil graag een cappuccino."
+            "text": "Hoi Noor! Ik wil graag een cappuccino.",
+            "translation": "Hi Noor! I'd like a cappuccino, please."
           },
           {
             "speaker": "Noor",
-            "text": "Een cappuccino. En jij, Daan?"
+            "text": "Een cappuccino. En jij, Daan?",
+            "translation": "A cappuccino. And you, Daan?"
           },
           {
             "speaker": "Daan",
-            "text": "Doe mij maar een thee."
+            "text": "Doe mij maar een thee.",
+            "translation": "I'll have a tea."
           },
           {
             "speaker": "Noor",
-            "text": "Gewone thee of verse muntthee?"
+            "text": "Gewone thee of verse muntthee?",
+            "translation": "Regular tea or fresh mint tea?"
           },
           {
             "speaker": "Daan",
-            "text": "Verse muntthee, graag. En mag ik een glas water?"
+            "text": "Verse muntthee, graag. En mag ik een glas water?",
+            "translation": "Fresh mint tea, please. And may I have a glass of water?"
           },
           {
             "speaker": "Noor",
-            "text": "Kraanwater?"
+            "text": "Kraanwater?",
+            "translation": "Tap water?"
           },
           {
             "speaker": "Daan",
-            "text": "Ja, prima."
+            "text": "Ja, prima.",
+            "translation": "Yes, that's fine."
           },
           {
             "speaker": "Sofia",
-            "text": "Wacht even! Mag ik ook een glas water?"
+            "text": "Wacht even! Mag ik ook een glas water?",
+            "translation": "Wait a moment! May I have a glass of water too?"
           },
           {
             "speaker": "Noor",
-            "text": "Ja hoor! Een cappuccino, een verse muntthee en twee glazen water. Verder nog iets?"
+            "text": "Ja hoor! Een cappuccino, een verse muntthee en twee glazen water. Verder nog iets?",
+            "translation": "Sure! One cappuccino, one fresh mint tea, and two glasses of water. Anything else?"
           },
           {
             "speaker": "Daan",
-            "text": "Nee, dank je. Prima."
+            "text": "Nee, dank je. Prima.",
+            "translation": "No, thank you. That's fine."
           }
         ]
       },
@@ -2783,51 +2794,63 @@
         "turns": [
           {
             "speaker": "Daan",
-            "text": "Noor, mag ik de kaart?"
+            "text": "Noor, mag ik de kaart?",
+            "translation": "Noor, may I have the menu?"
           },
           {
             "speaker": "Noor",
-            "text": "Alsjeblieft."
+            "text": "Alsjeblieft.",
+            "translation": "Here you go."
           },
           {
             "speaker": "Sofia",
-            "text": "Noor! Ik wil bestellen graag!"
+            "text": "Noor! Ik wil bestellen graag!",
+            "translation": "Noor! I'd like to order!"
           },
           {
             "speaker": "Noor",
-            "text": "Je wilt graag bestellen? Super! Wat mag het zijn?"
+            "text": "Je wilt graag bestellen? Super! Wat mag het zijn?",
+            "translation": "You'd like to order? Great! What can I get you?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ik neem een tosti ham-kaas."
+            "text": "Ik neem een tosti ham-kaas.",
+            "translation": "I'll have a ham-and-cheese toasted sandwich."
           },
           {
             "speaker": "Noor",
-            "text": "En jij, Daan?"
+            "text": "En jij, Daan?",
+            "translation": "And you, Daan?"
           },
           {
             "speaker": "Daan",
-            "text": "Voor mij een broodje kaas en een kop tomatensoep."
+            "text": "Voor mij een broodje kaas en een kop tomatensoep.",
+            "translation": "A cheese sandwich and a bowl of tomato soup for me."
           },
           {
             "speaker": "Noor",
-            "text": "Lekker! Willen jullie ook appeltaart? Met slagroom?"
+            "text": "Lekker! Willen jullie ook appeltaart? Met slagroom?",
+            "translation": "Delicious! Would you also like apple pie? With whipped cream?"
           },
           {
             "speaker": "Sofia",
-            "text": "Echt? Ja, graag! Met veel slagroom!"
+            "text": "Echt? Ja, graag! Met veel slagroom!",
+            "translation": "Really? Yes, please! With lots of whipped cream!"
           },
           {
             "speaker": "Daan",
-            "text": "Nee, dank je. Mag ik nog een muntthee?"
+            "text": "Nee, dank je. Mag ik nog een muntthee?",
+            "translation": "No, thank you. May I have another mint tea?"
           },
           {
             "speaker": "Noor",
-            "text": "Ja hoor. Verder nog iets?"
+            "text": "Ja hoor. Verder nog iets?",
+            "translation": "Sure. Anything else?"
           },
           {
             "speaker": "Daan",
-            "text": "Nee, dat is alles. Dank je, Noor!"
+            "text": "Nee, dat is alles. Dank je, Noor!",
+            "translation": "No, that's all. Thank you, Noor!"
           }
         ]
       },

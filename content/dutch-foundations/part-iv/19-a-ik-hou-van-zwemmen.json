@@ -92,47 +92,58 @@
         "turns": [
           {
             "speaker": "Marieke",
-            "text": "Goedenavond, allemaal! Vanavond praten we over hobby's. Wat doe je in je vrije tijd, Sofia?"
+            "text": "Goedenavond, allemaal! Vanavond praten we over hobby's. Wat doe je in je vrije tijd, Sofia?",
+            "translation": "Good evening, everyone! Tonight we are talking about hobbies. What do you do in your free time, Sofia?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ik hou van zwemmen en dansen."
+            "text": "Ik hou van zwemmen en dansen.",
+            "translation": "I love swimming and dancing."
           },
           {
             "speaker": "Marieke",
-            "text": "Wat leuk! Zwem je in een club?"
+            "text": "Wat leuk! Zwem je in een club?",
+            "translation": "How nice! Do you swim in a club?"
           },
           {
             "speaker": "Sofia",
-            "text": "Nee, ik zwem alleen, elke woensdag om zeven uur."
+            "text": "Nee, ik zwem alleen, elke woensdag om zeven uur.",
+            "translation": "No, I swim alone, every Wednesday at seven o'clock."
           },
           {
             "speaker": "Marieke",
-            "text": "En jij, Piotr? Wat is jouw hobby?"
+            "text": "En jij, Piotr? Wat is jouw hobby?",
+            "translation": "And you, Piotr? What is your hobby?"
           },
           {
             "speaker": "Piotr",
-            "text": "Ik hou van voetbal! Ik voetbal in een club, en elke zaterdag speel ik een wedstrijd. Ik kijk ook voetbal op tv."
+            "text": "Ik hou van voetbal! Ik voetbal in een club, en elke zaterdag speel ik een wedstrijd. Ik kijk ook voetbal op tv.",
+            "translation": "I love soccer! I play soccer in a club, and every Saturday I play a match. I also watch soccer on TV."
           },
           {
             "speaker": "Marieke",
-            "text": "Houd je ook van koken?"
+            "text": "Houd je ook van koken?",
+            "translation": "Do you also like cooking?"
           },
           {
             "speaker": "Piotr",
-            "text": "Ja! Maar ik vind Nederlands moeilijk."
+            "text": "Ja! Maar ik vind Nederlands moeilijk.",
+            "translation": "Yes! But I find Dutch difficult."
           },
           {
             "speaker": "Marieke",
-            "text": "Nederlands is niet makkelijk, maar je doet het heel goed! En jij? Wat is je hobby?"
+            "text": "Nederlands is niet makkelijk, maar je doet het heel goed! En jij? Wat is je hobby?",
+            "translation": "Dutch is not easy, but you are doing very well! And you? What is your hobby?"
           },
           {
             "speaker": "Cursist",
-            "text": "Ik hou van tekenen. Ik vind tekenen heel leuk."
+            "text": "Ik hou van tekenen. Ik vind tekenen heel leuk.",
+            "translation": "I like drawing. I really enjoy drawing."
           },
           {
             "speaker": "Marieke",
-            "text": "Mooi! Volgende week praten we meer over muziek en sport."
+            "text": "Mooi! Volgende week praten we meer over muziek en sport.",
+            "translation": "Great! Next week we will talk more about music and sports."
           }
         ]
       },
@@ -1147,47 +1158,58 @@
         "turns": [
           {
             "speaker": "Piotr",
-            "text": "Ik woon al twee jaar in Utrecht."
+            "text": "Ik woon al twee jaar in Utrecht.",
+            "translation": "I have lived in Utrecht for two years now."
           },
           {
             "speaker": "Sofia",
-            "text": "Al twee jaar! Vind je Utrecht leuk?"
+            "text": "Al twee jaar! Vind je Utrecht leuk?",
+            "translation": "Two years already! Do you like Utrecht?"
           },
           {
             "speaker": "Piotr",
-            "text": "Ja, heel leuk. En mijn vrouw Kasia ook. Zij houdt van muziek: zij speelt gitaar en zingt in een koor."
+            "text": "Ja, heel leuk. En mijn vrouw Kasia ook. Zij houdt van muziek: zij speelt gitaar en zingt in een koor.",
+            "translation": "Yes, very much. And my wife Kasia does too. She loves music: she plays guitar and sings in a choir."
           },
           {
             "speaker": "Sofia",
-            "text": "Wat leuk! Ik hou ook van muziek. En ik hou van dansen."
+            "text": "Wat leuk! Ik hou ook van muziek. En ik hou van dansen.",
+            "translation": "How nice! I also like music. And I love dancing."
           },
           {
             "speaker": "Piotr",
-            "text": "Dans je in een club?"
+            "text": "Dans je in een club?",
+            "translation": "Do you dance in a club?"
           },
           {
             "speaker": "Sofia",
-            "text": "Nee, ik dans thuis. En wat doe jij nog in je vrije tijd?"
+            "text": "Nee, ik dans thuis. En wat doe jij nog in je vrije tijd?",
+            "translation": "No, I dance at home. And what else do you do in your free time?"
           },
           {
             "speaker": "Piotr",
-            "text": "Ik puzzel soms, en ik doe spelletjes met mijn collega's."
+            "text": "Ik puzzel soms, en ik doe spelletjes met mijn collega's.",
+            "translation": "I sometimes do puzzles, and I play games with my colleagues."
           },
           {
             "speaker": "Sofia",
-            "text": "Spelletjes? Wat leuk!"
+            "text": "Spelletjes? Wat leuk!",
+            "translation": "Games? How nice!"
           },
           {
             "speaker": "Piotr",
-            "text": "Ja, ik vind spelletjes heel leuk. En jij?"
+            "text": "Ja, ik vind spelletjes heel leuk. En jij?",
+            "translation": "Yes, I really like games. And you?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ik vind spelletjes een beetje saai. Nou, tot volgende week, Piotr!"
+            "text": "Ik vind spelletjes een beetje saai. Nou, tot volgende week, Piotr!",
+            "translation": "I find games a little boring. Well, see you next week, Piotr!"
           },
           {
             "speaker": "Piotr",
-            "text": "Tot volgende week, Sofia!"
+            "text": "Tot volgende week, Sofia!",
+            "translation": "See you next week, Sofia!"
           }
         ]
       },

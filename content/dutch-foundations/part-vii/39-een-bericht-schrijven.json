@@ -34,35 +34,43 @@
         "turns": [
           {
             "speaker": "Sofia",
-            "text": "Ik schrijf Noor een bericht. Het is voor morgen."
+            "text": "Ik schrijf Noor een bericht. Het is voor morgen.",
+            "translation": "I’m writing Noor a message. It’s for tomorrow."
           },
           {
             "speaker": "Noor",
-            "text": "Begin maar met Hoi! Je schrijft aan mij."
+            "text": "Begin maar met Hoi! Je schrijft aan mij.",
+            "translation": "Just start with Hi! You’re writing to me."
           },
           {
             "speaker": "Sofia",
-            "text": "Hoi Noor, ik ben iets later, want de bus rijdt langzaam."
+            "text": "Hoi Noor, ik ben iets later, want de bus rijdt langzaam.",
+            "translation": "Hi Noor, I’m a little late because the bus is moving slowly."
           },
           {
             "speaker": "Noor",
-            "text": "Prima. Zet de reden in een korte zin."
+            "text": "Prima. Zet de reden in een korte zin.",
+            "translation": "Great. Put the reason in a short sentence."
           },
           {
             "speaker": "Sofia",
-            "text": "Ik neem mijn boek mee, terwijl ik op de bus wacht."
+            "text": "Ik neem mijn boek mee, terwijl ik op de bus wacht.",
+            "translation": "I’m bringing my book while I wait for the bus."
           },
           {
             "speaker": "Noor",
-            "text": "Goed. De bijzin met terwijl staat achteraan."
+            "text": "Goed. De bijzin met terwijl staat achteraan.",
+            "translation": "Good. The subordinate clause with while comes at the end."
           },
           {
             "speaker": "Sofia",
-            "text": "En de vraag: Ik wil graag weten of je tijd hebt."
+            "text": "En de vraag: Ik wil graag weten of je tijd hebt.",
+            "translation": "And the question: I’d like to know if you have time."
           },
           {
             "speaker": "Noor",
-            "text": "Ja, dat is duidelijk. Sluit af met Groetjes!"
+            "text": "Ja, dat is duidelijk. Sluit af met Groetjes!",
+            "translation": "Yes, that’s clear. End with Best wishes!"
           }
         ]
       },
@@ -544,35 +552,43 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Heb je het bericht aan de balie klaar?"
+            "text": "Heb je het bericht aan de balie klaar?",
+            "translation": "Have you finished the message for the desk?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja. Ik vraag of ze mijn formulier kunnen invullen."
+            "text": "Ja. Ik vraag of ze mijn formulier kunnen invullen.",
+            "translation": "Yes. I’m asking whether they can fill in my form."
           },
           {
             "speaker": "Noor",
-            "text": "Goed. Je schrijft aan een medewerker, dus gebruik u."
+            "text": "Goed. Je schrijft aan een medewerker, dus gebruik u.",
+            "translation": "Good. You’re writing to an employee, so use the formal ‘you.’"
           },
           {
             "speaker": "Sofia",
-            "text": "Beste medewerker. Ik wil graag weten of u mij kunt helpen."
+            "text": "Beste medewerker. Ik wil graag weten of u mij kunt helpen.",
+            "translation": "Dear employee. I’d like to know if you can help me."
           },
           {
             "speaker": "Noor",
-            "text": "Dat is beleefd en duidelijk."
+            "text": "Dat is beleefd en duidelijk.",
+            "translation": "That’s polite and clear."
           },
           {
             "speaker": "Sofia",
-            "text": "Ik schrijf de vraag op, terwijl ik de e-mail lees."
+            "text": "Ik schrijf de vraag op, terwijl ik de e-mail lees.",
+            "translation": "I’m writing down the question while I read the email."
           },
           {
             "speaker": "Noor",
-            "text": "Mooi. En je sluit af met Met vriendelijke groet."
+            "text": "Mooi. En je sluit af met Met vriendelijke groet.",
+            "translation": "Good. And you end with Kind regards."
           },
           {
             "speaker": "Sofia",
-            "text": "Dank je. De toon past nu bij de ontvanger."
+            "text": "Dank je. De toon past nu bij de ontvanger.",
+            "translation": "Thanks. The tone now suits the recipient."
           }
         ]
       },

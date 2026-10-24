@@ -1,0 +1,1040 @@
+[
+ {
+  "course": "dutch-foundations/part-i",
+  "lesson": "01-a-hallo",
+  "title": "Hallo! Hoe gaat het?",
+  "dialogues": [
+   {
+    "blockId": "6a948e36-f702-4a1e-ab2f-a84588d1b11a",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "Sofia! Hoi!",
+      "translation": "Sofia! Hi!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Hoi Noor!",
+      "translation": "Hi Noor!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Welkom in Utrecht!",
+      "translation": "Welcome to Utrecht!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dank je wel!",
+      "translation": "Thank you!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Hoe gaat het?",
+      "translation": "How are you?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Goed, dank je. Ik ben een beetje moe. En met jou?",
+      "translation": "Good, thank you. I’m a little tired. And you?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Met mij gaat het heel goed!",
+      "translation": "I’m doing very well!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Het station is groot!",
+      "translation": "The station is big!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ja, Utrecht Centraal is heel groot.",
+      "translation": "Yes, Utrecht Central is very big."
+     }
+    ]
+   },
+   {
+    "blockId": "4956d3c9-8385-44c8-b953-eb153084ecdb",
+    "turns": [
+     {
+      "speaker": "Els",
+      "text": "Goedemiddag, Noor!",
+      "translation": "Good afternoon, Noor!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Hallo Els! Hoe gaat het met u?",
+      "translation": "Hello Els! How are you?"
+     },
+     {
+      "speaker": "Els",
+      "text": "Prima, dank je. En wie ben jij?",
+      "translation": "Fine, thank you. And who are you?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Goedemiddag. Ik ben Sofia.",
+      "translation": "Good afternoon. I’m Sofia."
+     },
+     {
+      "speaker": "Els",
+      "text": "Dag Sofia. Ik ben Els, de buurvrouw.",
+      "translation": "Hello Sofia. I’m Els, the neighbor."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Aangenaam.",
+      "translation": "Nice to meet you."
+     },
+     {
+      "speaker": "Els",
+      "text": "Aangenaam. Welkom in Utrecht!",
+      "translation": "Nice to meet you. Welcome to Utrecht!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dank u wel.",
+      "translation": "Thank you."
+     },
+     {
+      "speaker": "Els",
+      "text": "Tot ziens!",
+      "translation": "Goodbye!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Tot ziens!",
+      "translation": "Goodbye!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Dag Els!",
+      "translation": "Bye, Els!"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-i",
+  "lesson": "01-b-wie-ben-jij",
+  "title": "Wie ben jij?",
+  "dialogues": [
+   {
+    "blockId": "fb1d3cb3-2f60-49b4-9d85-e129e87bb5ad",
+    "turns": [
+     {
+      "speaker": "Receptioniste",
+      "text": "Goedemorgen! Bent u Sofia Moreno?",
+      "translation": "Good morning! Are you Sofia Moreno?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, dat ben ik. Goedemorgen!",
+      "translation": "Yes, that’s me. Good morning!"
+     },
+     {
+      "speaker": "Receptioniste",
+      "text": "Welkom! Een moment, alstublieft.",
+      "translation": "Welcome! One moment, please."
+     },
+     {
+      "speaker": "Karin",
+      "text": "Goedemorgen! Ik ben Karin Smit. Ik ben teamleider.",
+      "translation": "Good morning! I’m Karin Smit. I’m the team leader."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Goedemorgen, mevrouw Smit. Aangenaam.",
+      "translation": "Good morning, Ms. Smit. Nice to meet you."
+     },
+     {
+      "speaker": "Karin",
+      "text": "Aangenaam! Zeg maar jij, hoor. En zeg maar Karin.",
+      "translation": "Nice to meet you! You can call me “you” informally. And call me Karin."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Oké, Karin!",
+      "translation": "Okay, Karin!"
+     },
+     {
+      "speaker": "Karin",
+      "text": "Welkom in het team, Sofia. Hoe gaat het?",
+      "translation": "Welcome to the team, Sofia. How are you?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Goed, dank je. Ik ben een beetje nerveus.",
+      "translation": "Good, thank you. I’m a little nervous."
+     },
+     {
+      "speaker": "Karin",
+      "text": "Kijk, dit is Daan.",
+      "translation": "Look, this is Daan."
+     }
+    ]
+   },
+   {
+    "blockId": "ec2b67f2-c4fc-4251-bcb0-ab136e7ffc94",
+    "turns": [
+     {
+      "speaker": "Daan",
+      "text": "Hoi! Ik ben Daan. Ik ben ook programmeur.",
+      "translation": "Hi! I’m Daan. I’m a programmer too."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Hoi Daan! Ik ben Sofia. Aangenaam.",
+      "translation": "Hi Daan! I’m Sofia. Nice to meet you."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Aangenaam! Ben jij nieuw in Utrecht?",
+      "translation": "Nice to meet you! Are you new in Utrecht?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, ik ben hier nieuw. Is het team groot?",
+      "translation": "Yes, I’m new here. Is the team big?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Nee hoor, het team is klein: Karin, jij en ik.",
+      "translation": "No, the team is small: Karin, you, and me."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Jullie zijn heel aardig!",
+      "translation": "You are all very kind!"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Dank je! Wij zijn blij met jou.",
+      "translation": "Thank you! We’re happy to have you."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-i",
+  "lesson": "02-a-waar-kom-je-vandaan",
+  "title": "Waar kom je vandaan?",
+  "dialogues": [
+   {
+    "blockId": "9829c512-a078-4f9b-9a7b-17c07dd1cfff",
+    "turns": [
+     {
+      "speaker": "Daan",
+      "text": "Sofia, waar kom je vandaan?",
+      "translation": "Sofia, where are you from?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik kom uit Spanje, uit Valencia.",
+      "translation": "I’m from Spain, from Valencia."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Ah, Valencia! Is Valencia groot?",
+      "translation": "Ah, Valencia! Is Valencia big?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, Valencia is heel groot. En jij, Daan? Waar kom jij vandaan?",
+      "translation": "Yes, Valencia is very big. And you, Daan? Where are you from?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Ik kom uit Utrecht. Utrecht is gezellig!",
+      "translation": "I’m from Utrecht. Utrecht is lovely!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Karin, kom jij ook uit Utrecht?",
+      "translation": "Karin, are you also from Utrecht?"
+     },
+     {
+      "speaker": "Karin",
+      "text": "Nee, ik kom uit Amersfoort.",
+      "translation": "No, I’m from Amersfoort."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Amersfoort? Waar is Amersfoort?",
+      "translation": "Amersfoort? Where is Amersfoort?"
+     },
+     {
+      "speaker": "Karin",
+      "text": "Amersfoort is in Nederland, heel dichtbij.",
+      "translation": "Amersfoort is in the Netherlands, very close by."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Amersfoort is klein. Utrecht is groot!",
+      "translation": "Amersfoort is small. Utrecht is big!"
+     }
+    ]
+   },
+   {
+    "blockId": "842e37f9-62b5-4583-8081-26bbdddc48b6",
+    "turns": [
+     {
+      "speaker": "Collega",
+      "text": "Hoi allemaal! Eet smakelijk!",
+      "translation": "Hi everyone! Enjoy your meal!"
+     },
+     {
+      "speaker": "Karin",
+      "text": "Dank je! Hoe gaat het?",
+      "translation": "Thank you! How are you?"
+     },
+     {
+      "speaker": "Collega",
+      "text": "Goed, dank je. Ben jij Sofia?",
+      "translation": "Good, thank you. Are you Sofia?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, dat ben ik! Hoi!",
+      "translation": "Yes, that’s me! Hi!"
+     },
+     {
+      "speaker": "Collega",
+      "text": "Welkom! Waar kom je vandaan?",
+      "translation": "Welcome! Where are you from?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik kom uit Valencia, in Spanje. En jij? Kom jij ook uit Utrecht?",
+      "translation": "I’m from Valencia, in Spain. And you? Are you also from Utrecht?"
+     },
+     {
+      "speaker": "Collega",
+      "text": "Nee hoor, ik kom uit België, uit Antwerpen.",
+      "translation": "No, I’m from Belgium, from Antwerp."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Echt? Karin komt uit Amersfoort en Daan komt uit Utrecht.",
+      "translation": "Really? Karin is from Amersfoort and Daan is from Utrecht."
+     },
+     {
+      "speaker": "Collega",
+      "text": "En jij komt uit Valencia! Het bedrijf is klein, maar internationaal.",
+      "translation": "And you’re from Valencia! The company is small, but international."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Precies!",
+      "translation": "Exactly!"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-i",
+  "lesson": "02-b-ik-woon-in-utrecht",
+  "title": "Ik woon in Utrecht",
+  "dialogues": [
+   {
+    "blockId": "67d2fbbb-1e0c-4970-aa06-5fb4435376e1",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "Hoi Sofia! Hoe is het werk?",
+      "translation": "Hi Sofia! How is work?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Goed! Het team is klein, maar heel aardig.",
+      "translation": "Good! The team is small, but very nice."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Super! Wie is de teamleider?",
+      "translation": "Great! Who is the team leader?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Karin. Ze komt uit Amersfoort en ze woont ook in Amersfoort.",
+      "translation": "Karin. She’s from Amersfoort and she also lives in Amersfoort."
+     },
+     {
+      "speaker": "Noor",
+      "text": "En ze werkt in Utrecht?",
+      "translation": "And does she work in Utrecht?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja. Ze reist met de trein.",
+      "translation": "Yes. She travels by train."
+     },
+     {
+      "speaker": "Noor",
+      "text": "En Daan? Waar woont Daan?",
+      "translation": "And Daan? Where does Daan live?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Daan komt uit Utrecht en hij woont in Utrecht.",
+      "translation": "Daan is from Utrecht and he lives in Utrecht."
+     },
+     {
+      "speaker": "Noor",
+      "text": "En de collega uit België?",
+      "translation": "And the colleague from Belgium?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Hij komt uit Antwerpen, maar hij woont in Utrecht.",
+      "translation": "He’s from Antwerp, but he lives in Utrecht."
+     }
+    ]
+   },
+   {
+    "blockId": "1a17dbcf-3147-4421-98dc-e31c52d7eba5",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "Ik maak thee. Jij ook?",
+      "translation": "I’m making tea. You too?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, graag! Noor, kom jij uit Utrecht?",
+      "translation": "Yes, please! Noor, are you from Utrecht?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Nee, ik kom uit Groningen. Maar ik woon in Utrecht.",
+      "translation": "No, I’m from Groningen. But I live in Utrecht."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Groningen? Is Groningen ver?",
+      "translation": "Groningen? Is Groningen far away?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ja, ver. Groningen is in het noorden.",
+      "translation": "Yes, far away. Groningen is in the north."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "En jij studeert hier, in Utrecht.",
+      "translation": "And you study here, in Utrecht."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ja, ik studeer psychologie. En ik werk in een café, in het centrum.",
+      "translation": "Yes, I study psychology. And I work in a café in the city center."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Echt? Gezellig!",
+      "translation": "Really? Nice!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "En jij, Sofia? Waar woon jij nu?",
+      "translation": "And you, Sofia? Where do you live now?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik woon in Utrecht-Oost. Bij Noor!",
+      "translation": "I live in East Utrecht. With Noor!"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-i",
+  "lesson": "03-a-spreek-je-nederlands",
+  "title": "Spreek je Nederlands?",
+  "dialogues": [
+   {
+    "blockId": "525accbe-8104-4a5a-963a-d08a41d4a73c",
+    "turns": [
+     {
+      "speaker": "Daan",
+      "text": "Goedemorgen, Sofia! Koffie?",
+      "translation": "Good morning, Sofia! Coffee?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, graag! Hoe zeg je \"café con leche\" in het Nederlands?",
+      "translation": "Yes, please! How do you say “café con leche” in Dutch?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Koffie met melk.",
+      "translation": "Coffee with milk."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Koffie met melk. Dank je! Daan, spreek jij Spaans?",
+      "translation": "Coffee with milk. Thank you! Daan, do you speak Spanish?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Nee, ik spreek Nederlands en Engels. En een beetje Duits.",
+      "translation": "No, I speak Dutch and English. And a little German."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik spreek Spaans en Engels. En ik leer Nederlands!",
+      "translation": "I speak Spanish and English. And I’m learning Dutch!"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Super! Spreek je Nederlands of Engels met Karin?",
+      "translation": "Great! Do you speak Dutch or English with Karin?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Engels. Nederlands is moeilijk!",
+      "translation": "English. Dutch is difficult!"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Ja, een beetje. Maar jij leert snel!",
+      "translation": "Yes, a little. But you’re learning quickly!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dank je! Ik lees een boek in het Nederlands.",
+      "translation": "Thank you! I’m reading a book in Dutch."
+     }
+    ]
+   },
+   {
+    "blockId": "e264684b-437c-4f0b-8b31-487a9b87465a",
+    "turns": [
+     {
+      "speaker": "Collega",
+      "text": "Dag Sofia! Dag Karin! Eet smakelijk!",
+      "translation": "Hi Sofia! Hi Karin! Enjoy your meal!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dank je! Ik eet een boterham met kaas. Heel Nederlands!",
+      "translation": "Thank you! I’m eating a cheese sandwich. Very Dutch!"
+     },
+     {
+      "speaker": "Collega",
+      "text": "Ja! Sofia, spreek jij Nederlands?",
+      "translation": "Yes! Sofia, do you speak Dutch?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Een beetje. Ik leer Nederlands. En jij? Spreek jij Vlaams?",
+      "translation": "A little. I’m learning Dutch. And you? Do you speak Flemish?"
+     },
+     {
+      "speaker": "Collega",
+      "text": "Ja, ik ben Belg. Vlaams is ook Nederlands.",
+      "translation": "Yes, I’m Belgian. Flemish is also Dutch."
+     },
+     {
+      "speaker": "Karin",
+      "text": "En hij spreekt ook Frans en Engels.",
+      "translation": "And he also speaks French and English."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Echt? Ik ben Spaanse. Ik spreek Spaans en Engels.",
+      "translation": "Really? I’m Spanish. I speak Spanish and English."
+     },
+     {
+      "speaker": "Karin",
+      "text": "Ik spreek Engels met Sofia. Maar ze leert Nederlands!",
+      "translation": "I speak English with Sofia. But she’s learning Dutch!"
+     },
+     {
+      "speaker": "Collega",
+      "text": "Super! Sofia, hoe zeg je \"Eet smakelijk!\" in het Spaans?",
+      "translation": "Great! Sofia, how do you say “Enjoy your meal!” in Spanish?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "¡Que aproveche!",
+      "translation": "Enjoy your meal!"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-i",
+  "lesson": "03-b-werk-jij-hier",
+  "title": "Werk jij hier?",
+  "dialogues": [
+   {
+    "blockId": "19df46bf-8da8-4e91-9a47-b89cad0cf78c",
+    "turns": [
+     {
+      "speaker": "Daan",
+      "text": "Sofia, werk je nog? Het is borrel!",
+      "translation": "Sofia, are you still working? It’s drinks time!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Borrel? Hoe zeg je “borrel” in het Engels?",
+      "translation": "Drinks? How do you say “borrel” in English?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "“Drinks”. De borrel is heel Nederlands! Wat drink je?",
+      "translation": "“Drinks.” Borrel is very Dutch! What are you drinking?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Wijn, graag. En jij? Drink jij ook wijn?",
+      "translation": "Wine, please. And you? Do you drink wine too?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Nee, ik drink bier. Proost!",
+      "translation": "No, I drink beer. Cheers!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Proost! Lekker!",
+      "translation": "Cheers! Delicious!"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Ben je moe?",
+      "translation": "Are you tired?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Nee, ik ben niet moe. Ik ben blij!",
+      "translation": "No, I’m not tired. I’m happy!"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Super! En het werk? Is het werk moeilijk?",
+      "translation": "Great! And work? Is the work difficult?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Nee, het werk is niet moeilijk. Maar Nederlands is moeilijk!",
+      "translation": "No, the work isn’t difficult. But Dutch is difficult!"
+     }
+    ]
+   },
+   {
+    "blockId": "0ff122f3-dc28-4ff8-ba08-07f2463fac8f",
+    "turns": [
+     {
+      "speaker": "Collega",
+      "text": "Dag Sofia! Proost!",
+      "translation": "Hi Sofia! Cheers!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Proost! Waar is Karin?",
+      "translation": "Cheers! Where is Karin?"
+     },
+     {
+      "speaker": "Collega",
+      "text": "Karin komt niet. Ze werkt thuis, in Amersfoort.",
+      "translation": "Karin isn’t coming. She works from home, in Amersfoort."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ah, oké. Werk jij ook thuis?",
+      "translation": "Ah, okay. Do you also work from home?"
+     },
+     {
+      "speaker": "Collega",
+      "text": "Nee, ik werk op kantoor. Woon jij in het centrum?",
+      "translation": "No, I work at the office. Do you live in the city center?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Nee, ik woon niet in het centrum. Ik woon in Utrecht-Oost, bij Noor.",
+      "translation": "No, I don’t live in the city center. I live in East Utrecht, with Noor."
+     },
+     {
+      "speaker": "Collega",
+      "text": "Is Utrecht-Oost ver?",
+      "translation": "Is East Utrecht far away?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Nee, het is niet ver. En jij? Waar woon jij?",
+      "translation": "No, it isn’t far. And you? Where do you live?"
+     },
+     {
+      "speaker": "Collega",
+      "text": "Ik woon in het centrum. Spreek je Nederlands met Noor?",
+      "translation": "I live in the city center. Do you speak Dutch with Noor?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, thuis. Noor spreekt niet snel met mij!",
+      "translation": "Yes, at home. Noor doesn’t speak quickly with me!"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-i",
+  "lesson": "04-a-hoe-oud-ben-je",
+  "title": "Hoe oud ben je?",
+  "dialogues": [
+   {
+    "blockId": "f71d12a9-ab1e-4086-88cf-03701435fa17",
+    "turns": [
+     {
+      "speaker": "Verkoper",
+      "text": "Goedemorgen!",
+      "translation": "Good morning!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Goedemorgen! Ik zoek een simkaart. Ik spreek een beetje Nederlands.",
+      "translation": "Good morning! I’m looking for a SIM card. I speak a little Dutch."
+     },
+     {
+      "speaker": "Verkoper",
+      "text": "Prima! Hoe heet u?",
+      "translation": "Fine! What is your name?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Sofia Moreno.",
+      "translation": "Sofia Moreno."
+     },
+     {
+      "speaker": "Verkoper",
+      "text": "Moreno? Hoe schrijft u dat?",
+      "translation": "Moreno? How do you spell that?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "M-O-R-E-N-O.",
+      "translation": "M-O-R-E-N-O."
+     },
+     {
+      "speaker": "Verkoper",
+      "text": "Dank u. Het nummer is nul zes, achtendertig, tweeëntwintig, negentien, vierenzeventig.",
+      "translation": "Thank you. The number is zero six, thirty-eight, twenty-two, nineteen, seventy-four."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Pardon? Nog een keer, alstublieft. Langzaam!",
+      "translation": "Pardon? One more time, please. Slowly!"
+     },
+     {
+      "speaker": "Verkoper",
+      "text": "Nul zes – drie acht – twee twee – één negen – zeven vier.",
+      "translation": "Zero six – three eight – two two – one nine – seven four."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Super! Dank u wel!",
+      "translation": "Great! Thank you!"
+     }
+    ]
+   },
+   {
+    "blockId": "79748e03-1da2-4485-8c72-81b0d6f1189e",
+    "turns": [
+     {
+      "speaker": "Sofia",
+      "text": "Noor, kijk! Mijn nummer is nu 06-38221974.",
+      "translation": "Noor, look! My number is 06-38221974."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Super! Nul zes, achtendertig, tweeëntwintig, negentien, vierenzeventig?",
+      "translation": "Great! Zero six, thirty-eight, twenty-two, nineteen, seventy-four?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, precies! En kijk, Daan schrijft: “Super!”",
+      "translation": "Yes, exactly! And look, Daan is writing: “Great!”"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Daan, de collega? Hoe oud is Daan?",
+      "translation": "Daan, the colleague? How old is Daan?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Hij is tweeëndertig.",
+      "translation": "He is thirty-two."
+     },
+     {
+      "speaker": "Noor",
+      "text": "En jij? Ben jij zevenentwintig?",
+      "translation": "And you? Are you twenty-seven?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Nee, ik ben achtentwintig. Ik ben oud!",
+      "translation": "No, I’m twenty-eight. I’m old!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Nee hoor! Achtentwintig is niet oud. Ik ben vijfentwintig.",
+      "translation": "No! Twenty-eight isn’t old. I’m twenty-five."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "En Els? Hoe oud is Els?",
+      "translation": "And Els? How old is Els?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Els is ongeveer zeventig.",
+      "translation": "Els is about seventy."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-i",
+  "lesson": "04-b-heb-jij-een-fiets",
+  "title": "Heb jij een fiets?",
+  "dialogues": [
+   {
+    "blockId": "333f7932-ac8a-4072-989d-2acd2779b297",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "Hoi Sofia! Ik ben thuis!",
+      "translation": "Hi Sofia! I’m home!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Hoi Noor! Ben je moe?",
+      "translation": "Hi Noor! Are you tired?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ja, een beetje. Maar De Zwaluw is gezellig!",
+      "translation": "Yes, a little. But De Zwaluw is lively!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "De Zwaluw? Wat is De Zwaluw?",
+      "translation": "De Zwaluw? What is De Zwaluw?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Het café! Ik werk in Café De Zwaluw, in het centrum.",
+      "translation": "The café! I work at Café De Zwaluw, in the city center."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Is het ver?",
+      "translation": "Is it far?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Nee hoor. Ik heb een fiets.",
+      "translation": "No. I have a bicycle."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ah. Ik heb geen fiets.",
+      "translation": "Ah. I don’t have a bicycle."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Heb jij geen fiets? In Utrecht?!",
+      "translation": "You don’t have a bicycle? In Utrecht?!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Nee! Ik loop of ik neem de bus.",
+      "translation": "No! I walk or take the bus."
+     }
+    ]
+   },
+   {
+    "blockId": "7186309b-80ba-4ee9-b33d-4b2546e46528",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "Sofia, wat is je nummer?",
+      "translation": "Sofia, what’s your number?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Nul zes, achtendertig, tweeëntwintig, negentien, vierenzeventig.",
+      "translation": "Zero six, thirty-eight, twenty-two, nineteen, seventy-four."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Dank je! Heeft Daan het nummer ook?",
+      "translation": "Thank you! Does Daan have the number too?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, Daan heeft het nummer. En Karin ook.",
+      "translation": "Yes, Daan has the number. And Karin does too."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Spreek je Nederlands met Daan?",
+      "translation": "Do you speak Dutch with Daan?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, een beetje. Daan spreekt geen Spaans!",
+      "translation": "Yes, a little. Daan doesn’t speak Spanish!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Hoeveel talen spreekt Daan?",
+      "translation": "How many languages does Daan speak?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Drie: Nederlands, Engels en een beetje Duits.",
+      "translation": "Three: Dutch, English, and a little German."
+     },
+     {
+      "speaker": "Noor",
+      "text": "En jij? Hoeveel talen spreek jij?",
+      "translation": "And you? How many languages do you speak?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Spaans, Engels en een beetje Nederlands. Ook drie!",
+      "translation": "Spanish, English, and a little Dutch. Three as well!"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-i",
+  "lesson": "05-a-mijn-familie",
+  "title": "Mijn familie",
+  "dialogues": [
+   {
+    "blockId": "07403220-104c-4c6b-996a-4a165d91dd7e",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "Goedemorgen! Hoe gaat het met je moeder?",
+      "translation": "Good morning! How is your mother?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Goed, dank je! Kijk, een foto van mijn familie.",
+      "translation": "Good, thank you! Look, a photo of my family."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Wie is dit?",
+      "translation": "Who is this?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dit is mijn moeder. Ze heet Carmen.",
+      "translation": "This is my mother. Her name is Carmen."
+     },
+     {
+      "speaker": "Noor",
+      "text": "En wie is de man op de foto?",
+      "translation": "And who is the man in the photo?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dit is mijn broer, Javier.",
+      "translation": "This is my brother, Javier."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Hoe oud is je broer?",
+      "translation": "How old is your brother?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Hij is eenendertig. Hij is kok.",
+      "translation": "He is thirty-one. He is a cook."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Woont je broer ook in Valencia?",
+      "translation": "Does your brother also live in Valencia?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja. Mijn familie woont in Valencia.",
+      "translation": "Yes. My family lives in Valencia."
+     }
+    ]
+   },
+   {
+    "blockId": "24873c7d-412f-4493-9b5b-74afab98926b",
+    "turns": [
+     {
+      "speaker": "Sofia",
+      "text": "En jouw familie, Noor? Heb jij een broer of een zus?",
+      "translation": "And your family, Noor? Do you have a brother or a sister?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ik heb een zus. Kijk, dit is Fleur!",
+      "translation": "I have a sister. Look, this is Fleur!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Woont je zus in Groningen, bij je ouders?",
+      "translation": "Does your sister live in Groningen, with your parents?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Nee. Mijn ouders zijn in Groningen, maar Fleur is nu in Australië.",
+      "translation": "No. My parents are in Groningen, but Fleur is in Australia now."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Australië? Echt? Hoe oud is ze?",
+      "translation": "Australia? Really? How old is she?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Zevenentwintig. Ze surft heel goed!",
+      "translation": "Twenty-seven. She surfs very well!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Super! En Els? Heeft Els familie in Utrecht?",
+      "translation": "Great! And Els? Does Els have family in Utrecht?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ja! Ze komt straks, met haar kleindochter.",
+      "translation": "Yes! She’s coming soon, with her granddaughter."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Haar kleindochter? Hoe oud is ze?",
+      "translation": "Her granddaughter? How old is she?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ongeveer zes. Gezellig!",
+      "translation": "About six. How nice!"
+     }
+    ]
+   }
+  ]
+ }
+]

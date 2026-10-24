@@ -34,35 +34,43 @@
         "turns": [
           {
             "speaker": "Sofia",
-            "text": "Karin, wie staat er op deze foto?"
+            "text": "Karin, wie staat er op deze foto?",
+            "translation": "Karin, who is in this photo?"
           },
           {
             "speaker": "Karin",
-            "text": "Dat is mijn collega Daan."
+            "text": "Dat is mijn collega Daan.",
+            "translation": "That is my colleague Daan."
           },
           {
             "speaker": "Sofia",
-            "text": "De collega die hier werkt?"
+            "text": "De collega die hier werkt?",
+            "translation": "The colleague who works here?"
           },
           {
             "speaker": "Karin",
-            "text": "Ja. En de man die naast hem staat, is Piotr."
+            "text": "Ja. En de man die naast hem staat, is Piotr.",
+            "translation": "Yes. And the man standing next to him is Piotr."
           },
           {
             "speaker": "Sofia",
-            "text": "Ik ken Piotr uit de Nederlandse les."
+            "text": "Ik ken Piotr uit de Nederlandse les.",
+            "translation": "I know Piotr from Dutch class."
           },
           {
             "speaker": "Karin",
-            "text": "Precies. Het boek dat op tafel ligt, is open."
+            "text": "Precies. Het boek dat op tafel ligt, is open.",
+            "translation": "Exactly. The book that is on the table is open."
           },
           {
             "speaker": "Sofia",
-            "text": "En de tas die naast het boek staat?"
+            "text": "En de tas die naast het boek staat?",
+            "translation": "And the bag that is next to the book?"
           },
           {
             "speaker": "Karin",
-            "text": "Die tas is van mij."
+            "text": "Die tas is van mij.",
+            "translation": "That bag is mine."
           }
         ]
       },
@@ -613,35 +621,43 @@
         "turns": [
           {
             "speaker": "Daan",
-            "text": "Sofia, welk kaartje zoek je?"
+            "text": "Sofia, welk kaartje zoek je?",
+            "translation": "Sofia, which card are you looking for?"
           },
           {
             "speaker": "Sofia",
-            "text": "Het kaartje dat naast de computer ligt."
+            "text": "Het kaartje dat naast de computer ligt.",
+            "translation": "The card that is next to the computer."
           },
           {
             "speaker": "Daan",
-            "text": "Dit kaartje?"
+            "text": "Dit kaartje?",
+            "translation": "This card?"
           },
           {
             "speaker": "Sofia",
-            "text": "Nee, het kaartje dat bij de foto ligt."
+            "text": "Nee, het kaartje dat bij de foto ligt.",
+            "translation": "No, the card that is next to the photo."
           },
           {
             "speaker": "Daan",
-            "text": "O, dit kaartje. Hier staat je naam."
+            "text": "O, dit kaartje. Hier staat je naam.",
+            "translation": "Oh, this card. Your name is written here."
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, en de afbeelding die ernaast staat, is mooi."
+            "text": "Ja, en de afbeelding die ernaast staat, is mooi.",
+            "translation": "Yes, and the image next to it is beautiful."
           },
           {
             "speaker": "Daan",
-            "text": "De afbeelding die op het scherm staat?"
+            "text": "De afbeelding die op het scherm staat?",
+            "translation": "The image that is on the screen?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, precies. Ik herken het gebouw."
+            "text": "Ja, precies. Ik herken het gebouw.",
+            "translation": "Yes, exactly. I recognize the building."
           }
         ]
       },

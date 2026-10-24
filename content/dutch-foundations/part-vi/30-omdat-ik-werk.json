@@ -34,35 +34,43 @@
         "turns": [
           {
             "speaker": "Karin",
-            "text": "Sofia, werk je vandaag op kantoor?"
+            "text": "Sofia, werk je vandaag op kantoor?",
+            "translation": "Sofia, are you working at the office today?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja. Ik werk op kantoor omdat ik met Daan overleg."
+            "text": "Ja. Ik werk op kantoor omdat ik met Daan overleg.",
+            "translation": "Yes. I am working at the office because I am consulting with Daan."
           },
           {
             "speaker": "Daan",
-            "text": "Ik denk dat de nieuwe tekst duidelijk is."
+            "text": "Ik denk dat de nieuwe tekst duidelijk is.",
+            "translation": "I think the new text is clear."
           },
           {
             "speaker": "Sofia",
-            "text": "Ik lees de tekst nog een keer omdat ik Nederlands leer."
+            "text": "Ik lees de tekst nog een keer omdat ik Nederlands leer.",
+            "translation": "I am reading the text once more because I am learning Dutch."
           },
           {
             "speaker": "Karin",
-            "text": "Goed. Als ik vragen heb, praat ik met jullie."
+            "text": "Goed. Als ik vragen heb, praat ik met jullie.",
+            "translation": "Good. If I have questions, I will talk to you."
           },
           {
             "speaker": "Daan",
-            "text": "En als ik iets niet begrijp, vraag ik het aan Karin."
+            "text": "En als ik iets niet begrijp, vraag ik het aan Karin.",
+            "translation": "And if I do not understand something, I will ask Karin."
           },
           {
             "speaker": "Sofia",
-            "text": "Ik vind dat de uitleg nu duidelijk is."
+            "text": "Ik vind dat de uitleg nu duidelijk is.",
+            "translation": "I think the explanation is clear now."
           },
           {
             "speaker": "Karin",
-            "text": "Fijn. We praten straks verder."
+            "text": "Fijn. We praten straks verder.",
+            "translation": "Great. We will talk more later."
           }
         ]
       },
@@ -729,35 +737,43 @@
         "turns": [
           {
             "speaker": "Sofia",
-            "text": "Ik lees deze tekst omdat ik mijn Nederlands oefen."
+            "text": "Ik lees deze tekst omdat ik mijn Nederlands oefen.",
+            "translation": "I am reading this text because I am practicing my Dutch."
           },
           {
             "speaker": "Daan",
-            "text": "Ik denk dat je de uitleg goed begrijpt."
+            "text": "Ik denk dat je de uitleg goed begrijpt.",
+            "translation": "I think you understand the explanation well."
           },
           {
             "speaker": "Sofia",
-            "text": "Dank je. Als ik een nieuw woord zie, schrijf ik het op."
+            "text": "Dank je. Als ik een nieuw woord zie, schrijf ik het op.",
+            "translation": "Thank you. If I see a new word, I write it down."
           },
           {
             "speaker": "Daan",
-            "text": "En als je een vraag hebt, vraag je het aan Karin?"
+            "text": "En als je een vraag hebt, vraag je het aan Karin?",
+            "translation": "And if you have a question, do you ask Karin?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja. Ik vraag het aan haar omdat zij de teamleider is."
+            "text": "Ja. Ik vraag het aan haar omdat zij de teamleider is.",
+            "translation": "Yes. I ask her because she is the team leader."
           },
           {
             "speaker": "Daan",
-            "text": "Ik vind dat we zo verder kunnen."
+            "text": "Ik vind dat we zo verder kunnen.",
+            "translation": "I think we can continue like this."
           },
           {
             "speaker": "Sofia",
-            "text": "Goed. Als ik klaar ben, drink ik thee."
+            "text": "Goed. Als ik klaar ben, drink ik thee.",
+            "translation": "Good. When I am finished, I will drink tea."
           },
           {
             "speaker": "Daan",
-            "text": "Prima. Dan praten we straks verder."
+            "text": "Prima. Dan praten we straks verder.",
+            "translation": "Fine. Then we will talk more later."
           }
         ]
       },

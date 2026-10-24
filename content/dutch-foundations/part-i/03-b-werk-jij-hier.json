@@ -85,43 +85,53 @@
         "turns": [
           {
             "speaker": "Daan",
-            "text": "Sofia, werk je nog? Het is borrel!"
+            "text": "Sofia, werk je nog? Het is borrel!",
+            "translation": "Sofia, are you still working? It’s drinks time!"
           },
           {
             "speaker": "Sofia",
-            "text": "Borrel? Hoe zeg je “borrel” in het Engels?"
+            "text": "Borrel? Hoe zeg je “borrel” in het Engels?",
+            "translation": "Drinks? How do you say “borrel” in English?"
           },
           {
             "speaker": "Daan",
-            "text": "“Drinks”. De borrel is heel Nederlands! Wat drink je?"
+            "text": "“Drinks”. De borrel is heel Nederlands! Wat drink je?",
+            "translation": "“Drinks.” Borrel is very Dutch! What are you drinking?"
           },
           {
             "speaker": "Sofia",
-            "text": "Wijn, graag. En jij? Drink jij ook wijn?"
+            "text": "Wijn, graag. En jij? Drink jij ook wijn?",
+            "translation": "Wine, please. And you? Do you drink wine too?"
           },
           {
             "speaker": "Daan",
-            "text": "Nee, ik drink bier. Proost!"
+            "text": "Nee, ik drink bier. Proost!",
+            "translation": "No, I drink beer. Cheers!"
           },
           {
             "speaker": "Sofia",
-            "text": "Proost! Lekker!"
+            "text": "Proost! Lekker!",
+            "translation": "Cheers! Delicious!"
           },
           {
             "speaker": "Daan",
-            "text": "Ben je moe?"
+            "text": "Ben je moe?",
+            "translation": "Are you tired?"
           },
           {
             "speaker": "Sofia",
-            "text": "Nee, ik ben niet moe. Ik ben blij!"
+            "text": "Nee, ik ben niet moe. Ik ben blij!",
+            "translation": "No, I’m not tired. I’m happy!"
           },
           {
             "speaker": "Daan",
-            "text": "Super! En het werk? Is het werk moeilijk?"
+            "text": "Super! En het werk? Is het werk moeilijk?",
+            "translation": "Great! And work? Is the work difficult?"
           },
           {
             "speaker": "Sofia",
-            "text": "Nee, het werk is niet moeilijk. Maar Nederlands is moeilijk!"
+            "text": "Nee, het werk is niet moeilijk. Maar Nederlands is moeilijk!",
+            "translation": "No, the work isn’t difficult. But Dutch is difficult!"
           }
         ]
       },
@@ -1934,43 +1944,53 @@
         "turns": [
           {
             "speaker": "Collega",
-            "text": "Dag Sofia! Proost!"
+            "text": "Dag Sofia! Proost!",
+            "translation": "Hi Sofia! Cheers!"
           },
           {
             "speaker": "Sofia",
-            "text": "Proost! Waar is Karin?"
+            "text": "Proost! Waar is Karin?",
+            "translation": "Cheers! Where is Karin?"
           },
           {
             "speaker": "Collega",
-            "text": "Karin komt niet. Ze werkt thuis, in Amersfoort."
+            "text": "Karin komt niet. Ze werkt thuis, in Amersfoort.",
+            "translation": "Karin isn’t coming. She works from home, in Amersfoort."
           },
           {
             "speaker": "Sofia",
-            "text": "Ah, oké. Werk jij ook thuis?"
+            "text": "Ah, oké. Werk jij ook thuis?",
+            "translation": "Ah, okay. Do you also work from home?"
           },
           {
             "speaker": "Collega",
-            "text": "Nee, ik werk op kantoor. Woon jij in het centrum?"
+            "text": "Nee, ik werk op kantoor. Woon jij in het centrum?",
+            "translation": "No, I work at the office. Do you live in the city center?"
           },
           {
             "speaker": "Sofia",
-            "text": "Nee, ik woon niet in het centrum. Ik woon in Utrecht-Oost, bij Noor."
+            "text": "Nee, ik woon niet in het centrum. Ik woon in Utrecht-Oost, bij Noor.",
+            "translation": "No, I don’t live in the city center. I live in East Utrecht, with Noor."
           },
           {
             "speaker": "Collega",
-            "text": "Is Utrecht-Oost ver?"
+            "text": "Is Utrecht-Oost ver?",
+            "translation": "Is East Utrecht far away?"
           },
           {
             "speaker": "Sofia",
-            "text": "Nee, het is niet ver. En jij? Waar woon jij?"
+            "text": "Nee, het is niet ver. En jij? Waar woon jij?",
+            "translation": "No, it isn’t far. And you? Where do you live?"
           },
           {
             "speaker": "Collega",
-            "text": "Ik woon in het centrum. Spreek je Nederlands met Noor?"
+            "text": "Ik woon in het centrum. Spreek je Nederlands met Noor?",
+            "translation": "I live in the city center. Do you speak Dutch with Noor?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, thuis. Noor spreekt niet snel met mij!"
+            "text": "Ja, thuis. Noor spreekt niet snel met mij!",
+            "translation": "Yes, at home. Noor doesn’t speak quickly with me!"
           }
         ]
       },

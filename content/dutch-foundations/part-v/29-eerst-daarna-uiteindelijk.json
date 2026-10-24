@@ -29,35 +29,43 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Vertel eens over maandag."
+            "text": "Vertel eens over maandag.",
+            "translation": "Tell me about Monday."
           },
           {
             "speaker": "Sofia",
-            "text": "Eerst ben ik naar het centrum gegaan."
+            "text": "Eerst ben ik naar het centrum gegaan.",
+            "translation": "First, I went to the city center."
           },
           {
             "speaker": "Noor",
-            "text": "En toen?"
+            "text": "En toen?",
+            "translation": "And then?"
           },
           {
             "speaker": "Sofia",
-            "text": "Toen ben ik door het park gegaan."
+            "text": "Toen ben ik door het park gegaan.",
+            "translation": "Then I went through the park."
           },
           {
             "speaker": "Noor",
-            "text": "Was het druk?"
+            "text": "Was het druk?",
+            "translation": "Was it busy?"
           },
           {
             "speaker": "Sofia",
-            "text": "Nee, het was rustig."
+            "text": "Nee, het was rustig.",
+            "translation": "No, it was quiet."
           },
           {
             "speaker": "Noor",
-            "text": "En daarna?"
+            "text": "En daarna?",
+            "translation": "And after that?"
           },
           {
             "speaker": "Sofia",
-            "text": "Daarna ben ik naar huis gegaan. Uiteindelijk kwam ik thuis."
+            "text": "Daarna ben ik naar huis gegaan. Uiteindelijk kwam ik thuis.",
+            "translation": "After that, I went home. Eventually, I arrived home."
           }
         ]
       },
@@ -685,35 +693,43 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Hoe was maandag?"
+            "text": "Hoe was maandag?",
+            "translation": "How was Monday?"
           },
           {
             "speaker": "Sofia",
-            "text": "Het was een rustige dag."
+            "text": "Het was een rustige dag.",
+            "translation": "It was a quiet day."
           },
           {
             "speaker": "Noor",
-            "text": "Wat heb je gedaan?"
+            "text": "Wat heb je gedaan?",
+            "translation": "What did you do?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ik ben naar het centrum gegaan."
+            "text": "Ik ben naar het centrum gegaan.",
+            "translation": "I went to the city center."
           },
           {
             "speaker": "Noor",
-            "text": "En wat deed je toen?"
+            "text": "En wat deed je toen?",
+            "translation": "And what did you do then?"
           },
           {
             "speaker": "Sofia",
-            "text": "Toen ging ik door het park."
+            "text": "Toen ging ik door het park.",
+            "translation": "Then I went through the park."
           },
           {
             "speaker": "Noor",
-            "text": "En daarna?"
+            "text": "En daarna?",
+            "translation": "And after that?"
           },
           {
             "speaker": "Sofia",
-            "text": "Daarna ben ik naar huis gegaan. Uiteindelijk kwam ik thuis."
+            "text": "Daarna ben ik naar huis gegaan. Uiteindelijk kwam ik thuis.",
+            "translation": "After that, I went home. Eventually, I arrived home."
           }
         ]
       },

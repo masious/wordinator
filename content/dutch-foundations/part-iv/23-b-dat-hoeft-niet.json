@@ -34,35 +34,43 @@
         "turns": [
           {
             "speaker": "Piotr",
-            "text": "Moet ik iets meenemen naar de housewarming?"
+            "text": "Moet ik iets meenemen naar de housewarming?",
+            "translation": "Do I have to bring something to the housewarming party?"
           },
           {
             "speaker": "Sofia",
-            "text": "Nee, je hoeft niets mee te nemen!"
+            "text": "Nee, je hoeft niets mee te nemen!",
+            "translation": "No, you don’t have tos mee te nemen!"
           },
           {
             "speaker": "Piotr",
-            "text": "Moet ik echt niets meenemen?"
+            "text": "Moet ik echt niets meenemen?",
+            "translation": "Do I have to echt bring anything?"
           },
           {
             "speaker": "Sofia",
-            "text": "Nee hoor. Ik maak veel eten."
+            "text": "Nee hoor. Ik maak veel eten.",
+            "translation": "No, not at all. I’m making a lot eten."
           },
           {
             "speaker": "Lotte",
-            "text": "Moeten we bloemen kopen?"
+            "text": "Moeten we bloemen kopen?",
+            "translation": "Do we have to buy flowers?"
           },
           {
             "speaker": "Sofia",
-            "text": "Dat hoeft niet. Er staan bloemen op tafel."
+            "text": "Dat hoeft niet. Er staan bloemen op tafel.",
+            "translation": "That isn’t necessary. Er staan bloemen on the table."
           },
           {
             "speaker": "Lotte",
-            "text": "Oké. Henk neemt kaas mee, toch?"
+            "text": "Oké. Henk neemt kaas mee, toch?",
+            "translation": "Oké. Henk neemt kaas mee, toch?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, Henk neemt kaas mee. Dat vindt hij leuk."
+            "text": "Ja, Henk neemt kaas mee. Dat vindt hij leuk.",
+            "translation": "Yes, Henk neemt kaas mee. Dat vindt hij leuk."
           }
         ]
       },
@@ -506,43 +514,53 @@
         "turns": [
           {
             "speaker": "Henk",
-            "text": "Ik geef de planten water. Ik heb een gieter."
+            "text": "Ik geef de planten water. Ik heb een gieter.",
+            "translation": "I geef water the plants. I have een gieter."
           },
           {
             "speaker": "Sofia",
-            "text": "Wat lief! Je hoeft niet elke dag te komen."
+            "text": "Wat lief! Je hoeft niet elke dag te komen.",
+            "translation": "Wat lief! You don’t have to every day te komen."
           },
           {
             "speaker": "Henk",
-            "text": "Hoe vaak is genoeg?"
+            "text": "Hoe vaak is genoeg?",
+            "translation": "Hoe vaak is genoeg?"
           },
           {
             "speaker": "Sofia",
-            "text": "Twee keer per week is genoeg."
+            "text": "Twee keer per week is genoeg.",
+            "translation": "Twice a week is genoeg."
           },
           {
             "speaker": "Henk",
-            "text": "Moet ik de post ook pakken?"
+            "text": "Moet ik de post ook pakken?",
+            "translation": "Do I have to the mail ook pakken?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, graag. Je hoeft de post niet elke dag te pakken."
+            "text": "Ja, graag. Je hoeft de post niet elke dag te pakken.",
+            "translation": "Yes, graag. Je hoeft the mail niet every day te pakken."
           },
           {
             "speaker": "Henk",
-            "text": "En de sleutel?"
+            "text": "En de sleutel?",
+            "translation": "En the key?"
           },
           {
             "speaker": "Sofia",
-            "text": "Hier is de reservesleutel. Je hoeft me niets te betalen, hoor!"
+            "text": "Hier is de reservesleutel. Je hoeft me niets te betalen, hoor!",
+            "translation": "Hier is de spare key. Je hoeft me pay anything, hoor!"
           },
           {
             "speaker": "Henk",
-            "text": "Natuurlijk niet. Ik kijk graag naar Tijger."
+            "text": "Natuurlijk niet. Ik kijk graag naar Tijger.",
+            "translation": "Of course niet. I’m happy to look after Tijger."
           },
           {
             "speaker": "Sofia",
-            "text": "Dank je wel, Henk. Dat is heel aardig."
+            "text": "Dank je wel, Henk. Dat is heel aardig.",
+            "translation": "Thank you, Henk. Dat is heel aardig."
           }
         ]
       },

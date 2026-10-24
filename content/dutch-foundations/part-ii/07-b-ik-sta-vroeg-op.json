@@ -143,51 +143,63 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Goedemorgen! Jij staat laat op!"
+            "text": "Goedemorgen! Jij staat laat op!",
+            "translation": "Good morning! You get up late!"
           },
           {
             "speaker": "Sofia",
-            "text": "Goedemorgen. Het is zaterdag! Sta jij altijd zo vroeg op?"
+            "text": "Goedemorgen. Het is zaterdag! Sta jij altijd zo vroeg op?",
+            "translation": "Good morning. It's Saturday! Do you always get up this early?"
           },
           {
             "speaker": "Noor",
-            "text": "Ja, ik sta altijd vroeg op. Ook in het weekend."
+            "text": "Ja, ik sta altijd vroeg op. Ook in het weekend.",
+            "translation": "Yes, I always get up early. Even on the weekend."
           },
           {
             "speaker": "Sofia",
-            "text": "Ik niet. Ik sta in het weekend nooit vroeg op."
+            "text": "Ik niet. Ik sta in het weekend nooit vroeg op.",
+            "translation": "Not me. I never get up early on the weekend."
           },
           {
             "speaker": "Noor",
-            "text": "Kijk, onze keuken. Wat een rommel!"
+            "text": "Kijk, onze keuken. Wat een rommel!",
+            "translation": "Look, our kitchen. What a mess!"
           },
           {
             "speaker": "Sofia",
-            "text": "Oei. Sorry! Ruim jij de keuken op? Ik was af."
+            "text": "Oei. Sorry! Ruim jij de keuken op? Ik was af.",
+            "translation": "Oh dear. Sorry! Will you tidy the kitchen? I'll do the dishes."
           },
           {
             "speaker": "Noor",
-            "text": "Nee hoor! Jij ruimt op en ik was af."
+            "text": "Nee hoor! Jij ruimt op en ik was af.",
+            "translation": "No, you do the tidying and I'll do the dishes."
           },
           {
             "speaker": "Sofia",
-            "text": "Oké. Ik opruim de keuken."
+            "text": "Oké. Ik opruim de keuken.",
+            "translation": "Okay. I tidy the kitchen."
           },
           {
             "speaker": "Noor",
-            "text": "Ja, jij ruimt de keuken op. Super!"
+            "text": "Ja, jij ruimt de keuken op. Super!",
+            "translation": "Yes, you tidy the kitchen. Great!"
           },
           {
             "speaker": "Sofia",
-            "text": "En wie maakt het ontbijt klaar?"
+            "text": "En wie maakt het ontbijt klaar?",
+            "translation": "And who prepares breakfast?"
           },
           {
             "speaker": "Noor",
-            "text": "Ik maak koffie en jij maakt het ontbijt klaar."
+            "text": "Ik maak koffie en jij maakt het ontbijt klaar.",
+            "translation": "I'll make coffee and you'll prepare breakfast."
           },
           {
             "speaker": "Sofia",
-            "text": "Gezellig! En wij doen straks samen boodschappen."
+            "text": "Gezellig! En wij doen straks samen boodschappen.",
+            "translation": "Nice! And we'll do the grocery shopping together later."
           }
         ]
       },
@@ -2475,51 +2487,63 @@
         "turns": [
           {
             "speaker": "Sofia",
-            "text": "Hallo, met Sofia."
+            "text": "Hallo, met Sofia.",
+            "translation": "Hello, this is Sofia."
           },
           {
             "speaker": "Daan",
-            "text": "Hoi Sofia, met Daan. Lotte en ik gaan vanavond uit. Een vriendin van Lotte geeft een feest. Kom je mee?"
+            "text": "Hoi Sofia, met Daan. Lotte en ik gaan vanavond uit. Een vriendin van Lotte geeft een feest. Kom je mee?",
+            "translation": "Hi Sofia, it's Daan. Lotte and I are going out tonight. One of Lotte's friends is having a party. Are you coming?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, leuk! Komt Noor ook mee?"
+            "text": "Ja, leuk! Komt Noor ook mee?",
+            "translation": "Yes, great! Is Noor coming too?"
           },
           {
             "speaker": "Daan",
-            "text": "Ja, Noor komt ook mee."
+            "text": "Ja, Noor komt ook mee.",
+            "translation": "Yes, Noor is coming too."
           },
           {
             "speaker": "Sofia",
-            "text": "Super. Neem ik iets mee?"
+            "text": "Super. Neem ik iets mee?",
+            "translation": "Great. Should I bring something?"
           },
           {
             "speaker": "Daan",
-            "text": "Ja, graag. Neem jij een fles wijn mee? Lotte neemt chips mee."
+            "text": "Ja, graag. Neem jij een fles wijn mee? Lotte neemt chips mee.",
+            "translation": "Yes, please. Could you bring a bottle of wine? Lotte is bringing chips."
           },
           {
             "speaker": "Sofia",
-            "text": "Oké! Wanneer gaan jullie weg?"
+            "text": "Oké! Wanneer gaan jullie weg?",
+            "translation": "Okay! When are you leaving?"
           },
           {
             "speaker": "Daan",
-            "text": "Wij gaan vroeg weg. Ik ben altijd op tijd, hè."
+            "text": "Wij gaan vroeg weg. Ik ben altijd op tijd, hè.",
+            "translation": "We're leaving early. I'm always on time, right?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ha! En ik ben altijd een beetje laat. Wanneer komen we thuis?"
+            "text": "Ha! En ik ben altijd een beetje laat. Wanneer komen we thuis?",
+            "translation": "Ha! And I'm always a little late. When will we get home?"
           },
           {
             "speaker": "Daan",
-            "text": "Laat. Het is zaterdag!"
+            "text": "Laat. Het is zaterdag!",
+            "translation": "Late. It's Saturday!"
           },
           {
             "speaker": "Sofia",
-            "text": "Tot vanavond!"
+            "text": "Tot vanavond!",
+            "translation": "See you tonight!"
           },
           {
             "speaker": "Daan",
-            "text": "Tot vanavond. Doei!"
+            "text": "Tot vanavond. Doei!",
+            "translation": "See you tonight. Bye!"
           }
         ]
       },

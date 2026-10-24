@@ -132,43 +132,53 @@
         "turns": [
           {
             "speaker": "Verkoper",
-            "text": "Goedemorgen!"
+            "text": "Goedemorgen!",
+            "translation": "Good morning!"
           },
           {
             "speaker": "Sofia",
-            "text": "Goedemorgen! Ik zoek een simkaart. Ik spreek een beetje Nederlands."
+            "text": "Goedemorgen! Ik zoek een simkaart. Ik spreek een beetje Nederlands.",
+            "translation": "Good morning! I’m looking for a SIM card. I speak a little Dutch."
           },
           {
             "speaker": "Verkoper",
-            "text": "Prima! Hoe heet u?"
+            "text": "Prima! Hoe heet u?",
+            "translation": "Fine! What is your name?"
           },
           {
             "speaker": "Sofia",
-            "text": "Sofia Moreno."
+            "text": "Sofia Moreno.",
+            "translation": "Sofia Moreno."
           },
           {
             "speaker": "Verkoper",
-            "text": "Moreno? Hoe schrijft u dat?"
+            "text": "Moreno? Hoe schrijft u dat?",
+            "translation": "Moreno? How do you spell that?"
           },
           {
             "speaker": "Sofia",
-            "text": "M-O-R-E-N-O."
+            "text": "M-O-R-E-N-O.",
+            "translation": "M-O-R-E-N-O."
           },
           {
             "speaker": "Verkoper",
-            "text": "Dank u. Het nummer is nul zes, achtendertig, tweeëntwintig, negentien, vierenzeventig."
+            "text": "Dank u. Het nummer is nul zes, achtendertig, tweeëntwintig, negentien, vierenzeventig.",
+            "translation": "Thank you. The number is zero six, thirty-eight, twenty-two, nineteen, seventy-four."
           },
           {
             "speaker": "Sofia",
-            "text": "Pardon? Nog een keer, alstublieft. Langzaam!"
+            "text": "Pardon? Nog een keer, alstublieft. Langzaam!",
+            "translation": "Pardon? One more time, please. Slowly!"
           },
           {
             "speaker": "Verkoper",
-            "text": "Nul zes – drie acht – twee twee – één negen – zeven vier."
+            "text": "Nul zes – drie acht – twee twee – één negen – zeven vier.",
+            "translation": "Zero six – three eight – two two – one nine – seven four."
           },
           {
             "speaker": "Sofia",
-            "text": "Super! Dank u wel!"
+            "text": "Super! Dank u wel!",
+            "translation": "Great! Thank you!"
           }
         ]
       },
@@ -2593,43 +2603,53 @@
         "turns": [
           {
             "speaker": "Sofia",
-            "text": "Noor, kijk! Mijn nummer is nu 06-38221974."
+            "text": "Noor, kijk! Mijn nummer is nu 06-38221974.",
+            "translation": "Noor, look! My number is 06-38221974."
           },
           {
             "speaker": "Noor",
-            "text": "Super! Nul zes, achtendertig, tweeëntwintig, negentien, vierenzeventig?"
+            "text": "Super! Nul zes, achtendertig, tweeëntwintig, negentien, vierenzeventig?",
+            "translation": "Great! Zero six, thirty-eight, twenty-two, nineteen, seventy-four?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, precies! En kijk, Daan schrijft: “Super!”"
+            "text": "Ja, precies! En kijk, Daan schrijft: “Super!”",
+            "translation": "Yes, exactly! And look, Daan is writing: “Great!”"
           },
           {
             "speaker": "Noor",
-            "text": "Daan, de collega? Hoe oud is Daan?"
+            "text": "Daan, de collega? Hoe oud is Daan?",
+            "translation": "Daan, the colleague? How old is Daan?"
           },
           {
             "speaker": "Sofia",
-            "text": "Hij is tweeëndertig."
+            "text": "Hij is tweeëndertig.",
+            "translation": "He is thirty-two."
           },
           {
             "speaker": "Noor",
-            "text": "En jij? Ben jij zevenentwintig?"
+            "text": "En jij? Ben jij zevenentwintig?",
+            "translation": "And you? Are you twenty-seven?"
           },
           {
             "speaker": "Sofia",
-            "text": "Nee, ik ben achtentwintig. Ik ben oud!"
+            "text": "Nee, ik ben achtentwintig. Ik ben oud!",
+            "translation": "No, I’m twenty-eight. I’m old!"
           },
           {
             "speaker": "Noor",
-            "text": "Nee hoor! Achtentwintig is niet oud. Ik ben vijfentwintig."
+            "text": "Nee hoor! Achtentwintig is niet oud. Ik ben vijfentwintig.",
+            "translation": "No! Twenty-eight isn’t old. I’m twenty-five."
           },
           {
             "speaker": "Sofia",
-            "text": "En Els? Hoe oud is Els?"
+            "text": "En Els? Hoe oud is Els?",
+            "translation": "And Els? How old is Els?"
           },
           {
             "speaker": "Noor",
-            "text": "Els is ongeveer zeventig."
+            "text": "Els is ongeveer zeventig.",
+            "translation": "Els is about seventy."
           }
         ]
       },

@@ -34,35 +34,43 @@
         "turns": [
           {
             "speaker": "Sofia",
-            "text": "Hoi Marieke. Ik zit hier, want het is rustig."
+            "text": "Hoi Marieke. Ik zit hier, want het is rustig.",
+            "translation": "Hi Marieke. I am sitting here because it is quiet."
           },
           {
             "speaker": "Marieke",
-            "text": "Goed idee. Is het rustig genoeg?"
+            "text": "Goed idee. Is het rustig genoeg?",
+            "translation": "Good idea. Is it quiet enough?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, want de bibliotheek is stil."
+            "text": "Ja, want de bibliotheek is stil.",
+            "translation": "Yes, because the library is quiet."
           },
           {
             "speaker": "Piotr",
-            "text": "Ik zit vooraan, omdat ik het bord goed zie."
+            "text": "Ik zit vooraan, omdat ik het bord goed zie.",
+            "translation": "I am sitting at the front because I can see the board well."
           },
           {
             "speaker": "Sofia",
-            "text": "Dat snap ik. Ik zit liever bij het raam, want daar is het licht."
+            "text": "Dat snap ik. Ik zit liever bij het raam, want daar is het licht.",
+            "translation": "I understand. I would rather sit by the window because it is light there."
           },
           {
             "speaker": "Marieke",
-            "text": "We beginnen om zeven uur. Hebben jullie een vraag?"
+            "text": "We beginnen om zeven uur. Hebben jullie een vraag?",
+            "translation": "We start at seven o’clock. Do you have a question?"
           },
           {
             "speaker": "Piotr",
-            "text": "Ja. Ik begrijp de opdracht niet, omdat de uitleg kort is."
+            "text": "Ja. Ik begrijp de opdracht niet, omdat de uitleg kort is.",
+            "translation": "Yes. I do not understand the assignment because the explanation is brief."
           },
           {
             "speaker": "Marieke",
-            "text": "Dan geef ik nog een voorbeeld. Vraag gerust."
+            "text": "Dan geef ik nog een voorbeeld. Vraag gerust.",
+            "translation": "Then I will give another example. Feel free to ask."
           }
         ]
       },
@@ -786,35 +794,43 @@
         "turns": [
           {
             "speaker": "Marieke",
-            "text": "Waarom zit je vooraan, Piotr?"
+            "text": "Waarom zit je vooraan, Piotr?",
+            "translation": "Why are you sitting at the front, Piotr?"
           },
           {
             "speaker": "Piotr",
-            "text": "Ik zit vooraan, want ik zie het bord goed."
+            "text": "Ik zit vooraan, want ik zie het bord goed.",
+            "translation": "I am sitting at the front because I can see the board well."
           },
           {
             "speaker": "Sofia",
-            "text": "Ik zit bij het raam, omdat het daar rustig is."
+            "text": "Ik zit bij het raam, omdat het daar rustig is.",
+            "translation": "I am sitting by the window because it is quiet there."
           },
           {
             "speaker": "Marieke",
-            "text": "En waarom lees je de opdracht nog een keer?"
+            "text": "En waarom lees je de opdracht nog een keer?",
+            "translation": "And why are you reading the assignment once more?"
           },
           {
             "speaker": "Sofia",
-            "text": "Omdat de uitleg kort is, lees ik de opdracht nog een keer."
+            "text": "Omdat de uitleg kort is, lees ik de opdracht nog een keer.",
+            "translation": "Because the explanation is brief, I am reading the assignment once more."
           },
           {
             "speaker": "Piotr",
-            "text": "Ik vraag het aan Marieke, want ik begrijp de laatste zin niet."
+            "text": "Ik vraag het aan Marieke, want ik begrijp de laatste zin niet.",
+            "translation": "I am asking Marieke because I do not understand the last sentence."
           },
           {
             "speaker": "Marieke",
-            "text": "Ik leg het graag uit, omdat die zin lastig is."
+            "text": "Ik leg het graag uit, omdat die zin lastig is.",
+            "translation": "I am happy to explain it because that sentence is difficult."
           },
           {
             "speaker": "Sofia",
-            "text": "Dank je. Ik begrijp het nu."
+            "text": "Dank je. Ik begrijp het nu.",
+            "translation": "Thank you. I understand it now."
           }
         ]
       },

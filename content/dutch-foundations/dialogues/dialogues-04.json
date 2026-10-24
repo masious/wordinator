@@ -1,0 +1,921 @@
+[
+ {
+  "course": "dutch-foundations/part-iii",
+  "lesson": "14-a-waar-is-het",
+  "title": "Waar is het?",
+  "dialogues": [
+   {
+    "blockId": "374cd9de-9874-4ccf-a3a6-a8939cbb889d",
+    "turns": [
+     {
+      "speaker": "Ingrid",
+      "text": "Goedemorgen, mevrouw Moreno. Welkom! Hier zijn de sleutels.",
+      "translation": "Good morning, Mrs Moreno. Welcome! Here are the keys."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Goedemorgen, mevrouw Visser. Dank u wel! Twee sleutels?",
+      "translation": "Good morning, Mrs Visser. Thank you! Two keys?"
+     },
+     {
+      "speaker": "Ingrid",
+      "text": "Ja. Deze is voor de voordeur beneden en die is voor het appartement.",
+      "translation": "Yes. This one is for the downstairs front door, and that one is for the apartment."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Prima. En waar is de meterkast?",
+      "translation": "Great. And where is the meter cupboard?"
+     },
+     {
+      "speaker": "Ingrid",
+      "text": "De meterkast is hier, naast de deur. De meters zijn links.",
+      "translation": "The meter cupboard is here, next to the door. The meters are on the left."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "En waar zijn de containers voor het afval?",
+      "translation": "And where are the containers for the rubbish?"
+     },
+     {
+      "speaker": "Ingrid",
+      "text": "Ze zijn beneden, achter het gebouw.",
+      "translation": "They are downstairs, behind the building."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dank u. En de lift is tegenover de trap, toch?",
+      "translation": "Thank you. And the lift is opposite the stairs, right?"
+     },
+     {
+      "speaker": "Ingrid",
+      "text": "Dat klopt. Hebt u nog vragen?",
+      "translation": "That's right. Do you have any other questions?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Nee, dank u. O, kijk! Daan is er al.",
+      "translation": "No, thank you. Oh, look! Daan is already here."
+     },
+     {
+      "speaker": "Ingrid",
+      "text": "Prima. Veel succes met de verhuizing!",
+      "translation": "Great. Good luck with the move!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dank u wel. Tot ziens!",
+      "translation": "Thank you. Goodbye!"
+     }
+    ]
+   },
+   {
+    "blockId": "3052654e-5235-4380-86dd-e43eaab93091",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "Sofia, waar zijn de borden?",
+      "translation": "Sofia, where are the plates?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ze zijn in de doos naast de bank.",
+      "translation": "They are in the box next to the sofa."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Welke doos? Hier zijn tien dozen!",
+      "translation": "Which box? There are ten boxes here!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Die grote doos, tussen de bank en het raam.",
+      "translation": "That big box, between the sofa and the window."
+     },
+     {
+      "speaker": "Daan",
+      "text": "En waar is de lamp van de markt?",
+      "translation": "And where is the lamp from the market?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Het is in die kleine doos, op de stoel.",
+      "translation": "It's in that small box, on the chair."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Hij, Sofia. De lamp: hij is in die doos. Kijk, hier is hij!",
+      "translation": "He, Sofia. The lamp: it is in that box. Look, here it is!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, hij! Dank je. Maar waar is mijn tas? Mijn telefoon is in de tas.",
+      "translation": "Yes, it! Thank you. But where is my bag? My phone is in the bag."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Hij is onder de tafel, naast de prullenbak.",
+      "translation": "It's under the table, next to the bin."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Super! En het kussen van de bank?",
+      "translation": "Great! And the sofa cushion?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Het is in de slaapkamer, op het bed.",
+      "translation": "It's in the bedroom, on the bed."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Mag ik de lege dozen meenemen? Ze zijn bij de deur.",
+      "translation": "Can I take the empty boxes with me? They are by the door."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-iii",
+  "lesson": "14-b-staan-liggen-zitten",
+  "title": "Leggen of zetten?",
+  "dialogues": [
+   {
+    "blockId": "c30a20e9-9405-40fb-a99c-566ad9c0bb66",
+    "turns": [
+     {
+      "speaker": "Henk",
+      "text": "Zo! Hier is een plant voor je nieuwe huis.",
+      "translation": "Here we go! Here's a plant for your new home."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Wat leuk! Waar zet ik de plant?",
+      "translation": "How nice! Where should I put the plant?"
+     },
+     {
+      "speaker": "Henk",
+      "text": "Ik zet hem op de vensterbank. Daar staat hij in de zon.",
+      "translation": "I'll put it on the windowsill. It stands there in the sun."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Prima. En waar is Tijger?",
+      "translation": "Great. And where is Tijger?"
+     },
+     {
+      "speaker": "Henk",
+      "text": "Hij zit in die doos naast de bank.",
+      "translation": "He is sitting in that box next to the sofa."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Tijger, kijk! Ik leg dit kussen op de bank.",
+      "translation": "Tijger, look! I'm putting this cushion on the sofa."
+     },
+     {
+      "speaker": "Henk",
+      "text": "Nu ligt Tijger op het kussen. Gezellig hier!",
+      "translation": "Now Tijger is lying on the cushion. It's cosy here!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Mooi. Nu hang ik alleen het schilderij nog aan de muur.",
+      "translation": "Nice. Now I only have to hang the painting on the wall."
+     }
+    ]
+   },
+   {
+    "blockId": "3352fe85-97c7-4531-adff-92075d15c4dd",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "Hoi Sofia! Waar liggen de handdoeken?",
+      "translation": "Hi Sofia! Where are the towels?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ze liggen in de kast in de badkamer.",
+      "translation": "They are in the cupboard in the bathroom."
+     },
+     {
+      "speaker": "Noor",
+      "text": "En waar staat de koffie?",
+      "translation": "And where is the coffee?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Het pak staat naast de koelkast.",
+      "translation": "The packet is next to the fridge."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Waar zit je sleutel?",
+      "translation": "Where is your key?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Die zit in mijn jas. Wacht even, ik leg hem op de tafel.",
+      "translation": "It's in my coat. Wait a moment, I'll put it on the table."
+     },
+     {
+      "speaker": "Noor",
+      "text": "En het schilderij? Hangt het al aan de muur?",
+      "translation": "And the painting? Is it already hanging on the wall?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja! Het hangt boven de bank. Kom binnen!",
+      "translation": "Yes! It's hanging above the sofa. Come in!"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-iii",
+  "lesson": "15-a-mijn-buurt",
+  "title": "Mijn buurt",
+  "dialogues": [
+   {
+    "blockId": "a7e4785c-ac3c-4710-a3cc-c8aa8f8848b5",
+    "turns": [
+     {
+      "speaker": "Henk",
+      "text": "Zo, Sofia! Vandaag ben ik vroeg klaar op de markt. Mooi weer, hè? Kom je mee? Dan zie je onze buurt.",
+      "translation": "Well, Sofia! Today I finished early at the market. Nice weather, isn't it? Will you come with me? Then you'll see our neighbourhood."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, graag! Is er een supermarkt in de buurt?",
+      "translation": "Yes, gladly! Is there a supermarket nearby?"
+     },
+     {
+      "speaker": "Henk",
+      "text": "Ja hoor, in de Kanaalstraat. Daar zijn veel winkels. Daar kun je alles kopen.",
+      "translation": "Yes, there is, on Kanaalstraat. There are lots of shops there. You can buy everything there."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Wat leuk! En waar ik kan brood kopen?",
+      "translation": "How nice! And where can I buy bread?"
+     },
+     {
+      "speaker": "Henk",
+      "text": "Waar kun je brood kopen? Bij de bakker. De bakker is ook in de Kanaalstraat, naast de supermarkt.",
+      "translation": "Where can you buy bread? At the bakery. The bakery is also on Kanaalstraat, next to the supermarket."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Is de bakker ook op zondag open?",
+      "translation": "Is the bakery open on Sundays too?"
+     },
+     {
+      "speaker": "Henk",
+      "text": "Nee, op zondag is hij dicht. Maar de supermarkt is wel open.",
+      "translation": "No, it's closed on Sundays. But the supermarket is open."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "En wat is dat grote gebouw daar?",
+      "translation": "And what is that big building over there?"
+     },
+     {
+      "speaker": "Henk",
+      "text": "Dat is de grote moskee. Hij is mooi, hè? En kijk, daar is het park. Daar kun je lekker wandelen.",
+      "translation": "That's the big mosque. It's beautiful, isn't it? And look, there's the park. You can go for a nice walk there."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "En de bibliotheek? Ik wil graag Nederlandse boeken lenen.",
+      "translation": "And the library? I'd like to borrow Dutch books."
+     },
+     {
+      "speaker": "Henk",
+      "text": "De bibliotheek is vlakbij, aan het plein bij het kanaal. Daar kun je ook koffie drinken. Naast de bibliotheek is de apotheek.",
+      "translation": "The library is very close, on the square by the canal. You can also have coffee there. The pharmacy is next to the library."
+     }
+    ]
+   },
+   {
+    "blockId": "6ec701f6-c1bb-4e46-aebd-5b4a352455ce",
+    "turns": [
+     {
+      "speaker": "Henk",
+      "text": "Kijk, hier is de fietsenwinkel van Ahmed. Hoi Ahmed!",
+      "translation": "Look, here is Ahmed's bicycle shop. Hi Ahmed!"
+     },
+     {
+      "speaker": "Ahmed",
+      "text": "Hoi Henk! En wie is dit?",
+      "translation": "Hi Henk! And who is this?"
+     },
+     {
+      "speaker": "Henk",
+      "text": "Dit is Sofia. Ze woont boven mij, op de tweede verdieping.",
+      "translation": "This is Sofia. She lives above me, on the second floor."
+     },
+     {
+      "speaker": "Ahmed",
+      "text": "Welkom in Lombok, Sofia! Kun jij fietsen?",
+      "translation": "Welcome to Lombok, Sofia! Can you ride a bicycle?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, ik kan fietsen. Maar ik heb geen fiets.",
+      "translation": "Yes, I can ride a bicycle. But I don't have a bicycle."
+     },
+     {
+      "speaker": "Ahmed",
+      "text": "Geen probleem! Kijk eens, hier staan veel fietsen. Hier kun je een fiets kopen.",
+      "translation": "No problem! Look, there are lots of bicycles here. You can buy a bicycle here."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dank je, Ahmed! Ik kom snel terug.",
+      "translation": "Thank you, Ahmed! I'll come back soon."
+     }
+    ]
+   },
+   {
+    "blockId": "5adf957b-9fba-404a-81b3-914a4ab9db33",
+    "turns": [
+     {
+      "speaker": "Sofia",
+      "text": "Goedemiddag. Kunt u mij helpen?",
+      "translation": "Good afternoon. Can you help me?"
+     },
+     {
+      "speaker": "Medewerkster",
+      "text": "Ja, natuurlijk. Wat kan ik voor u doen?",
+      "translation": "Yes, of course. What can I do for you?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik woon nu in Lombok. Kan ik hier boeken lenen?",
+      "translation": "I live in Lombok now. Can I borrow books here?"
+     },
+     {
+      "speaker": "Medewerkster",
+      "text": "Ja, dat kan. Dan hebt u een pas nodig. U kunt de pas hier krijgen.",
+      "translation": "Yes, you can. Then you need a library card. You can get the card here."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Prima. En kan ik hier ook Spaanse boeken lenen?",
+      "translation": "Great. And can I borrow Spanish books here too?"
+     },
+     {
+      "speaker": "Medewerkster",
+      "text": "Nee, we hebben geen Spaanse boeken. Maar we hebben veel Engelse boeken.",
+      "translation": "No, we don't have any Spanish books. But we have lots of English books."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Oké. Ik kan ook een beetje Nederlands. Wanneer is de bibliotheek open?",
+      "translation": "Okay. I also speak a little Dutch. When is the library open?"
+     },
+     {
+      "speaker": "Medewerkster",
+      "text": "Van dinsdag tot zaterdag, van tien tot vijf. Op zondag en maandag zijn we dicht.",
+      "translation": "From Tuesday to Saturday, from ten to five. We are closed on Sundays and Mondays."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-iii",
+  "lesson": "15-b-rechtdoor-en-dan-links",
+  "title": "Rechtdoor en dan links",
+  "dialogues": [
+   {
+    "blockId": "edc9ef77-e28a-4fc0-b84c-66fdb7ca2a30",
+    "turns": [
+     {
+      "speaker": "Sofia",
+      "text": "Met Sofia!",
+      "translation": "It's Sofia!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Hoi, met Noor! Sorry, ik weet de weg niet. Waar is de Kastanjestraat?",
+      "translation": "Hi, Noor speaking! Sorry, I don't know the way. Where is Kastanjestraat?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Joh! Waar ben je nu?",
+      "translation": "Oh! Where are you now?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ik sta bij een groot kruispunt met een stoplicht. Ik zie een brug en een grote moskee.",
+      "translation": "I'm standing at a large crossroads with a traffic light. I can see a bridge and a large mosque."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "O, dan ben je vlakbij! Steek bij het stoplicht over. Steek dan de brug over.",
+      "translation": "Oh, then you're very close! Cross at the traffic light. Then cross the bridge."
+     },
+     {
+      "speaker": "Noor",
+      "text": "De brug over. Oké. En dan?",
+      "translation": "Cross the bridge. Okay. And then?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dan ben je in de Kanaalstraat. Loop rechtdoor, voorbij de bakker.",
+      "translation": "Then you're on Kanaalstraat. Walk straight ahead, past the bakery."
+     },
+     {
+      "speaker": "Noor",
+      "text": "En dan de tweede straat rechts?",
+      "translation": "And then the second street on the right?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Nee, niet de tweede! Neem de derde straat rechts. Dat is de Kastanjestraat.",
+      "translation": "No, not the second one! Take the third street on the right. That's Kastanjestraat."
+     },
+     {
+      "speaker": "Noor",
+      "text": "De derde straat rechts. Is het ver?",
+      "translation": "The third street on the right. Is it far?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Nee, het is drie minuten lopen. Wees voorzichtig op de brug. Er zijn veel fietsers!",
+      "translation": "No, it's a three-minute walk. Be careful on the bridge. There are lots of cyclists!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ja hoor. Tot straks!",
+      "translation": "Sure. See you later!"
+     }
+    ]
+   },
+   {
+    "blockId": "7647e98d-557a-477b-b7de-810e376eac23",
+    "turns": [
+     {
+      "speaker": "Toerist",
+      "text": "Pardon, mevrouw. Hoe kom ik bij Utrecht Centraal?",
+      "translation": "Excuse me, ma'am. How do I get to Utrecht Central Station?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Utrecht Centraal? Dat is niet ver. Gaat u hier rechtdoor tot de brug.",
+      "translation": "Utrecht Central? It's not far. Go straight ahead here until the bridge."
+     },
+     {
+      "speaker": "Toerist",
+      "text": "Tot de brug. En dan?",
+      "translation": "To the bridge. And then?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Steekt u de brug over. Dan ziet u een groot kruispunt met een stoplicht.",
+      "translation": "Cross the bridge. Then you'll see a large crossroads with a traffic light."
+     },
+     {
+      "speaker": "Toerist",
+      "text": "Een kruispunt. Ga ik daar links of rechts?",
+      "translation": "A crossroads. Do I go left or right there?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Niet links en niet rechts. Steekt u daar over en gaat u rechtdoor. Dan ziet u het station.",
+      "translation": "Neither left nor right. Cross there and go straight ahead. Then you'll see the station."
+     },
+     {
+      "speaker": "Toerist",
+      "text": "Is het ver?",
+      "translation": "Is it far?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Nee, het is ongeveer tien minuten lopen.",
+      "translation": "No, it's about a ten-minute walk."
+     },
+     {
+      "speaker": "Noor",
+      "text": "U kunt ook de bus nemen. De halte is daar, tegenover de supermarkt.",
+      "translation": "You can also take the bus. The stop is over there, opposite the supermarket."
+     },
+     {
+      "speaker": "Toerist",
+      "text": "Nee, dank u. Ik loop wel.",
+      "translation": "No, thank you. I'll walk."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Pas op voor de fietsers bij het kruispunt!",
+      "translation": "Watch out for the cyclists at the crossroads!"
+     },
+     {
+      "speaker": "Toerist",
+      "text": "Dank u wel! Tot ziens!",
+      "translation": "Thank you! Goodbye!"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-iii",
+  "lesson": "16-a-met-de-tram-en-de-trein",
+  "title": "Met de tram en de trein",
+  "dialogues": [
+   {
+    "blockId": "6e5649de-1260-499d-8788-0332e53e0523",
+    "turns": [
+     {
+      "speaker": "Daan",
+      "text": "Goedemorgen, Sofia! Je bent op tijd!",
+      "translation": "Good morning, Sofia! You're on time!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja! Ik ren van de bus naar het station. Is dit spoor 7?",
+      "translation": "Yes! I run from the bus to the station. Is this platform 7?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Ja. Onze trein vertrekt om 8.16 van spoor 7. Check je altijd in met je bankpas?",
+      "translation": "Yes. Our train leaves from platform 7 at 8:16. Do you always check in with your bank card?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, ik check altijd in met mijn bankpas, bij de poortjes.",
+      "translation": "Yes, I always check in with my bank card, at the gates."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Prima. O nee, kijk: vijf minuten vertraging.",
+      "translation": "Great. Oh no, look: five minutes' delay."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Vertraging? Is dat een probleem? De vergadering begint om tien uur.",
+      "translation": "Delay? Is that a problem? The meeting starts at ten o'clock."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Nee hoor. We komen om ongeveer tien voor negen in Amsterdam aan.",
+      "translation": "No problem. We'll arrive in Amsterdam at about ten to nine."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "En dan? Overstappen we in Amsterdam?",
+      "translation": "And then? Do we change in Amsterdam?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Ja, in Amsterdam stappen we over op de tram. Met de tram zijn we in vijftien minuten bij de klant.",
+      "translation": "Yes, in Amsterdam we change to the tram. The tram takes us to the client in fifteen minutes."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Kijk, daar komt de trein! Waar stappen we in?",
+      "translation": "Look, the train is coming! Where do we get on?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Hier, bij deze deur. Kom op, stap in!",
+      "translation": "Here, at this door. Come on, get on!"
+     }
+    ]
+   },
+   {
+    "blockId": "c53cbb4d-8f82-4300-a7e2-79b2d211f8bb",
+    "turns": [
+     {
+      "speaker": "Conducteur",
+      "text": "Goedemorgen. Hebt u een kaartje?",
+      "translation": "Good morning. Do you have a ticket?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Goedemorgen. Ik heb een ov-chipkaart. Alstublieft.",
+      "translation": "Good morning. I have an OV-chipkaart. Here you are."
+     },
+     {
+      "speaker": "Conducteur",
+      "text": "Dank u. En u, mevrouw?",
+      "translation": "Thank you. And you, ma'am?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik heb geen kaartje. Ik check in met mijn bankpas.",
+      "translation": "I don't have a ticket. I check in with my bank card."
+     },
+     {
+      "speaker": "Conducteur",
+      "text": "Prima. Mag ik uw bankpas even zien?",
+      "translation": "Great. May I see your bank card for a moment?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Alstublieft. Is dat goed?",
+      "translation": "Here you are. Is that all right?"
+     },
+     {
+      "speaker": "Conducteur",
+      "text": "Ja, dat is goed. Checkt u in Amsterdam ook uit, alstublieft.",
+      "translation": "Yes, that's fine. Please check out in Amsterdam too."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Natuurlijk. Stappen we in Amsterdam Amstel uit?",
+      "translation": "Of course. Do we get off at Amsterdam Amstel?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Nee, niet in Amstel. De trein rijdt door naar Amsterdam Centraal. Daar stappen we uit.",
+      "translation": "No, not at Amstel. The train continues to Amsterdam Central. We get off there."
+     },
+     {
+      "speaker": "Conducteur",
+      "text": "Precies. En dit is de stiltecoupé. Hier zijn de reizigers stil.",
+      "translation": "Exactly. And this is the quiet carriage. The passengers are quiet here."
+     },
+     {
+      "speaker": "Daan",
+      "text": "O, sorry! Kom op, Sofia, we lopen even door.",
+      "translation": "Oh, sorry! Come on, Sofia, let's walk through."
+     },
+     {
+      "speaker": "Conducteur",
+      "text": "Goede reis!",
+      "translation": "Have a good journey!"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-iii",
+  "lesson": "16-b-ik-ga-een-fiets-kopen",
+  "title": "Ik ga een fiets kopen",
+  "dialogues": [
+   {
+    "blockId": "2f8670f2-b5ed-43e3-81df-fb505b53daff",
+    "turns": [
+     {
+      "speaker": "Daan",
+      "text": "Sofia, hoe kom jij elke dag naar kantoor?",
+      "translation": "Sofia, how do you get to the office every day?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Met de bus. Of ik loop naar het station. Dat is vijftien minuten lopen.",
+      "translation": "By bus. Or I walk to the station. It's a fifteen-minute walk."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Je hebt geen fiets? In Utrecht? Je gaat een fiets kopen!",
+      "translation": "You don't have a bicycle? In Utrecht? You're going to buy a bicycle!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, ja. Ik ga kopen een fiets. Zaterdag.",
+      "translation": "Yes, yes. I'm going to buy a bicycle. On Saturday."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Goed plan! Je gaat zaterdag een fiets kopen. Waar ga je kijken?",
+      "translation": "Good plan! You're going to buy a bicycle on Saturday. Where are you going to look?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Zaterdag ga ik naar de fietsenwinkel van Ahmed, in de Kanaalstraat.",
+      "translation": "On Saturday I'm going to Ahmed's bicycle shop, on Kanaalstraat."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Prima. Ga je een nieuwe fiets kopen?",
+      "translation": "Great. Are you going to buy a new bicycle?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Nee, ik ga geen nieuwe fiets kopen. Een nieuwe fiets is te duur. Ik ga een tweedehands fiets kopen.",
+      "translation": "No, I'm not going to buy a new bicycle. A new bicycle is too expensive. I'm going to buy a second-hand bicycle."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Doe maar. En neem een goed slot! In Utrecht zijn veel fietsendieven.",
+      "translation": "Go ahead. And get a good lock! There are lots of bicycle thieves in Utrecht."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Een goed slot. Oké! En wat ga jij dit weekend doen?",
+      "translation": "A good lock. Okay! And what are you going to do this weekend?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Zaterdag ga ik met Lotte fietsen. En zondag gaan we bij mijn moeder eten.",
+      "translation": "On Saturday I'm going cycling with Lotte. And on Sunday we're going to eat at my mother's."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Gezellig! Veel plezier!",
+      "translation": "How nice! Have fun!"
+     }
+    ]
+   },
+   {
+    "blockId": "e1fe170d-fbae-46ec-8556-331913f323ad",
+    "turns": [
+     {
+      "speaker": "Ahmed",
+      "text": "Hé, Sofia! Welkom! Wat kan ik voor je doen?",
+      "translation": "Hey, Sofia! Welcome! What can I do for you?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Hoi Ahmed! Ik ga vandaag een fiets kopen. Een tweedehands fiets.",
+      "translation": "Hi Ahmed! I'm going to buy a bicycle today. A second-hand bicycle."
+     },
+     {
+      "speaker": "Ahmed",
+      "text": "Kijk eens, deze zwarte fiets. Hij kost honderdvijftig euro. De remmen en het licht zijn nieuw.",
+      "translation": "Look at this black bicycle. It costs one hundred and fifty euros. The brakes and the light are new."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Mooi! Mag ik deze fiets proberen?",
+      "translation": "Nice! May I try this bicycle?"
+     },
+     {
+      "speaker": "Ahmed",
+      "text": "Natuurlijk. Fiets maar een rondje.",
+      "translation": "Of course. Just ride around the block."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Super, hij fietst lekker! Maar de bel is kapot.",
+      "translation": "Great, it rides nicely! But the bell is broken."
+     },
+     {
+      "speaker": "Ahmed",
+      "text": "Geen probleem. Ik ga de bel even repareren. Ga je elke dag fietsen?",
+      "translation": "No problem. I'll repair the bell. Are you going to cycle every day?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja! Ik ga elke dag naar kantoor fietsen. Niet meer met de bus!",
+      "translation": "Yes! I'm going to cycle to the office every day. No more bus!"
+     },
+     {
+      "speaker": "Ahmed",
+      "text": "Dan heb je ook een goed slot nodig. Dit slot kost vijfentwintig euro.",
+      "translation": "Then you also need a good lock. This lock costs twenty-five euros."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik neem het slot. Is er garantie op de fiets?",
+      "translation": "I'll take the lock. Is there a warranty on the bicycle?"
+     },
+     {
+      "speaker": "Ahmed",
+      "text": "Ja, drie maanden. Is er iets kapot? Dan repareer ik de fiets gratis. En zet je fiets altijd op slot!",
+      "translation": "Yes, three months. Is anything broken? Then I'll repair the bicycle for free. And always lock your bicycle!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dat ga ik doen! Samen is dat honderdvijfenzeventig euro, toch? Mag ik pinnen?",
+      "translation": "I'll do that! Together that's one hundred and seventy-five euros, right? Can I pay by card?"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-iii",
+  "lesson": "17-a-wat-voor-weer-is-het",
+  "title": "Wat voor weer is het?",
+  "dialogues": [
+   {
+    "blockId": "e9633920-dee2-45c4-94ce-0504c6d10dec",
+    "turns": [
+     {
+      "speaker": "Henk",
+      "text": "Nou, nou, wat een weer! Kom binnen, Sofia!",
+      "translation": "Well, well, what weather! Come in, Sofia!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Hoi Henk! Brr, het regent en het waait. Ik ben zo nat!",
+      "translation": "Hi Henk! Brr, it's raining and windy. I'm soaking wet!"
+     },
+     {
+      "speaker": "Henk",
+      "text": "Ja, het regent weer. Fiets je in deze regen naar kantoor?",
+      "translation": "Yes, it's raining again. Do you cycle to the office in this rain?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, met mijn nieuwe fiets. Maar ik heb geen regenjas.",
+      "translation": "Yes, on my new bicycle. But I don't have a raincoat."
+     },
+     {
+      "speaker": "Henk",
+      "text": "Geen regenjas? In november? Dan word je elke dag nat!",
+      "translation": "No raincoat? In November? Then you'll get wet every day!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Wat voor weer is het morgen?",
+      "translation": "What will the weather be like tomorrow?"
+     },
+     {
+      "speaker": "Henk",
+      "text": "Morgen wordt het koud: acht graden. En het gaat weer regenen.",
+      "translation": "Tomorrow it will be cold: eight degrees. And it will rain again."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Echt? In Valencia is het vandaag twintig graden en de zon schijnt. Ik mis de zon!",
+      "translation": "Really? In Valencia it's twenty degrees today and the sun is shining. I miss the sun!"
+     },
+     {
+      "speaker": "Henk",
+      "text": "Ach, in de zomer schijnt de zon hier ook. Soms!",
+      "translation": "Ah, in summer the sun shines here too. Sometimes!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dan ga ik morgen een paraplu kopen.",
+      "translation": "Then I'll buy an umbrella tomorrow."
+     },
+     {
+      "speaker": "Henk",
+      "text": "Een paraplu? Met deze wind? Nee hoor! Neem een regenjas.",
+      "translation": "An umbrella? In this wind? No way! Get a raincoat."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Oké, een regenjas. Dank je wel, Henk. Fijne avond!",
+      "translation": "Okay, a raincoat. Thank you, Henk. Have a nice evening!"
+     }
+    ]
+   },
+   {
+    "blockId": "76334df8-dfd4-4900-8e05-7cce1cdb5edd",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "Zaterdag gaan we met Daan naar Zandvoort! Wat voor weer wordt het?",
+      "translation": "On Saturday we're going to Zandvoort with Daan! What will the weather be like?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Wacht even, ik kijk naar de weersverwachting. Hmm… is het regenen zaterdag?",
+      "translation": "Wait a moment, I'll check the weather forecast. Hmm… is it going to rain on Saturday?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Regent het zaterdag? Nee, kijk: 's ochtends schijnt de zon!",
+      "translation": "Will it rain on Saturday? No, look: the sun will shine in the morning!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "O ja! En het wordt twaalf graden. Lekker weer!",
+      "translation": "Oh yes! And it will be twelve degrees. Lovely weather!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Maar 's middags is het bewolkt en dan komt er een bui.",
+      "translation": "But in the afternoon it will be cloudy and then there will be a shower."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Een bui? Dan worden we nat!",
+      "translation": "A shower? Then we'll get wet!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ja, en in Zandvoort waait het altijd.",
+      "translation": "Yes, and it is always windy in Zandvoort."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dan neem ik mijn nieuwe regenjas mee.",
+      "translation": "Then I'll take my new raincoat with me."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Goed zo! Er is geen slecht weer, alleen slechte kleding!",
+      "translation": "Good! There is no bad weather, only bad clothing!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Haha, dat zegt Henk ook altijd! En zaterdag kijken we eerst op de buienradar.",
+      "translation": "Haha, Henk always says that too! And on Saturday we'll check the rain radar first."
+     }
+    ]
+   }
+  ]
+ }
+]

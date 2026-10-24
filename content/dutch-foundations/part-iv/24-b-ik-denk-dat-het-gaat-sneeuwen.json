@@ -34,35 +34,43 @@
         "turns": [
           {
             "speaker": "Marieke",
-            "text": "Wat vinden jullie van Nederland?"
+            "text": "Wat vinden jullie van Nederland?",
+            "translation": "What do you think of Nederland?"
           },
           {
             "speaker": "Piotr",
-            "text": "Ik vind dat Nederlanders heel direct zijn."
+            "text": "Ik vind dat Nederlanders heel direct zijn.",
+            "translation": "I think dat Dutch people are very direct."
           },
           {
             "speaker": "Sofia",
-            "text": "Ik denk dat Nederlands minder moeilijk is dan Pools!"
+            "text": "Ik denk dat Nederlands minder moeilijk is dan Pools!",
+            "translation": "I think dat Dutch is less difficult than Polish!"
           },
           {
             "speaker": "Piotr",
-            "text": "Echt? Ik denk dat Nederlands soms moeilijk is."
+            "text": "Echt? Ik denk dat Nederlands soms moeilijk is.",
+            "translation": "Echt? I think dat Dutch is sometimes difficult."
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, maar ik vind de mensen hier aardig."
+            "text": "Ja, maar ik vind de mensen hier aardig.",
+            "translation": "Yes, maar ik vind the people here nice."
           },
           {
             "speaker": "Marieke",
-            "text": "Ik hoop dat jullie in januari allemaal terugkomen."
+            "text": "Ik hoop dat jullie in januari allemaal terugkomen.",
+            "translation": "I hope dat jullie in January allemaal come back."
           },
           {
             "speaker": "Piotr",
-            "text": "Marieke zegt dat Sofia goed Nederlands spreekt."
+            "text": "Marieke zegt dat Sofia goed Nederlands spreekt.",
+            "translation": "Marieke zegt dat Sofia goed Dutch speaks."
           },
           {
             "speaker": "Sofia",
-            "text": "Dank je! Ik hoop dat ik in januari weer naar de les kom."
+            "text": "Dank je! Ik hoop dat ik in januari weer naar de les kom.",
+            "translation": "Thanks! I hope dat ik in January weer come to class."
           }
         ]
       },
@@ -1265,35 +1273,43 @@
         "turns": [
           {
             "speaker": "Henk",
-            "text": "Ik denk dat het met kerst gaat sneeuwen."
+            "text": "Ik denk dat het met kerst gaat sneeuwen.",
+            "translation": "I think dat het at Christmas will snow."
           },
           {
             "speaker": "Sofia",
-            "text": "Misschien! Ik denk dat ik mijn fiets ga missen."
+            "text": "Misschien! Ik denk dat ik mijn fiets ga missen.",
+            "translation": "Misschien! I think dat ik mijn bike ga miss."
           },
           {
             "speaker": "Henk",
-            "text": "Ik hoop dat je een fijne kerst hebt."
+            "text": "Ik hoop dat je een fijne kerst hebt.",
+            "translation": "I hope dat you een Merry Christmas hebt."
           },
           {
             "speaker": "Sofia",
-            "text": "Dank je, Henk. Ik vind dat Utrecht nu echt mijn stad is."
+            "text": "Dank je, Henk. Ik vind dat Utrecht nu echt mijn stad is.",
+            "translation": "Thanks, Henk. I think dat Utrecht nu echt my city is."
           },
           {
             "speaker": "Henk",
-            "text": "Dat vind ik fijn. Tijger mist je ook."
+            "text": "Dat vind ik fijn. Tijger mist je ook.",
+            "translation": "Dat vind ik fijn. Tijger misses you ook."
           },
           {
             "speaker": "Sofia",
-            "text": "Ik hoop dat jullie allebei een fijne kerst hebben."
+            "text": "Ik hoop dat jullie allebei een fijne kerst hebben.",
+            "translation": "I hope dat both of you een Merry Christmas hebben."
           },
           {
             "speaker": "Henk",
-            "text": "We zien je in januari. Goede reis!"
+            "text": "We zien je in januari. Goede reis!",
+            "translation": "We’ll see you in January. Have a good trip!"
           },
           {
             "speaker": "Sofia",
-            "text": "Dank je! Tot volgend jaar!"
+            "text": "Dank je! Tot volgend jaar!",
+            "translation": "Thanks! See you next year!"
           }
         ]
       },

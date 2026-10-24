@@ -34,51 +34,63 @@
         "turns": [
           {
             "speaker": "Sofia",
-            "text": "Noor, welke stad is groter: Utrecht of Valencia?"
+            "text": "Noor, welke stad is groter: Utrecht of Valencia?",
+            "translation": "Noor, which city is larger: Utrecht or Valencia?"
           },
           {
             "speaker": "Noor",
-            "text": "Utrecht is kleiner dan Valencia, maar Valencia is warmer."
+            "text": "Utrecht is kleiner dan Valencia, maar Valencia is warmer.",
+            "translation": "Utrecht is smaller than Valencia, but Valencia is warmer."
           },
           {
             "speaker": "Sofia",
-            "text": "En welke stad is het grootst?"
+            "text": "En welke stad is het grootst?",
+            "translation": "And which city is the largest?"
           },
           {
             "speaker": "Noor",
-            "text": "Valencia is het grootst."
+            "text": "Valencia is het grootst.",
+            "translation": "Valencia is the largest."
           },
           {
             "speaker": "Sofia",
-            "text": "Wat vindt Henk lekkerder: de paella of de boerenkoolstamppot?"
+            "text": "Wat vindt Henk lekkerder: de paella of de boerenkoolstamppot?",
+            "translation": "Which does Henk like better: paella or kale stew?"
           },
           {
             "speaker": "Noor",
-            "text": "Henk vindt de boerenkoolstamppot lekkerder dan de paella."
+            "text": "Henk vindt de boerenkoolstamppot lekkerder dan de paella.",
+            "translation": "Henk likes the kale stew better than the paella."
           },
           {
             "speaker": "Sofia",
-            "text": "En de pierogi?"
+            "text": "En de pierogi?",
+            "translation": "And the pierogi?"
           },
           {
             "speaker": "Noor",
-            "text": "Die zijn ook lekker. Kasia vindt ze heerlijk."
+            "text": "Die zijn ook lekker. Kasia vindt ze heerlijk.",
+            "translation": "They are delicious too. Kasia loves them."
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, ik vind alles lekker."
+            "text": "Ja, ik vind alles lekker.",
+            "translation": "Yes, I like everything."
           },
           {
             "speaker": "Noor",
-            "text": "En welke activiteit vind je het leukst?"
+            "text": "En welke activiteit vind je het leukst?",
+            "translation": "And which activity do you like best?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ik zwem het liefst. Schaatsen vind ik best eng."
+            "text": "Ik zwem het liefst. Schaatsen vind ik best eng.",
+            "translation": "I prefer swimming. I find skating rather scary."
           },
           {
             "speaker": "Noor",
-            "text": "Dan vind je zwemmen misschien het leukst!"
+            "text": "Dan vind je zwemmen misschien het leukst!",
+            "translation": "Then you might like swimming best!"
           }
         ]
       },
@@ -1108,43 +1120,53 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "We vergelijken Utrecht en Valencia."
+            "text": "We vergelijken Utrecht en Valencia.",
+            "translation": "We are comparing Utrecht and Valencia."
           },
           {
             "speaker": "Sofia",
-            "text": "Valencia is warmer dan Utrecht."
+            "text": "Valencia is warmer dan Utrecht.",
+            "translation": "Valencia is warmer than Utrecht."
           },
           {
             "speaker": "Noor",
-            "text": "Utrecht is kleiner dan Valencia."
+            "text": "Utrecht is kleiner dan Valencia.",
+            "translation": "Utrecht is smaller than Valencia."
           },
           {
             "speaker": "Sofia",
-            "text": "Welke stad is het grootst?"
+            "text": "Welke stad is het grootst?",
+            "translation": "Which city is the largest?"
           },
           {
             "speaker": "Noor",
-            "text": "Valencia is het grootst van de twee."
+            "text": "Valencia is het grootst van de twee.",
+            "translation": "Valencia is the larger of the two."
           },
           {
             "speaker": "Sofia",
-            "text": "En welke stad is het warmst?"
+            "text": "En welke stad is het warmst?",
+            "translation": "And which city is the warmest?"
           },
           {
             "speaker": "Noor",
-            "text": "Valencia is het warmst van de twee."
+            "text": "Valencia is het warmst van de twee.",
+            "translation": "Valencia is the warmer of the two."
           },
           {
             "speaker": "Sofia",
-            "text": "Utrecht is kleiner en kouder."
+            "text": "Utrecht is kleiner en kouder.",
+            "translation": "Utrecht is smaller and colder."
           },
           {
             "speaker": "Noor",
-            "text": "Ja, Utrecht is kleiner en kouder dan Valencia."
+            "text": "Ja, Utrecht is kleiner en kouder dan Valencia.",
+            "translation": "Yes, Utrecht is smaller and colder than Valencia."
           },
           {
             "speaker": "Sofia",
-            "text": "Dan klopt de vergelijking."
+            "text": "Dan klopt de vergelijking.",
+            "translation": "Then the comparison is correct."
           }
         ]
       },

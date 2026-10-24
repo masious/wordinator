@@ -130,51 +130,63 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Zo, Sofia! Vandaag maken we een Spaanse tortilla. Hoeveel eieren heb je nodig?"
+            "text": "Zo, Sofia! Vandaag maken we een Spaanse tortilla. Hoeveel eieren heb je nodig?",
+            "translation": "Well, Sofia! Today we're making a Spanish tortilla. How many eggs do you need?"
           },
           {
             "speaker": "Sofia",
-            "text": "Zes eieren en een kilo aardappelen."
+            "text": "Zes eieren en een kilo aardappelen.",
+            "translation": "Six eggs and a kilo of potatoes."
           },
           {
             "speaker": "Noor",
-            "text": "Een kilo? Joh! Wat heb je nog meer nodig?"
+            "text": "Een kilo? Joh! Wat heb je nog meer nodig?",
+            "translation": "A kilo? Wow! What else do you need?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ik heb nodig twee uien."
+            "text": "Ik heb nodig twee uien.",
+            "translation": "I need two onions."
           },
           {
             "speaker": "Noor",
-            "text": "Je hebt twee uien nodig? Prima, we hebben vijf uien."
+            "text": "Je hebt twee uien nodig? Prima, we hebben vijf uien.",
+            "translation": "You need two onions? Great, we have five onions."
           },
           {
             "speaker": "Sofia",
-            "text": "O ja: ik heb twee uien nodig. En een beetje zout."
+            "text": "O ja: ik heb twee uien nodig. En een beetje zout.",
+            "translation": "Oh yes: I need two onions. And a little salt."
           },
           {
             "speaker": "Noor",
-            "text": "En olijfolie? We hebben een fles olijfolie. Is een fles genoeg?"
+            "text": "En olijfolie? We hebben een fles olijfolie. Is een fles genoeg?",
+            "translation": "And olive oil? We have a bottle of olive oil. Is one bottle enough?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, een fles is genoeg. Voor een tortilla gebruik ik een kwart liter."
+            "text": "Ja, een fles is genoeg. Voor een tortilla gebruik ik een kwart liter.",
+            "translation": "Yes, one bottle is enough. I use a quarter of a liter for one tortilla."
           },
           {
             "speaker": "Noor",
-            "text": "Super! Ik maak ook Nederlandse snacks klaar: kaasblokjes en bitterballen."
+            "text": "Super! Ik maak ook Nederlandse snacks klaar: kaasblokjes en bitterballen.",
+            "translation": "Great! I'm also preparing Dutch snacks: cheese cubes and bitterballen."
           },
           {
             "speaker": "Sofia",
-            "text": "Kaasblokjes? Lekker! Hoeveel kaas heb je nodig?"
+            "text": "Kaasblokjes? Lekker! Hoeveel kaas heb je nodig?",
+            "translation": "Cheese cubes? Delicious! How much cheese do you need?"
           },
           {
             "speaker": "Noor",
-            "text": "Een pond kaas. Een pond is vijfhonderd gram. En twee zakken chips!"
+            "text": "Een pond kaas. Een pond is vijfhonderd gram. En twee zakken chips!",
+            "translation": "A pound of cheese. A pound is five hundred grams. And two bags of crisps!"
           },
           {
             "speaker": "Sofia",
-            "text": "Echt? Vijfhonderd gram? Oké!"
+            "text": "Echt? Vijfhonderd gram? Oké!",
+            "translation": "Really? Five hundred grams? Okay!"
           }
         ]
       },
@@ -2246,51 +2258,63 @@
         "turns": [
           {
             "speaker": "Daan",
-            "text": "Sofia, de tortilla is heel lekker! Hoeveel eieren gebruik je?"
+            "text": "Sofia, de tortilla is heel lekker! Hoeveel eieren gebruik je?",
+            "translation": "Sofia, the tortilla is really delicious! How many eggs do you use?"
           },
           {
             "speaker": "Sofia",
-            "text": "Dank je! Zes eieren voor een tortilla. Ik maak vandaag twee tortilla's."
+            "text": "Dank je! Zes eieren voor een tortilla. Ik maak vandaag twee tortilla's.",
+            "translation": "Thank you! Six eggs for one tortilla. I'm making two tortillas today."
           },
           {
             "speaker": "Daan",
-            "text": "Dus twaalf eieren! En hoeveel aardappelen?"
+            "text": "Dus twaalf eieren! En hoeveel aardappelen?",
+            "translation": "So twelve eggs! And how many potatoes?"
           },
           {
             "speaker": "Sofia",
-            "text": "Een kilo voor een tortilla. Dus twee kilo aardappelen."
+            "text": "Een kilo voor een tortilla. Dus twee kilo aardappelen.",
+            "translation": "A kilo for one tortilla. So two kilos of potatoes."
           },
           {
             "speaker": "Lotte",
-            "text": "En olijfolie? In Spanje gebruiken jullie veel olijfolie, toch?"
+            "text": "En olijfolie? In Spanje gebruiken jullie veel olijfolie, toch?",
+            "translation": "And olive oil? You use a lot of olive oil in Spain, right?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, veel olijfolie! En een beetje zout."
+            "text": "Ja, veel olijfolie! En een beetje zout.",
+            "translation": "Yes, lots of olive oil! And a little salt."
           },
           {
             "speaker": "Noor",
-            "text": "Daan, hier zijn de bitterballen. Heb je mosterd nodig?"
+            "text": "Daan, hier zijn de bitterballen. Heb je mosterd nodig?",
+            "translation": "Daan, here are the bitterballen. Do you need mustard?"
           },
           {
             "speaker": "Daan",
-            "text": "Ja, een beetje mosterd, alsjeblieft. Hoeveel bitterballen heb je, Noor?"
+            "text": "Ja, een beetje mosterd, alsjeblieft. Hoeveel bitterballen heb je, Noor?",
+            "translation": "Yes, a little mustard, please. How many bitterballen do you have, Noor?"
           },
           {
             "speaker": "Noor",
-            "text": "Veertig. En twee zakken chips en veel kaasblokjes."
+            "text": "Veertig. En twee zakken chips en veel kaasblokjes.",
+            "translation": "Forty. And two bags of crisps and lots of cheese cubes."
           },
           {
             "speaker": "Daan",
-            "text": "Twintig mensen en veertig bitterballen: twee bitterballen per persoon. Prima."
+            "text": "Twintig mensen en veertig bitterballen: twee bitterballen per persoon. Prima.",
+            "translation": "Twenty people and forty bitterballen: two bitterballen per person. Great."
           },
           {
             "speaker": "Lotte",
-            "text": "Daan, jij kookt op zondag. Heb jij het recept nodig?"
+            "text": "Daan, jij kookt op zondag. Heb jij het recept nodig?",
+            "translation": "Daan, you cook on Sunday. Do you need the recipe?"
           },
           {
             "speaker": "Daan",
-            "text": "Precies. Sofia, ik heb het recept nodig!"
+            "text": "Precies. Sofia, ik heb het recept nodig!",
+            "translation": "Exactly. Sofia, I need the recipe!"
           }
         ]
       },

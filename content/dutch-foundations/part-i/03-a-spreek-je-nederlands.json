@@ -87,43 +87,53 @@
         "turns": [
           {
             "speaker": "Daan",
-            "text": "Goedemorgen, Sofia! Koffie?"
+            "text": "Goedemorgen, Sofia! Koffie?",
+            "translation": "Good morning, Sofia! Coffee?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, graag! Hoe zeg je \"café con leche\" in het Nederlands?"
+            "text": "Ja, graag! Hoe zeg je \"café con leche\" in het Nederlands?",
+            "translation": "Yes, please! How do you say “café con leche” in Dutch?"
           },
           {
             "speaker": "Daan",
-            "text": "Koffie met melk."
+            "text": "Koffie met melk.",
+            "translation": "Coffee with milk."
           },
           {
             "speaker": "Sofia",
-            "text": "Koffie met melk. Dank je! Daan, spreek jij Spaans?"
+            "text": "Koffie met melk. Dank je! Daan, spreek jij Spaans?",
+            "translation": "Coffee with milk. Thank you! Daan, do you speak Spanish?"
           },
           {
             "speaker": "Daan",
-            "text": "Nee, ik spreek Nederlands en Engels. En een beetje Duits."
+            "text": "Nee, ik spreek Nederlands en Engels. En een beetje Duits.",
+            "translation": "No, I speak Dutch and English. And a little German."
           },
           {
             "speaker": "Sofia",
-            "text": "Ik spreek Spaans en Engels. En ik leer Nederlands!"
+            "text": "Ik spreek Spaans en Engels. En ik leer Nederlands!",
+            "translation": "I speak Spanish and English. And I’m learning Dutch!"
           },
           {
             "speaker": "Daan",
-            "text": "Super! Spreek je Nederlands of Engels met Karin?"
+            "text": "Super! Spreek je Nederlands of Engels met Karin?",
+            "translation": "Great! Do you speak Dutch or English with Karin?"
           },
           {
             "speaker": "Sofia",
-            "text": "Engels. Nederlands is moeilijk!"
+            "text": "Engels. Nederlands is moeilijk!",
+            "translation": "English. Dutch is difficult!"
           },
           {
             "speaker": "Daan",
-            "text": "Ja, een beetje. Maar jij leert snel!"
+            "text": "Ja, een beetje. Maar jij leert snel!",
+            "translation": "Yes, a little. But you’re learning quickly!"
           },
           {
             "speaker": "Sofia",
-            "text": "Dank je! Ik lees een boek in het Nederlands."
+            "text": "Dank je! Ik lees een boek in het Nederlands.",
+            "translation": "Thank you! I’m reading a book in Dutch."
           }
         ]
       },
@@ -1111,43 +1121,53 @@
         "turns": [
           {
             "speaker": "Collega",
-            "text": "Dag Sofia! Dag Karin! Eet smakelijk!"
+            "text": "Dag Sofia! Dag Karin! Eet smakelijk!",
+            "translation": "Hi Sofia! Hi Karin! Enjoy your meal!"
           },
           {
             "speaker": "Sofia",
-            "text": "Dank je! Ik eet een boterham met kaas. Heel Nederlands!"
+            "text": "Dank je! Ik eet een boterham met kaas. Heel Nederlands!",
+            "translation": "Thank you! I’m eating a cheese sandwich. Very Dutch!"
           },
           {
             "speaker": "Collega",
-            "text": "Ja! Sofia, spreek jij Nederlands?"
+            "text": "Ja! Sofia, spreek jij Nederlands?",
+            "translation": "Yes! Sofia, do you speak Dutch?"
           },
           {
             "speaker": "Sofia",
-            "text": "Een beetje. Ik leer Nederlands. En jij? Spreek jij Vlaams?"
+            "text": "Een beetje. Ik leer Nederlands. En jij? Spreek jij Vlaams?",
+            "translation": "A little. I’m learning Dutch. And you? Do you speak Flemish?"
           },
           {
             "speaker": "Collega",
-            "text": "Ja, ik ben Belg. Vlaams is ook Nederlands."
+            "text": "Ja, ik ben Belg. Vlaams is ook Nederlands.",
+            "translation": "Yes, I’m Belgian. Flemish is also Dutch."
           },
           {
             "speaker": "Karin",
-            "text": "En hij spreekt ook Frans en Engels."
+            "text": "En hij spreekt ook Frans en Engels.",
+            "translation": "And he also speaks French and English."
           },
           {
             "speaker": "Sofia",
-            "text": "Echt? Ik ben Spaanse. Ik spreek Spaans en Engels."
+            "text": "Echt? Ik ben Spaanse. Ik spreek Spaans en Engels.",
+            "translation": "Really? I’m Spanish. I speak Spanish and English."
           },
           {
             "speaker": "Karin",
-            "text": "Ik spreek Engels met Sofia. Maar ze leert Nederlands!"
+            "text": "Ik spreek Engels met Sofia. Maar ze leert Nederlands!",
+            "translation": "I speak English with Sofia. But she’s learning Dutch!"
           },
           {
             "speaker": "Collega",
-            "text": "Super! Sofia, hoe zeg je \"Eet smakelijk!\" in het Spaans?"
+            "text": "Super! Sofia, hoe zeg je \"Eet smakelijk!\" in het Spaans?",
+            "translation": "Great! Sofia, how do you say “Enjoy your meal!” in Spanish?"
           },
           {
             "speaker": "Sofia",
-            "text": "¡Que aproveche!"
+            "text": "¡Que aproveche!",
+            "translation": "Enjoy your meal!"
           }
         ]
       },

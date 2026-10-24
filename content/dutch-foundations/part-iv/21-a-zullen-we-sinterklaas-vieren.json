@@ -122,39 +122,48 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Zullen we op vijf december Sinterklaas vieren? Met Daan en Lotte?"
+            "text": "Zullen we op vijf december Sinterklaas vieren? Met Daan en Lotte?",
+            "translation": "Shall we celebrate Sinterklaas on December fifth? With Daan and Lotte?"
           },
           {
             "speaker": "Fleur",
-            "text": "Ja, leuk! Zullen we ook lootjes trekken?"
+            "text": "Ja, leuk! Zullen we ook lootjes trekken?",
+            "translation": "Yes, great! Shall we also draw names?"
           },
           {
             "speaker": "Sofia",
-            "text": "Lootjes trekken? Wat is dat precies?"
+            "text": "Lootjes trekken? Wat is dat precies?",
+            "translation": "Draw names? What exactly is that?"
           },
           {
             "speaker": "Noor",
-            "text": "Je trekt een naam met de app. Dat is geheim! Je maakt een surprise en je schrijft een gedicht."
+            "text": "Je trekt een naam met de app. Dat is geheim! Je maakt een surprise en je schrijft een gedicht.",
+            "translation": "You draw a name using the app. It's a secret! You make a surprise gift and write a poem."
           },
           {
             "speaker": "Sofia",
-            "text": "Gezellig! En een cadeautje erbij?"
+            "text": "Gezellig! En een cadeautje erbij?",
+            "translation": "Lovely! And a little present too?"
           },
           {
             "speaker": "Noor",
-            "text": "Ja, maximaal twintig euro."
+            "text": "Ja, maximaal twintig euro.",
+            "translation": "Yes, twenty euros maximum."
           },
           {
             "speaker": "Fleur",
-            "text": "Zal ik de afwas doen? Dan trekken jullie de lootjes."
+            "text": "Zal ik de afwas doen? Dan trekken jullie de lootjes.",
+            "translation": "Shall I do the dishes? Then you can draw the names."
           },
           {
             "speaker": "Sofia",
-            "text": "Goed idee! En zullen we daarna een filmpje kijken?"
+            "text": "Goed idee! En zullen we daarna een filmpje kijken?",
+            "translation": "Good idea! And shall we watch a movie afterward?"
           },
           {
             "speaker": "Noor",
-            "text": "Ja, gezellig! Ik bel Daan straks even."
+            "text": "Ja, gezellig! Ik bel Daan straks even.",
+            "translation": "Yes, lovely! I'll give Daan a call later."
           }
         ]
       },
@@ -1361,31 +1370,38 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Hoi Daan! Op vijf december vieren we Sinterklaas bij mij. Heb je zin in een gezellige avond?"
+            "text": "Hoi Daan! Op vijf december vieren we Sinterklaas bij mij. Heb je zin in een gezellige avond?",
+            "translation": "Hi Daan! We're celebrating Sinterklaas at my place on December fifth. Would you like to spend a nice evening together?"
           },
           {
             "speaker": "Daan",
-            "text": "Zeker! Komen Sofia en Fleur ook?"
+            "text": "Zeker! Komen Sofia en Fleur ook?",
+            "translation": "Definitely! Are Sofia and Fleur coming too?"
           },
           {
             "speaker": "Noor",
-            "text": "Ja, en Lotte ook. Zullen we om zeven uur beginnen?"
+            "text": "Ja, en Lotte ook. Zullen we om zeven uur beginnen?",
+            "translation": "Yes, and Lotte too. Shall we start at seven?"
           },
           {
             "speaker": "Daan",
-            "text": "Prima. Laten we om zeven uur beginnen, dan is er genoeg tijd."
+            "text": "Prima. Laten we om zeven uur beginnen, dan is er genoeg tijd.",
+            "translation": "Great. Let's start at seven, then there will be plenty of time."
           },
           {
             "speaker": "Noor",
-            "text": "Goed. Zal ik wijn meenemen, of doe jij dat liever?"
+            "text": "Goed. Zal ik wijn meenemen, of doe jij dat liever?",
+            "translation": "Okay. Shall I bring wine, or would you rather do that?"
           },
           {
             "speaker": "Daan",
-            "text": "Nee, zal ik wijn meenemen? Ik heb toch een fles staan."
+            "text": "Nee, zal ik wijn meenemen? Ik heb toch een fles staan.",
+            "translation": "No, shall I bring wine? I have a bottle anyway."
           },
           {
             "speaker": "Noor",
-            "text": "Gezellig! Tot vijf december dan!"
+            "text": "Gezellig! Tot vijf december dan!",
+            "translation": "Lovely! See you on December fifth, then!"
           }
         ]
       },

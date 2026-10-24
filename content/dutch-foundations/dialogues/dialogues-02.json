@@ -1,0 +1,1028 @@
+[
+ {
+  "course": "dutch-foundations/part-i",
+  "lesson": "05-b-de-of-het",
+  "title": "De of het?",
+  "dialogues": [
+   {
+    "blockId": "5203240a-24b5-4a14-ab22-074c799c10bf",
+    "turns": [
+     {
+      "speaker": "Els",
+      "text": "Goedemorgen, Noor! Goedemorgen, Sofia!",
+      "translation": "Good morning, Noor! Good morning, Sofia!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Goedemorgen, Els! Is dit uw kleindochter?",
+      "translation": "Good morning, Els! Is this your granddaughter?"
+     },
+     {
+      "speaker": "Els",
+      "text": "Ja! Dit is Tess.",
+      "translation": "Yes! This is Tess."
+     },
+     {
+      "speaker": "Tess",
+      "text": "Hoi! Ik ben zes!",
+      "translation": "Hi! I'm six!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Hoi Tess! Ik ben Sofia. Ik ben achtentwintig.",
+      "translation": "Hi Tess! I'm Sofia. I'm twenty-eight."
+     },
+     {
+      "speaker": "Tess",
+      "text": "Achtentwintig? Oud!",
+      "translation": "Twenty-eight? Old!"
+     },
+     {
+      "speaker": "Els",
+      "text": "Tess! Achtentwintig is niet oud.",
+      "translation": "Tess! Twenty-eight isn't old."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Een kopje thee, Els? En jij, Tess?",
+      "translation": "A cup of tea, Els? And you, Tess?"
+     },
+     {
+      "speaker": "Els",
+      "text": "Ja, graag.",
+      "translation": "Yes, please."
+     },
+     {
+      "speaker": "Tess",
+      "text": "Water, graag! En een koekje, alsjeblieft!",
+      "translation": "Water, please! And a cookie, please!"
+     }
+    ]
+   },
+   {
+    "blockId": "598b41a4-cdd2-4ba7-95da-d5aedd31a393",
+    "turns": [
+     {
+      "speaker": "Tess",
+      "text": "Sofia, spreek jij Nederlands?",
+      "translation": "Sofia, do you speak Dutch?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Een beetje. Ik leer Nederlands.",
+      "translation": "A little. I'm learning Dutch."
+     },
+     {
+      "speaker": "Tess",
+      "text": "Huis: de of het?",
+      "translation": "House: de or het?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "De huis?",
+      "translation": "De huis?"
+     },
+     {
+      "speaker": "Tess",
+      "text": "Nee! Het huis!",
+      "translation": "No! Het huis!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Oké, het huis. En meisje? De meisje?",
+      "translation": "Okay, het huis. And girl? De meisje?"
+     },
+     {
+      "speaker": "Tess",
+      "text": "Nee! Het meisje! Ik ben een meisje.",
+      "translation": "No! Het meisje! I'm a girl."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Het meisje? Maar de vrouw!",
+      "translation": "Het meisje? But de vrouw!"
+     },
+     {
+      "speaker": "Els",
+      "text": "Ja. De vrouw, de man, de jongen. Maar het meisje en het kind.",
+      "translation": "Yes. The woman, the man, the boy. But the girl and the child."
+     },
+     {
+      "speaker": "Tess",
+      "text": "Nederlands is makkelijk!",
+      "translation": "Dutch is easy!"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-i",
+  "lesson": "06-a-utrecht-is-mooi",
+  "title": "Utrecht is mooi",
+  "dialogues": [
+   {
+    "blockId": "70706f95-c3ca-41d4-ab09-7788001a83f1",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "Kijk, Sofia! De Domtoren!",
+      "translation": "Look, Sofia! The Dom Tower!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "De Domtoren is heel hoog!",
+      "translation": "The Dom Tower is very tall!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ja. En heel oud.",
+      "translation": "Yes. And very old."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "En erg mooi!",
+      "translation": "And very beautiful!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Is Valencia ook mooi?",
+      "translation": "Is Valencia beautiful too?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, Valencia is heel mooi. Maar Valencia is groot en druk.",
+      "translation": "Yes, Valencia is very beautiful. But Valencia is big and busy."
+     },
+     {
+      "speaker": "Noor",
+      "text": "En Utrecht?",
+      "translation": "And Utrecht?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Het centrum is klein, maar gezellig.",
+      "translation": "The city center is small, but cozy."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Klein? De Domtoren is niet klein!",
+      "translation": "Small? The Dom Tower isn't small!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Nee! De Domtoren is heel groot.",
+      "translation": "No! The Dom Tower is very big."
+     }
+    ]
+   },
+   {
+    "blockId": "2aa46af8-21f8-479e-ae64-43c26010211a",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "En, Sofia? Hoe is het werk?",
+      "translation": "So, Sofia? How is work?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Leuk! Het team is klein, maar heel aardig.",
+      "translation": "Great! The team is small, but very nice."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Is Karin aardig?",
+      "translation": "Is Karin nice?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, Karin is heel aardig. En Daan is aardig en heel lang!",
+      "translation": "Yes, Karin is very nice. And Daan is nice and very tall!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Lang? Ik ben ook lang!",
+      "translation": "Tall? I'm tall too!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja! En ik ben niet lang.",
+      "translation": "Yes! And I'm not tall."
+     },
+     {
+      "speaker": "Noor",
+      "text": "En Tess? Tess is lief!",
+      "translation": "And Tess? Tess is sweet!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Lief, maar streng! Ze is nu mijn lerares.",
+      "translation": "Sweet, but strict! She's my teacher now."
+     },
+     {
+      "speaker": "Noor",
+      "text": "En jij? Ben je moe?",
+      "translation": "And you? Are you tired?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Een beetje moe. Maar ik ben heel blij!",
+      "translation": "A little tired. But I'm very happy!"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-i",
+  "lesson": "06-b-een-mooie-stad",
+  "title": "Een mooie stad",
+  "dialogues": [
+   {
+    "blockId": "e52fe5e2-f87c-4456-a5e2-259547219f69",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "Ik maak thee. Jij ook?",
+      "translation": "I'm making tea. You too?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, graag! Kijk, een foto van de Domtoren.",
+      "translation": "Yes, please! Look, a photo of the Dom Tower."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Mooie foto! De oude toren is heel mooi.",
+      "translation": "Beautiful photo! The old tower is very beautiful."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja. Utrecht is een mooie stad!",
+      "translation": "Yes. Utrecht is a beautiful city!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "En kijk: Café De Zwaluw!",
+      "translation": "And look: Café De Zwaluw!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "De Zwaluw is een klein café, maar heel gezellig.",
+      "translation": "De Zwaluw is a small café, but very cozy."
+     },
+     {
+      "speaker": "Noor",
+      "text": "En hier: het grote station.",
+      "translation": "And here: the large station."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Utrecht Centraal is een groot station. En mooi!",
+      "translation": "Utrecht Centraal is a large station. And beautiful!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Mooi? Het grote station is niet mooi!",
+      "translation": "Beautiful? The large station isn't beautiful!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja hoor! Utrecht Centraal is een mooi station!",
+      "translation": "Oh yes! Utrecht Centraal is a beautiful station!"
+     }
+    ]
+   },
+   {
+    "blockId": "97374d97-dfd9-4411-b959-f28055f4845f",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "En de mensen? Hoe zijn de mensen hier?",
+      "translation": "And the people? What are the people like here?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Heel aardig! Ik heb een leuk team.",
+      "translation": "Very nice! I have a great team."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Is Karin een goede teamleider?",
+      "translation": "Is Karin a good team leader?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, Karin is een goede teamleider. En Daan is een aardige collega.",
+      "translation": "Yes, Karin is a good team leader. And Daan is a nice colleague."
+     },
+     {
+      "speaker": "Noor",
+      "text": "En de collega uit Antwerpen?",
+      "translation": "And the colleague from Antwerp?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Hij is ook aardig. Een leuke man!",
+      "translation": "He's nice too. A great guy!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "En Tess?",
+      "translation": "And Tess?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Tess is een grappig meisje. Maar een strenge lerares!",
+      "translation": "Tess is a funny girl. But a strict teacher!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "En ik?",
+      "translation": "And me?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Jij bent een goede vriendin, Noor. Ik ben heel blij in Utrecht.",
+      "translation": "You're a good friend, Noor. I'm very happy in Utrecht."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-ii",
+  "lesson": "07-a-mijn-dag",
+  "title": "Mijn dag",
+  "dialogues": [
+   {
+    "blockId": "6c08b061-2714-4bda-80b0-5a7ef6585d30",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "Goedemorgen! Koffie, Sofia? Jij drinkt altijd koffie.",
+      "translation": "Good morning! Coffee, Sofia? You always drink coffee."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, graag! En jij drinkt altijd thee, hè?",
+      "translation": "Yes, please! And you always drink tea, right?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ja, ik drink nooit koffie. Thee is lekker!",
+      "translation": "Yes, I never drink coffee. Tea is delicious!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Wij ontbijten samen. Gezellig!",
+      "translation": "We have breakfast together. Nice!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Super! Werk jij thuis of op kantoor?",
+      "translation": "Great! Do you work at home or at the office?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik werk meestal op kantoor. En jij? Studeer jij thuis?",
+      "translation": "I usually work at the office. And you? Do you study at home?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ja, ik studeer 's middags thuis. En ik kook 's avonds.",
+      "translation": "Yes, I study at home in the afternoon. And I cook in the evening."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Jij kookt altijd lekker! Wij eet samen, toch?",
+      "translation": "You always cook delicious food! We eat together, right?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ja, wij eten 's avonds samen. Joh, en jij gaat altijd laat naar bed!",
+      "translation": "Yes, we eat dinner together in the evening. Wow, and you always go to bed late!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, en ik ben elke ochtend moe!",
+      "translation": "Yes, and I'm tired every morning!"
+     }
+    ]
+   },
+   {
+    "blockId": "f84ea039-2db7-49f8-89c9-3cd6074949bc",
+    "turns": [
+     {
+      "speaker": "Sofia",
+      "text": "Goedemorgen, Daan! Jij bent altijd vroeg.",
+      "translation": "Good morning, Daan! You're always early."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Precies. Ik ben elke dag vroeg op kantoor. En ik ga ook vroeg naar huis.",
+      "translation": "Exactly. I'm at the office early every day. And I also go home early."
+     },
+     {
+      "speaker": "Collega",
+      "text": "Daan, fiets jij elke dag naar kantoor?",
+      "translation": "Daan, do you cycle to the office every day?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Ja, elke dag. En jullie? Wat doen jullie 's avonds?",
+      "translation": "Yes, every day. And you all? What do you do in the evenings?"
+     },
+     {
+      "speaker": "Collega",
+      "text": "Ik sport vaak. En ik kijk soms tv.",
+      "translation": "I often exercise. And sometimes I watch TV."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Noor en ik eten 's avonds samen. Gezellig!",
+      "translation": "Noor and I eat dinner together in the evening. Nice!"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Lekker! Wie kookt? Jij?",
+      "translation": "Great! Who cooks? You?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Nee, Noor kookt meestal. Ik kook soms.",
+      "translation": "No, Noor usually cooks. I cook sometimes."
+     },
+     {
+      "speaker": "Collega",
+      "text": "En jij, Daan? Wat doen jij en Lotte 's avonds?",
+      "translation": "And you, Daan? What do you and Lotte do in the evenings?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Wij lezen vaak de krant en ik luister soms naar muziek. En we gaan vroeg naar bed.",
+      "translation": "We often read the newspaper and I sometimes listen to music. And we go to bed early."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Vroeg naar bed? Ik ga nooit vroeg naar bed!",
+      "translation": "To bed early? I never go to bed early!"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Ja, en jij bent soms laat op kantoor!",
+      "translation": "Yes, and you're sometimes at the office late!"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-ii",
+  "lesson": "07-b-ik-sta-vroeg-op",
+  "title": "Ik sta vroeg op",
+  "dialogues": [
+   {
+    "blockId": "c3fdd20f-7979-42ef-bc47-66426ffd45e9",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "Goedemorgen! Jij staat laat op!",
+      "translation": "Good morning! You get up late!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Goedemorgen. Het is zaterdag! Sta jij altijd zo vroeg op?",
+      "translation": "Good morning. It's Saturday! Do you always get up this early?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ja, ik sta altijd vroeg op. Ook in het weekend.",
+      "translation": "Yes, I always get up early. Even on the weekend."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik niet. Ik sta in het weekend nooit vroeg op.",
+      "translation": "Not me. I never get up early on the weekend."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Kijk, onze keuken. Wat een rommel!",
+      "translation": "Look, our kitchen. What a mess!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Oei. Sorry! Ruim jij de keuken op? Ik was af.",
+      "translation": "Oh dear. Sorry! Will you tidy the kitchen? I'll do the dishes."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Nee hoor! Jij ruimt op en ik was af.",
+      "translation": "No, you do the tidying and I'll do the dishes."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Oké. Ik opruim de keuken.",
+      "translation": "Okay. I tidy the kitchen."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ja, jij ruimt de keuken op. Super!",
+      "translation": "Yes, you tidy the kitchen. Great!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "En wie maakt het ontbijt klaar?",
+      "translation": "And who prepares breakfast?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ik maak koffie en jij maakt het ontbijt klaar.",
+      "translation": "I'll make coffee and you'll prepare breakfast."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Gezellig! En wij doen straks samen boodschappen.",
+      "translation": "Nice! And we'll do the grocery shopping together later."
+     }
+    ]
+   },
+   {
+    "blockId": "1da0b521-8e76-4266-9055-05303102fe1d",
+    "turns": [
+     {
+      "speaker": "Sofia",
+      "text": "Hallo, met Sofia.",
+      "translation": "Hello, this is Sofia."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Hoi Sofia, met Daan. Lotte en ik gaan vanavond uit. Een vriendin van Lotte geeft een feest. Kom je mee?",
+      "translation": "Hi Sofia, it's Daan. Lotte and I are going out tonight. One of Lotte's friends is having a party. Are you coming?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, leuk! Komt Noor ook mee?",
+      "translation": "Yes, great! Is Noor coming too?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Ja, Noor komt ook mee.",
+      "translation": "Yes, Noor is coming too."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Super. Neem ik iets mee?",
+      "translation": "Great. Should I bring something?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Ja, graag. Neem jij een fles wijn mee? Lotte neemt chips mee.",
+      "translation": "Yes, please. Could you bring a bottle of wine? Lotte is bringing chips."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Oké! Wanneer gaan jullie weg?",
+      "translation": "Okay! When are you leaving?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Wij gaan vroeg weg. Ik ben altijd op tijd, hè.",
+      "translation": "We're leaving early. I'm always on time, right?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ha! En ik ben altijd een beetje laat. Wanneer komen we thuis?",
+      "translation": "Ha! And I'm always a little late. When will we get home?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Laat. Het is zaterdag!",
+      "translation": "Late. It's Saturday!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Tot vanavond!",
+      "translation": "See you tonight!"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Tot vanavond. Doei!",
+      "translation": "See you tonight. Bye!"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-ii",
+  "lesson": "08-a-hoe-laat-is-het",
+  "title": "Hoe laat is het?",
+  "dialogues": [
+   {
+    "blockId": "a2354394-43b6-4b41-83ba-137d6e0e072b",
+    "turns": [
+     {
+      "speaker": "Daan",
+      "text": "Goedemorgen, Sofia. Je bent te laat!",
+      "translation": "Good morning, Sofia. You're late!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Sorry! Hoe laat is het?",
+      "translation": "Sorry! What time is it?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Het is tien over half negen. Het ontbijt begint om half negen.",
+      "translation": "It's twenty to nine. Breakfast starts at half past eight."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Half negen? Dat is negen uur dertig, toch?",
+      "translation": "Half past nine? That's nine thirty, right?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Nee, half negen is acht uur dertig. Een half uur voor negen uur.",
+      "translation": "No, half nine is eight thirty. Half an hour before nine o'clock."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Echt? \"Half nine\" is negen uur dertig in het Engels.",
+      "translation": "Really? \"Half nine\" is nine thirty in English."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Ja, maar het Nederlands is anders. Half negen is acht uur dertig.",
+      "translation": "Yes, but Dutch is different. Half nine is eight thirty."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Oké. Ik ben tien minuten te laat.",
+      "translation": "Okay. I'm ten minutes late."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Precies. Maar we hebben nog koffie.",
+      "translation": "Exactly. But we still have coffee."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Lekker! Hoe laat ben jij meestal op kantoor?",
+      "translation": "Great! What time are you usually at the office?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Ik ben altijd om tien voor half negen op kantoor. Altijd een beetje vroeg.",
+      "translation": "I'm always at the office at twenty past eight. Always a little early."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Tien voor half negen. Dat is acht uur twintig. Ik ben morgen ook op tijd!",
+      "translation": "Twenty past eight. That's eight twenty. I'll be on time tomorrow too!"
+     }
+    ]
+   },
+   {
+    "blockId": "e0fa5cba-6b95-46de-9a48-58a5bdefa8e7",
+    "turns": [
+     {
+      "speaker": "Daan",
+      "text": "Goed, Sofia. Dit is de planning van vandaag.",
+      "translation": "Okay, Sofia. This is today's schedule."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Hoe laat begint de vergadering?",
+      "translation": "What time does the meeting start?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "De vergadering begint om tien uur. De klant komt met de trein uit Amsterdam.",
+      "translation": "The meeting starts at ten o'clock. The client is coming by train from Amsterdam."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Hoe laat komt de trein aan?",
+      "translation": "What time does the train arrive?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "De trein komt om tien voor half tien aan. Ik wacht op het station op de klant.",
+      "translation": "The train arrives at twenty to nine. I'll wait for the client at the station."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "En hoe laat stopt de vergadering?",
+      "translation": "And what time does the meeting end?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Om kwart voor twaalf. We lunchen om half een.",
+      "translation": "At quarter to twelve. We have lunch at half past twelve."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Half een. Dat is twaalf uur dertig, toch?",
+      "translation": "Half one. That's twelve thirty, right?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Precies! We hebben om drie uur een pauze van een kwartier.",
+      "translation": "Exactly! We have a fifteen-minute break at three o'clock."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Prima. En hoe laat gaat de klant weg?",
+      "translation": "Great. And what time does the client leave?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Om vijf uur. Zijn trein naar Amsterdam vertrekt om vijf over half zes.",
+      "translation": "At five o'clock. His train to Amsterdam leaves at twenty-five past five."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Vijf over half zes. Dat is zeventien uur vijfendertig. Ik ben vandaag de hele dag op tijd!",
+      "translation": "Twenty-five past five. That's 17:35. I'm on time all day today!"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-ii",
+  "lesson": "08-b-een-afspraak-maken",
+  "title": "Een afspraak maken",
+  "dialogues": [
+   {
+    "blockId": "89014b86-4b76-4bc8-811c-f1fb3248b99b",
+    "turns": [
+     {
+      "speaker": "Sofia",
+      "text": "Hoi Daan! Heb je morgen tijd? Lunchen we samen?",
+      "translation": "Hi Daan! Do you have time tomorrow? Shall we have lunch together?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Morgen? Ik kijk even in mijn agenda.",
+      "translation": "Tomorrow? Let me check my calendar."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Om half een?",
+      "translation": "At half past twelve?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Morgen om half een? Nee, om één uur heb ik een vergadering. Morgen heb ik het druk.",
+      "translation": "Tomorrow at half past twelve? No, I have a meeting at one o'clock. I'm busy tomorrow."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Jammer. En overmorgen? Ben je overmorgen vrij?",
+      "translation": "That's a shame. And the day after tomorrow? Are you free then?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Overmorgen… ja. Tussen twaalf en twee heb ik tijd.",
+      "translation": "The day after tomorrow… yes. I have time between twelve and two."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Is half een goed?",
+      "translation": "Is half past twelve okay?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Prima, dat past. Overmorgen om half een.",
+      "translation": "Great, that works. The day after tomorrow at half past twelve."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Leuk! En morgen om tien uur hebben we de teamvergadering, toch?",
+      "translation": "Great! And we have the team meeting at ten tomorrow, right?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Nee, om half tien! De teamvergadering is van half tien tot half elf.",
+      "translation": "No, at half past nine! The team meeting is from half past nine to half past ten."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "O ja. Morgen ik sta vroeg op!",
+      "translation": "Oh right. I'll get up early tomorrow!"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Ja, morgen sta je vroeg op! Tot morgen, Sofia.",
+      "translation": "Yes, you'll get up early tomorrow! See you tomorrow, Sofia."
+     }
+    ]
+   },
+   {
+    "blockId": "9386117a-e113-49d3-9b6d-c88ecd8c5c3d",
+    "turns": [
+     {
+      "speaker": "Kapper",
+      "text": "Kapsalon Knip, goedemiddag!",
+      "translation": "Knip Hair Salon, good afternoon!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Goedemiddag, met Sofia Moreno. Ik bel voor een afspraak.",
+      "translation": "Good afternoon, this is Sofia Moreno. I'm calling to make an appointment."
+     },
+     {
+      "speaker": "Kapper",
+      "text": "Prima. Wanneer?",
+      "translation": "Certainly. When?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Hebt u donderdag om vier uur plaats?",
+      "translation": "Do you have an opening on Thursday at four?"
+     },
+     {
+      "speaker": "Kapper",
+      "text": "Donderdag om vier uur? Nee, helaas. Om vier uur heb ik geen plaats.",
+      "translation": "Thursday at four? No, unfortunately. I don't have an opening at four."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Hm. Hebt u later plaats? Om vijf uur?",
+      "translation": "Hmm. Do you have a later opening? At five?"
+     },
+     {
+      "speaker": "Kapper",
+      "text": "Om vijf uur ook niet. Om half zes heb ik plaats. Past dat?",
+      "translation": "Not at five either. I have an opening at half past five. Does that work?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, dat past. Alleen knippen, alstublieft.",
+      "translation": "Yes, that works. Just a haircut, please."
+     },
+     {
+      "speaker": "Kapper",
+      "text": "Dat is goed. Donderdag om half zes, voor mevrouw Moreno.",
+      "translation": "All right. Thursday at half past five, for Ms. Moreno."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Prima. Dank u wel!",
+      "translation": "Great. Thank you!"
+     },
+     {
+      "speaker": "Kapper",
+      "text": "Graag gedaan. Tot donderdag!",
+      "translation": "You're welcome. See you Thursday!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Tot dan!",
+      "translation": "See you then!"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-ii",
+  "lesson": "09-a-maandag-dinsdag",
+  "title": "Maandag, dinsdag…",
+  "dialogues": [
+   {
+    "blockId": "2cc60f29-f3d3-4762-9316-291c1fc2c5ef",
+    "turns": [
+     {
+      "speaker": "Sofia",
+      "text": "Kijk, Noor! Ik heb een nieuwe agenda.",
+      "translation": "Look, Noor! I have a new calendar."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Super! Een agenda van papier?",
+      "translation": "Great! A paper calendar?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja. De hoeveelste is het vandaag?",
+      "translation": "Yes. What date is it today?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Het is de zestiende. Woensdag 16 september.",
+      "translation": "It's the sixteenth. Wednesday, September 16."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dank je. En wanneer is Daan jarig?",
+      "translation": "Thanks. And when is Daan's birthday?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Op zaterdag. Op zaterdag 19 september.",
+      "translation": "On Saturday. On Saturday, September 19."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Is het feest ook in zaterdag?",
+      "translation": "Is the party also on Saturday?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ja, ook op zaterdag. En op vrijdag 2 oktober heb ik een tentamen.",
+      "translation": "Yes, also on Saturday. And I have an exam on Friday, October 2."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Succes! En Fleur? Wanneer komt je zus terug?",
+      "translation": "Good luck! And Fleur? When is your sister coming back?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Fleur komt op 1 november terug. De kamer is vrij tot 31 oktober.",
+      "translation": "Fleur is coming back on November 1. The room is available until October 31."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Tot 31 oktober. Dat is een zaterdag. In oktober zoek ik dus een appartement!",
+      "translation": "Until October 31. That's a Saturday. So I'll look for an apartment in October!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ja! Maar eerst het feest van Daan!",
+      "translation": "Yes! But first, Daan's party!"
+     }
+    ]
+   },
+   {
+    "blockId": "4315c350-be46-46d5-9b56-9df73d1f7516",
+    "turns": [
+     {
+      "speaker": "Daan",
+      "text": "Goedemorgen, Sofia. Een nieuwe agenda?",
+      "translation": "Good morning, Sofia. A new calendar?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja! Vandaag is het woensdag 16 september. En op zaterdag ben jij jarig!",
+      "translation": "Yes! Today is Wednesday, September 16. And your birthday is on Saturday!"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Precies. Op zaterdag geef ik een feest.",
+      "translation": "Exactly. I'm having a party on Saturday."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Gezellig! Hoe laat begint het feest?",
+      "translation": "Nice! What time does the party start?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Om acht uur. Lotte komt ook, en Noor.",
+      "translation": "At eight o'clock. Lotte and Noor are coming too."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Leuk! Ik schrijf de datum in mijn agenda.",
+      "translation": "Great! I'll write the date in my calendar."
+     },
+     {
+      "speaker": "Daan",
+      "text": "En op vrijdag trakteer ik op taart, hier op kantoor.",
+      "translation": "And on Friday I'll treat everyone to cake here at the office."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Lekker! Op vrijdag? Niet op zaterdag?",
+      "translation": "Yum! On Friday? Not on Saturday?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Nee, op zaterdag werk ik niet. Wanneer ben jij jarig, Sofia?",
+      "translation": "No, I don't work on Saturday. When is your birthday, Sofia?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik ben op 23 april jarig.",
+      "translation": "My birthday is on April 23."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Op 23 april? Kijk, in 2027 is dat een vrijdag. Dan trakteer jij!",
+      "translation": "On April 23? Look, in 2027 that's a Friday. Then you'll treat everyone!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Prima! Dan trakteer ik op taart.",
+      "translation": "Great! Then I'll treat everyone to cake."
+     }
+    ]
+   }
+  ]
+ }
+]

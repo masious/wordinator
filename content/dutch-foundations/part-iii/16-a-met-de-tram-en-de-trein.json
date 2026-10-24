@@ -101,47 +101,58 @@
         "turns": [
           {
             "speaker": "Daan",
-            "text": "Goedemorgen, Sofia! Je bent op tijd!"
+            "text": "Goedemorgen, Sofia! Je bent op tijd!",
+            "translation": "Good morning, Sofia! You're on time!"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja! Ik ren van de bus naar het station. Is dit spoor 7?"
+            "text": "Ja! Ik ren van de bus naar het station. Is dit spoor 7?",
+            "translation": "Yes! I run from the bus to the station. Is this platform 7?"
           },
           {
             "speaker": "Daan",
-            "text": "Ja. Onze trein vertrekt om 8.16 van spoor 7. Check je altijd in met je bankpas?"
+            "text": "Ja. Onze trein vertrekt om 8.16 van spoor 7. Check je altijd in met je bankpas?",
+            "translation": "Yes. Our train leaves from platform 7 at 8:16. Do you always check in with your bank card?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, ik check altijd in met mijn bankpas, bij de poortjes."
+            "text": "Ja, ik check altijd in met mijn bankpas, bij de poortjes.",
+            "translation": "Yes, I always check in with my bank card, at the gates."
           },
           {
             "speaker": "Daan",
-            "text": "Prima. O nee, kijk: vijf minuten vertraging."
+            "text": "Prima. O nee, kijk: vijf minuten vertraging.",
+            "translation": "Great. Oh no, look: five minutes' delay."
           },
           {
             "speaker": "Sofia",
-            "text": "Vertraging? Is dat een probleem? De vergadering begint om tien uur."
+            "text": "Vertraging? Is dat een probleem? De vergadering begint om tien uur.",
+            "translation": "Delay? Is that a problem? The meeting starts at ten o'clock."
           },
           {
             "speaker": "Daan",
-            "text": "Nee hoor. We komen om ongeveer tien voor negen in Amsterdam aan."
+            "text": "Nee hoor. We komen om ongeveer tien voor negen in Amsterdam aan.",
+            "translation": "No problem. We'll arrive in Amsterdam at about ten to nine."
           },
           {
             "speaker": "Sofia",
-            "text": "En dan? Overstappen we in Amsterdam?"
+            "text": "En dan? Overstappen we in Amsterdam?",
+            "translation": "And then? Do we change in Amsterdam?"
           },
           {
             "speaker": "Daan",
-            "text": "Ja, in Amsterdam stappen we over op de tram. Met de tram zijn we in vijftien minuten bij de klant."
+            "text": "Ja, in Amsterdam stappen we over op de tram. Met de tram zijn we in vijftien minuten bij de klant.",
+            "translation": "Yes, in Amsterdam we change to the tram. The tram takes us to the client in fifteen minutes."
           },
           {
             "speaker": "Sofia",
-            "text": "Kijk, daar komt de trein! Waar stappen we in?"
+            "text": "Kijk, daar komt de trein! Waar stappen we in?",
+            "translation": "Look, the train is coming! Where do we get on?"
           },
           {
             "speaker": "Daan",
-            "text": "Hier, bij deze deur. Kom op, stap in!"
+            "text": "Hier, bij deze deur. Kom op, stap in!",
+            "translation": "Here, at this door. Come on, get on!"
           }
         ]
       },
@@ -2054,51 +2065,63 @@
         "turns": [
           {
             "speaker": "Conducteur",
-            "text": "Goedemorgen. Hebt u een kaartje?"
+            "text": "Goedemorgen. Hebt u een kaartje?",
+            "translation": "Good morning. Do you have a ticket?"
           },
           {
             "speaker": "Daan",
-            "text": "Goedemorgen. Ik heb een ov-chipkaart. Alstublieft."
+            "text": "Goedemorgen. Ik heb een ov-chipkaart. Alstublieft.",
+            "translation": "Good morning. I have an OV-chipkaart. Here you are."
           },
           {
             "speaker": "Conducteur",
-            "text": "Dank u. En u, mevrouw?"
+            "text": "Dank u. En u, mevrouw?",
+            "translation": "Thank you. And you, ma'am?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ik heb geen kaartje. Ik check in met mijn bankpas."
+            "text": "Ik heb geen kaartje. Ik check in met mijn bankpas.",
+            "translation": "I don't have a ticket. I check in with my bank card."
           },
           {
             "speaker": "Conducteur",
-            "text": "Prima. Mag ik uw bankpas even zien?"
+            "text": "Prima. Mag ik uw bankpas even zien?",
+            "translation": "Great. May I see your bank card for a moment?"
           },
           {
             "speaker": "Sofia",
-            "text": "Alstublieft. Is dat goed?"
+            "text": "Alstublieft. Is dat goed?",
+            "translation": "Here you are. Is that all right?"
           },
           {
             "speaker": "Conducteur",
-            "text": "Ja, dat is goed. Checkt u in Amsterdam ook uit, alstublieft."
+            "text": "Ja, dat is goed. Checkt u in Amsterdam ook uit, alstublieft.",
+            "translation": "Yes, that's fine. Please check out in Amsterdam too."
           },
           {
             "speaker": "Sofia",
-            "text": "Natuurlijk. Stappen we in Amsterdam Amstel uit?"
+            "text": "Natuurlijk. Stappen we in Amsterdam Amstel uit?",
+            "translation": "Of course. Do we get off at Amsterdam Amstel?"
           },
           {
             "speaker": "Daan",
-            "text": "Nee, niet in Amstel. De trein rijdt door naar Amsterdam Centraal. Daar stappen we uit."
+            "text": "Nee, niet in Amstel. De trein rijdt door naar Amsterdam Centraal. Daar stappen we uit.",
+            "translation": "No, not at Amstel. The train continues to Amsterdam Central. We get off there."
           },
           {
             "speaker": "Conducteur",
-            "text": "Precies. En dit is de stiltecoupé. Hier zijn de reizigers stil."
+            "text": "Precies. En dit is de stiltecoupé. Hier zijn de reizigers stil.",
+            "translation": "Exactly. And this is the quiet carriage. The passengers are quiet here."
           },
           {
             "speaker": "Daan",
-            "text": "O, sorry! Kom op, Sofia, we lopen even door."
+            "text": "O, sorry! Kom op, Sofia, we lopen even door.",
+            "translation": "Oh, sorry! Come on, Sofia, let's walk through."
           },
           {
             "speaker": "Conducteur",
-            "text": "Goede reis!"
+            "text": "Goede reis!",
+            "translation": "Have a good journey!"
           }
         ]
       },

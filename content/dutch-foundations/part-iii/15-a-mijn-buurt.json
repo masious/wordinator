@@ -150,47 +150,58 @@
         "turns": [
           {
             "speaker": "Henk",
-            "text": "Zo, Sofia! Vandaag ben ik vroeg klaar op de markt. Mooi weer, hè? Kom je mee? Dan zie je onze buurt."
+            "text": "Zo, Sofia! Vandaag ben ik vroeg klaar op de markt. Mooi weer, hè? Kom je mee? Dan zie je onze buurt.",
+            "translation": "Well, Sofia! Today I finished early at the market. Nice weather, isn't it? Will you come with me? Then you'll see our neighbourhood."
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, graag! Is er een supermarkt in de buurt?"
+            "text": "Ja, graag! Is er een supermarkt in de buurt?",
+            "translation": "Yes, gladly! Is there a supermarket nearby?"
           },
           {
             "speaker": "Henk",
-            "text": "Ja hoor, in de Kanaalstraat. Daar zijn veel winkels. Daar kun je alles kopen."
+            "text": "Ja hoor, in de Kanaalstraat. Daar zijn veel winkels. Daar kun je alles kopen.",
+            "translation": "Yes, there is, on Kanaalstraat. There are lots of shops there. You can buy everything there."
           },
           {
             "speaker": "Sofia",
-            "text": "Wat leuk! En waar ik kan brood kopen?"
+            "text": "Wat leuk! En waar ik kan brood kopen?",
+            "translation": "How nice! And where can I buy bread?"
           },
           {
             "speaker": "Henk",
-            "text": "Waar kun je brood kopen? Bij de bakker. De bakker is ook in de Kanaalstraat, naast de supermarkt."
+            "text": "Waar kun je brood kopen? Bij de bakker. De bakker is ook in de Kanaalstraat, naast de supermarkt.",
+            "translation": "Where can you buy bread? At the bakery. The bakery is also on Kanaalstraat, next to the supermarket."
           },
           {
             "speaker": "Sofia",
-            "text": "Is de bakker ook op zondag open?"
+            "text": "Is de bakker ook op zondag open?",
+            "translation": "Is the bakery open on Sundays too?"
           },
           {
             "speaker": "Henk",
-            "text": "Nee, op zondag is hij dicht. Maar de supermarkt is wel open."
+            "text": "Nee, op zondag is hij dicht. Maar de supermarkt is wel open.",
+            "translation": "No, it's closed on Sundays. But the supermarket is open."
           },
           {
             "speaker": "Sofia",
-            "text": "En wat is dat grote gebouw daar?"
+            "text": "En wat is dat grote gebouw daar?",
+            "translation": "And what is that big building over there?"
           },
           {
             "speaker": "Henk",
-            "text": "Dat is de grote moskee. Hij is mooi, hè? En kijk, daar is het park. Daar kun je lekker wandelen."
+            "text": "Dat is de grote moskee. Hij is mooi, hè? En kijk, daar is het park. Daar kun je lekker wandelen.",
+            "translation": "That's the big mosque. It's beautiful, isn't it? And look, there's the park. You can go for a nice walk there."
           },
           {
             "speaker": "Sofia",
-            "text": "En de bibliotheek? Ik wil graag Nederlandse boeken lenen."
+            "text": "En de bibliotheek? Ik wil graag Nederlandse boeken lenen.",
+            "translation": "And the library? I'd like to borrow Dutch books."
           },
           {
             "speaker": "Henk",
-            "text": "De bibliotheek is vlakbij, aan het plein bij het kanaal. Daar kun je ook koffie drinken. Naast de bibliotheek is de apotheek."
+            "text": "De bibliotheek is vlakbij, aan het plein bij het kanaal. Daar kun je ook koffie drinken. Naast de bibliotheek is de apotheek.",
+            "translation": "The library is very close, on the square by the canal. You can also have coffee there. The pharmacy is next to the library."
           }
         ]
       },
@@ -1900,31 +1911,38 @@
         "turns": [
           {
             "speaker": "Henk",
-            "text": "Kijk, hier is de fietsenwinkel van Ahmed. Hoi Ahmed!"
+            "text": "Kijk, hier is de fietsenwinkel van Ahmed. Hoi Ahmed!",
+            "translation": "Look, here is Ahmed's bicycle shop. Hi Ahmed!"
           },
           {
             "speaker": "Ahmed",
-            "text": "Hoi Henk! En wie is dit?"
+            "text": "Hoi Henk! En wie is dit?",
+            "translation": "Hi Henk! And who is this?"
           },
           {
             "speaker": "Henk",
-            "text": "Dit is Sofia. Ze woont boven mij, op de tweede verdieping."
+            "text": "Dit is Sofia. Ze woont boven mij, op de tweede verdieping.",
+            "translation": "This is Sofia. She lives above me, on the second floor."
           },
           {
             "speaker": "Ahmed",
-            "text": "Welkom in Lombok, Sofia! Kun jij fietsen?"
+            "text": "Welkom in Lombok, Sofia! Kun jij fietsen?",
+            "translation": "Welcome to Lombok, Sofia! Can you ride a bicycle?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, ik kan fietsen. Maar ik heb geen fiets."
+            "text": "Ja, ik kan fietsen. Maar ik heb geen fiets.",
+            "translation": "Yes, I can ride a bicycle. But I don't have a bicycle."
           },
           {
             "speaker": "Ahmed",
-            "text": "Geen probleem! Kijk eens, hier staan veel fietsen. Hier kun je een fiets kopen."
+            "text": "Geen probleem! Kijk eens, hier staan veel fietsen. Hier kun je een fiets kopen.",
+            "translation": "No problem! Look, there are lots of bicycles here. You can buy a bicycle here."
           },
           {
             "speaker": "Sofia",
-            "text": "Dank je, Ahmed! Ik kom snel terug."
+            "text": "Dank je, Ahmed! Ik kom snel terug.",
+            "translation": "Thank you, Ahmed! I'll come back soon."
           }
         ]
       },
@@ -2005,35 +2023,43 @@
         "turns": [
           {
             "speaker": "Sofia",
-            "text": "Goedemiddag. Kunt u mij helpen?"
+            "text": "Goedemiddag. Kunt u mij helpen?",
+            "translation": "Good afternoon. Can you help me?"
           },
           {
             "speaker": "Medewerkster",
-            "text": "Ja, natuurlijk. Wat kan ik voor u doen?"
+            "text": "Ja, natuurlijk. Wat kan ik voor u doen?",
+            "translation": "Yes, of course. What can I do for you?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ik woon nu in Lombok. Kan ik hier boeken lenen?"
+            "text": "Ik woon nu in Lombok. Kan ik hier boeken lenen?",
+            "translation": "I live in Lombok now. Can I borrow books here?"
           },
           {
             "speaker": "Medewerkster",
-            "text": "Ja, dat kan. Dan hebt u een pas nodig. U kunt de pas hier krijgen."
+            "text": "Ja, dat kan. Dan hebt u een pas nodig. U kunt de pas hier krijgen.",
+            "translation": "Yes, you can. Then you need a library card. You can get the card here."
           },
           {
             "speaker": "Sofia",
-            "text": "Prima. En kan ik hier ook Spaanse boeken lenen?"
+            "text": "Prima. En kan ik hier ook Spaanse boeken lenen?",
+            "translation": "Great. And can I borrow Spanish books here too?"
           },
           {
             "speaker": "Medewerkster",
-            "text": "Nee, we hebben geen Spaanse boeken. Maar we hebben veel Engelse boeken."
+            "text": "Nee, we hebben geen Spaanse boeken. Maar we hebben veel Engelse boeken.",
+            "translation": "No, we don't have any Spanish books. But we have lots of English books."
           },
           {
             "speaker": "Sofia",
-            "text": "Oké. Ik kan ook een beetje Nederlands. Wanneer is de bibliotheek open?"
+            "text": "Oké. Ik kan ook een beetje Nederlands. Wanneer is de bibliotheek open?",
+            "translation": "Okay. I also speak a little Dutch. When is the library open?"
           },
           {
             "speaker": "Medewerkster",
-            "text": "Van dinsdag tot zaterdag, van tien tot vijf. Op zondag en maandag zijn we dicht."
+            "text": "Van dinsdag tot zaterdag, van tien tot vijf. Op zondag en maandag zijn we dicht.",
+            "translation": "From Tuesday to Saturday, from ten to five. We are closed on Sundays and Mondays."
           }
         ]
       },

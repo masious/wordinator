@@ -1,0 +1,886 @@
+[
+ {
+  "course": "dutch-foundations/part-iii",
+  "lesson": "17-b-lekker-weer",
+  "title": "Lekker weer",
+  "dialogues": [
+   {
+    "blockId": "9a7e4c90-8246-4aea-857b-5f2d977e5627",
+    "turns": [
+     {
+      "speaker": "Daan",
+      "text": "Kom op! Lopen we naar de zee?",
+      "translation": "Come on! Shall we walk to the sea?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Wacht even, Daan! Jij loopt zo snel.",
+      "translation": "Wait a moment, Daan! You walk so fast."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Ik loop altijd snel. Jij loopt juist zo langzaam, Sofia!",
+      "translation": "I always walk fast. You walk so slowly, Sofia!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Kijk, de zee is kalm en de zon schijnt. Heerlijk, hè?",
+      "translation": "Look, the sea is calm and the sun is shining. Wonderful, isn't it?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Lekker weer! En er is bijna geen wind.",
+      "translation": "Lovely weather! And there is hardly any wind."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ja, maar aan zee waait het vaak hard. Kijk naar de golven!",
+      "translation": "Yes, but it is often very windy by the sea. Look at the waves!"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Lopen we naar de duinen?",
+      "translation": "Shall we walk to the dunes?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Goed plan. Het zand is hier zo zacht.",
+      "translation": "Good plan. The sand is so soft here."
+     },
+     {
+      "speaker": "Noor",
+      "text": "En kijk, daar is een strandcafé. Straks gaan we daar iets drinken.",
+      "translation": "And look, there is a beach café. We will have something to drink there later."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Eerst nog een lange wandeling!",
+      "translation": "First, one more long walk!"
+     }
+    ]
+   },
+   {
+    "blockId": "4bf6e08b-07ec-46fa-94e3-0ecf15421b4f",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "Kijk, een bui! Snel, naar het strandcafé!",
+      "translation": "Look, a rain shower! Quickly, to the beach café!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "We schuilen hier. Ik ben best nat!",
+      "translation": "We will shelter here. I am quite wet!"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Ik ook, maar binnen is het lekker warm.",
+      "translation": "Me too, but it is nice and warm inside."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Drie warme chocolademelk, graag!",
+      "translation": "Three hot chocolates, please!"
+     },
+     {
+      "speaker": "Ober",
+      "text": "Alstublieft, drie warme chocolademelk.",
+      "translation": "Here you are, three hot chocolates."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dank u wel. Mmm, dit is heerlijk.",
+      "translation": "Thank you. Mmm, this is delicious."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Eerst zo mooi weer, en nu deze bui!",
+      "translation": "The weather was so beautiful at first, and now this shower!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Het regent nu heel hard, maar morgen wordt het weer droog.",
+      "translation": "It is raining very hard now, but it will be dry again tomorrow."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "De chocolademelk is lekker warm. Dat is fijn!",
+      "translation": "The hot chocolate is nice and warm. That is lovely!"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Nemen we nog een chocolademelk?",
+      "translation": "Shall we have another hot chocolate?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Goed idee. Buiten waait het nog steeds erg hard.",
+      "translation": "Good idea. It is still very windy outside."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-iii",
+  "lesson": "18-a-kleren-en-kleuren",
+  "title": "Kleren en kleuren",
+  "dialogues": [
+   {
+    "blockId": "db3aaa59-867e-4a73-9fa7-5c0a80ddc00a",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "Sofia, kijk eens naar buiten. Het wordt nu echt koud!",
+      "translation": "Sofia, look outside. It is really getting cold now!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, het is hier erg koud. Maar ik heb genoeg kleren, toch?",
+      "translation": "Yes, it is very cold here. But I have enough clothes, right?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Nee, joh! Je hebt geen warme jas!",
+      "translation": "No way! You do not have a warm coat!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dat klopt. Ik heb een dunne jas en een rode trui. Dat is alles uit Valencia.",
+      "translation": "That is true. I have a thin coat and a red sweater. That is all from Valencia."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Dat is niet genoeg voor de winter hier. Je hebt een dikke trui nodig, een warme winterjas en ook een nieuw shirt.",
+      "translation": "That is not enough for winter here. You need a thick sweater, a warm winter coat, and a new shirt too."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja! En ik wil een rode shirt.",
+      "translation": "Yes! And I want a red shirt."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Een rood shirt, Sofia! Shirt is een het-woord. Dus: een rood shirt, zonder -e.",
+      "translation": "A red shirt, Sofia! Shirt is a neuter noun. So: a red shirt, without -e."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "O ja, natuurlijk. Een rood shirt dan. En ik wil ook nieuwe schoenen.",
+      "translation": "Oh yes, of course. A red shirt, then. And I also want new shoes."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Goed idee. Kom, we gaan naar het centrum! Daar zijn veel leuke kledingwinkels.",
+      "translation": "Good idea. Come on, let us go to the city center! There are lots of nice clothing stores there."
+     }
+    ]
+   },
+   {
+    "blockId": "56c8f2ac-83f6-43f6-9209-31b2de1b8abf",
+    "turns": [
+     {
+      "speaker": "Verkoopster",
+      "text": "Goedemiddag! Kan ik u helpen?",
+      "translation": "Good afternoon! Can I help you?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ja, graag! Mijn vriendin heeft een trui en een broek nodig, en ook een warme winterjas.",
+      "translation": "Yes, please! My friend needs a sweater and trousers, and a warm winter coat too."
+     },
+     {
+      "speaker": "Verkoopster",
+      "text": "Natuurlijk. Welke maat hebt u?",
+      "translation": "Of course. What size are you?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik heb maat 38. Hebt u deze trui ook in het blauw?",
+      "translation": "I am size 38. Do you also have this sweater in blue?"
+     },
+     {
+      "speaker": "Verkoopster",
+      "text": "Ja, deze wollen trui hebben we in blauw, grijs en donkergroen.",
+      "translation": "Yes, we have this woolen sweater in blue, gray, and dark green."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Mooi! En deze zwarte spijkerbroek? Mag ik deze broek passen?",
+      "translation": "Nice! And these black jeans? May I try on these trousers?"
+     },
+     {
+      "speaker": "Verkoopster",
+      "text": "Natuurlijk, de paskamer is achterin.",
+      "translation": "Of course, the fitting room is at the back."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "De broek past goed! En de blauwe trui is lekker warm.",
+      "translation": "The trousers fit well! And the blue sweater is nice and warm."
+     },
+     {
+      "speaker": "Verkoopster",
+      "text": "Fijn! Wilt u de trui en de broek meenemen?",
+      "translation": "Great! Would you like to take the sweater and trousers?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, graag! Dank u wel.",
+      "translation": "Yes, please! Thank you."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Kijk, Sofia, daar hangen de winterjassen!",
+      "translation": "Look, Sofia, the winter coats are hanging over there!"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-iii",
+  "lesson": "18-b-deze-jas-is-warmer",
+  "title": "Deze jas is warmer",
+  "dialogues": [
+   {
+    "blockId": "f149503d-a305-4a05-8ac9-de721e342abc",
+    "turns": [
+     {
+      "speaker": "Verkoopster",
+      "text": "Deze jas is warmer dan die jas.",
+      "translation": "This coat is warmer than that coat."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Maar die is goedkoper. Welke jas is langer?",
+      "translation": "But that one is cheaper. Which coat is longer?"
+     },
+     {
+      "speaker": "Verkoopster",
+      "text": "De blauwe jas is langer dan de zwarte jas. Hij is ook dikker.",
+      "translation": "The blue coat is longer than the black coat. It is also thicker."
+     },
+     {
+      "speaker": "Noor",
+      "text": "En de kwaliteit? Is de blauwe jas beter?",
+      "translation": "And the quality? Is the blue coat better?"
+     },
+     {
+      "speaker": "Verkoopster",
+      "text": "Ja, de kwaliteit is beter. Maar hij is ook zwaarder.",
+      "translation": "Yes, the quality is better. But it is also heavier."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "En de blauwe jas is duurder. Ik twijfel.",
+      "translation": "And the blue coat is more expensive. I cannot decide."
+     },
+     {
+      "speaker": "Noor",
+      "text": "De zwarte jas is lichter en goedkoper, maar de winter hier is lang en koud.",
+      "translation": "The black coat is lighter and cheaper, but winter here is long and cold."
+     },
+     {
+      "speaker": "Verkoopster",
+      "text": "De blauwe jas is ook heel mooi.",
+      "translation": "The blue coat is also very beautiful."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik vergelijk de prijzen. De blauwe jas kost honderdtwintig euro en de zwarte jas kost tachtig euro.",
+      "translation": "I am comparing the prices. The blue coat costs one hundred and twenty euros, and the black coat costs eighty euros."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Dus is de blauwe jas veertig euro duurder, maar hij is warmer en praktischer.",
+      "translation": "So the blue coat is forty euros more expensive, but it is warmer and more practical."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Goed, ik kies de blauwe jas! Hij is mooier en warmer.",
+      "translation": "All right, I choose the blue coat! It is nicer and warmer."
+     },
+     {
+      "speaker": "Verkoopster",
+      "text": "Een goede keus! Wilt u deze nu meenemen?",
+      "translation": "A good choice! Would you like to take it with you now?"
+     }
+    ]
+   },
+   {
+    "blockId": "6a312d9d-1f47-4891-a933-20fb62a32560",
+    "turns": [
+     {
+      "speaker": "Henk",
+      "text": "Zo, Sofia! Mooie jas! Die jas staat je goed.",
+      "translation": "Well, Sofia! Nice coat! That coat suits you."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dank je, Henk! Deze donkerblauwe jas is nieuw. Hij is warmer dan mijn regenjas.",
+      "translation": "Thanks, Henk! This dark-blue coat is new. It is warmer than my raincoat."
+     },
+     {
+      "speaker": "Henk",
+      "text": "Prima! De winter hier is kouder dan in Spanje, hè?",
+      "translation": "Great! Winter here is colder than in Spain, right?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja! Utrecht is kouder dan Valencia, en de winter hier is ook langer.",
+      "translation": "Yes! Utrecht is colder than Valencia, and winter here is longer too."
+     },
+     {
+      "speaker": "Henk",
+      "text": "Mis je de zon?",
+      "translation": "Do you miss the sun?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Een beetje. Maar mijn appartement hier is gezelliger dan mijn oude kamer bij Noor.",
+      "translation": "A little. But my apartment here is cozier than my old room at Noor's."
+     },
+     {
+      "speaker": "Henk",
+      "text": "Mooi! En je hebt nu ook een fiets en goede vrienden.",
+      "translation": "Nice! And now you also have a bike and good friends."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Precies. Mijn appartement is kleiner dan het huis in Valencia, maar het is net zo gezellig.",
+      "translation": "Exactly. My apartment is smaller than the house in Valencia, but it is just as cozy."
+     },
+     {
+      "speaker": "Henk",
+      "text": "Dan kan de winter komen! Welkom thuis, Sofia!",
+      "translation": "Then winter can come! Welcome home, Sofia!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dank je wel, Henk. Ik ben hier nu thuis.",
+      "translation": "Thank you, Henk. I am at home here now."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-iv",
+  "lesson": "19-a-ik-hou-van-zwemmen",
+  "title": "Ik hou van zwemmen",
+  "dialogues": [
+   {
+    "blockId": "1b267d5e-e204-4d70-a925-fcf1515c6035",
+    "turns": [
+     {
+      "speaker": "Marieke",
+      "text": "Goedenavond, allemaal! Vanavond praten we over hobby's. Wat doe je in je vrije tijd, Sofia?",
+      "translation": "Good evening, everyone! Tonight we are talking about hobbies. What do you do in your free time, Sofia?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik hou van zwemmen en dansen.",
+      "translation": "I love swimming and dancing."
+     },
+     {
+      "speaker": "Marieke",
+      "text": "Wat leuk! Zwem je in een club?",
+      "translation": "How nice! Do you swim in a club?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Nee, ik zwem alleen, elke woensdag om zeven uur.",
+      "translation": "No, I swim alone, every Wednesday at seven o'clock."
+     },
+     {
+      "speaker": "Marieke",
+      "text": "En jij, Piotr? Wat is jouw hobby?",
+      "translation": "And you, Piotr? What is your hobby?"
+     },
+     {
+      "speaker": "Piotr",
+      "text": "Ik hou van voetbal! Ik voetbal in een club, en elke zaterdag speel ik een wedstrijd. Ik kijk ook voetbal op tv.",
+      "translation": "I love soccer! I play soccer in a club, and every Saturday I play a match. I also watch soccer on TV."
+     },
+     {
+      "speaker": "Marieke",
+      "text": "Houd je ook van koken?",
+      "translation": "Do you also like cooking?"
+     },
+     {
+      "speaker": "Piotr",
+      "text": "Ja! Maar ik vind Nederlands moeilijk.",
+      "translation": "Yes! But I find Dutch difficult."
+     },
+     {
+      "speaker": "Marieke",
+      "text": "Nederlands is niet makkelijk, maar je doet het heel goed! En jij? Wat is je hobby?",
+      "translation": "Dutch is not easy, but you are doing very well! And you? What is your hobby?"
+     },
+     {
+      "speaker": "Cursist",
+      "text": "Ik hou van tekenen. Ik vind tekenen heel leuk.",
+      "translation": "I like drawing. I really enjoy drawing."
+     },
+     {
+      "speaker": "Marieke",
+      "text": "Mooi! Volgende week praten we meer over muziek en sport.",
+      "translation": "Great! Next week we will talk more about music and sports."
+     }
+    ]
+   },
+   {
+    "blockId": "df630847-fb54-45f1-8a68-3a6ef5e47d5d",
+    "turns": [
+     {
+      "speaker": "Piotr",
+      "text": "Ik woon al twee jaar in Utrecht.",
+      "translation": "I have lived in Utrecht for two years now."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Al twee jaar! Vind je Utrecht leuk?",
+      "translation": "Two years already! Do you like Utrecht?"
+     },
+     {
+      "speaker": "Piotr",
+      "text": "Ja, heel leuk. En mijn vrouw Kasia ook. Zij houdt van muziek: zij speelt gitaar en zingt in een koor.",
+      "translation": "Yes, very much. And my wife Kasia does too. She loves music: she plays guitar and sings in a choir."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Wat leuk! Ik hou ook van muziek. En ik hou van dansen.",
+      "translation": "How nice! I also like music. And I love dancing."
+     },
+     {
+      "speaker": "Piotr",
+      "text": "Dans je in een club?",
+      "translation": "Do you dance in a club?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Nee, ik dans thuis. En wat doe jij nog in je vrije tijd?",
+      "translation": "No, I dance at home. And what else do you do in your free time?"
+     },
+     {
+      "speaker": "Piotr",
+      "text": "Ik puzzel soms, en ik doe spelletjes met mijn collega's.",
+      "translation": "I sometimes do puzzles, and I play games with my colleagues."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Spelletjes? Wat leuk!",
+      "translation": "Games? How nice!"
+     },
+     {
+      "speaker": "Piotr",
+      "text": "Ja, ik vind spelletjes heel leuk. En jij?",
+      "translation": "Yes, I really like games. And you?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik vind spelletjes een beetje saai. Nou, tot volgende week, Piotr!",
+      "translation": "I find games a little boring. Well, see you next week, Piotr!"
+     },
+     {
+      "speaker": "Piotr",
+      "text": "Tot volgende week, Sofia!",
+      "translation": "See you next week, Sofia!"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-iv",
+  "lesson": "19-b-ik-zwem-liever",
+  "title": "Ik zwem liever",
+  "dialogues": [
+   {
+    "blockId": "9e1e3451-1eef-4e10-8408-41932db38d5b",
+    "turns": [
+     {
+      "speaker": "Fleur",
+      "text": "Hoi Sofia! Ik ben Fleur, de zus van Noor. Ik woon nu in jouw oude kamer!",
+      "translation": "Hi Sofia! I am Fleur, Noor's sister. I am living in your old room now!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Hoi Fleur! Welkom terug! Surf je nog veel?",
+      "translation": "Hi Fleur! Welcome back! Do you still surf a lot?"
+     },
+     {
+      "speaker": "Fleur",
+      "text": "Ja, ik surf heel graag! Maar Utrecht heeft geen zee. Dus schaats ik!",
+      "translation": "Yes, I really enjoy surfing! But Utrecht has no sea. So I go ice-skating!"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Kom op, Sofia! Nog een rondje!",
+      "translation": "Come on, Sofia! One more lap!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Wacht even! Ik val heel vaak. Schaatsen is best eng!",
+      "translation": "Wait a moment! I fall very often. Ice-skating is quite scary!"
+     },
+     {
+      "speaker": "Fleur",
+      "text": "Schaats je graag, Sofia?",
+      "translation": "Do you enjoy ice-skating, Sofia?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Nee, ik zwem liever! Zwemmen is veel makkelijker.",
+      "translation": "No, I would rather swim! Swimming is much easier."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Je bent nog een beginner. Het gaat al beter!",
+      "translation": "You are still a beginner. You are already doing better!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Oké, nog één rondje. Maar daarna heb ik liever warme chocolademelk!",
+      "translation": "Okay, one more lap. But after that I would rather have hot chocolate!"
+     },
+     {
+      "speaker": "Fleur",
+      "text": "Goed idee! Maar ik schaats eerst nog even.",
+      "translation": "Good idea! But I will ice-skate for a little while first."
+     }
+    ]
+   },
+   {
+    "blockId": "f5c01e2d-2070-4237-b7a0-8a9003cb7856",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "Kom binnen! Wil je warme chocolademelk, Sofia?",
+      "translation": "Come in! Would you like hot chocolate, Sofia?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, heel graag! Ik ben moe van het schaatsen.",
+      "translation": "Yes, very much! I am tired from ice-skating."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Blijf je eten? Ik maak pasta.",
+      "translation": "Are you staying for dinner? I am making pasta."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, graag!",
+      "translation": "Yes, please!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "En jij, Fleur? Blijf je ook eten?",
+      "translation": "And you, Fleur? Are you staying for dinner too?"
+     },
+     {
+      "speaker": "Fleur",
+      "text": "Ja, graag! Ik blijf vanavond lekker thuis.",
+      "translation": "Yes, please! I am happy to stay home tonight."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Noor kookt heel graag. En jij, Fleur?",
+      "translation": "Noor really enjoys cooking. And you, Fleur?"
+     },
+     {
+      "speaker": "Fleur",
+      "text": "Ik? Nee, ik kook niet graag. Ik sport liever!",
+      "translation": "Me? No, I do not like cooking. I would rather play sports!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Dat klopt! Fleur surft, schaatst en fietst, maar ze kookt nooit.",
+      "translation": "That is right! Fleur surfs, ice-skates, and cycles, but she never cooks."
+     },
+     {
+      "speaker": "Fleur",
+      "text": "Nee, ik eet liever! Noor kookt en ik was af.",
+      "translation": "No, I would rather eat! Noor cooks and I do the dishes."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Deze chocolademelk is heel lekker! En ik zwem veel liever dan ik schaats.",
+      "translation": "This hot chocolate is delicious! And I much prefer swimming to ice-skating."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Maar het gaat al beter met het schaatsen, hè?",
+      "translation": "But you are already getting better at ice-skating, right?"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-iv",
+  "lesson": "20-a-ik-moet-werken",
+  "title": "Ik moet werken",
+  "dialogues": [
+   {
+    "blockId": "5dd31ae4-d15c-459e-b33d-f262de3b1502",
+    "turns": [
+     {
+      "speaker": "Karin",
+      "text": "Goedemorgen! We hebben een deadline: we moeten vrijdag klaar zijn met de app voor de klant in Amsterdam.",
+      "translation": "Good morning! We have a deadline: we have to finish the app for the client in Amsterdam by Friday."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Oké. De presentatie is vrijdag om twee uur, toch?",
+      "translation": "Okay. The presentation is on Friday at two o'clock, right?"
+     },
+     {
+      "speaker": "Karin",
+      "text": "Precies. Daan, jij moet de app nog testen.",
+      "translation": "Exactly. Daan, you still have to test the app."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Prima. Ik moet ook nog twee taken afmaken.",
+      "translation": "Fine. I also still have to finish two tasks."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "En ik? Wat moet ik doen?",
+      "translation": "And me? What do I have to do?"
+     },
+     {
+      "speaker": "Karin",
+      "text": "Jij moet de nieuwe schermen afmaken, Sofia. Kun je donderdag lang werken?",
+      "translation": "You have to finish the new screens, Sofia. Can you work late on Thursday?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, dat kan. De app moet op tijd klaar zijn!",
+      "translation": "Yes, I can. The app has to be ready on time!"
+     },
+     {
+      "speaker": "Karin",
+      "text": "Mooi. Ik moet de presentatie nog voorbereiden.",
+      "translation": "Good. I still have to prepare the presentation."
+     },
+     {
+      "speaker": "Daan",
+      "text": "We moeten dit echt samen doen. Het wordt een drukke week!",
+      "translation": "We really have to do this together. It will be a busy week!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dat klopt! Kom op, we moeten beginnen!",
+      "translation": "That is right! Come on, we have to start!"
+     }
+    ]
+   },
+   {
+    "blockId": "dcedacdc-c1a0-4a5e-8ba7-6508aa0b788a",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "Hoi Sofia! Alles goed?",
+      "translation": "Hi Sofia! How are you?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Hoi Noor! Ja, maar ik heb het heel druk. Ik moet nog zo veel doen!",
+      "translation": "Hi Noor! Yes, but I am very busy. I still have so much to do!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Wat moet je doen?",
+      "translation": "What do you have to do?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik moet de nieuwe schermen nog afmaken en ik moet de app ook testen, met Daan.",
+      "translation": "I still have to finish the new screens, and I also have to test the app with Daan."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Dat is veel!",
+      "translation": "That is a lot!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja! En vrijdag hebben we de presentatie voor de klant.",
+      "translation": "Yes! And on Friday we have the presentation for the client."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Joh, wat druk! Gaan we deze week naar de film?",
+      "translation": "Goodness, how busy! Shall we go to the movies this week?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik wil wel, maar ik moet eerst in mijn agenda kijken.",
+      "translation": "I would like to, but I have to check my calendar first."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Oké, geen probleem. Welke dag kun je niet?",
+      "translation": "Okay, no problem. Which day can you not make it?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Donderdag kan ik niet. Dan moet ik overwerken.",
+      "translation": "I cannot do Thursday. I have to work overtime then."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Oké, we praten morgen verder!",
+      "translation": "Okay, we will talk more tomorrow!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Tot morgen!",
+      "translation": "See you tomorrow!"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-iv",
+  "lesson": "20-b-donderdag-kan-ik-niet",
+  "title": "Donderdag kan ik niet",
+  "dialogues": [
+   {
+    "blockId": "3723dd9b-b89e-42f4-96b7-1923c9ff3e15",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "Hoi Sofia! Heb je dit weekend al plannen?",
+      "translation": "Hi Sofia! Do you have plans for this weekend yet?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Nee, nog niet. Hoezo?",
+      "translation": "No, not yet. Why?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Gaan we naar de film? Er is een nieuwe film in de bioscoop: \"De Lange Zomer\".",
+      "translation": "Shall we go to the movies? There is a new film at the cinema: \"The Long Summer\"."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Die film ken ik niet. Is hij goed?",
+      "translation": "I do not know that film. Is it good?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Heel goed, zegt iedereen! De voorstelling is donderdagavond om acht uur. Kun je dan?",
+      "translation": "Everyone says it is very good! The screening is on Thursday evening at eight. Can you make it then?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Donderdag kan ik niet. Dan moet ik overwerken voor de deadline.",
+      "translation": "I cannot do Thursday. I have to work overtime for the deadline."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Oké. Misschien kan ik vrijdag. Ik kijk even in mijn agenda... Nee, vrijdag kan ik ook niet. Dan is het feestje van mijn vriendin.",
+      "translation": "Okay. Maybe I can do Friday. Let me check my calendar... No, I cannot do Friday either. It is my friend's party then."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Donderdag niet, en vrijdag ook niet!",
+      "translation": "Not Thursday, and not Friday either!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Kom je zaterdag eten? Fleur en ik koken pasta.",
+      "translation": "Will you come for dinner on Saturday? Fleur and I are cooking pasta."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, heel graag!",
+      "translation": "Yes, I would love to!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "En zondag gaan we naar de film, om drie uur in het centrum!",
+      "translation": "And on Sunday we are going to the movies, at three o'clock in the city center!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Goed idee! Niet donderdag, maar zondag. Dat komt goed.",
+      "translation": "Good idea! Not Thursday, but Sunday. That works."
+     }
+    ]
+   },
+   {
+    "blockId": "51338ed7-7e0e-4a61-87f4-1ac75e6c4f02",
+    "turns": [
+     {
+      "speaker": "Daan",
+      "text": "Sofia, we testen de app nog een keer vanavond. Morgen moet alles klaar zijn.",
+      "translation": "Sofia, we are testing the app one more time tonight. Everything has to be ready tomorrow."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Oké. Ik start de test op mijn computer... Hmm, het werkt nog niet.",
+      "translation": "Okay. I am starting the test on my computer... Hmm, it still does not work."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Wat is het probleem?",
+      "translation": "What is the problem?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik weet het niet. Ik vind de fout niet.",
+      "translation": "I do not know. I cannot find the error."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Ik kijk even mee. Welke knop werkt niet?",
+      "translation": "I will take a look with you. Which button does not work?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Deze knop hier. De knop doet het niet.",
+      "translation": "This button here. The button does not work."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Ah, ik zie de fout! Een moment...",
+      "translation": "Ah, I see the error! One moment..."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "En nu?",
+      "translation": "And now?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Probeer het opnieuw.",
+      "translation": "Try again."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Nu werkt het wel! Gelukkig!",
+      "translation": "Now it works! Luckily!"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Mooi. Dan zijn we klaar voor vrijdag.",
+      "translation": "Great. Then we are ready for Friday."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Eindelijk! Ik ga naar huis. Tot morgen, Daan!",
+      "translation": "Finally! I am going home. See you tomorrow, Daan!"
+     }
+    ]
+   }
+  ]
+ }
+]

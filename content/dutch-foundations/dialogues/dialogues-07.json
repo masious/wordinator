@@ -1,0 +1,1032 @@
+[
+ {
+  "course": "dutch-foundations/part-v",
+  "lesson": "27-wat-heb-je-gezien",
+  "title": "Wat heb je gezien en gedaan?",
+  "dialogues": [
+   {
+    "blockId": "73fab6e5-e342-4e36-9726-493822060a05",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "Heb je foto’s uit Valencia?",
+      "translation": "Do you have photos from Valencia?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, ik heb foto’s gezien en veel gegeten.",
+      "translation": "Yes, I saw photos and ate a lot."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Wat heb je met je moeder gedaan?",
+      "translation": "What did you do with your mother?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "We hebben samen gekookt. Ik heb ook een boek gelezen.",
+      "translation": "We cooked together. I also read a book."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Heb je Nederlands gestudeerd?",
+      "translation": "Did you study Dutch?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, en ik heb een brief aan mijn moeder geschreven.",
+      "translation": "Yes, and I wrote a letter to my mother."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Heb je veel gedronken?",
+      "translation": "Did you drink a lot?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Water en thee. Ik heb geen wijn gedronken.",
+      "translation": "Water and tea. I did not drink any wine."
+     }
+    ]
+   },
+   {
+    "blockId": "95f0ffd7-e3e3-49a8-a35c-a516966b0ef7",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "Heb je de foto van het huisfeest gezien?",
+      "translation": "Did you see the photo of the house party?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, ik heb alle foto’s bekeken.",
+      "translation": "Yes, I looked at all the photos."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Heb je ook de foto met de paella gezien?",
+      "translation": "Did you also see the photo with the paella?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, die heb ik gezien. De paella is lekker.",
+      "translation": "Yes, I saw it. The paella is delicious."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Heb je het recept opgeschreven?",
+      "translation": "Did you write down the recipe?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Nee, ik heb alleen de naam opgeschreven.",
+      "translation": "No, I only wrote down the name."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Heb je het recept aan je moeder verteld?",
+      "translation": "Did you tell your mother the recipe?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Nee, ik heb haar over het huisfeest verteld.",
+      "translation": "No, I told her about the house party."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-v",
+  "lesson": "28-toen-ik-jonger-was",
+  "title": "Vroeger",
+  "dialogues": [
+   {
+    "blockId": "3cae05f8-db7d-4efd-9ed0-4bbbc3aee4e7",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "Sofia, waar woonde je als kind?",
+      "translation": "Sofia, where did you live as a child?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik woonde in Valencia, in een rustige straat.",
+      "translation": "I lived in Valencia, on a quiet street."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ik woonde in Groningen, vlak bij mijn school.",
+      "translation": "I lived in Groningen, close to my school."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Had je een step?",
+      "translation": "Did you have a scooter?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ja, ik had een rode step. En jij?",
+      "translation": "Yes, I had a red scooter. And you?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik had een blauwe step.",
+      "translation": "I had a blue scooter."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Wat deed je na school?",
+      "translation": "What did you do after school?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik speelde vaak buiten met vriendinnen.",
+      "translation": "I often played outside with friends."
+     }
+    ]
+   },
+   {
+    "blockId": "0ef35c3d-e71a-4d6a-a588-44f05b3f8574",
+    "turns": [
+     {
+      "speaker": "Sofia",
+      "text": "Was je school klein?",
+      "translation": "Was your school small?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ja, mijn school was klein. En jouw school?",
+      "translation": "Yes, my school was small. And your school?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Mijn school was ook klein.",
+      "translation": "My school was small too."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Fietste je naar school?",
+      "translation": "Did you cycle to school?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Nee, ik ging meestal lopend. Mijn school was dichtbij.",
+      "translation": "No, I usually walked. My school was nearby."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Wat deed je na school?",
+      "translation": "What did you do after school?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik speelde buiten of ik fietste naar de speelplaats.",
+      "translation": "I played outside or cycled to the playground."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ik ging soms naar de speelplaats.",
+      "translation": "I sometimes went to the playground."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-v",
+  "lesson": "29-eerst-daarna-uiteindelijk",
+  "title": "Eerst, toen en uiteindelijk",
+  "dialogues": [
+   {
+    "blockId": "17447302-1f96-45d2-96c1-bd7cfe616dc3",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "Vertel eens over maandag.",
+      "translation": "Tell me about Monday."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Eerst ben ik naar het centrum gegaan.",
+      "translation": "First, I went to the city center."
+     },
+     {
+      "speaker": "Noor",
+      "text": "En toen?",
+      "translation": "And then?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Toen ben ik door het park gegaan.",
+      "translation": "Then I went through the park."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Was het druk?",
+      "translation": "Was it busy?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Nee, het was rustig.",
+      "translation": "No, it was quiet."
+     },
+     {
+      "speaker": "Noor",
+      "text": "En daarna?",
+      "translation": "And after that?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Daarna ben ik naar huis gegaan. Uiteindelijk kwam ik thuis.",
+      "translation": "After that, I went home. Eventually, I arrived home."
+     }
+    ]
+   },
+   {
+    "blockId": "5e4ab70a-42fc-4583-bb11-469aff33697c",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "Hoe was maandag?",
+      "translation": "How was Monday?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Het was een rustige dag.",
+      "translation": "It was a quiet day."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Wat heb je gedaan?",
+      "translation": "What did you do?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik ben naar het centrum gegaan.",
+      "translation": "I went to the city center."
+     },
+     {
+      "speaker": "Noor",
+      "text": "En wat deed je toen?",
+      "translation": "And what did you do then?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Toen ging ik door het park.",
+      "translation": "Then I went through the park."
+     },
+     {
+      "speaker": "Noor",
+      "text": "En daarna?",
+      "translation": "And after that?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Daarna ben ik naar huis gegaan. Uiteindelijk kwam ik thuis.",
+      "translation": "After that, I went home. Eventually, I arrived home."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-vi",
+  "lesson": "30-omdat-ik-werk",
+  "title": "Omdat ik werk",
+  "dialogues": [
+   {
+    "blockId": "760b1036-c981-4827-ae3f-91b2b91c4068",
+    "turns": [
+     {
+      "speaker": "Karin",
+      "text": "Sofia, werk je vandaag op kantoor?",
+      "translation": "Sofia, are you working at the office today?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja. Ik werk op kantoor omdat ik met Daan overleg.",
+      "translation": "Yes. I am working at the office because I am consulting with Daan."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Ik denk dat de nieuwe tekst duidelijk is.",
+      "translation": "I think the new text is clear."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik lees de tekst nog een keer omdat ik Nederlands leer.",
+      "translation": "I am reading the text once more because I am learning Dutch."
+     },
+     {
+      "speaker": "Karin",
+      "text": "Goed. Als ik vragen heb, praat ik met jullie.",
+      "translation": "Good. If I have questions, I will talk to you."
+     },
+     {
+      "speaker": "Daan",
+      "text": "En als ik iets niet begrijp, vraag ik het aan Karin.",
+      "translation": "And if I do not understand something, I will ask Karin."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik vind dat de uitleg nu duidelijk is.",
+      "translation": "I think the explanation is clear now."
+     },
+     {
+      "speaker": "Karin",
+      "text": "Fijn. We praten straks verder.",
+      "translation": "Great. We will talk more later."
+     }
+    ]
+   },
+   {
+    "blockId": "46ef3591-27aa-4f0d-baa2-83579d68d6ef",
+    "turns": [
+     {
+      "speaker": "Sofia",
+      "text": "Ik lees deze tekst omdat ik mijn Nederlands oefen.",
+      "translation": "I am reading this text because I am practicing my Dutch."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Ik denk dat je de uitleg goed begrijpt.",
+      "translation": "I think you understand the explanation well."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dank je. Als ik een nieuw woord zie, schrijf ik het op.",
+      "translation": "Thank you. If I see a new word, I write it down."
+     },
+     {
+      "speaker": "Daan",
+      "text": "En als je een vraag hebt, vraag je het aan Karin?",
+      "translation": "And if you have a question, do you ask Karin?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja. Ik vraag het aan haar omdat zij de teamleider is.",
+      "translation": "Yes. I ask her because she is the team leader."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Ik vind dat we zo verder kunnen.",
+      "translation": "I think we can continue like this."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Goed. Als ik klaar ben, drink ik thee.",
+      "translation": "Good. When I am finished, I will drink tea."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Prima. Dan praten we straks verder.",
+      "translation": "Fine. Then we will talk more later."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-vi",
+  "lesson": "31-want-of-omdat",
+  "title": "Want of omdat?",
+  "dialogues": [
+   {
+    "blockId": "92f07c87-a832-4d85-a96b-f76af4fb1d6c",
+    "turns": [
+     {
+      "speaker": "Sofia",
+      "text": "Hoi Marieke. Ik zit hier, want het is rustig.",
+      "translation": "Hi Marieke. I am sitting here because it is quiet."
+     },
+     {
+      "speaker": "Marieke",
+      "text": "Goed idee. Is het rustig genoeg?",
+      "translation": "Good idea. Is it quiet enough?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, want de bibliotheek is stil.",
+      "translation": "Yes, because the library is quiet."
+     },
+     {
+      "speaker": "Piotr",
+      "text": "Ik zit vooraan, omdat ik het bord goed zie.",
+      "translation": "I am sitting at the front because I can see the board well."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dat snap ik. Ik zit liever bij het raam, want daar is het licht.",
+      "translation": "I understand. I would rather sit by the window because it is light there."
+     },
+     {
+      "speaker": "Marieke",
+      "text": "We beginnen om zeven uur. Hebben jullie een vraag?",
+      "translation": "We start at seven o’clock. Do you have a question?"
+     },
+     {
+      "speaker": "Piotr",
+      "text": "Ja. Ik begrijp de opdracht niet, omdat de uitleg kort is.",
+      "translation": "Yes. I do not understand the assignment because the explanation is brief."
+     },
+     {
+      "speaker": "Marieke",
+      "text": "Dan geef ik nog een voorbeeld. Vraag gerust.",
+      "translation": "Then I will give another example. Feel free to ask."
+     }
+    ]
+   },
+   {
+    "blockId": "c8e304c3-dca2-4577-96f6-272203132aa4",
+    "turns": [
+     {
+      "speaker": "Marieke",
+      "text": "Waarom zit je vooraan, Piotr?",
+      "translation": "Why are you sitting at the front, Piotr?"
+     },
+     {
+      "speaker": "Piotr",
+      "text": "Ik zit vooraan, want ik zie het bord goed.",
+      "translation": "I am sitting at the front because I can see the board well."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik zit bij het raam, omdat het daar rustig is.",
+      "translation": "I am sitting by the window because it is quiet there."
+     },
+     {
+      "speaker": "Marieke",
+      "text": "En waarom lees je de opdracht nog een keer?",
+      "translation": "And why are you reading the assignment once more?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Omdat de uitleg kort is, lees ik de opdracht nog een keer.",
+      "translation": "Because the explanation is brief, I am reading the assignment once more."
+     },
+     {
+      "speaker": "Piotr",
+      "text": "Ik vraag het aan Marieke, want ik begrijp de laatste zin niet.",
+      "translation": "I am asking Marieke because I do not understand the last sentence."
+     },
+     {
+      "speaker": "Marieke",
+      "text": "Ik leg het graag uit, omdat die zin lastig is.",
+      "translation": "I am happy to explain it because that sentence is difficult."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dank je. Ik begrijp het nu.",
+      "translation": "Thank you. I understand it now."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-vi",
+  "lesson": "32-wat-is-het-leukst",
+  "title": "Wat is het leukst?",
+  "dialogues": [
+   {
+    "blockId": "2452b6a0-28b9-414a-8681-7c6f3076aaec",
+    "turns": [
+     {
+      "speaker": "Sofia",
+      "text": "Noor, welke stad is groter: Utrecht of Valencia?",
+      "translation": "Noor, which city is larger: Utrecht or Valencia?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Utrecht is kleiner dan Valencia, maar Valencia is warmer.",
+      "translation": "Utrecht is smaller than Valencia, but Valencia is warmer."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "En welke stad is het grootst?",
+      "translation": "And which city is the largest?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Valencia is het grootst.",
+      "translation": "Valencia is the largest."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Wat vindt Henk lekkerder: de paella of de boerenkoolstamppot?",
+      "translation": "Which does Henk like better: paella or kale stew?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Henk vindt de boerenkoolstamppot lekkerder dan de paella.",
+      "translation": "Henk likes the kale stew better than the paella."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "En de pierogi?",
+      "translation": "And the pierogi?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Die zijn ook lekker. Kasia vindt ze heerlijk.",
+      "translation": "They are delicious too. Kasia loves them."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, ik vind alles lekker.",
+      "translation": "Yes, I like everything."
+     },
+     {
+      "speaker": "Noor",
+      "text": "En welke activiteit vind je het leukst?",
+      "translation": "And which activity do you like best?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik zwem het liefst. Schaatsen vind ik best eng.",
+      "translation": "I prefer swimming. I find skating rather scary."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Dan vind je zwemmen misschien het leukst!",
+      "translation": "Then you might like swimming best!"
+     }
+    ]
+   },
+   {
+    "blockId": "5a80bce6-0323-49ee-98a3-c3abc31883fd",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "We vergelijken Utrecht en Valencia.",
+      "translation": "We are comparing Utrecht and Valencia."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Valencia is warmer dan Utrecht.",
+      "translation": "Valencia is warmer than Utrecht."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Utrecht is kleiner dan Valencia.",
+      "translation": "Utrecht is smaller than Valencia."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Welke stad is het grootst?",
+      "translation": "Which city is the largest?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Valencia is het grootst van de twee.",
+      "translation": "Valencia is the larger of the two."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "En welke stad is het warmst?",
+      "translation": "And which city is the warmest?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Valencia is het warmst van de twee.",
+      "translation": "Valencia is the warmer of the two."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Utrecht is kleiner en kouder.",
+      "translation": "Utrecht is smaller and colder."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ja, Utrecht is kleiner en kouder dan Valencia.",
+      "translation": "Yes, Utrecht is smaller and colder than Valencia."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dan klopt de vergelijking.",
+      "translation": "Then the comparison is correct."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-vi",
+  "lesson": "33-de-collega-die-hier-werkt",
+  "title": "De collega die hier werkt",
+  "dialogues": [
+   {
+    "blockId": "c447a54d-9262-4880-8802-200677c81866",
+    "turns": [
+     {
+      "speaker": "Sofia",
+      "text": "Karin, wie staat er op deze foto?",
+      "translation": "Karin, who is in this photo?"
+     },
+     {
+      "speaker": "Karin",
+      "text": "Dat is mijn collega Daan.",
+      "translation": "That is my colleague Daan."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "De collega die hier werkt?",
+      "translation": "The colleague who works here?"
+     },
+     {
+      "speaker": "Karin",
+      "text": "Ja. En de man die naast hem staat, is Piotr.",
+      "translation": "Yes. And the man standing next to him is Piotr."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik ken Piotr uit de Nederlandse les.",
+      "translation": "I know Piotr from Dutch class."
+     },
+     {
+      "speaker": "Karin",
+      "text": "Precies. Het boek dat op tafel ligt, is open.",
+      "translation": "Exactly. The book that is on the table is open."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "En de tas die naast het boek staat?",
+      "translation": "And the bag that is next to the book?"
+     },
+     {
+      "speaker": "Karin",
+      "text": "Die tas is van mij.",
+      "translation": "That bag is mine."
+     }
+    ]
+   },
+   {
+    "blockId": "f7b17a0f-4740-4163-9608-92136e05b38d",
+    "turns": [
+     {
+      "speaker": "Daan",
+      "text": "Sofia, welk kaartje zoek je?",
+      "translation": "Sofia, which card are you looking for?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Het kaartje dat naast de computer ligt.",
+      "translation": "The card that is next to the computer."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Dit kaartje?",
+      "translation": "This card?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Nee, het kaartje dat bij de foto ligt.",
+      "translation": "No, the card that is next to the photo."
+     },
+     {
+      "speaker": "Daan",
+      "text": "O, dit kaartje. Hier staat je naam.",
+      "translation": "Oh, this card. Your name is written here."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, en de afbeelding die ernaast staat, is mooi.",
+      "translation": "Yes, and the image next to it is beautiful."
+     },
+     {
+      "speaker": "Daan",
+      "text": "De afbeelding die op het scherm staat?",
+      "translation": "The image that is on the screen?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, precies. Ik herken het gebouw.",
+      "translation": "Yes, exactly. I recognize the building."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-vi",
+  "lesson": "34-om-te-studeren",
+  "title": "Om te studeren",
+  "dialogues": [
+   {
+    "blockId": "f04dec36-d3ef-4924-ae35-70bc6c9e1961",
+    "turns": [
+     {
+      "speaker": "Sofia",
+      "text": "Noor, ik lees deze Nederlandse tekst.",
+      "translation": "Noor, I am reading this Dutch text."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Waarom lees je die tekst?",
+      "translation": "Why are you reading that text?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik lees de tekst om nieuwe woorden te leren.",
+      "translation": "I am reading the text to learn new words."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Goed idee. Ik pak mijn woordenboek.",
+      "translation": "Good idea. I will get my dictionary."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Gebruik je dat om een woord op te zoeken?",
+      "translation": "Do you use it to look up a word?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ja. Ik zoek de betekenis op om de tekst beter te begrijpen.",
+      "translation": "Yes. I look up the meaning to understand the text better."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik schrijf de uitspraak op om thuis hardop te oefenen.",
+      "translation": "I write down the pronunciation to practice aloud at home."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ik maak ook een aantekening om die klank te onthouden.",
+      "translation": "I also make a note to remember that sound."
+     }
+    ]
+   },
+   {
+    "blockId": "82dbcf94-1d53-4812-8275-26682b7aaa67",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "Ik lees de woordenlijst om de nieuwe woorden te herhalen.",
+      "translation": "I read the word list to review the new words."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik maak een aantekening om een lastige klank te onthouden.",
+      "translation": "I make a note to remember a difficult sound."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Probeer de zin ook hardop te lezen.",
+      "translation": "Try reading the sentence aloud too."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, ik probeer de uitspraak rustig te oefenen.",
+      "translation": "Yes, I try to practice the pronunciation calmly."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ik pak mijn woordenboek om een woord op te zoeken.",
+      "translation": "I get my dictionary to look up a word."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik schrijf de betekenis op om die te onthouden.",
+      "translation": "I write down the meaning to remember it."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Goed. Ik lees het voorbeeld om de uitleg te begrijpen.",
+      "translation": "Good. I read the example to understand the explanation."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik leg mijn telefoon weg om minder afleiding te hebben.",
+      "translation": "I put my phone away to have fewer distractions."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ik gebruik een markeerstift om een woord te markeren.",
+      "translation": "I use a highlighter to mark a word."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dat is handig. Ik gebruik de pauzeknop om een zin nog eens te horen.",
+      "translation": "That is useful. I use the pause button to hear a sentence again."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-vi",
+  "lesson": "35-als-ik-tijd-had",
+  "title": "Als ik tijd had",
+  "dialogues": [
+   {
+    "blockId": "20004243-eb38-4df1-8fe1-9e7429be8cdc",
+    "turns": [
+     {
+      "speaker": "Sofia",
+      "text": "Noor, stel: als ik vandaag vrij had, zou ik naar het park gaan.",
+      "translation": "Noor, suppose I had today off; I would go to the park."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Zou je daar gaan wandelen?",
+      "translation": "Would you go for a walk there?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja. En als het zonnig was, zou ik ook buiten zitten.",
+      "translation": "Yes. And if it were sunny, I would sit outside too."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Als we samen tijd hadden, zouden we kunnen zwemmen.",
+      "translation": "If we had time together, we could go swimming."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Zou jij liever zwemmen of schaatsen?",
+      "translation": "Would you rather swim or skate?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Als ik moest kiezen, zou ik zwemmen.",
+      "translation": "If I had to choose, I would swim."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik ook. Maar dit is alleen een idee.",
+      "translation": "Me too. But this is only an idea."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Natuurlijk. We maken nu geen afspraak.",
+      "translation": "Of course. We are not making plans now."
+     }
+    ]
+   },
+   {
+    "blockId": "bacf9131-d097-444d-b19e-18e1051a22d2",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "Als we een vrije middag hadden, wat zouden we dan doen?",
+      "translation": "If we had a free afternoon, what would we do?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dan zou ik naar het park gaan.",
+      "translation": "Then I would go to the park."
+     },
+     {
+      "speaker": "Noor",
+      "text": "En als het regende?",
+      "translation": "And if it rained?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dan zouden we naar het zwembad gaan.",
+      "translation": "Then we would go to the swimming pool."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Zou je ook naar Valencia gaan?",
+      "translation": "Would you also go to Valencia?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Als ik daar was, zou ik mijn moeder bellen.",
+      "translation": "If I were there, I would call my mother."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Dat klinkt gezellig.",
+      "translation": "That sounds nice."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, maar het is alleen een denkbeeldige middag.",
+      "translation": "Yes, but it is only an imaginary afternoon."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-vi",
+  "lesson": "36-wat-gaan-we-morgen-doen",
+  "title": "Wat gaan we morgen doen?",
+  "dialogues": [
+   {
+    "blockId": "c9380fd2-5240-47d3-b8f0-6c74f61fe786",
+    "turns": [
+     {
+      "speaker": "Sofia",
+      "text": "De les is bijna afgelopen. Hoe laat begint de les volgende week?",
+      "translation": "The class is almost over. What time does class start next week?"
+     },
+     {
+      "speaker": "Piotr",
+      "text": "Volgende week dinsdag begint de les om zeven uur 's avonds. Dat staat in het rooster.",
+      "translation": "Next Tuesday, class starts at seven in the evening. It is on the schedule."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "O ja, vandaag is de les op dinsdagavond. Ik ga morgen mijn woorden herhalen.",
+      "translation": "Oh yes, class is on Tuesday evening today. I am going to review my words tomorrow."
+     },
+     {
+      "speaker": "Piotr",
+      "text": "Goed idee. Ik ga vanavond mijn aantekeningen lezen.",
+      "translation": "Good idea. I am going to read my notes tonight."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Denk je dat het morgen regent?",
+      "translation": "Do you think it will rain tomorrow?"
+     },
+     {
+      "speaker": "Piotr",
+      "text": "Ik denk dat het misschien regent, maar ik weet het niet zeker.",
+      "translation": "I think it might rain, but I am not sure."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dan neem ik mijn jas mee.",
+      "translation": "Then I will bring my coat."
+     },
+     {
+      "speaker": "Piotr",
+      "text": "Ik zal je morgen een bericht sturen als ik meer weet.",
+      "translation": "I will send you a message tomorrow if I find out more."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dank je. Zal ik de woordenlijst voor je meenemen?",
+      "translation": "Thank you. Shall I bring the word list for you?"
+     },
+     {
+      "speaker": "Piotr",
+      "text": "Ja, graag. Dan kunnen we die voor de les bekijken.",
+      "translation": "Yes, please. Then we can look at it before class."
+     }
+    ]
+   },
+   {
+    "blockId": "f4cd2515-1bfb-489b-a461-fb007a128306",
+    "turns": [
+     {
+      "speaker": "Piotr",
+      "text": "Staat de les van volgende week al in het rooster?",
+      "translation": "Is next week’s class already on the schedule?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, dinsdag om zeven uur 's avonds. Dat is de vaste tijd.",
+      "translation": "Yes, Tuesday at seven in the evening. That is the regular time."
+     },
+     {
+      "speaker": "Piotr",
+      "text": "Ik ga morgenavond de nieuwe woorden leren.",
+      "translation": "I am going to learn the new words tomorrow evening."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik ga de woorden ook herhalen. Misschien oefen ik met Noor.",
+      "translation": "I am going to review the words too. Maybe I will practice with Noor."
+     },
+     {
+      "speaker": "Piotr",
+      "text": "Denk je dat het morgen regenachtig is?",
+      "translation": "Do you think it will be rainy tomorrow?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Misschien zal het morgen regenachtig zijn.",
+      "translation": "Maybe it will be rainy tomorrow."
+     },
+     {
+      "speaker": "Piotr",
+      "text": "Ik zal je na de les een bericht sturen.",
+      "translation": "I will send you a message after class."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dank je. Zal ik mijn aantekeningen delen?",
+      "translation": "Thank you. Shall I share my notes?"
+     },
+     {
+      "speaker": "Piotr",
+      "text": "Ja, graag. Dat is handig.",
+      "translation": "Yes, please. That is useful."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Prima. Dan zien we elkaar volgende week weer in de les.",
+      "translation": "Great. Then we will see each other in class again next week."
+     }
+    ]
+   }
+  ]
+ }
+]

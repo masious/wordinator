@@ -118,51 +118,63 @@
         "turns": [
           {
             "speaker": "Sofia",
-            "text": "Met Sofia!"
+            "text": "Met Sofia!",
+            "translation": "It's Sofia!"
           },
           {
             "speaker": "Noor",
-            "text": "Hoi, met Noor! Sorry, ik weet de weg niet. Waar is de Kastanjestraat?"
+            "text": "Hoi, met Noor! Sorry, ik weet de weg niet. Waar is de Kastanjestraat?",
+            "translation": "Hi, Noor speaking! Sorry, I don't know the way. Where is Kastanjestraat?"
           },
           {
             "speaker": "Sofia",
-            "text": "Joh! Waar ben je nu?"
+            "text": "Joh! Waar ben je nu?",
+            "translation": "Oh! Where are you now?"
           },
           {
             "speaker": "Noor",
-            "text": "Ik sta bij een groot kruispunt met een stoplicht. Ik zie een brug en een grote moskee."
+            "text": "Ik sta bij een groot kruispunt met een stoplicht. Ik zie een brug en een grote moskee.",
+            "translation": "I'm standing at a large crossroads with a traffic light. I can see a bridge and a large mosque."
           },
           {
             "speaker": "Sofia",
-            "text": "O, dan ben je vlakbij! Steek bij het stoplicht over. Steek dan de brug over."
+            "text": "O, dan ben je vlakbij! Steek bij het stoplicht over. Steek dan de brug over.",
+            "translation": "Oh, then you're very close! Cross at the traffic light. Then cross the bridge."
           },
           {
             "speaker": "Noor",
-            "text": "De brug over. Oké. En dan?"
+            "text": "De brug over. Oké. En dan?",
+            "translation": "Cross the bridge. Okay. And then?"
           },
           {
             "speaker": "Sofia",
-            "text": "Dan ben je in de Kanaalstraat. Loop rechtdoor, voorbij de bakker."
+            "text": "Dan ben je in de Kanaalstraat. Loop rechtdoor, voorbij de bakker.",
+            "translation": "Then you're on Kanaalstraat. Walk straight ahead, past the bakery."
           },
           {
             "speaker": "Noor",
-            "text": "En dan de tweede straat rechts?"
+            "text": "En dan de tweede straat rechts?",
+            "translation": "And then the second street on the right?"
           },
           {
             "speaker": "Sofia",
-            "text": "Nee, niet de tweede! Neem de derde straat rechts. Dat is de Kastanjestraat."
+            "text": "Nee, niet de tweede! Neem de derde straat rechts. Dat is de Kastanjestraat.",
+            "translation": "No, not the second one! Take the third street on the right. That's Kastanjestraat."
           },
           {
             "speaker": "Noor",
-            "text": "De derde straat rechts. Is het ver?"
+            "text": "De derde straat rechts. Is het ver?",
+            "translation": "The third street on the right. Is it far?"
           },
           {
             "speaker": "Sofia",
-            "text": "Nee, het is drie minuten lopen. Wees voorzichtig op de brug. Er zijn veel fietsers!"
+            "text": "Nee, het is drie minuten lopen. Wees voorzichtig op de brug. Er zijn veel fietsers!",
+            "translation": "No, it's a three-minute walk. Be careful on the bridge. There are lots of cyclists!"
           },
           {
             "speaker": "Noor",
-            "text": "Ja hoor. Tot straks!"
+            "text": "Ja hoor. Tot straks!",
+            "translation": "Sure. See you later!"
           }
         ]
       },
@@ -2013,51 +2025,63 @@
         "turns": [
           {
             "speaker": "Toerist",
-            "text": "Pardon, mevrouw. Hoe kom ik bij Utrecht Centraal?"
+            "text": "Pardon, mevrouw. Hoe kom ik bij Utrecht Centraal?",
+            "translation": "Excuse me, ma'am. How do I get to Utrecht Central Station?"
           },
           {
             "speaker": "Sofia",
-            "text": "Utrecht Centraal? Dat is niet ver. Gaat u hier rechtdoor tot de brug."
+            "text": "Utrecht Centraal? Dat is niet ver. Gaat u hier rechtdoor tot de brug.",
+            "translation": "Utrecht Central? It's not far. Go straight ahead here until the bridge."
           },
           {
             "speaker": "Toerist",
-            "text": "Tot de brug. En dan?"
+            "text": "Tot de brug. En dan?",
+            "translation": "To the bridge. And then?"
           },
           {
             "speaker": "Sofia",
-            "text": "Steekt u de brug over. Dan ziet u een groot kruispunt met een stoplicht."
+            "text": "Steekt u de brug over. Dan ziet u een groot kruispunt met een stoplicht.",
+            "translation": "Cross the bridge. Then you'll see a large crossroads with a traffic light."
           },
           {
             "speaker": "Toerist",
-            "text": "Een kruispunt. Ga ik daar links of rechts?"
+            "text": "Een kruispunt. Ga ik daar links of rechts?",
+            "translation": "A crossroads. Do I go left or right there?"
           },
           {
             "speaker": "Sofia",
-            "text": "Niet links en niet rechts. Steekt u daar over en gaat u rechtdoor. Dan ziet u het station."
+            "text": "Niet links en niet rechts. Steekt u daar over en gaat u rechtdoor. Dan ziet u het station.",
+            "translation": "Neither left nor right. Cross there and go straight ahead. Then you'll see the station."
           },
           {
             "speaker": "Toerist",
-            "text": "Is het ver?"
+            "text": "Is het ver?",
+            "translation": "Is it far?"
           },
           {
             "speaker": "Sofia",
-            "text": "Nee, het is ongeveer tien minuten lopen."
+            "text": "Nee, het is ongeveer tien minuten lopen.",
+            "translation": "No, it's about a ten-minute walk."
           },
           {
             "speaker": "Noor",
-            "text": "U kunt ook de bus nemen. De halte is daar, tegenover de supermarkt."
+            "text": "U kunt ook de bus nemen. De halte is daar, tegenover de supermarkt.",
+            "translation": "You can also take the bus. The stop is over there, opposite the supermarket."
           },
           {
             "speaker": "Toerist",
-            "text": "Nee, dank u. Ik loop wel."
+            "text": "Nee, dank u. Ik loop wel.",
+            "translation": "No, thank you. I'll walk."
           },
           {
             "speaker": "Noor",
-            "text": "Pas op voor de fietsers bij het kruispunt!"
+            "text": "Pas op voor de fietsers bij het kruispunt!",
+            "translation": "Watch out for the cyclists at the crossroads!"
           },
           {
             "speaker": "Toerist",
-            "text": "Dank u wel! Tot ziens!"
+            "text": "Dank u wel! Tot ziens!",
+            "translation": "Thank you! Goodbye!"
           }
         ]
       },

@@ -111,43 +111,53 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Kijk, Sofia! De Domtoren!"
+            "text": "Kijk, Sofia! De Domtoren!",
+            "translation": "Look, Sofia! The Dom Tower!"
           },
           {
             "speaker": "Sofia",
-            "text": "De Domtoren is heel hoog!"
+            "text": "De Domtoren is heel hoog!",
+            "translation": "The Dom Tower is very tall!"
           },
           {
             "speaker": "Noor",
-            "text": "Ja. En heel oud."
+            "text": "Ja. En heel oud.",
+            "translation": "Yes. And very old."
           },
           {
             "speaker": "Sofia",
-            "text": "En erg mooi!"
+            "text": "En erg mooi!",
+            "translation": "And very beautiful!"
           },
           {
             "speaker": "Noor",
-            "text": "Is Valencia ook mooi?"
+            "text": "Is Valencia ook mooi?",
+            "translation": "Is Valencia beautiful too?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, Valencia is heel mooi. Maar Valencia is groot en druk."
+            "text": "Ja, Valencia is heel mooi. Maar Valencia is groot en druk.",
+            "translation": "Yes, Valencia is very beautiful. But Valencia is big and busy."
           },
           {
             "speaker": "Noor",
-            "text": "En Utrecht?"
+            "text": "En Utrecht?",
+            "translation": "And Utrecht?"
           },
           {
             "speaker": "Sofia",
-            "text": "Het centrum is klein, maar gezellig."
+            "text": "Het centrum is klein, maar gezellig.",
+            "translation": "The city center is small, but cozy."
           },
           {
             "speaker": "Noor",
-            "text": "Klein? De Domtoren is niet klein!"
+            "text": "Klein? De Domtoren is niet klein!",
+            "translation": "Small? The Dom Tower isn't small!"
           },
           {
             "speaker": "Sofia",
-            "text": "Nee! De Domtoren is heel groot."
+            "text": "Nee! De Domtoren is heel groot.",
+            "translation": "No! The Dom Tower is very big."
           }
         ]
       },
@@ -1853,43 +1863,53 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "En, Sofia? Hoe is het werk?"
+            "text": "En, Sofia? Hoe is het werk?",
+            "translation": "So, Sofia? How is work?"
           },
           {
             "speaker": "Sofia",
-            "text": "Leuk! Het team is klein, maar heel aardig."
+            "text": "Leuk! Het team is klein, maar heel aardig.",
+            "translation": "Great! The team is small, but very nice."
           },
           {
             "speaker": "Noor",
-            "text": "Is Karin aardig?"
+            "text": "Is Karin aardig?",
+            "translation": "Is Karin nice?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, Karin is heel aardig. En Daan is aardig en heel lang!"
+            "text": "Ja, Karin is heel aardig. En Daan is aardig en heel lang!",
+            "translation": "Yes, Karin is very nice. And Daan is nice and very tall!"
           },
           {
             "speaker": "Noor",
-            "text": "Lang? Ik ben ook lang!"
+            "text": "Lang? Ik ben ook lang!",
+            "translation": "Tall? I'm tall too!"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja! En ik ben niet lang."
+            "text": "Ja! En ik ben niet lang.",
+            "translation": "Yes! And I'm not tall."
           },
           {
             "speaker": "Noor",
-            "text": "En Tess? Tess is lief!"
+            "text": "En Tess? Tess is lief!",
+            "translation": "And Tess? Tess is sweet!"
           },
           {
             "speaker": "Sofia",
-            "text": "Lief, maar streng! Ze is nu mijn lerares."
+            "text": "Lief, maar streng! Ze is nu mijn lerares.",
+            "translation": "Sweet, but strict! She's my teacher now."
           },
           {
             "speaker": "Noor",
-            "text": "En jij? Ben je moe?"
+            "text": "En jij? Ben je moe?",
+            "translation": "And you? Are you tired?"
           },
           {
             "speaker": "Sofia",
-            "text": "Een beetje moe. Maar ik ben heel blij!"
+            "text": "Een beetje moe. Maar ik ben heel blij!",
+            "translation": "A little tired. But I'm very happy!"
           }
         ]
       },

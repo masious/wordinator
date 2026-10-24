@@ -29,35 +29,43 @@
         "turns": [
           {
             "speaker": "Sofia",
-            "text": "Karin, mag ik vrij nemen van 21 december tot en met 31 december?"
+            "text": "Karin, mag ik vrij nemen van 21 december tot en met 31 december?",
+            "translation": "Karin, mag ik take time off from December 21 through December 31?"
           },
           {
             "speaker": "Karin",
-            "text": "Dat mag. Je moet het wel in het systeem aanvragen."
+            "text": "Dat mag. Je moet het wel in het systeem aanvragen.",
+            "translation": "That is allowed. You must het wel request it in the system."
           },
           {
             "speaker": "Sofia",
-            "text": "Dank je. Kan ik vrijdag thuiswerken?"
+            "text": "Dank je. Kan ik vrijdag thuiswerken?",
+            "translation": "Thanks. Kan ik vrijdag work from home?"
           },
           {
             "speaker": "Karin",
-            "text": "Ja, dat kan. Op vrijdag mag je thuiswerken."
+            "text": "Ja, dat kan. Op vrijdag mag je thuiswerken.",
+            "translation": "Yes, dat kan. Op vrijdag mag you work from home."
           },
           {
             "speaker": "Sofia",
-            "text": "Moet ik acht dagen aanvragen?"
+            "text": "Moet ik acht dagen aanvragen?",
+            "translation": "Do I have to acht dagen aanvragen?"
           },
           {
             "speaker": "Karin",
-            "text": "Ja. Eerste kerstdag en tweede kerstdag zijn feestdagen."
+            "text": "Ja. Eerste kerstdag en tweede kerstdag zijn feestdagen.",
+            "translation": "Ja. Christmas Day en the second day of Christmas zijn public holidays."
           },
           {
             "speaker": "Sofia",
-            "text": "En 1 januari is ook een feestdag."
+            "text": "En 1 januari is ook een feestdag.",
+            "translation": "En 1 January is ook een feestdag."
           },
           {
             "speaker": "Karin",
-            "text": "Precies. Dan begin je op maandag 4 januari weer, toch?"
+            "text": "Precies. Dan begin je op maandag 4 januari weer, toch?",
+            "translation": "Precies. Dan begin you on Monday, January 4 weer, toch?"
           }
         ]
       },
@@ -716,35 +724,43 @@
         "turns": [
           {
             "speaker": "Badmeester",
-            "text": "Goedemorgen. Je moet eerst douchen."
+            "text": "Goedemorgen. Je moet eerst douchen.",
+            "translation": "Good morning. You must eerst douchen."
           },
           {
             "speaker": "Sofia",
-            "text": "Natuurlijk. Mag mijn tas hier staan?"
+            "text": "Natuurlijk. Mag mijn tas hier staan?",
+            "translation": "Of course. Mag mijn tas hier staan?"
           },
           {
             "speaker": "Badmeester",
-            "text": "Nee, dat mag niet. Je moet je tas in een kluis doen."
+            "text": "Nee, dat mag niet. Je moet je tas in een kluis doen.",
+            "translation": "No, that is not allowed. You must you tas in een kluis doen."
           },
           {
             "speaker": "Sofia",
-            "text": "Mag ik hier zwemmen?"
+            "text": "Mag ik hier zwemmen?",
+            "translation": "May I hier zwemmen?"
           },
           {
             "speaker": "Badmeester",
-            "text": "Ja, dat mag. Maar je mag hier niet rennen."
+            "text": "Ja, dat mag. Maar je mag hier niet rennen.",
+            "translation": "Yes, dat mag. Maar you mag hier niet rennen."
           },
           {
             "speaker": "Sofia",
-            "text": "En kan ik in het diepe zwemmen?"
+            "text": "En kan ik in het diepe zwemmen?",
+            "translation": "En can I in het diepe zwemmen?"
           },
           {
             "speaker": "Badmeester",
-            "text": "Dat kan. Je kunt goed zwemmen, toch?"
+            "text": "Dat kan. Je kunt goed zwemmen, toch?",
+            "translation": "That is possible. You can swim well, toch?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, ik kan goed zwemmen. Dank u wel."
+            "text": "Ja, ik kan goed zwemmen. Dank u wel.",
+            "translation": "Yes, ik kan goed zwemmen. Dank u wel."
           }
         ]
       },

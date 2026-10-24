@@ -1,0 +1,941 @@
+[
+ {
+  "course": "dutch-foundations/part-ii",
+  "lesson": "09-b-mijn-week",
+  "title": "Mijn week",
+  "dialogues": [
+   {
+    "blockId": "7013a519-d9d4-44f4-bc8f-e3dccf48330a",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "Joh, Sofia, jouw agenda is vol! Wat doe je elke week?",
+      "translation": "Wow, Sofia, your schedule is full! What do you do every week?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Veel! Ik ga naar de bibliotheek elke dinsdag.",
+      "translation": "A lot! I go to the library every Tuesday."
+     },
+     {
+      "speaker": "Noor",
+      "text": "O, je gaat elke dinsdag naar de bibliotheek? Wat doe je daar?",
+      "translation": "Oh, you go to the library every Tuesday? What do you do there?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik heb daar Nederlandse les. De les is van zeven tot negen uur.",
+      "translation": "I have Dutch class there. The class is from seven to nine o'clock."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Super! Hoe ga je naar de bibliotheek? Lopend?",
+      "translation": "Great! How do you get to the library? On foot?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Nee, ik ga om half zeven met de bus. De bibliotheek is in het centrum.",
+      "translation": "No, I take the bus at half past six. The library is in the city center."
+     },
+     {
+      "speaker": "Noor",
+      "text": "En ik sport elke donderdag in de sportschool. Vanavond ook! Kom je mee?",
+      "translation": "And I work out at the gym every Thursday. Tonight too! Are you coming?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Vanavond niet, ik ben moe. Maar volgende week kom ik mee!",
+      "translation": "Not tonight, I'm tired. But I'll come along next week!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Leuk! Dan gaan we volgende week samen naar de sportschool.",
+      "translation": "Great! Then we'll go to the gym together next week."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "En zaterdag is het feest van Daan!",
+      "translation": "And Saturday is Daan's party!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ja! Op zaterdag werk ik van tien tot vier in het café. Daarna koken we samen.",
+      "translation": "Yes! On Saturday I work from ten to four at the café. After that we'll cook together."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "En om acht uur gaan we samen met de tram naar Daan. Gezellig!",
+      "translation": "And at eight o'clock we'll take the tram to Daan together. That'll be fun!"
+     }
+    ]
+   },
+   {
+    "blockId": "36ec4230-b532-418e-923c-16bbf4b15678",
+    "turns": [
+     {
+      "speaker": "Sofia",
+      "text": "Hoi Daan! Gefeliciteerd met je verjaardag!",
+      "translation": "Hi Daan! Happy birthday!"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Dank je wel, Sofia! Kom binnen!",
+      "translation": "Thank you, Sofia! Come in!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Alsjeblieft, een cadeau!",
+      "translation": "Here you go, a present!"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Een boek! Wat leuk, dank je wel!",
+      "translation": "A book! How nice, thank you!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Hoi Lotte! Gefeliciteerd met Daan!",
+      "translation": "Hi Lotte! Congratulations on Daan!"
+     },
+     {
+      "speaker": "Lotte",
+      "text": "Dank je! Kijk, daar is de moeder van Daan.",
+      "translation": "Thanks! Look, there's Daan's mother."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dag mevrouw! Gefeliciteerd met Daan!",
+      "translation": "Hello, ma'am! Congratulations on Daan!"
+     },
+     {
+      "speaker": "Daans moeder",
+      "text": "Dank je wel! Ga zitten. Koffie? Taart?",
+      "translation": "Thank you! Sit down. Coffee? Cake?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, graag! Lotte, wat doe jij volgende week?",
+      "translation": "Yes, please! Lotte, what are you doing next week?"
+     },
+     {
+      "speaker": "Lotte",
+      "text": "Ik werk elke dag op school. Op woensdag ga ik 's middags met de trein naar Amersfoort.",
+      "translation": "I work at school every day. On Wednesday afternoon I take the train to Amersfoort."
+     },
+     {
+      "speaker": "Daan",
+      "text": "En ik ga elke dag om acht uur met de fiets naar kantoor.",
+      "translation": "And I cycle to the office at eight o'clock every day."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Om acht uur? Ik ga om half negen lopend naar kantoor. Ik ben vaak een beetje te laat!",
+      "translation": "At eight o'clock? I walk to the office at half past eight. I'm often a little late!"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-ii",
+  "lesson": "10-a-boodschappen",
+  "title": "Boodschappen",
+  "dialogues": [
+   {
+    "blockId": "22e73d13-07b5-49e5-9c49-e1caaddbb4eb",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "Sofia, morgen is het feest van Daan. Jij maakt een tortilla, toch?",
+      "translation": "Sofia, Daan's party is tomorrow. You're making a tortilla, right?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, een Spaanse tortilla! Hebben we eieren?",
+      "translation": "Yes, a Spanish tortilla! Do we have eggs?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Nee, we hebben geen eieren. En we hebben ook geen melk.",
+      "translation": "No, we don't have any eggs. And we don't have any milk either."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Echt? Wacht even, ik kijk in de koelkast.",
+      "translation": "Really? Wait a moment, I'll look in the fridge."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "We hebben een ui, twee tomaten, kaas en boter.",
+      "translation": "We have an onion, two tomatoes, cheese, and butter."
+     },
+     {
+      "speaker": "Noor",
+      "text": "En we hebben geen aardappelen.",
+      "translation": "And we don't have any potatoes."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Geen aardappelen? Dan koop ik aardappelen en uien.",
+      "translation": "No potatoes? Then I'll buy potatoes and onions."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Goed. Kijk, hier is mijn boodschappenlijstje: eieren, aardappelen, uien.",
+      "translation": "Good. Look, here's my shopping list: eggs, potatoes, onions."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "En chips en koekjes voor het feest!",
+      "translation": "And crisps and cookies for the party!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Super! Om half zes doen we samen boodschappen.",
+      "translation": "Great! At half past five we'll go grocery shopping together."
+     }
+    ]
+   },
+   {
+    "blockId": "25120ed6-c2aa-4e8c-81c7-d3952d9506cc",
+    "turns": [
+     {
+      "speaker": "Sofia",
+      "text": "Noor, waar zijn de tomaats?",
+      "translation": "Noor, where are the tomatoes?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "De tomaten? Kijk, hier zijn de tomaten, bij de paprika's.",
+      "translation": "The tomatoes? Look, here are the tomatoes, next to the peppers."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "O ja, tomaten. Ik neem zes grote tomaten voor het feest.",
+      "translation": "Oh yes, tomatoes. I'll take six large tomatoes for the party."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Super. En ik neem twee rode paprika's en een komkommer.",
+      "translation": "Great. And I'll take two red peppers and a cucumber."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Eieren, aardappelen, uien en tomaten. Ja! Nu het brood nog.",
+      "translation": "Eggs, potatoes, onions, and tomatoes. Yes! Now we just need the bread."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Neem jij de broodjes?",
+      "translation": "Will you get the bread rolls?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja hoor. Kijk, een groot brood!",
+      "translation": "Sure. Look, a large loaf of bread!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Nee, joh! Geen brood, broodjes! Kleine broodjes, voor het feest.",
+      "translation": "No way! Not bread, bread rolls! Small rolls, for the party."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "O, sorry! Hoe zeg je 'rolls' in het Nederlands? Broodjes?",
+      "translation": "Oh, sorry! How do you say “rolls” in Dutch? Broodjes?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ja! Een broodje is klein. Een brood is groot.",
+      "translation": "Yes! A broodje is small. A brood is large."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Oké, ik neem twintig broodjes. En het grote brood ook, voor het ontbijt!",
+      "translation": "Okay, I'll take twenty rolls. And the large loaf too, for breakfast!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Lekker! Nu nog chips en koekjes, en dan naar huis.",
+      "translation": "Great! Just crisps and cookies now, and then we'll go home."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-ii",
+  "lesson": "10-b-hoeveel-heb-je-nodig",
+  "title": "Hoeveel heb je nodig?",
+  "dialogues": [
+   {
+    "blockId": "9d532ee5-647d-4f7c-94a7-fb90208fc2ce",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "Zo, Sofia! Vandaag maken we een Spaanse tortilla. Hoeveel eieren heb je nodig?",
+      "translation": "Well, Sofia! Today we're making a Spanish tortilla. How many eggs do you need?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Zes eieren en een kilo aardappelen.",
+      "translation": "Six eggs and a kilo of potatoes."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Een kilo? Joh! Wat heb je nog meer nodig?",
+      "translation": "A kilo? Wow! What else do you need?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik heb nodig twee uien.",
+      "translation": "I need two onions."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Je hebt twee uien nodig? Prima, we hebben vijf uien.",
+      "translation": "You need two onions? Great, we have five onions."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "O ja: ik heb twee uien nodig. En een beetje zout.",
+      "translation": "Oh yes: I need two onions. And a little salt."
+     },
+     {
+      "speaker": "Noor",
+      "text": "En olijfolie? We hebben een fles olijfolie. Is een fles genoeg?",
+      "translation": "And olive oil? We have a bottle of olive oil. Is one bottle enough?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, een fles is genoeg. Voor een tortilla gebruik ik een kwart liter.",
+      "translation": "Yes, one bottle is enough. I use a quarter of a liter for one tortilla."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Super! Ik maak ook Nederlandse snacks klaar: kaasblokjes en bitterballen.",
+      "translation": "Great! I'm also preparing Dutch snacks: cheese cubes and bitterballen."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Kaasblokjes? Lekker! Hoeveel kaas heb je nodig?",
+      "translation": "Cheese cubes? Delicious! How much cheese do you need?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Een pond kaas. Een pond is vijfhonderd gram. En twee zakken chips!",
+      "translation": "A pound of cheese. A pound is five hundred grams. And two bags of crisps!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Echt? Vijfhonderd gram? Oké!",
+      "translation": "Really? Five hundred grams? Okay!"
+     }
+    ]
+   },
+   {
+    "blockId": "a23e07df-c70b-470b-9c3c-59e8075548c0",
+    "turns": [
+     {
+      "speaker": "Daan",
+      "text": "Sofia, de tortilla is heel lekker! Hoeveel eieren gebruik je?",
+      "translation": "Sofia, the tortilla is really delicious! How many eggs do you use?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dank je! Zes eieren voor een tortilla. Ik maak vandaag twee tortilla's.",
+      "translation": "Thank you! Six eggs for one tortilla. I'm making two tortillas today."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Dus twaalf eieren! En hoeveel aardappelen?",
+      "translation": "So twelve eggs! And how many potatoes?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Een kilo voor een tortilla. Dus twee kilo aardappelen.",
+      "translation": "A kilo for one tortilla. So two kilos of potatoes."
+     },
+     {
+      "speaker": "Lotte",
+      "text": "En olijfolie? In Spanje gebruiken jullie veel olijfolie, toch?",
+      "translation": "And olive oil? You use a lot of olive oil in Spain, right?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, veel olijfolie! En een beetje zout.",
+      "translation": "Yes, lots of olive oil! And a little salt."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Daan, hier zijn de bitterballen. Heb je mosterd nodig?",
+      "translation": "Daan, here are the bitterballen. Do you need mustard?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Ja, een beetje mosterd, alsjeblieft. Hoeveel bitterballen heb je, Noor?",
+      "translation": "Yes, a little mustard, please. How many bitterballen do you have, Noor?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Veertig. En twee zakken chips en veel kaasblokjes.",
+      "translation": "Forty. And two bags of crisps and lots of cheese cubes."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Twintig mensen en veertig bitterballen: twee bitterballen per persoon. Prima.",
+      "translation": "Twenty people and forty bitterballen: two bitterballen per person. Great."
+     },
+     {
+      "speaker": "Lotte",
+      "text": "Daan, jij kookt op zondag. Heb jij het recept nodig?",
+      "translation": "Daan, you cook on Sunday. Do you need the recipe?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Precies. Sofia, ik heb het recept nodig!",
+      "translation": "Exactly. Sofia, I need the recipe!"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-ii",
+  "lesson": "11-a-in-het-cafe",
+  "title": "In het café",
+  "dialogues": [
+   {
+    "blockId": "a1fb6569-e90e-4af8-b42c-6eb6790e60ad",
+    "turns": [
+     {
+      "speaker": "Noor",
+      "text": "Hoi! Gezellig! Wat willen jullie drinken?",
+      "translation": "Hi! Nice to see you! What would you like to drink?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Hoi Noor! Ik wil graag een cappuccino.",
+      "translation": "Hi Noor! I'd like a cappuccino, please."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Een cappuccino. En jij, Daan?",
+      "translation": "A cappuccino. And you, Daan?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Doe mij maar een thee.",
+      "translation": "I'll have a tea."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Gewone thee of verse muntthee?",
+      "translation": "Regular tea or fresh mint tea?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Verse muntthee, graag. En mag ik een glas water?",
+      "translation": "Fresh mint tea, please. And may I have a glass of water?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Kraanwater?",
+      "translation": "Tap water?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Ja, prima.",
+      "translation": "Yes, that's fine."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Wacht even! Mag ik ook een glas water?",
+      "translation": "Wait a moment! May I have a glass of water too?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ja hoor! Een cappuccino, een verse muntthee en twee glazen water. Verder nog iets?",
+      "translation": "Sure! One cappuccino, one fresh mint tea, and two glasses of water. Anything else?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Nee, dank je. Prima.",
+      "translation": "No, thank you. That's fine."
+     }
+    ]
+   },
+   {
+    "blockId": "64c5ee9c-52e0-48dc-8b32-f036e66f6018",
+    "turns": [
+     {
+      "speaker": "Daan",
+      "text": "Noor, mag ik de kaart?",
+      "translation": "Noor, may I have the menu?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Alsjeblieft.",
+      "translation": "Here you go."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Noor! Ik wil bestellen graag!",
+      "translation": "Noor! I'd like to order!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Je wilt graag bestellen? Super! Wat mag het zijn?",
+      "translation": "You'd like to order? Great! What can I get you?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ik neem een tosti ham-kaas.",
+      "translation": "I'll have a ham-and-cheese toasted sandwich."
+     },
+     {
+      "speaker": "Noor",
+      "text": "En jij, Daan?",
+      "translation": "And you, Daan?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Voor mij een broodje kaas en een kop tomatensoep.",
+      "translation": "A cheese sandwich and a bowl of tomato soup for me."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Lekker! Willen jullie ook appeltaart? Met slagroom?",
+      "translation": "Delicious! Would you also like apple pie? With whipped cream?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Echt? Ja, graag! Met veel slagroom!",
+      "translation": "Really? Yes, please! With lots of whipped cream!"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Nee, dank je. Mag ik nog een muntthee?",
+      "translation": "No, thank you. May I have another mint tea?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ja hoor. Verder nog iets?",
+      "translation": "Sure. Anything else?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Nee, dat is alles. Dank je, Noor!",
+      "translation": "No, that's all. Thank you, Noor!"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-ii",
+  "lesson": "11-b-de-rekening-alstublieft",
+  "title": "De rekening, alstublieft",
+  "dialogues": [
+   {
+    "blockId": "3a95f476-cc32-4f99-b4cd-04bacbfa244d",
+    "turns": [
+     {
+      "speaker": "Ober",
+      "text": "Goedenavond! Hebt u een reservering?",
+      "translation": "Good evening! Do you have a reservation?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Goedenavond. Ja, voor vier personen, op naam van De Vries.",
+      "translation": "Good evening. Yes, for four people, under the name De Vries."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Mogen wij bij het raam zitten?",
+      "translation": "May we sit by the window?"
+     },
+     {
+      "speaker": "Ober",
+      "text": "Natuurlijk. Alstublieft, de kaart. Wat wilt u drinken?",
+      "translation": "Of course. Here's the menu. What would you like to drink?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ik wil graag een glas witte wijn.",
+      "translation": "I'd like a glass of white wine, please."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Voor mij een bier, alstublieft. En een fles rode wijn voor Sofia en Lotte.",
+      "translation": "A beer for me, please. And a bottle of red wine for Sofia and Lotte."
+     },
+     {
+      "speaker": "Ober",
+      "text": "Prima. En wat wilt u eten?",
+      "translation": "Fine. And what would you like to eat?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Daan en ik willen graag de vis.",
+      "translation": "Daan and I would like the fish."
+     },
+     {
+      "speaker": "Lotte",
+      "text": "Ik ben vegetarisch. Ik wil geen vlees en geen vis. Is de pasta vegetarisch?",
+      "translation": "I'm vegetarian. I don't want meat or fish. Is the pasta vegetarian?"
+     },
+     {
+      "speaker": "Ober",
+      "text": "Ja, de pasta met groente is vegetarisch.",
+      "translation": "Yes, the pasta with vegetables is vegetarian."
+     },
+     {
+      "speaker": "Lotte",
+      "text": "Dan neem ik de pasta, alstublieft.",
+      "translation": "Then I'll have the pasta, please."
+     },
+     {
+      "speaker": "Noor",
+      "text": "En ik wil graag de kip met friet.",
+      "translation": "And I'd like the chicken with fries."
+     }
+    ]
+   },
+   {
+    "blockId": "ffe17fb6-fe7f-48dc-ac34-a5b3c9a0965f",
+    "turns": [
+     {
+      "speaker": "Ober",
+      "text": "Is alles goed? Wilt u nog een nagerecht?",
+      "translation": "Is everything all right? Would you like a dessert?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Ja! Ik wil graag de appeltaart met slagroom.",
+      "translation": "Yes! I'd like the apple pie with whipped cream."
+     },
+     {
+      "speaker": "Daan",
+      "text": "Ik wil geen toetje. Mag ik een koffie?",
+      "translation": "I don't want dessert. May I have a coffee?"
+     },
+     {
+      "speaker": "Ober",
+      "text": "Natuurlijk.",
+      "translation": "Of course."
+     },
+     {
+      "speaker": "Lotte",
+      "text": "Mogen we de rekening, alstublieft?",
+      "translation": "May we have the bill, please?"
+     },
+     {
+      "speaker": "Ober",
+      "text": "Alstublieft. Samen of apart?",
+      "translation": "Here you are. Together or separately?"
+     },
+     {
+      "speaker": "Daan",
+      "text": "Apart, alstublieft. Maar Noor betaalt vanavond niet. Wij betalen voor Noor.",
+      "translation": "Separately, please. But Noor isn't paying tonight. We're paying for Noor."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Echt? Dank jullie wel!",
+      "translation": "Really? Thank you all!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Graag gedaan! Mag ik pinnen?",
+      "translation": "You're welcome! May I pay by card?"
+     },
+     {
+      "speaker": "Ober",
+      "text": "Ja, natuurlijk.",
+      "translation": "Yes, of course."
+     },
+     {
+      "speaker": "Lotte",
+      "text": "Ik wil graag contant betalen. Alstublieft. De rest is voor u.",
+      "translation": "I'd like to pay in cash. Here you are. The rest is for you."
+     },
+     {
+      "speaker": "Ober",
+      "text": "Dank u wel! Nog een fijne avond!",
+      "translation": "Thank you! Have a lovely evening!"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-ii",
+  "lesson": "12-a-deze-of-die",
+  "title": "Deze of die?",
+  "dialogues": [
+   {
+    "blockId": "a5ce4733-6e73-4f5e-88c0-5c69dd9870e2",
+    "turns": [
+     {
+      "speaker": "Henk",
+      "text": "Zo! Goedemorgen, dames! Mooi weer vandaag, hè?",
+      "translation": "Well! Good morning, ladies! Nice weather today, isn't it?"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Hoi Henk! Ja, super! Dit is mijn vriendin Sofia. Ze komt uit Spanje.",
+      "translation": "Hi Henk! Yes, great! This is my friend Sofia. She's from Spain."
+     },
+     {
+      "speaker": "Henk",
+      "text": "Nou, nou! Uit Spanje! Welkom op de markt. Wat mag het zijn?",
+      "translation": "Well, well! From Spain! Welcome to the market. What can I get you?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dank u wel. Wat is dit?",
+      "translation": "Thank you. What is this?"
+     },
+     {
+      "speaker": "Henk",
+      "text": "Dit is jonge kaas en dat is oude kaas. Wilt u proeven?",
+      "translation": "This is young cheese and that is aged cheese. Would you like to taste them?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Ja, graag. Mmm, deze kaas is lekker! Mag ik die ook proeven?",
+      "translation": "Yes, please. Mmm, this cheese is delicious! May I taste that one too?"
+     },
+     {
+      "speaker": "Henk",
+      "text": "Alstublieft! Die kaas is twee jaar oud.",
+      "translation": "Here you go! That cheese is two years old."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Oh, dat is lekker! Ik wil graag een stuk oude kaas. Deze stuk, alstublieft.",
+      "translation": "Oh, that's delicious! I'd like a piece of aged cheese. This piece, please."
+     },
+     {
+      "speaker": "Henk",
+      "text": "Dit stuk? Prima! Dat is een pond.",
+      "translation": "This piece? Fine! That's a pound."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Wat kost dit?",
+      "translation": "How much does this cost?"
+     },
+     {
+      "speaker": "Henk",
+      "text": "Dat kost acht euro.",
+      "translation": "That costs eight euros."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Super! De kaas van Henk is altijd lekker.",
+      "translation": "Great! Henk's cheese is always delicious."
+     }
+    ]
+   },
+   {
+    "blockId": "cf59c128-2643-4584-8c6b-7e05778d8b3d",
+    "turns": [
+     {
+      "speaker": "Verkoopster",
+      "text": "Goedemorgen! Mooie bloemen vandaag. Wat mag het zijn?",
+      "translation": "Good morning! Beautiful flowers today. What can I get you?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Goedemorgen. Ik wil graag een plant voor mijn kamer.",
+      "translation": "Good morning. I'd like a plant for my room."
+     },
+     {
+      "speaker": "Verkoopster",
+      "text": "Kijk, dit zijn mooie planten. Deze plant is klein en die is groot.",
+      "translation": "Look, these are beautiful plants. This plant is small and that one is large."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Mijn kamer is niet groot. Ik neem deze. Wat kost deze plant?",
+      "translation": "My room isn't large. I'll take this one. How much does this plant cost?"
+     },
+     {
+      "speaker": "Verkoopster",
+      "text": "Deze kost zes euro, met de pot.",
+      "translation": "This one costs six euros, including the pot."
+     },
+     {
+      "speaker": "Noor",
+      "text": "Joh, dat is goedkoop! En kijk, Sofia: zonnebloemen! Deze bloemen of die?",
+      "translation": "Wow, that's cheap! And look, Sofia: sunflowers! These flowers or those?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Die, daar. Die zonnebloemen zijn heel mooi!",
+      "translation": "Those, over there. Those sunflowers are very beautiful!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Super! Een bos zonnebloemen voor onze tafel?",
+      "translation": "Great! A bunch of sunflowers for our table?"
+     },
+     {
+      "speaker": "Verkoopster",
+      "text": "Deze bos? Die kost vijf euro.",
+      "translation": "This bunch? It costs five euros."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dat is goed. Deze bloemen zijn een cadeau, Noor!",
+      "translation": "That's fine. These flowers are a gift, Noor!"
+     },
+     {
+      "speaker": "Noor",
+      "text": "Wat lief, Sofia! Dank je wel!",
+      "translation": "That's so sweet, Sofia! Thank you!"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "course": "dutch-foundations/part-ii",
+  "lesson": "12-b-wat-kost-dat",
+  "title": "Wat kost dat?",
+  "dialogues": [
+   {
+    "blockId": "3fd09900-47be-4bd6-9871-faca53501591",
+    "turns": [
+     {
+      "speaker": "Sofia",
+      "text": "Goedemorgen! Wat kost deze witte lamp?",
+      "translation": "Good morning! How much does this white lamp cost?"
+     },
+     {
+      "speaker": "Verkoper",
+      "text": "Die lamp? Die kost vijftien euro.",
+      "translation": "That lamp? It costs fifteen euros."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Vijftien euro? Dat is te duur. De lamp is tweedehands!",
+      "translation": "Fifteen euros? That's too expensive. The lamp is second-hand!"
+     },
+     {
+      "speaker": "Verkoper",
+      "text": "Hm. Voor u twaalf euro vijftig. Dat is goedkoop!",
+      "translation": "Hmm. For you, twelve euros fifty. That's cheap!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Goed, ik neem de lamp. En wat kosten die zwarte mokken?",
+      "translation": "Okay, I'll take the lamp. And how much do those black mugs cost?"
+     },
+     {
+      "speaker": "Verkoper",
+      "text": "Die mokken kosten drie euro vijftig per stuk.",
+      "translation": "Those mugs cost three euros fifty each."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dan neem ik twee mokken.",
+      "translation": "Then I'll take two mugs."
+     },
+     {
+      "speaker": "Verkoper",
+      "text": "Prima. Anders nog iets?",
+      "translation": "Fine. Anything else?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Nee, dank u, dat is alles. Mag ik pinnen?",
+      "translation": "No, thank you, that's all. May I pay by card?"
+     },
+     {
+      "speaker": "Verkoper",
+      "text": "Nee, sorry, hier niet. Alleen contant. Samen is dat negentien euro vijftig.",
+      "translation": "No, sorry, not here. Cash only. That comes to nineteen euros fifty."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Negentien euros vijftig? Oké. Alstublieft, twintig euro.",
+      "translation": "Nineteen euros fifty? Okay. Here are twenty euros."
+     },
+     {
+      "speaker": "Verkoper",
+      "text": "Ja, negentien euro vijftig. Hier is uw wisselgeld, vijftig cent. En hier is uw bon.",
+      "translation": "Yes, nineteen euros fifty. Here's your change, fifty cents. And here's your receipt."
+     }
+    ]
+   },
+   {
+    "blockId": "85c4cd93-0636-4728-a731-24fb589016e8",
+    "turns": [
+     {
+      "speaker": "Henk",
+      "text": "Zo! Daar bent u weer! Uw oude kaas, alstublieft.",
+      "translation": "Well! There you are again! Here's your aged cheese."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dank u wel, meneer. Wat kost de kaas?",
+      "translation": "Thank you, sir. How much does the cheese cost?"
+     },
+     {
+      "speaker": "Henk",
+      "text": "Acht euro. Maar meneer? Nee, nee. Zeg maar Henk!",
+      "translation": "Eight euros. But “sir”? No, no. Just call me Henk!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Oké, Henk! Mag ik pinnen?",
+      "translation": "Okay, Henk! May I pay by card?"
+     },
+     {
+      "speaker": "Henk",
+      "text": "Ja hoor. Zo, dat is goed. En waar woon je, Sofia?",
+      "translation": "Sure. There we go, that's good. And where do you live, Sofia?"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "In Utrecht-Oost, bij mijn vriendin Noor. Maar mijn kamer is alleen tot 31 oktober vrij. En de appartementen in Utrecht zijn zo duur!",
+      "translation": "In Utrecht-Oost, with my friend Noor. But my room is only available until October 31. And the apartments in Utrecht are so expensive!"
+     },
+     {
+      "speaker": "Henk",
+      "text": "Nou, nou! Boven mij is een appartement te huur. Met balkon!",
+      "translation": "Well, well! There's an apartment for rent above me. With a balcony!"
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Echt? Waar woon jij, Henk?",
+      "translation": "Really? Where do you live, Henk?"
+     },
+     {
+      "speaker": "Henk",
+      "text": "In de Kastanjestraat, nummer 14, in Lombok. Ik woon op de eerste verdieping en het appartement is op de tweede.",
+      "translation": "On Kastanjestraat, number 14, in Lombok. I live on the first floor and the apartment is on the second."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Wat kost het appartement per maand?",
+      "translation": "How much does the apartment cost per month?"
+     },
+     {
+      "speaker": "Henk",
+      "text": "Dat weet ik niet. Maar de eigenaar is Ingrid Visser. Ik stuur straks het telefoonnummer van Ingrid.",
+      "translation": "I don't know. But the owner is Ingrid Visser. I'll send Ingrid's phone number later."
+     },
+     {
+      "speaker": "Sofia",
+      "text": "Dank je wel, Henk! Een appartement met balkon! Wat leuk!",
+      "translation": "Thank you, Henk! An apartment with a balcony! How nice!"
+     }
+    ]
+   }
+  ]
+ }
+]

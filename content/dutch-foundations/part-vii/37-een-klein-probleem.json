@@ -34,35 +34,43 @@
         "turns": [
           {
             "speaker": "Sofia",
-            "text": "Hoi Ahmed! Heb je even tijd?"
+            "text": "Hoi Ahmed! Heb je even tijd?",
+            "translation": "Hi Ahmed! Do you have a moment?"
           },
           {
             "speaker": "Ahmed",
-            "text": "Hoi Sofia! Ja hoor. Wat is er?"
+            "text": "Hoi Sofia! Ja hoor. Wat is er?",
+            "translation": "Hi Sofia! Sure. What’s up?"
           },
           {
             "speaker": "Sofia",
-            "text": "Mijn fiets maakt een vreemd geluid."
+            "text": "Mijn fiets maakt een vreemd geluid.",
+            "translation": "My bike is making a strange noise."
           },
           {
             "speaker": "Ahmed",
-            "text": "Wanneer hoor je het geluid?"
+            "text": "Wanneer hoor je het geluid?",
+            "translation": "When do you hear the noise?"
           },
           {
             "speaker": "Sofia",
-            "text": "Vooral als ik fiets. Kun je ernaar luisteren?"
+            "text": "Vooral als ik fiets. Kun je ernaar luisteren?",
+            "translation": "Especially when I’m riding. Can you listen to it?"
           },
           {
             "speaker": "Ahmed",
-            "text": "Ja, natuurlijk. Zet je fiets maar hier."
+            "text": "Ja, natuurlijk. Zet je fiets maar hier.",
+            "translation": "Yes, of course. Just put your bike here."
           },
           {
             "speaker": "Sofia",
-            "text": "Dank je. Ik weet niet wat ik ermee moet doen."
+            "text": "Dank je. Ik weet niet wat ik ermee moet doen.",
+            "translation": "Thanks. I don’t know what to do about it."
           },
           {
             "speaker": "Ahmed",
-            "text": "Geen probleem. Ik kijk er even naar."
+            "text": "Geen probleem. Ik kijk er even naar.",
+            "translation": "No problem. I’ll take a quick look at it."
           }
         ]
       },
@@ -871,35 +879,43 @@
         "turns": [
           {
             "speaker": "Sofia",
-            "text": "Hoi Henk. Zijn deze sleutels van jou?"
+            "text": "Hoi Henk. Zijn deze sleutels van jou?",
+            "translation": "Hi Henk. Are these keys yours?"
           },
           {
             "speaker": "Henk",
-            "text": "Nee, die zijn van Ahmed."
+            "text": "Nee, die zijn van Ahmed.",
+            "translation": "No, they belong to Ahmed."
           },
           {
             "speaker": "Sofia",
-            "text": "Ik geef hem de sleutels straks."
+            "text": "Ik geef hem de sleutels straks.",
+            "translation": "I’ll give him the keys later."
           },
           {
             "speaker": "Henk",
-            "text": "Goed. Ik praat straks met hem."
+            "text": "Goed. Ik praat straks met hem.",
+            "translation": "Okay. I’ll talk to him later."
           },
           {
             "speaker": "Sofia",
-            "text": "En deze fietspomp? Is die van jou?"
+            "text": "En deze fietspomp? Is die van jou?",
+            "translation": "And this bike pump? Is it yours?"
           },
           {
             "speaker": "Henk",
-            "text": "Nee, de mijne is kleiner. Die pomp is van Noor."
+            "text": "Nee, de mijne is kleiner. Die pomp is van Noor.",
+            "translation": "No, mine is smaller. That pump belongs to Noor."
           },
           {
             "speaker": "Sofia",
-            "text": "Ik zet hem bij de deur."
+            "text": "Ik zet hem bij de deur.",
+            "translation": "I’ll put it by the door."
           },
           {
             "speaker": "Henk",
-            "text": "Dank je. Dan ziet Noor hem meteen."
+            "text": "Dank je. Dan ziet Noor hem meteen.",
+            "translation": "Thanks. Then Noor will see it right away."
           }
         ]
       },

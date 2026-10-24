@@ -87,51 +87,63 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Hoi Sofia! Heb je dit weekend al plannen?"
+            "text": "Hoi Sofia! Heb je dit weekend al plannen?",
+            "translation": "Hi Sofia! Do you have plans for this weekend yet?"
           },
           {
             "speaker": "Sofia",
-            "text": "Nee, nog niet. Hoezo?"
+            "text": "Nee, nog niet. Hoezo?",
+            "translation": "No, not yet. Why?"
           },
           {
             "speaker": "Noor",
-            "text": "Gaan we naar de film? Er is een nieuwe film in de bioscoop: \"De Lange Zomer\"."
+            "text": "Gaan we naar de film? Er is een nieuwe film in de bioscoop: \"De Lange Zomer\".",
+            "translation": "Shall we go to the movies? There is a new film at the cinema: \"The Long Summer\"."
           },
           {
             "speaker": "Sofia",
-            "text": "Die film ken ik niet. Is hij goed?"
+            "text": "Die film ken ik niet. Is hij goed?",
+            "translation": "I do not know that film. Is it good?"
           },
           {
             "speaker": "Noor",
-            "text": "Heel goed, zegt iedereen! De voorstelling is donderdagavond om acht uur. Kun je dan?"
+            "text": "Heel goed, zegt iedereen! De voorstelling is donderdagavond om acht uur. Kun je dan?",
+            "translation": "Everyone says it is very good! The screening is on Thursday evening at eight. Can you make it then?"
           },
           {
             "speaker": "Sofia",
-            "text": "Donderdag kan ik niet. Dan moet ik overwerken voor de deadline."
+            "text": "Donderdag kan ik niet. Dan moet ik overwerken voor de deadline.",
+            "translation": "I cannot do Thursday. I have to work overtime for the deadline."
           },
           {
             "speaker": "Noor",
-            "text": "Oké. Misschien kan ik vrijdag. Ik kijk even in mijn agenda... Nee, vrijdag kan ik ook niet. Dan is het feestje van mijn vriendin."
+            "text": "Oké. Misschien kan ik vrijdag. Ik kijk even in mijn agenda... Nee, vrijdag kan ik ook niet. Dan is het feestje van mijn vriendin.",
+            "translation": "Okay. Maybe I can do Friday. Let me check my calendar... No, I cannot do Friday either. It is my friend's party then."
           },
           {
             "speaker": "Sofia",
-            "text": "Donderdag niet, en vrijdag ook niet!"
+            "text": "Donderdag niet, en vrijdag ook niet!",
+            "translation": "Not Thursday, and not Friday either!"
           },
           {
             "speaker": "Noor",
-            "text": "Kom je zaterdag eten? Fleur en ik koken pasta."
+            "text": "Kom je zaterdag eten? Fleur en ik koken pasta.",
+            "translation": "Will you come for dinner on Saturday? Fleur and I are cooking pasta."
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, heel graag!"
+            "text": "Ja, heel graag!",
+            "translation": "Yes, I would love to!"
           },
           {
             "speaker": "Noor",
-            "text": "En zondag gaan we naar de film, om drie uur in het centrum!"
+            "text": "En zondag gaan we naar de film, om drie uur in het centrum!",
+            "translation": "And on Sunday we are going to the movies, at three o'clock in the city center!"
           },
           {
             "speaker": "Sofia",
-            "text": "Goed idee! Niet donderdag, maar zondag. Dat komt goed."
+            "text": "Goed idee! Niet donderdag, maar zondag. Dat komt goed.",
+            "translation": "Good idea! Not Thursday, but Sunday. That works."
           }
         ]
       },
@@ -812,51 +824,63 @@
         "turns": [
           {
             "speaker": "Daan",
-            "text": "Sofia, we testen de app nog een keer vanavond. Morgen moet alles klaar zijn."
+            "text": "Sofia, we testen de app nog een keer vanavond. Morgen moet alles klaar zijn.",
+            "translation": "Sofia, we are testing the app one more time tonight. Everything has to be ready tomorrow."
           },
           {
             "speaker": "Sofia",
-            "text": "Oké. Ik start de test op mijn computer... Hmm, het werkt nog niet."
+            "text": "Oké. Ik start de test op mijn computer... Hmm, het werkt nog niet.",
+            "translation": "Okay. I am starting the test on my computer... Hmm, it still does not work."
           },
           {
             "speaker": "Daan",
-            "text": "Wat is het probleem?"
+            "text": "Wat is het probleem?",
+            "translation": "What is the problem?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ik weet het niet. Ik vind de fout niet."
+            "text": "Ik weet het niet. Ik vind de fout niet.",
+            "translation": "I do not know. I cannot find the error."
           },
           {
             "speaker": "Daan",
-            "text": "Ik kijk even mee. Welke knop werkt niet?"
+            "text": "Ik kijk even mee. Welke knop werkt niet?",
+            "translation": "I will take a look with you. Which button does not work?"
           },
           {
             "speaker": "Sofia",
-            "text": "Deze knop hier. De knop doet het niet."
+            "text": "Deze knop hier. De knop doet het niet.",
+            "translation": "This button here. The button does not work."
           },
           {
             "speaker": "Daan",
-            "text": "Ah, ik zie de fout! Een moment..."
+            "text": "Ah, ik zie de fout! Een moment...",
+            "translation": "Ah, I see the error! One moment..."
           },
           {
             "speaker": "Sofia",
-            "text": "En nu?"
+            "text": "En nu?",
+            "translation": "And now?"
           },
           {
             "speaker": "Daan",
-            "text": "Probeer het opnieuw."
+            "text": "Probeer het opnieuw.",
+            "translation": "Try again."
           },
           {
             "speaker": "Sofia",
-            "text": "Nu werkt het wel! Gelukkig!"
+            "text": "Nu werkt het wel! Gelukkig!",
+            "translation": "Now it works! Luckily!"
           },
           {
             "speaker": "Daan",
-            "text": "Mooi. Dan zijn we klaar voor vrijdag."
+            "text": "Mooi. Dan zijn we klaar voor vrijdag.",
+            "translation": "Great. Then we are ready for Friday."
           },
           {
             "speaker": "Sofia",
-            "text": "Eindelijk! Ik ga naar huis. Tot morgen, Daan!"
+            "text": "Eindelijk! Ik ga naar huis. Tot morgen, Daan!",
+            "translation": "Finally! I am going home. See you tomorrow, Daan!"
           }
         ]
       },

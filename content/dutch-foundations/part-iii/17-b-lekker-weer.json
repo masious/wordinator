@@ -245,43 +245,53 @@
         "turns": [
           {
             "speaker": "Daan",
-            "text": "Kom op! Lopen we naar de zee?"
+            "text": "Kom op! Lopen we naar de zee?",
+            "translation": "Come on! Shall we walk to the sea?"
           },
           {
             "speaker": "Sofia",
-            "text": "Wacht even, Daan! Jij loopt zo snel."
+            "text": "Wacht even, Daan! Jij loopt zo snel.",
+            "translation": "Wait a moment, Daan! You walk so fast."
           },
           {
             "speaker": "Daan",
-            "text": "Ik loop altijd snel. Jij loopt juist zo langzaam, Sofia!"
+            "text": "Ik loop altijd snel. Jij loopt juist zo langzaam, Sofia!",
+            "translation": "I always walk fast. You walk so slowly, Sofia!"
           },
           {
             "speaker": "Noor",
-            "text": "Kijk, de zee is kalm en de zon schijnt. Heerlijk, hè?"
+            "text": "Kijk, de zee is kalm en de zon schijnt. Heerlijk, hè?",
+            "translation": "Look, the sea is calm and the sun is shining. Wonderful, isn't it?"
           },
           {
             "speaker": "Sofia",
-            "text": "Lekker weer! En er is bijna geen wind."
+            "text": "Lekker weer! En er is bijna geen wind.",
+            "translation": "Lovely weather! And there is hardly any wind."
           },
           {
             "speaker": "Noor",
-            "text": "Ja, maar aan zee waait het vaak hard. Kijk naar de golven!"
+            "text": "Ja, maar aan zee waait het vaak hard. Kijk naar de golven!",
+            "translation": "Yes, but it is often very windy by the sea. Look at the waves!"
           },
           {
             "speaker": "Daan",
-            "text": "Lopen we naar de duinen?"
+            "text": "Lopen we naar de duinen?",
+            "translation": "Shall we walk to the dunes?"
           },
           {
             "speaker": "Sofia",
-            "text": "Goed plan. Het zand is hier zo zacht."
+            "text": "Goed plan. Het zand is hier zo zacht.",
+            "translation": "Good plan. The sand is so soft here."
           },
           {
             "speaker": "Noor",
-            "text": "En kijk, daar is een strandcafé. Straks gaan we daar iets drinken."
+            "text": "En kijk, daar is een strandcafé. Straks gaan we daar iets drinken.",
+            "translation": "And look, there is a beach café. We will have something to drink there later."
           },
           {
             "speaker": "Daan",
-            "text": "Eerst nog een lange wandeling!"
+            "text": "Eerst nog een lange wandeling!",
+            "translation": "First, one more long walk!"
           }
         ]
       },
@@ -1203,47 +1213,58 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Kijk, een bui! Snel, naar het strandcafé!"
+            "text": "Kijk, een bui! Snel, naar het strandcafé!",
+            "translation": "Look, a rain shower! Quickly, to the beach café!"
           },
           {
             "speaker": "Sofia",
-            "text": "We schuilen hier. Ik ben best nat!"
+            "text": "We schuilen hier. Ik ben best nat!",
+            "translation": "We will shelter here. I am quite wet!"
           },
           {
             "speaker": "Daan",
-            "text": "Ik ook, maar binnen is het lekker warm."
+            "text": "Ik ook, maar binnen is het lekker warm.",
+            "translation": "Me too, but it is nice and warm inside."
           },
           {
             "speaker": "Noor",
-            "text": "Drie warme chocolademelk, graag!"
+            "text": "Drie warme chocolademelk, graag!",
+            "translation": "Three hot chocolates, please!"
           },
           {
             "speaker": "Ober",
-            "text": "Alstublieft, drie warme chocolademelk."
+            "text": "Alstublieft, drie warme chocolademelk.",
+            "translation": "Here you are, three hot chocolates."
           },
           {
             "speaker": "Sofia",
-            "text": "Dank u wel. Mmm, dit is heerlijk."
+            "text": "Dank u wel. Mmm, dit is heerlijk.",
+            "translation": "Thank you. Mmm, this is delicious."
           },
           {
             "speaker": "Daan",
-            "text": "Eerst zo mooi weer, en nu deze bui!"
+            "text": "Eerst zo mooi weer, en nu deze bui!",
+            "translation": "The weather was so beautiful at first, and now this shower!"
           },
           {
             "speaker": "Noor",
-            "text": "Het regent nu heel hard, maar morgen wordt het weer droog."
+            "text": "Het regent nu heel hard, maar morgen wordt het weer droog.",
+            "translation": "It is raining very hard now, but it will be dry again tomorrow."
           },
           {
             "speaker": "Sofia",
-            "text": "De chocolademelk is lekker warm. Dat is fijn!"
+            "text": "De chocolademelk is lekker warm. Dat is fijn!",
+            "translation": "The hot chocolate is nice and warm. That is lovely!"
           },
           {
             "speaker": "Daan",
-            "text": "Nemen we nog een chocolademelk?"
+            "text": "Nemen we nog een chocolademelk?",
+            "translation": "Shall we have another hot chocolate?"
           },
           {
             "speaker": "Sofia",
-            "text": "Goed idee. Buiten waait het nog steeds erg hard."
+            "text": "Goed idee. Buiten waait het nog steeds erg hard.",
+            "translation": "Good idea. It is still very windy outside."
           }
         ]
       },

@@ -29,35 +29,43 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Heb je foto’s uit Valencia?"
+            "text": "Heb je foto’s uit Valencia?",
+            "translation": "Do you have photos from Valencia?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, ik heb foto’s gezien en veel gegeten."
+            "text": "Ja, ik heb foto’s gezien en veel gegeten.",
+            "translation": "Yes, I saw photos and ate a lot."
           },
           {
             "speaker": "Noor",
-            "text": "Wat heb je met je moeder gedaan?"
+            "text": "Wat heb je met je moeder gedaan?",
+            "translation": "What did you do with your mother?"
           },
           {
             "speaker": "Sofia",
-            "text": "We hebben samen gekookt. Ik heb ook een boek gelezen."
+            "text": "We hebben samen gekookt. Ik heb ook een boek gelezen.",
+            "translation": "We cooked together. I also read a book."
           },
           {
             "speaker": "Noor",
-            "text": "Heb je Nederlands gestudeerd?"
+            "text": "Heb je Nederlands gestudeerd?",
+            "translation": "Did you study Dutch?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, en ik heb een brief aan mijn moeder geschreven."
+            "text": "Ja, en ik heb een brief aan mijn moeder geschreven.",
+            "translation": "Yes, and I wrote a letter to my mother."
           },
           {
             "speaker": "Noor",
-            "text": "Heb je veel gedronken?"
+            "text": "Heb je veel gedronken?",
+            "translation": "Did you drink a lot?"
           },
           {
             "speaker": "Sofia",
-            "text": "Water en thee. Ik heb geen wijn gedronken."
+            "text": "Water en thee. Ik heb geen wijn gedronken.",
+            "translation": "Water and tea. I did not drink any wine."
           }
         ]
       },
@@ -667,35 +675,43 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Heb je de foto van het huisfeest gezien?"
+            "text": "Heb je de foto van het huisfeest gezien?",
+            "translation": "Did you see the photo of the house party?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, ik heb alle foto’s bekeken."
+            "text": "Ja, ik heb alle foto’s bekeken.",
+            "translation": "Yes, I looked at all the photos."
           },
           {
             "speaker": "Noor",
-            "text": "Heb je ook de foto met de paella gezien?"
+            "text": "Heb je ook de foto met de paella gezien?",
+            "translation": "Did you also see the photo with the paella?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, die heb ik gezien. De paella is lekker."
+            "text": "Ja, die heb ik gezien. De paella is lekker.",
+            "translation": "Yes, I saw it. The paella is delicious."
           },
           {
             "speaker": "Noor",
-            "text": "Heb je het recept opgeschreven?"
+            "text": "Heb je het recept opgeschreven?",
+            "translation": "Did you write down the recipe?"
           },
           {
             "speaker": "Sofia",
-            "text": "Nee, ik heb alleen de naam opgeschreven."
+            "text": "Nee, ik heb alleen de naam opgeschreven.",
+            "translation": "No, I only wrote down the name."
           },
           {
             "speaker": "Noor",
-            "text": "Heb je het recept aan je moeder verteld?"
+            "text": "Heb je het recept aan je moeder verteld?",
+            "translation": "Did you tell your mother the recipe?"
           },
           {
             "speaker": "Sofia",
-            "text": "Nee, ik heb haar over het huisfeest verteld."
+            "text": "Nee, ik heb haar over het huisfeest verteld.",
+            "translation": "No, I told her about the house party."
           }
         ]
       },

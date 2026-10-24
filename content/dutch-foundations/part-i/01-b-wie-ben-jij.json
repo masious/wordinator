@@ -103,43 +103,53 @@
         "turns": [
           {
             "speaker": "Receptioniste",
-            "text": "Goedemorgen! Bent u Sofia Moreno?"
+            "text": "Goedemorgen! Bent u Sofia Moreno?",
+            "translation": "Good morning! Are you Sofia Moreno?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, dat ben ik. Goedemorgen!"
+            "text": "Ja, dat ben ik. Goedemorgen!",
+            "translation": "Yes, that’s me. Good morning!"
           },
           {
             "speaker": "Receptioniste",
-            "text": "Welkom! Een moment, alstublieft."
+            "text": "Welkom! Een moment, alstublieft.",
+            "translation": "Welcome! One moment, please."
           },
           {
             "speaker": "Karin",
-            "text": "Goedemorgen! Ik ben Karin Smit. Ik ben teamleider."
+            "text": "Goedemorgen! Ik ben Karin Smit. Ik ben teamleider.",
+            "translation": "Good morning! I’m Karin Smit. I’m the team leader."
           },
           {
             "speaker": "Sofia",
-            "text": "Goedemorgen, mevrouw Smit. Aangenaam."
+            "text": "Goedemorgen, mevrouw Smit. Aangenaam.",
+            "translation": "Good morning, Ms. Smit. Nice to meet you."
           },
           {
             "speaker": "Karin",
-            "text": "Aangenaam! Zeg maar jij, hoor. En zeg maar Karin."
+            "text": "Aangenaam! Zeg maar jij, hoor. En zeg maar Karin.",
+            "translation": "Nice to meet you! You can call me “you” informally. And call me Karin."
           },
           {
             "speaker": "Sofia",
-            "text": "Oké, Karin!"
+            "text": "Oké, Karin!",
+            "translation": "Okay, Karin!"
           },
           {
             "speaker": "Karin",
-            "text": "Welkom in het team, Sofia. Hoe gaat het?"
+            "text": "Welkom in het team, Sofia. Hoe gaat het?",
+            "translation": "Welcome to the team, Sofia. How are you?"
           },
           {
             "speaker": "Sofia",
-            "text": "Goed, dank je. Ik ben een beetje nerveus."
+            "text": "Goed, dank je. Ik ben een beetje nerveus.",
+            "translation": "Good, thank you. I’m a little nervous."
           },
           {
             "speaker": "Karin",
-            "text": "Kijk, dit is Daan."
+            "text": "Kijk, dit is Daan.",
+            "translation": "Look, this is Daan."
           }
         ]
       },
@@ -2094,31 +2104,38 @@
         "turns": [
           {
             "speaker": "Daan",
-            "text": "Hoi! Ik ben Daan. Ik ben ook programmeur."
+            "text": "Hoi! Ik ben Daan. Ik ben ook programmeur.",
+            "translation": "Hi! I’m Daan. I’m a programmer too."
           },
           {
             "speaker": "Sofia",
-            "text": "Hoi Daan! Ik ben Sofia. Aangenaam."
+            "text": "Hoi Daan! Ik ben Sofia. Aangenaam.",
+            "translation": "Hi Daan! I’m Sofia. Nice to meet you."
           },
           {
             "speaker": "Daan",
-            "text": "Aangenaam! Ben jij nieuw in Utrecht?"
+            "text": "Aangenaam! Ben jij nieuw in Utrecht?",
+            "translation": "Nice to meet you! Are you new in Utrecht?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, ik ben hier nieuw. Is het team groot?"
+            "text": "Ja, ik ben hier nieuw. Is het team groot?",
+            "translation": "Yes, I’m new here. Is the team big?"
           },
           {
             "speaker": "Daan",
-            "text": "Nee hoor, het team is klein: Karin, jij en ik."
+            "text": "Nee hoor, het team is klein: Karin, jij en ik.",
+            "translation": "No, the team is small: Karin, you, and me."
           },
           {
             "speaker": "Sofia",
-            "text": "Jullie zijn heel aardig!"
+            "text": "Jullie zijn heel aardig!",
+            "translation": "You are all very kind!"
           },
           {
             "speaker": "Daan",
-            "text": "Dank je! Wij zijn blij met jou."
+            "text": "Dank je! Wij zijn blij met jou.",
+            "translation": "Thank you! We’re happy to have you."
           }
         ]
       },

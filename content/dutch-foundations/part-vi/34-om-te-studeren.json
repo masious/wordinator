@@ -34,35 +34,43 @@
         "turns": [
           {
             "speaker": "Sofia",
-            "text": "Noor, ik lees deze Nederlandse tekst."
+            "text": "Noor, ik lees deze Nederlandse tekst.",
+            "translation": "Noor, I am reading this Dutch text."
           },
           {
             "speaker": "Noor",
-            "text": "Waarom lees je die tekst?"
+            "text": "Waarom lees je die tekst?",
+            "translation": "Why are you reading that text?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ik lees de tekst om nieuwe woorden te leren."
+            "text": "Ik lees de tekst om nieuwe woorden te leren.",
+            "translation": "I am reading the text to learn new words."
           },
           {
             "speaker": "Noor",
-            "text": "Goed idee. Ik pak mijn woordenboek."
+            "text": "Goed idee. Ik pak mijn woordenboek.",
+            "translation": "Good idea. I will get my dictionary."
           },
           {
             "speaker": "Sofia",
-            "text": "Gebruik je dat om een woord op te zoeken?"
+            "text": "Gebruik je dat om een woord op te zoeken?",
+            "translation": "Do you use it to look up a word?"
           },
           {
             "speaker": "Noor",
-            "text": "Ja. Ik zoek de betekenis op om de tekst beter te begrijpen."
+            "text": "Ja. Ik zoek de betekenis op om de tekst beter te begrijpen.",
+            "translation": "Yes. I look up the meaning to understand the text better."
           },
           {
             "speaker": "Sofia",
-            "text": "Ik schrijf de uitspraak op om thuis hardop te oefenen."
+            "text": "Ik schrijf de uitspraak op om thuis hardop te oefenen.",
+            "translation": "I write down the pronunciation to practice aloud at home."
           },
           {
             "speaker": "Noor",
-            "text": "Ik maak ook een aantekening om die klank te onthouden."
+            "text": "Ik maak ook een aantekening om die klank te onthouden.",
+            "translation": "I also make a note to remember that sound."
           }
         ]
       },
@@ -635,43 +643,53 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Ik lees de woordenlijst om de nieuwe woorden te herhalen."
+            "text": "Ik lees de woordenlijst om de nieuwe woorden te herhalen.",
+            "translation": "I read the word list to review the new words."
           },
           {
             "speaker": "Sofia",
-            "text": "Ik maak een aantekening om een lastige klank te onthouden."
+            "text": "Ik maak een aantekening om een lastige klank te onthouden.",
+            "translation": "I make a note to remember a difficult sound."
           },
           {
             "speaker": "Noor",
-            "text": "Probeer de zin ook hardop te lezen."
+            "text": "Probeer de zin ook hardop te lezen.",
+            "translation": "Try reading the sentence aloud too."
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, ik probeer de uitspraak rustig te oefenen."
+            "text": "Ja, ik probeer de uitspraak rustig te oefenen.",
+            "translation": "Yes, I try to practice the pronunciation calmly."
           },
           {
             "speaker": "Noor",
-            "text": "Ik pak mijn woordenboek om een woord op te zoeken."
+            "text": "Ik pak mijn woordenboek om een woord op te zoeken.",
+            "translation": "I get my dictionary to look up a word."
           },
           {
             "speaker": "Sofia",
-            "text": "Ik schrijf de betekenis op om die te onthouden."
+            "text": "Ik schrijf de betekenis op om die te onthouden.",
+            "translation": "I write down the meaning to remember it."
           },
           {
             "speaker": "Noor",
-            "text": "Goed. Ik lees het voorbeeld om de uitleg te begrijpen."
+            "text": "Goed. Ik lees het voorbeeld om de uitleg te begrijpen.",
+            "translation": "Good. I read the example to understand the explanation."
           },
           {
             "speaker": "Sofia",
-            "text": "Ik leg mijn telefoon weg om minder afleiding te hebben."
+            "text": "Ik leg mijn telefoon weg om minder afleiding te hebben.",
+            "translation": "I put my phone away to have fewer distractions."
           },
           {
             "speaker": "Noor",
-            "text": "Ik gebruik een markeerstift om een woord te markeren."
+            "text": "Ik gebruik een markeerstift om een woord te markeren.",
+            "translation": "I use a highlighter to mark a word."
           },
           {
             "speaker": "Sofia",
-            "text": "Dat is handig. Ik gebruik de pauzeknop om een zin nog eens te horen."
+            "text": "Dat is handig. Ik gebruik de pauzeknop om een zin nog eens te horen.",
+            "translation": "That is useful. I use the pause button to hear a sentence again."
           }
         ]
       },

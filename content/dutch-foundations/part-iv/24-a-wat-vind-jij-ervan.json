@@ -87,47 +87,58 @@
         "turns": [
           {
             "speaker": "Sofia",
-            "text": "Goedenavond, allemaal! Hier is de paella. Eet smakelijk!"
+            "text": "Goedenavond, allemaal! Hier is de paella. Eet smakelijk!",
+            "translation": "Good evening, everyone! Hier is de paella. Eet smakelijk!"
           },
           {
             "speaker": "Noor",
-            "text": "Wat vind je van de paella, Henk?"
+            "text": "Wat vind je van de paella, Henk?",
+            "translation": "What do you think of de paella, Henk?"
           },
           {
             "speaker": "Henk",
-            "text": "Ik vind hem heerlijk. Maar de stamppot vind ik lekkerder."
+            "text": "Ik vind hem heerlijk. Maar de stamppot vind ik lekkerder.",
+            "translation": "I think it is delicious. Maar de stamppot vind ik goodder."
           },
           {
             "speaker": "Fleur",
-            "text": "Ik ben het niet met je eens, Henk! De paella is heerlijk."
+            "text": "Ik ben het niet met je eens, Henk! De paella is heerlijk.",
+            "translation": "I disagree with you, Henk! De paella is delicious."
           },
           {
             "speaker": "Noor",
-            "text": "Ik ben het met Fleur eens. Wat vind je van de boerenkoolstamppot?"
+            "text": "Ik ben het met Fleur eens. Wat vind je van de boerenkoolstamppot?",
+            "translation": "I agree with Fleur. What do you think of de kale stamppot?"
           },
           {
             "speaker": "Henk",
-            "text": "Die vind ik ook lekker. Eerlijk gezegd vind ik allebei lekker."
+            "text": "Die vind ik ook lekker. Eerlijk gezegd vind ik allebei lekker.",
+            "translation": "Die vind ik ook good. To be honest vind ik both good."
           },
           {
             "speaker": "Piotr",
-            "text": "Wat vind jij van de pierogi, Sofia?"
+            "text": "Wat vind jij van de pierogi, Sofia?",
+            "translation": "What do you think of de pierogi, Sofia?"
           },
           {
             "speaker": "Kasia",
-            "text": "Ik vind ze heerlijk. De paella is ook lekker."
+            "text": "Ik vind ze heerlijk. De paella is ook lekker.",
+            "translation": "I think they are delicious. De paella is ook good."
           },
           {
             "speaker": "Sofia",
-            "text": "Dat vind ik ook. Piotr, je hebt gelijk: de pierogi zijn heerlijk."
+            "text": "Dat vind ik ook. Piotr, je hebt gelijk: de pierogi zijn heerlijk.",
+            "translation": "Dat vind ik ook. Piotr, you hebt right: de pierogi zijn delicious."
           },
           {
             "speaker": "Daan",
-            "text": "Wat is jouw mening, Sofia?"
+            "text": "Wat is jouw mening, Sofia?",
+            "translation": "What is your opinion, Sofia?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ik vind alles lekker. Het is een gezellige avond."
+            "text": "Ik vind alles lekker. Het is een gezellige avond.",
+            "translation": "I like everything. It is een gezellige evening."
           }
         ]
       },
@@ -883,39 +894,48 @@
         "turns": [
           {
             "speaker": "Daan",
-            "text": "Volgens mij gaat het volgende week sneeuwen."
+            "text": "Volgens mij gaat het volgende week sneeuwen.",
+            "translation": "In my opinion gaat het next week snowen."
           },
           {
             "speaker": "Piotr",
-            "text": "Ik denk het niet. Het is niet koud genoeg."
+            "text": "Ik denk het niet. Het is niet koud genoeg.",
+            "translation": "I don’t think so. It is niet cold genoeg."
           },
           {
             "speaker": "Daan",
-            "text": "Wat vind jij ervan, Sofia?"
+            "text": "Wat vind jij ervan, Sofia?",
+            "translation": "Wat vind jij ervan, Sofia?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ik denk het wel. Het is koud."
+            "text": "Ik denk het wel. Het is koud.",
+            "translation": "I think so. It is cold."
           },
           {
             "speaker": "Piotr",
-            "text": "Denk je van wel?"
+            "text": "Denk je van wel?",
+            "translation": "Do you think so?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, ik denk van wel."
+            "text": "Ja, ik denk van wel.",
+            "translation": "Yes, ik denk van wel."
           },
           {
             "speaker": "Daan",
-            "text": "Vind je sneeuw leuk?"
+            "text": "Vind je sneeuw leuk?",
+            "translation": "Vind you snow leuk?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ik vind van wel. Maar fietsen in de sneeuw vind ik niet leuk."
+            "text": "Ik vind van wel. Maar fietsen in de sneeuw vind ik niet leuk.",
+            "translation": "I think so. Maar cycling in de snow vind ik niet leuk."
           },
           {
             "speaker": "Piotr",
-            "text": "Ik vind van niet. Ik fiets liever bij droog weer."
+            "text": "Ik vind van niet. Ik fiets liever bij droog weer.",
+            "translation": "I don’t think so. I bike liever bij dry weather."
           }
         ]
       },

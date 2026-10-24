@@ -29,35 +29,43 @@
         "turns": [
           {
             "speaker": "Sofia",
-            "text": "Noor, stel: als ik vandaag vrij had, zou ik naar het park gaan."
+            "text": "Noor, stel: als ik vandaag vrij had, zou ik naar het park gaan.",
+            "translation": "Noor, suppose I had today off; I would go to the park."
           },
           {
             "speaker": "Noor",
-            "text": "Zou je daar gaan wandelen?"
+            "text": "Zou je daar gaan wandelen?",
+            "translation": "Would you go for a walk there?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja. En als het zonnig was, zou ik ook buiten zitten."
+            "text": "Ja. En als het zonnig was, zou ik ook buiten zitten.",
+            "translation": "Yes. And if it were sunny, I would sit outside too."
           },
           {
             "speaker": "Noor",
-            "text": "Als we samen tijd hadden, zouden we kunnen zwemmen."
+            "text": "Als we samen tijd hadden, zouden we kunnen zwemmen.",
+            "translation": "If we had time together, we could go swimming."
           },
           {
             "speaker": "Sofia",
-            "text": "Zou jij liever zwemmen of schaatsen?"
+            "text": "Zou jij liever zwemmen of schaatsen?",
+            "translation": "Would you rather swim or skate?"
           },
           {
             "speaker": "Noor",
-            "text": "Als ik moest kiezen, zou ik zwemmen."
+            "text": "Als ik moest kiezen, zou ik zwemmen.",
+            "translation": "If I had to choose, I would swim."
           },
           {
             "speaker": "Sofia",
-            "text": "Ik ook. Maar dit is alleen een idee."
+            "text": "Ik ook. Maar dit is alleen een idee.",
+            "translation": "Me too. But this is only an idea."
           },
           {
             "speaker": "Noor",
-            "text": "Natuurlijk. We maken nu geen afspraak."
+            "text": "Natuurlijk. We maken nu geen afspraak.",
+            "translation": "Of course. We are not making plans now."
           }
         ]
       },
@@ -649,35 +657,43 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Als we een vrije middag hadden, wat zouden we dan doen?"
+            "text": "Als we een vrije middag hadden, wat zouden we dan doen?",
+            "translation": "If we had a free afternoon, what would we do?"
           },
           {
             "speaker": "Sofia",
-            "text": "Dan zou ik naar het park gaan."
+            "text": "Dan zou ik naar het park gaan.",
+            "translation": "Then I would go to the park."
           },
           {
             "speaker": "Noor",
-            "text": "En als het regende?"
+            "text": "En als het regende?",
+            "translation": "And if it rained?"
           },
           {
             "speaker": "Sofia",
-            "text": "Dan zouden we naar het zwembad gaan."
+            "text": "Dan zouden we naar het zwembad gaan.",
+            "translation": "Then we would go to the swimming pool."
           },
           {
             "speaker": "Noor",
-            "text": "Zou je ook naar Valencia gaan?"
+            "text": "Zou je ook naar Valencia gaan?",
+            "translation": "Would you also go to Valencia?"
           },
           {
             "speaker": "Sofia",
-            "text": "Als ik daar was, zou ik mijn moeder bellen."
+            "text": "Als ik daar was, zou ik mijn moeder bellen.",
+            "translation": "If I were there, I would call my mother."
           },
           {
             "speaker": "Noor",
-            "text": "Dat klinkt gezellig."
+            "text": "Dat klinkt gezellig.",
+            "translation": "That sounds nice."
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, maar het is alleen een denkbeeldige middag."
+            "text": "Ja, maar het is alleen een denkbeeldige middag.",
+            "translation": "Yes, but it is only an imaginary afternoon."
           }
         ]
       },

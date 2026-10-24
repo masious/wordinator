@@ -60,43 +60,53 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Heb je je verhaal voor de les klaar?"
+            "text": "Heb je je verhaal voor de les klaar?",
+            "translation": "Have you finished your story for the lesson?"
           },
           {
             "speaker": "Sofia",
-            "text": "Bijna. Ik wil vertellen over mijn eerste maanden in Utrecht."
+            "text": "Bijna. Ik wil vertellen over mijn eerste maanden in Utrecht.",
+            "translation": "Almost. I want to talk about my first months in Utrecht."
           },
           {
             "speaker": "Noor",
-            "text": "Begin maar bij je aankomst."
+            "text": "Begin maar bij je aankomst.",
+            "translation": "Just start with your arrival."
           },
           {
             "speaker": "Sofia",
-            "text": "Op 1 september kwam ik op Utrecht Centraal aan. Jij stond daar."
+            "text": "Op 1 september kwam ik op Utrecht Centraal aan. Jij stond daar.",
+            "translation": "I arrived at Utrecht Central Station on September 1. You were there."
           },
           {
             "speaker": "Noor",
-            "text": "Daarna woonde je een tijd bij mij."
+            "text": "Daarna woonde je een tijd bij mij.",
+            "translation": "After that, you lived with me for a while."
           },
           {
             "speaker": "Sofia",
-            "text": "Ja. Op 17 oktober verhuisde ik naar mijn appartement in de Kastanjestraat."
+            "text": "Ja. Op 17 oktober verhuisde ik naar mijn appartement in de Kastanjestraat.",
+            "translation": "Yes. On October 17, I moved to my apartment on Kastanjestraat."
           },
           {
             "speaker": "Noor",
-            "text": "En je werk en je Nederlandse les?"
+            "text": "En je werk en je Nederlandse les?",
+            "translation": "And your work and your Dutch classes?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ik werk bij een klein IT-bedrijf en ik studeer Nederlands."
+            "text": "Ik werk bij een klein IT-bedrijf en ik studeer Nederlands.",
+            "translation": "I work for a small IT company and I’m studying Dutch."
           },
           {
             "speaker": "Noor",
-            "text": "Je hebt ook vrienden gemaakt."
+            "text": "Je hebt ook vrienden gemaakt.",
+            "translation": "You’ve also made friends."
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, en met kerst ben ik naar Valencia gegaan. Op 3 januari kwam ik terug."
+            "text": "Ja, en met kerst ben ik naar Valencia gegaan. Op 3 januari kwam ik terug.",
+            "translation": "Yes, and I went to Valencia for Christmas. I came back on January 3."
           }
         ]
       },
@@ -587,43 +597,53 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Lees je verhaal eens voor."
+            "text": "Lees je verhaal eens voor.",
+            "translation": "Read your story aloud."
           },
           {
             "speaker": "Sofia",
-            "text": "Eerst kwam ik naar Utrecht voor mijn werk."
+            "text": "Eerst kwam ik naar Utrecht voor mijn werk.",
+            "translation": "First, I came to Utrecht for my work."
           },
           {
             "speaker": "Noor",
-            "text": "En waar woonde je toen?"
+            "text": "En waar woonde je toen?",
+            "translation": "And where did you live then?"
           },
           {
             "speaker": "Sofia",
-            "text": "Eerst woonde ik bij jou. Daarna vond ik een appartement in Lombok."
+            "text": "Eerst woonde ik bij jou. Daarna vond ik een appartement in Lombok.",
+            "translation": "At first, I lived with you. Then I found an apartment in Lombok."
           },
           {
             "speaker": "Noor",
-            "text": "Wat deed je met kerst?"
+            "text": "Wat deed je met kerst?",
+            "translation": "What did you do for Christmas?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ik ging naar Valencia. Ik kookte met mijn moeder en studeerde Nederlands."
+            "text": "Ik ging naar Valencia. Ik kookte met mijn moeder en studeerde Nederlands.",
+            "translation": "I went to Valencia. I cooked with my mother and studied Dutch."
           },
           {
             "speaker": "Noor",
-            "text": "En toen je terug was?"
+            "text": "En toen je terug was?",
+            "translation": "And when you were back?"
           },
           {
             "speaker": "Sofia",
-            "text": "Op 3 januari kwam ik terug. Nu woon ik hier en leer ik nog steeds Nederlands."
+            "text": "Op 3 januari kwam ik terug. Nu woon ik hier en leer ik nog steeds Nederlands.",
+            "translation": "I came back on January 3. Now I live here and I’m still learning Dutch."
           },
           {
             "speaker": "Noor",
-            "text": "Wat is een mogelijke volgende stap?"
+            "text": "Wat is een mogelijke volgende stap?",
+            "translation": "What is a possible next step?"
           },
           {
             "speaker": "Sofia",
-            "text": "Misschien vertel ik mijn verhaal in de les. Als ik een woord niet weet, vraag ik om hulp."
+            "text": "Misschien vertel ik mijn verhaal in de les. Als ik een woord niet weet, vraag ik om hulp.",
+            "translation": "Maybe I’ll tell my story in class. If I don’t know a word, I’ll ask for help."
           }
         ]
       },

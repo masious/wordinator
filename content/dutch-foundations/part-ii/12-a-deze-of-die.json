@@ -119,51 +119,63 @@
         "turns": [
           {
             "speaker": "Henk",
-            "text": "Zo! Goedemorgen, dames! Mooi weer vandaag, hè?"
+            "text": "Zo! Goedemorgen, dames! Mooi weer vandaag, hè?",
+            "translation": "Well! Good morning, ladies! Nice weather today, isn't it?"
           },
           {
             "speaker": "Noor",
-            "text": "Hoi Henk! Ja, super! Dit is mijn vriendin Sofia. Ze komt uit Spanje."
+            "text": "Hoi Henk! Ja, super! Dit is mijn vriendin Sofia. Ze komt uit Spanje.",
+            "translation": "Hi Henk! Yes, great! This is my friend Sofia. She's from Spain."
           },
           {
             "speaker": "Henk",
-            "text": "Nou, nou! Uit Spanje! Welkom op de markt. Wat mag het zijn?"
+            "text": "Nou, nou! Uit Spanje! Welkom op de markt. Wat mag het zijn?",
+            "translation": "Well, well! From Spain! Welcome to the market. What can I get you?"
           },
           {
             "speaker": "Sofia",
-            "text": "Dank u wel. Wat is dit?"
+            "text": "Dank u wel. Wat is dit?",
+            "translation": "Thank you. What is this?"
           },
           {
             "speaker": "Henk",
-            "text": "Dit is jonge kaas en dat is oude kaas. Wilt u proeven?"
+            "text": "Dit is jonge kaas en dat is oude kaas. Wilt u proeven?",
+            "translation": "This is young cheese and that is aged cheese. Would you like to taste them?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, graag. Mmm, deze kaas is lekker! Mag ik die ook proeven?"
+            "text": "Ja, graag. Mmm, deze kaas is lekker! Mag ik die ook proeven?",
+            "translation": "Yes, please. Mmm, this cheese is delicious! May I taste that one too?"
           },
           {
             "speaker": "Henk",
-            "text": "Alstublieft! Die kaas is twee jaar oud."
+            "text": "Alstublieft! Die kaas is twee jaar oud.",
+            "translation": "Here you go! That cheese is two years old."
           },
           {
             "speaker": "Sofia",
-            "text": "Oh, dat is lekker! Ik wil graag een stuk oude kaas. Deze stuk, alstublieft."
+            "text": "Oh, dat is lekker! Ik wil graag een stuk oude kaas. Deze stuk, alstublieft.",
+            "translation": "Oh, that's delicious! I'd like a piece of aged cheese. This piece, please."
           },
           {
             "speaker": "Henk",
-            "text": "Dit stuk? Prima! Dat is een pond."
+            "text": "Dit stuk? Prima! Dat is een pond.",
+            "translation": "This piece? Fine! That's a pound."
           },
           {
             "speaker": "Sofia",
-            "text": "Wat kost dit?"
+            "text": "Wat kost dit?",
+            "translation": "How much does this cost?"
           },
           {
             "speaker": "Henk",
-            "text": "Dat kost acht euro."
+            "text": "Dat kost acht euro.",
+            "translation": "That costs eight euros."
           },
           {
             "speaker": "Noor",
-            "text": "Super! De kaas van Henk is altijd lekker."
+            "text": "Super! De kaas van Henk is altijd lekker.",
+            "translation": "Great! Henk's cheese is always delicious."
           }
         ]
       },
@@ -2214,47 +2226,58 @@
         "turns": [
           {
             "speaker": "Verkoopster",
-            "text": "Goedemorgen! Mooie bloemen vandaag. Wat mag het zijn?"
+            "text": "Goedemorgen! Mooie bloemen vandaag. Wat mag het zijn?",
+            "translation": "Good morning! Beautiful flowers today. What can I get you?"
           },
           {
             "speaker": "Sofia",
-            "text": "Goedemorgen. Ik wil graag een plant voor mijn kamer."
+            "text": "Goedemorgen. Ik wil graag een plant voor mijn kamer.",
+            "translation": "Good morning. I'd like a plant for my room."
           },
           {
             "speaker": "Verkoopster",
-            "text": "Kijk, dit zijn mooie planten. Deze plant is klein en die is groot."
+            "text": "Kijk, dit zijn mooie planten. Deze plant is klein en die is groot.",
+            "translation": "Look, these are beautiful plants. This plant is small and that one is large."
           },
           {
             "speaker": "Sofia",
-            "text": "Mijn kamer is niet groot. Ik neem deze. Wat kost deze plant?"
+            "text": "Mijn kamer is niet groot. Ik neem deze. Wat kost deze plant?",
+            "translation": "My room isn't large. I'll take this one. How much does this plant cost?"
           },
           {
             "speaker": "Verkoopster",
-            "text": "Deze kost zes euro, met de pot."
+            "text": "Deze kost zes euro, met de pot.",
+            "translation": "This one costs six euros, including the pot."
           },
           {
             "speaker": "Noor",
-            "text": "Joh, dat is goedkoop! En kijk, Sofia: zonnebloemen! Deze bloemen of die?"
+            "text": "Joh, dat is goedkoop! En kijk, Sofia: zonnebloemen! Deze bloemen of die?",
+            "translation": "Wow, that's cheap! And look, Sofia: sunflowers! These flowers or those?"
           },
           {
             "speaker": "Sofia",
-            "text": "Die, daar. Die zonnebloemen zijn heel mooi!"
+            "text": "Die, daar. Die zonnebloemen zijn heel mooi!",
+            "translation": "Those, over there. Those sunflowers are very beautiful!"
           },
           {
             "speaker": "Noor",
-            "text": "Super! Een bos zonnebloemen voor onze tafel?"
+            "text": "Super! Een bos zonnebloemen voor onze tafel?",
+            "translation": "Great! A bunch of sunflowers for our table?"
           },
           {
             "speaker": "Verkoopster",
-            "text": "Deze bos? Die kost vijf euro."
+            "text": "Deze bos? Die kost vijf euro.",
+            "translation": "This bunch? It costs five euros."
           },
           {
             "speaker": "Sofia",
-            "text": "Dat is goed. Deze bloemen zijn een cadeau, Noor!"
+            "text": "Dat is goed. Deze bloemen zijn een cadeau, Noor!",
+            "translation": "That's fine. These flowers are a gift, Noor!"
           },
           {
             "speaker": "Noor",
-            "text": "Wat lief, Sofia! Dank je wel!"
+            "text": "Wat lief, Sofia! Dank je wel!",
+            "translation": "That's so sweet, Sofia! Thank you!"
           }
         ]
       },

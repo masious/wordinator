@@ -74,51 +74,63 @@
         "turns": [
           {
             "speaker": "Sofia",
-            "text": "Hoi Daan! Heb je morgen tijd? Lunchen we samen?"
+            "text": "Hoi Daan! Heb je morgen tijd? Lunchen we samen?",
+            "translation": "Hi Daan! Do you have time tomorrow? Shall we have lunch together?"
           },
           {
             "speaker": "Daan",
-            "text": "Morgen? Ik kijk even in mijn agenda."
+            "text": "Morgen? Ik kijk even in mijn agenda.",
+            "translation": "Tomorrow? Let me check my calendar."
           },
           {
             "speaker": "Sofia",
-            "text": "Om half een?"
+            "text": "Om half een?",
+            "translation": "At half past twelve?"
           },
           {
             "speaker": "Daan",
-            "text": "Morgen om half een? Nee, om één uur heb ik een vergadering. Morgen heb ik het druk."
+            "text": "Morgen om half een? Nee, om één uur heb ik een vergadering. Morgen heb ik het druk.",
+            "translation": "Tomorrow at half past twelve? No, I have a meeting at one o'clock. I'm busy tomorrow."
           },
           {
             "speaker": "Sofia",
-            "text": "Jammer. En overmorgen? Ben je overmorgen vrij?"
+            "text": "Jammer. En overmorgen? Ben je overmorgen vrij?",
+            "translation": "That's a shame. And the day after tomorrow? Are you free then?"
           },
           {
             "speaker": "Daan",
-            "text": "Overmorgen… ja. Tussen twaalf en twee heb ik tijd."
+            "text": "Overmorgen… ja. Tussen twaalf en twee heb ik tijd.",
+            "translation": "The day after tomorrow… yes. I have time between twelve and two."
           },
           {
             "speaker": "Sofia",
-            "text": "Is half een goed?"
+            "text": "Is half een goed?",
+            "translation": "Is half past twelve okay?"
           },
           {
             "speaker": "Daan",
-            "text": "Prima, dat past. Overmorgen om half een."
+            "text": "Prima, dat past. Overmorgen om half een.",
+            "translation": "Great, that works. The day after tomorrow at half past twelve."
           },
           {
             "speaker": "Sofia",
-            "text": "Leuk! En morgen om tien uur hebben we de teamvergadering, toch?"
+            "text": "Leuk! En morgen om tien uur hebben we de teamvergadering, toch?",
+            "translation": "Great! And we have the team meeting at ten tomorrow, right?"
           },
           {
             "speaker": "Daan",
-            "text": "Nee, om half tien! De teamvergadering is van half tien tot half elf."
+            "text": "Nee, om half tien! De teamvergadering is van half tien tot half elf.",
+            "translation": "No, at half past nine! The team meeting is from half past nine to half past ten."
           },
           {
             "speaker": "Sofia",
-            "text": "O ja. Morgen ik sta vroeg op!"
+            "text": "O ja. Morgen ik sta vroeg op!",
+            "translation": "Oh right. I'll get up early tomorrow!"
           },
           {
             "speaker": "Daan",
-            "text": "Ja, morgen sta je vroeg op! Tot morgen, Sofia."
+            "text": "Ja, morgen sta je vroeg op! Tot morgen, Sofia.",
+            "translation": "Yes, you'll get up early tomorrow! See you tomorrow, Sofia."
           }
         ]
       },
@@ -2240,51 +2252,63 @@
         "turns": [
           {
             "speaker": "Kapper",
-            "text": "Kapsalon Knip, goedemiddag!"
+            "text": "Kapsalon Knip, goedemiddag!",
+            "translation": "Knip Hair Salon, good afternoon!"
           },
           {
             "speaker": "Sofia",
-            "text": "Goedemiddag, met Sofia Moreno. Ik bel voor een afspraak."
+            "text": "Goedemiddag, met Sofia Moreno. Ik bel voor een afspraak.",
+            "translation": "Good afternoon, this is Sofia Moreno. I'm calling to make an appointment."
           },
           {
             "speaker": "Kapper",
-            "text": "Prima. Wanneer?"
+            "text": "Prima. Wanneer?",
+            "translation": "Certainly. When?"
           },
           {
             "speaker": "Sofia",
-            "text": "Hebt u donderdag om vier uur plaats?"
+            "text": "Hebt u donderdag om vier uur plaats?",
+            "translation": "Do you have an opening on Thursday at four?"
           },
           {
             "speaker": "Kapper",
-            "text": "Donderdag om vier uur? Nee, helaas. Om vier uur heb ik geen plaats."
+            "text": "Donderdag om vier uur? Nee, helaas. Om vier uur heb ik geen plaats.",
+            "translation": "Thursday at four? No, unfortunately. I don't have an opening at four."
           },
           {
             "speaker": "Sofia",
-            "text": "Hm. Hebt u later plaats? Om vijf uur?"
+            "text": "Hm. Hebt u later plaats? Om vijf uur?",
+            "translation": "Hmm. Do you have a later opening? At five?"
           },
           {
             "speaker": "Kapper",
-            "text": "Om vijf uur ook niet. Om half zes heb ik plaats. Past dat?"
+            "text": "Om vijf uur ook niet. Om half zes heb ik plaats. Past dat?",
+            "translation": "Not at five either. I have an opening at half past five. Does that work?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, dat past. Alleen knippen, alstublieft."
+            "text": "Ja, dat past. Alleen knippen, alstublieft.",
+            "translation": "Yes, that works. Just a haircut, please."
           },
           {
             "speaker": "Kapper",
-            "text": "Dat is goed. Donderdag om half zes, voor mevrouw Moreno."
+            "text": "Dat is goed. Donderdag om half zes, voor mevrouw Moreno.",
+            "translation": "All right. Thursday at half past five, for Ms. Moreno."
           },
           {
             "speaker": "Sofia",
-            "text": "Prima. Dank u wel!"
+            "text": "Prima. Dank u wel!",
+            "translation": "Great. Thank you!"
           },
           {
             "speaker": "Kapper",
-            "text": "Graag gedaan. Tot donderdag!"
+            "text": "Graag gedaan. Tot donderdag!",
+            "translation": "You're welcome. See you Thursday!"
           },
           {
             "speaker": "Sofia",
-            "text": "Tot dan!"
+            "text": "Tot dan!",
+            "translation": "See you then!"
           }
         ]
       },

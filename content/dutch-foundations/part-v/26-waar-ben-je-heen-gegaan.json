@@ -41,35 +41,43 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Hoi Sofia! Hoe gaat het?"
+            "text": "Hoi Sofia! Hoe gaat het?",
+            "translation": "Hi Sofia! How are you?"
           },
           {
             "speaker": "Sofia",
-            "text": "Goed, dank je. Ik ben weer terug in Utrecht."
+            "text": "Goed, dank je. Ik ben weer terug in Utrecht.",
+            "translation": "Good, thanks. I am back again in Utrecht."
           },
           {
             "speaker": "Noor",
-            "text": "Fijn! Ben je zondag aangekomen?"
+            "text": "Fijn! Ben je zondag aangekomen?",
+            "translation": "Great! Ben you zondag arrived?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, ik ben zondag teruggekomen."
+            "text": "Ja, ik ben zondag teruggekomen.",
+            "translation": "Yes, ik ben zondag came back."
           },
           {
             "speaker": "Noor",
-            "text": "En gisteren? Ben je thuisgebleven?"
+            "text": "En gisteren? Ben je thuisgebleven?",
+            "translation": "En yesterday? Ben you stayed home?"
           },
           {
             "speaker": "Sofia",
-            "text": "Nee, ik ben naar het centrum gegaan."
+            "text": "Nee, ik ben naar het centrum gegaan.",
+            "translation": "No, ik ben went to the city center."
           },
           {
             "speaker": "Noor",
-            "text": "Ben je ook naar het park gegaan?"
+            "text": "Ben je ook naar het park gegaan?",
+            "translation": "Ben you ook went to the park?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, en daarna ben ik naar huis gegaan."
+            "text": "Ja, en daarna ben ik naar huis gegaan.",
+            "translation": "Yes, en afterward ben ik went home."
           }
         ]
       },
@@ -863,35 +871,43 @@
         "turns": [
           {
             "speaker": "Sofia",
-            "text": "Gisteren ben ik naar het centrum gegaan."
+            "text": "Gisteren ben ik naar het centrum gegaan.",
+            "translation": "Gisteren ben ik went to the city center."
           },
           {
             "speaker": "Noor",
-            "text": "Ben je ook naar de gracht gegaan?"
+            "text": "Ben je ook naar de gracht gegaan?",
+            "translation": "Ben you ook naar the canal gegaan?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, ik ben langs de gracht gegaan."
+            "text": "Ja, ik ben langs de gracht gegaan.",
+            "translation": "Yes, ik ben along the canal gegaan."
           },
           {
             "speaker": "Noor",
-            "text": "We zijn met de trein naar Zandvoort gegaan."
+            "text": "We zijn met de trein naar Zandvoort gegaan.",
+            "translation": "We are by train naar Zandvoort gegaan."
           },
           {
             "speaker": "Sofia",
-            "text": "Ben je daar met Daan en mij naartoe gegaan?"
+            "text": "Ben je daar met Daan en mij naartoe gegaan?",
+            "translation": "Ben you daar met Daan en mij naartoe gegaan?"
           },
           {
             "speaker": "Noor",
-            "text": "Ja, ik ben met jullie naar Zandvoort gegaan."
+            "text": "Ja, ik ben met jullie naar Zandvoort gegaan.",
+            "translation": "Yes, ik ben with you naar Zandvoort gegaan."
           },
           {
             "speaker": "Sofia",
-            "text": "Daar zijn we in een strandcafé gebleven."
+            "text": "Daar zijn we in een strandcafé gebleven.",
+            "translation": "Daar zijn we in een beach café stayed."
           },
           {
             "speaker": "Noor",
-            "text": "Wat gezellig!"
+            "text": "Wat gezellig!",
+            "translation": "How lovely!"
           }
         ]
       },

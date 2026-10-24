@@ -137,51 +137,63 @@
         "turns": [
           {
             "speaker": "Daan",
-            "text": "Goedemorgen, Sofia. Je bent te laat!"
+            "text": "Goedemorgen, Sofia. Je bent te laat!",
+            "translation": "Good morning, Sofia. You're late!"
           },
           {
             "speaker": "Sofia",
-            "text": "Sorry! Hoe laat is het?"
+            "text": "Sorry! Hoe laat is het?",
+            "translation": "Sorry! What time is it?"
           },
           {
             "speaker": "Daan",
-            "text": "Het is tien over half negen. Het ontbijt begint om half negen."
+            "text": "Het is tien over half negen. Het ontbijt begint om half negen.",
+            "translation": "It's twenty to nine. Breakfast starts at half past eight."
           },
           {
             "speaker": "Sofia",
-            "text": "Half negen? Dat is negen uur dertig, toch?"
+            "text": "Half negen? Dat is negen uur dertig, toch?",
+            "translation": "Half past nine? That's nine thirty, right?"
           },
           {
             "speaker": "Daan",
-            "text": "Nee, half negen is acht uur dertig. Een half uur voor negen uur."
+            "text": "Nee, half negen is acht uur dertig. Een half uur voor negen uur.",
+            "translation": "No, half nine is eight thirty. Half an hour before nine o'clock."
           },
           {
             "speaker": "Sofia",
-            "text": "Echt? \"Half nine\" is negen uur dertig in het Engels."
+            "text": "Echt? \"Half nine\" is negen uur dertig in het Engels.",
+            "translation": "Really? \"Half nine\" is nine thirty in English."
           },
           {
             "speaker": "Daan",
-            "text": "Ja, maar het Nederlands is anders. Half negen is acht uur dertig."
+            "text": "Ja, maar het Nederlands is anders. Half negen is acht uur dertig.",
+            "translation": "Yes, but Dutch is different. Half nine is eight thirty."
           },
           {
             "speaker": "Sofia",
-            "text": "Oké. Ik ben tien minuten te laat."
+            "text": "Oké. Ik ben tien minuten te laat.",
+            "translation": "Okay. I'm ten minutes late."
           },
           {
             "speaker": "Daan",
-            "text": "Precies. Maar we hebben nog koffie."
+            "text": "Precies. Maar we hebben nog koffie.",
+            "translation": "Exactly. But we still have coffee."
           },
           {
             "speaker": "Sofia",
-            "text": "Lekker! Hoe laat ben jij meestal op kantoor?"
+            "text": "Lekker! Hoe laat ben jij meestal op kantoor?",
+            "translation": "Great! What time are you usually at the office?"
           },
           {
             "speaker": "Daan",
-            "text": "Ik ben altijd om tien voor half negen op kantoor. Altijd een beetje vroeg."
+            "text": "Ik ben altijd om tien voor half negen op kantoor. Altijd een beetje vroeg.",
+            "translation": "I'm always at the office at twenty past eight. Always a little early."
           },
           {
             "speaker": "Sofia",
-            "text": "Tien voor half negen. Dat is acht uur twintig. Ik ben morgen ook op tijd!"
+            "text": "Tien voor half negen. Dat is acht uur twintig. Ik ben morgen ook op tijd!",
+            "translation": "Twenty past eight. That's eight twenty. I'll be on time tomorrow too!"
           }
         ]
       },
@@ -2570,51 +2582,63 @@
         "turns": [
           {
             "speaker": "Daan",
-            "text": "Goed, Sofia. Dit is de planning van vandaag."
+            "text": "Goed, Sofia. Dit is de planning van vandaag.",
+            "translation": "Okay, Sofia. This is today's schedule."
           },
           {
             "speaker": "Sofia",
-            "text": "Hoe laat begint de vergadering?"
+            "text": "Hoe laat begint de vergadering?",
+            "translation": "What time does the meeting start?"
           },
           {
             "speaker": "Daan",
-            "text": "De vergadering begint om tien uur. De klant komt met de trein uit Amsterdam."
+            "text": "De vergadering begint om tien uur. De klant komt met de trein uit Amsterdam.",
+            "translation": "The meeting starts at ten o'clock. The client is coming by train from Amsterdam."
           },
           {
             "speaker": "Sofia",
-            "text": "Hoe laat komt de trein aan?"
+            "text": "Hoe laat komt de trein aan?",
+            "translation": "What time does the train arrive?"
           },
           {
             "speaker": "Daan",
-            "text": "De trein komt om tien voor half tien aan. Ik wacht op het station op de klant."
+            "text": "De trein komt om tien voor half tien aan. Ik wacht op het station op de klant.",
+            "translation": "The train arrives at twenty to nine. I'll wait for the client at the station."
           },
           {
             "speaker": "Sofia",
-            "text": "En hoe laat stopt de vergadering?"
+            "text": "En hoe laat stopt de vergadering?",
+            "translation": "And what time does the meeting end?"
           },
           {
             "speaker": "Daan",
-            "text": "Om kwart voor twaalf. We lunchen om half een."
+            "text": "Om kwart voor twaalf. We lunchen om half een.",
+            "translation": "At quarter to twelve. We have lunch at half past twelve."
           },
           {
             "speaker": "Sofia",
-            "text": "Half een. Dat is twaalf uur dertig, toch?"
+            "text": "Half een. Dat is twaalf uur dertig, toch?",
+            "translation": "Half one. That's twelve thirty, right?"
           },
           {
             "speaker": "Daan",
-            "text": "Precies! We hebben om drie uur een pauze van een kwartier."
+            "text": "Precies! We hebben om drie uur een pauze van een kwartier.",
+            "translation": "Exactly! We have a fifteen-minute break at three o'clock."
           },
           {
             "speaker": "Sofia",
-            "text": "Prima. En hoe laat gaat de klant weg?"
+            "text": "Prima. En hoe laat gaat de klant weg?",
+            "translation": "Great. And what time does the client leave?"
           },
           {
             "speaker": "Daan",
-            "text": "Om vijf uur. Zijn trein naar Amsterdam vertrekt om vijf over half zes."
+            "text": "Om vijf uur. Zijn trein naar Amsterdam vertrekt om vijf over half zes.",
+            "translation": "At five o'clock. His train to Amsterdam leaves at twenty-five past five."
           },
           {
             "speaker": "Sofia",
-            "text": "Vijf over half zes. Dat is zeventien uur vijfendertig. Ik ben vandaag de hele dag op tijd!"
+            "text": "Vijf over half zes. Dat is zeventien uur vijfendertig. Ik ben vandaag de hele dag op tijd!",
+            "translation": "Twenty-five past five. That's 17:35. I'm on time all day today!"
           }
         ]
       },

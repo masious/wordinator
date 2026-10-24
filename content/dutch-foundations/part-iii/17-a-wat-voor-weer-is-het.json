@@ -106,51 +106,63 @@
         "turns": [
           {
             "speaker": "Henk",
-            "text": "Nou, nou, wat een weer! Kom binnen, Sofia!"
+            "text": "Nou, nou, wat een weer! Kom binnen, Sofia!",
+            "translation": "Well, well, what weather! Come in, Sofia!"
           },
           {
             "speaker": "Sofia",
-            "text": "Hoi Henk! Brr, het regent en het waait. Ik ben zo nat!"
+            "text": "Hoi Henk! Brr, het regent en het waait. Ik ben zo nat!",
+            "translation": "Hi Henk! Brr, it's raining and windy. I'm soaking wet!"
           },
           {
             "speaker": "Henk",
-            "text": "Ja, het regent weer. Fiets je in deze regen naar kantoor?"
+            "text": "Ja, het regent weer. Fiets je in deze regen naar kantoor?",
+            "translation": "Yes, it's raining again. Do you cycle to the office in this rain?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, met mijn nieuwe fiets. Maar ik heb geen regenjas."
+            "text": "Ja, met mijn nieuwe fiets. Maar ik heb geen regenjas.",
+            "translation": "Yes, on my new bicycle. But I don't have a raincoat."
           },
           {
             "speaker": "Henk",
-            "text": "Geen regenjas? In november? Dan word je elke dag nat!"
+            "text": "Geen regenjas? In november? Dan word je elke dag nat!",
+            "translation": "No raincoat? In November? Then you'll get wet every day!"
           },
           {
             "speaker": "Sofia",
-            "text": "Wat voor weer is het morgen?"
+            "text": "Wat voor weer is het morgen?",
+            "translation": "What will the weather be like tomorrow?"
           },
           {
             "speaker": "Henk",
-            "text": "Morgen wordt het koud: acht graden. En het gaat weer regenen."
+            "text": "Morgen wordt het koud: acht graden. En het gaat weer regenen.",
+            "translation": "Tomorrow it will be cold: eight degrees. And it will rain again."
           },
           {
             "speaker": "Sofia",
-            "text": "Echt? In Valencia is het vandaag twintig graden en de zon schijnt. Ik mis de zon!"
+            "text": "Echt? In Valencia is het vandaag twintig graden en de zon schijnt. Ik mis de zon!",
+            "translation": "Really? In Valencia it's twenty degrees today and the sun is shining. I miss the sun!"
           },
           {
             "speaker": "Henk",
-            "text": "Ach, in de zomer schijnt de zon hier ook. Soms!"
+            "text": "Ach, in de zomer schijnt de zon hier ook. Soms!",
+            "translation": "Ah, in summer the sun shines here too. Sometimes!"
           },
           {
             "speaker": "Sofia",
-            "text": "Dan ga ik morgen een paraplu kopen."
+            "text": "Dan ga ik morgen een paraplu kopen.",
+            "translation": "Then I'll buy an umbrella tomorrow."
           },
           {
             "speaker": "Henk",
-            "text": "Een paraplu? Met deze wind? Nee hoor! Neem een regenjas."
+            "text": "Een paraplu? Met deze wind? Nee hoor! Neem een regenjas.",
+            "translation": "An umbrella? In this wind? No way! Get a raincoat."
           },
           {
             "speaker": "Sofia",
-            "text": "Oké, een regenjas. Dank je wel, Henk. Fijne avond!"
+            "text": "Oké, een regenjas. Dank je wel, Henk. Fijne avond!",
+            "translation": "Okay, a raincoat. Thank you, Henk. Have a nice evening!"
           }
         ]
       },
@@ -2248,43 +2260,53 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Zaterdag gaan we met Daan naar Zandvoort! Wat voor weer wordt het?"
+            "text": "Zaterdag gaan we met Daan naar Zandvoort! Wat voor weer wordt het?",
+            "translation": "On Saturday we're going to Zandvoort with Daan! What will the weather be like?"
           },
           {
             "speaker": "Sofia",
-            "text": "Wacht even, ik kijk naar de weersverwachting. Hmm… is het regenen zaterdag?"
+            "text": "Wacht even, ik kijk naar de weersverwachting. Hmm… is het regenen zaterdag?",
+            "translation": "Wait a moment, I'll check the weather forecast. Hmm… is it going to rain on Saturday?"
           },
           {
             "speaker": "Noor",
-            "text": "Regent het zaterdag? Nee, kijk: 's ochtends schijnt de zon!"
+            "text": "Regent het zaterdag? Nee, kijk: 's ochtends schijnt de zon!",
+            "translation": "Will it rain on Saturday? No, look: the sun will shine in the morning!"
           },
           {
             "speaker": "Sofia",
-            "text": "O ja! En het wordt twaalf graden. Lekker weer!"
+            "text": "O ja! En het wordt twaalf graden. Lekker weer!",
+            "translation": "Oh yes! And it will be twelve degrees. Lovely weather!"
           },
           {
             "speaker": "Noor",
-            "text": "Maar 's middags is het bewolkt en dan komt er een bui."
+            "text": "Maar 's middags is het bewolkt en dan komt er een bui.",
+            "translation": "But in the afternoon it will be cloudy and then there will be a shower."
           },
           {
             "speaker": "Sofia",
-            "text": "Een bui? Dan worden we nat!"
+            "text": "Een bui? Dan worden we nat!",
+            "translation": "A shower? Then we'll get wet!"
           },
           {
             "speaker": "Noor",
-            "text": "Ja, en in Zandvoort waait het altijd."
+            "text": "Ja, en in Zandvoort waait het altijd.",
+            "translation": "Yes, and it is always windy in Zandvoort."
           },
           {
             "speaker": "Sofia",
-            "text": "Dan neem ik mijn nieuwe regenjas mee."
+            "text": "Dan neem ik mijn nieuwe regenjas mee.",
+            "translation": "Then I'll take my new raincoat with me."
           },
           {
             "speaker": "Noor",
-            "text": "Goed zo! Er is geen slecht weer, alleen slechte kleding!"
+            "text": "Goed zo! Er is geen slecht weer, alleen slechte kleding!",
+            "translation": "Good! There is no bad weather, only bad clothing!"
           },
           {
             "speaker": "Sofia",
-            "text": "Haha, dat zegt Henk ook altijd! En zaterdag kijken we eerst op de buienradar."
+            "text": "Haha, dat zegt Henk ook altijd! En zaterdag kijken we eerst op de buienradar.",
+            "translation": "Haha, Henk always says that too! And on Saturday we'll check the rain radar first."
           }
         ]
       },

@@ -29,35 +29,43 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Sofia, waar woonde je als kind?"
+            "text": "Sofia, waar woonde je als kind?",
+            "translation": "Sofia, where did you live as a child?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ik woonde in Valencia, in een rustige straat."
+            "text": "Ik woonde in Valencia, in een rustige straat.",
+            "translation": "I lived in Valencia, on a quiet street."
           },
           {
             "speaker": "Noor",
-            "text": "Ik woonde in Groningen, vlak bij mijn school."
+            "text": "Ik woonde in Groningen, vlak bij mijn school.",
+            "translation": "I lived in Groningen, close to my school."
           },
           {
             "speaker": "Sofia",
-            "text": "Had je een step?"
+            "text": "Had je een step?",
+            "translation": "Did you have a scooter?"
           },
           {
             "speaker": "Noor",
-            "text": "Ja, ik had een rode step. En jij?"
+            "text": "Ja, ik had een rode step. En jij?",
+            "translation": "Yes, I had a red scooter. And you?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ik had een blauwe step."
+            "text": "Ik had een blauwe step.",
+            "translation": "I had a blue scooter."
           },
           {
             "speaker": "Noor",
-            "text": "Wat deed je na school?"
+            "text": "Wat deed je na school?",
+            "translation": "What did you do after school?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ik speelde vaak buiten met vriendinnen."
+            "text": "Ik speelde vaak buiten met vriendinnen.",
+            "translation": "I often played outside with friends."
           }
         ]
       },
@@ -531,35 +539,43 @@
         "turns": [
           {
             "speaker": "Sofia",
-            "text": "Was je school klein?"
+            "text": "Was je school klein?",
+            "translation": "Was your school small?"
           },
           {
             "speaker": "Noor",
-            "text": "Ja, mijn school was klein. En jouw school?"
+            "text": "Ja, mijn school was klein. En jouw school?",
+            "translation": "Yes, my school was small. And your school?"
           },
           {
             "speaker": "Sofia",
-            "text": "Mijn school was ook klein."
+            "text": "Mijn school was ook klein.",
+            "translation": "My school was small too."
           },
           {
             "speaker": "Noor",
-            "text": "Fietste je naar school?"
+            "text": "Fietste je naar school?",
+            "translation": "Did you cycle to school?"
           },
           {
             "speaker": "Sofia",
-            "text": "Nee, ik ging meestal lopend. Mijn school was dichtbij."
+            "text": "Nee, ik ging meestal lopend. Mijn school was dichtbij.",
+            "translation": "No, I usually walked. My school was nearby."
           },
           {
             "speaker": "Noor",
-            "text": "Wat deed je na school?"
+            "text": "Wat deed je na school?",
+            "translation": "What did you do after school?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ik speelde buiten of ik fietste naar de speelplaats."
+            "text": "Ik speelde buiten of ik fietste naar de speelplaats.",
+            "translation": "I played outside or cycled to the playground."
           },
           {
             "speaker": "Noor",
-            "text": "Ik ging soms naar de speelplaats."
+            "text": "Ik ging soms naar de speelplaats.",
+            "translation": "I sometimes went to the playground."
           }
         ]
       },

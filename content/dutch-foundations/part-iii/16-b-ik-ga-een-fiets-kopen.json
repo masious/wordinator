@@ -110,51 +110,63 @@
         "turns": [
           {
             "speaker": "Daan",
-            "text": "Sofia, hoe kom jij elke dag naar kantoor?"
+            "text": "Sofia, hoe kom jij elke dag naar kantoor?",
+            "translation": "Sofia, how do you get to the office every day?"
           },
           {
             "speaker": "Sofia",
-            "text": "Met de bus. Of ik loop naar het station. Dat is vijftien minuten lopen."
+            "text": "Met de bus. Of ik loop naar het station. Dat is vijftien minuten lopen.",
+            "translation": "By bus. Or I walk to the station. It's a fifteen-minute walk."
           },
           {
             "speaker": "Daan",
-            "text": "Je hebt geen fiets? In Utrecht? Je gaat een fiets kopen!"
+            "text": "Je hebt geen fiets? In Utrecht? Je gaat een fiets kopen!",
+            "translation": "You don't have a bicycle? In Utrecht? You're going to buy a bicycle!"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, ja. Ik ga kopen een fiets. Zaterdag."
+            "text": "Ja, ja. Ik ga kopen een fiets. Zaterdag.",
+            "translation": "Yes, yes. I'm going to buy a bicycle. On Saturday."
           },
           {
             "speaker": "Daan",
-            "text": "Goed plan! Je gaat zaterdag een fiets kopen. Waar ga je kijken?"
+            "text": "Goed plan! Je gaat zaterdag een fiets kopen. Waar ga je kijken?",
+            "translation": "Good plan! You're going to buy a bicycle on Saturday. Where are you going to look?"
           },
           {
             "speaker": "Sofia",
-            "text": "Zaterdag ga ik naar de fietsenwinkel van Ahmed, in de Kanaalstraat."
+            "text": "Zaterdag ga ik naar de fietsenwinkel van Ahmed, in de Kanaalstraat.",
+            "translation": "On Saturday I'm going to Ahmed's bicycle shop, on Kanaalstraat."
           },
           {
             "speaker": "Daan",
-            "text": "Prima. Ga je een nieuwe fiets kopen?"
+            "text": "Prima. Ga je een nieuwe fiets kopen?",
+            "translation": "Great. Are you going to buy a new bicycle?"
           },
           {
             "speaker": "Sofia",
-            "text": "Nee, ik ga geen nieuwe fiets kopen. Een nieuwe fiets is te duur. Ik ga een tweedehands fiets kopen."
+            "text": "Nee, ik ga geen nieuwe fiets kopen. Een nieuwe fiets is te duur. Ik ga een tweedehands fiets kopen.",
+            "translation": "No, I'm not going to buy a new bicycle. A new bicycle is too expensive. I'm going to buy a second-hand bicycle."
           },
           {
             "speaker": "Daan",
-            "text": "Doe maar. En neem een goed slot! In Utrecht zijn veel fietsendieven."
+            "text": "Doe maar. En neem een goed slot! In Utrecht zijn veel fietsendieven.",
+            "translation": "Go ahead. And get a good lock! There are lots of bicycle thieves in Utrecht."
           },
           {
             "speaker": "Sofia",
-            "text": "Een goed slot. Oké! En wat ga jij dit weekend doen?"
+            "text": "Een goed slot. Oké! En wat ga jij dit weekend doen?",
+            "translation": "A good lock. Okay! And what are you going to do this weekend?"
           },
           {
             "speaker": "Daan",
-            "text": "Zaterdag ga ik met Lotte fietsen. En zondag gaan we bij mijn moeder eten."
+            "text": "Zaterdag ga ik met Lotte fietsen. En zondag gaan we bij mijn moeder eten.",
+            "translation": "On Saturday I'm going cycling with Lotte. And on Sunday we're going to eat at my mother's."
           },
           {
             "speaker": "Sofia",
-            "text": "Gezellig! Veel plezier!"
+            "text": "Gezellig! Veel plezier!",
+            "translation": "How nice! Have fun!"
           }
         ]
       },
@@ -1901,51 +1913,63 @@
         "turns": [
           {
             "speaker": "Ahmed",
-            "text": "Hé, Sofia! Welkom! Wat kan ik voor je doen?"
+            "text": "Hé, Sofia! Welkom! Wat kan ik voor je doen?",
+            "translation": "Hey, Sofia! Welcome! What can I do for you?"
           },
           {
             "speaker": "Sofia",
-            "text": "Hoi Ahmed! Ik ga vandaag een fiets kopen. Een tweedehands fiets."
+            "text": "Hoi Ahmed! Ik ga vandaag een fiets kopen. Een tweedehands fiets.",
+            "translation": "Hi Ahmed! I'm going to buy a bicycle today. A second-hand bicycle."
           },
           {
             "speaker": "Ahmed",
-            "text": "Kijk eens, deze zwarte fiets. Hij kost honderdvijftig euro. De remmen en het licht zijn nieuw."
+            "text": "Kijk eens, deze zwarte fiets. Hij kost honderdvijftig euro. De remmen en het licht zijn nieuw.",
+            "translation": "Look at this black bicycle. It costs one hundred and fifty euros. The brakes and the light are new."
           },
           {
             "speaker": "Sofia",
-            "text": "Mooi! Mag ik deze fiets proberen?"
+            "text": "Mooi! Mag ik deze fiets proberen?",
+            "translation": "Nice! May I try this bicycle?"
           },
           {
             "speaker": "Ahmed",
-            "text": "Natuurlijk. Fiets maar een rondje."
+            "text": "Natuurlijk. Fiets maar een rondje.",
+            "translation": "Of course. Just ride around the block."
           },
           {
             "speaker": "Sofia",
-            "text": "Super, hij fietst lekker! Maar de bel is kapot."
+            "text": "Super, hij fietst lekker! Maar de bel is kapot.",
+            "translation": "Great, it rides nicely! But the bell is broken."
           },
           {
             "speaker": "Ahmed",
-            "text": "Geen probleem. Ik ga de bel even repareren. Ga je elke dag fietsen?"
+            "text": "Geen probleem. Ik ga de bel even repareren. Ga je elke dag fietsen?",
+            "translation": "No problem. I'll repair the bell. Are you going to cycle every day?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja! Ik ga elke dag naar kantoor fietsen. Niet meer met de bus!"
+            "text": "Ja! Ik ga elke dag naar kantoor fietsen. Niet meer met de bus!",
+            "translation": "Yes! I'm going to cycle to the office every day. No more bus!"
           },
           {
             "speaker": "Ahmed",
-            "text": "Dan heb je ook een goed slot nodig. Dit slot kost vijfentwintig euro."
+            "text": "Dan heb je ook een goed slot nodig. Dit slot kost vijfentwintig euro.",
+            "translation": "Then you also need a good lock. This lock costs twenty-five euros."
           },
           {
             "speaker": "Sofia",
-            "text": "Ik neem het slot. Is er garantie op de fiets?"
+            "text": "Ik neem het slot. Is er garantie op de fiets?",
+            "translation": "I'll take the lock. Is there a warranty on the bicycle?"
           },
           {
             "speaker": "Ahmed",
-            "text": "Ja, drie maanden. Is er iets kapot? Dan repareer ik de fiets gratis. En zet je fiets altijd op slot!"
+            "text": "Ja, drie maanden. Is er iets kapot? Dan repareer ik de fiets gratis. En zet je fiets altijd op slot!",
+            "translation": "Yes, three months. Is anything broken? Then I'll repair the bicycle for free. And always lock your bicycle!"
           },
           {
             "speaker": "Sofia",
-            "text": "Dat ga ik doen! Samen is dat honderdvijfenzeventig euro, toch? Mag ik pinnen?"
+            "text": "Dat ga ik doen! Samen is dat honderdvijfenzeventig euro, toch? Mag ik pinnen?",
+            "translation": "I'll do that! Together that's one hundred and seventy-five euros, right? Can I pay by card?"
           }
         ]
       },

@@ -123,43 +123,53 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Sofia, morgen is het feest van Daan. Jij maakt een tortilla, toch?"
+            "text": "Sofia, morgen is het feest van Daan. Jij maakt een tortilla, toch?",
+            "translation": "Sofia, Daan's party is tomorrow. You're making a tortilla, right?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, een Spaanse tortilla! Hebben we eieren?"
+            "text": "Ja, een Spaanse tortilla! Hebben we eieren?",
+            "translation": "Yes, a Spanish tortilla! Do we have eggs?"
           },
           {
             "speaker": "Noor",
-            "text": "Nee, we hebben geen eieren. En we hebben ook geen melk."
+            "text": "Nee, we hebben geen eieren. En we hebben ook geen melk.",
+            "translation": "No, we don't have any eggs. And we don't have any milk either."
           },
           {
             "speaker": "Sofia",
-            "text": "Echt? Wacht even, ik kijk in de koelkast."
+            "text": "Echt? Wacht even, ik kijk in de koelkast.",
+            "translation": "Really? Wait a moment, I'll look in the fridge."
           },
           {
             "speaker": "Sofia",
-            "text": "We hebben een ui, twee tomaten, kaas en boter."
+            "text": "We hebben een ui, twee tomaten, kaas en boter.",
+            "translation": "We have an onion, two tomatoes, cheese, and butter."
           },
           {
             "speaker": "Noor",
-            "text": "En we hebben geen aardappelen."
+            "text": "En we hebben geen aardappelen.",
+            "translation": "And we don't have any potatoes."
           },
           {
             "speaker": "Sofia",
-            "text": "Geen aardappelen? Dan koop ik aardappelen en uien."
+            "text": "Geen aardappelen? Dan koop ik aardappelen en uien.",
+            "translation": "No potatoes? Then I'll buy potatoes and onions."
           },
           {
             "speaker": "Noor",
-            "text": "Goed. Kijk, hier is mijn boodschappenlijstje: eieren, aardappelen, uien."
+            "text": "Goed. Kijk, hier is mijn boodschappenlijstje: eieren, aardappelen, uien.",
+            "translation": "Good. Look, here's my shopping list: eggs, potatoes, onions."
           },
           {
             "speaker": "Sofia",
-            "text": "En chips en koekjes voor het feest!"
+            "text": "En chips en koekjes voor het feest!",
+            "translation": "And crisps and cookies for the party!"
           },
           {
             "speaker": "Noor",
-            "text": "Super! Om half zes doen we samen boodschappen."
+            "text": "Super! Om half zes doen we samen boodschappen.",
+            "translation": "Great! At half past five we'll go grocery shopping together."
           }
         ]
       },
@@ -1781,51 +1791,63 @@
         "turns": [
           {
             "speaker": "Sofia",
-            "text": "Noor, waar zijn de tomaats?"
+            "text": "Noor, waar zijn de tomaats?",
+            "translation": "Noor, where are the tomatoes?"
           },
           {
             "speaker": "Noor",
-            "text": "De tomaten? Kijk, hier zijn de tomaten, bij de paprika's."
+            "text": "De tomaten? Kijk, hier zijn de tomaten, bij de paprika's.",
+            "translation": "The tomatoes? Look, here are the tomatoes, next to the peppers."
           },
           {
             "speaker": "Sofia",
-            "text": "O ja, tomaten. Ik neem zes grote tomaten voor het feest."
+            "text": "O ja, tomaten. Ik neem zes grote tomaten voor het feest.",
+            "translation": "Oh yes, tomatoes. I'll take six large tomatoes for the party."
           },
           {
             "speaker": "Noor",
-            "text": "Super. En ik neem twee rode paprika's en een komkommer."
+            "text": "Super. En ik neem twee rode paprika's en een komkommer.",
+            "translation": "Great. And I'll take two red peppers and a cucumber."
           },
           {
             "speaker": "Sofia",
-            "text": "Eieren, aardappelen, uien en tomaten. Ja! Nu het brood nog."
+            "text": "Eieren, aardappelen, uien en tomaten. Ja! Nu het brood nog.",
+            "translation": "Eggs, potatoes, onions, and tomatoes. Yes! Now we just need the bread."
           },
           {
             "speaker": "Noor",
-            "text": "Neem jij de broodjes?"
+            "text": "Neem jij de broodjes?",
+            "translation": "Will you get the bread rolls?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja hoor. Kijk, een groot brood!"
+            "text": "Ja hoor. Kijk, een groot brood!",
+            "translation": "Sure. Look, a large loaf of bread!"
           },
           {
             "speaker": "Noor",
-            "text": "Nee, joh! Geen brood, broodjes! Kleine broodjes, voor het feest."
+            "text": "Nee, joh! Geen brood, broodjes! Kleine broodjes, voor het feest.",
+            "translation": "No way! Not bread, bread rolls! Small rolls, for the party."
           },
           {
             "speaker": "Sofia",
-            "text": "O, sorry! Hoe zeg je 'rolls' in het Nederlands? Broodjes?"
+            "text": "O, sorry! Hoe zeg je 'rolls' in het Nederlands? Broodjes?",
+            "translation": "Oh, sorry! How do you say “rolls” in Dutch? Broodjes?"
           },
           {
             "speaker": "Noor",
-            "text": "Ja! Een broodje is klein. Een brood is groot."
+            "text": "Ja! Een broodje is klein. Een brood is groot.",
+            "translation": "Yes! A broodje is small. A brood is large."
           },
           {
             "speaker": "Sofia",
-            "text": "Oké, ik neem twintig broodjes. En het grote brood ook, voor het ontbijt!"
+            "text": "Oké, ik neem twintig broodjes. En het grote brood ook, voor het ontbijt!",
+            "translation": "Okay, I'll take twenty rolls. And the large loaf too, for breakfast!"
           },
           {
             "speaker": "Noor",
-            "text": "Lekker! Nu nog chips en koekjes, en dan naar huis."
+            "text": "Lekker! Nu nog chips en koekjes, en dan naar huis.",
+            "translation": "Great! Just crisps and cookies now, and then we'll go home."
           }
         ]
       },

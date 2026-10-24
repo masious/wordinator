@@ -122,51 +122,63 @@
         "turns": [
           {
             "speaker": "Sofia",
-            "text": "Kijk, Noor! Ik heb een nieuwe agenda."
+            "text": "Kijk, Noor! Ik heb een nieuwe agenda.",
+            "translation": "Look, Noor! I have a new calendar."
           },
           {
             "speaker": "Noor",
-            "text": "Super! Een agenda van papier?"
+            "text": "Super! Een agenda van papier?",
+            "translation": "Great! A paper calendar?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja. De hoeveelste is het vandaag?"
+            "text": "Ja. De hoeveelste is het vandaag?",
+            "translation": "Yes. What date is it today?"
           },
           {
             "speaker": "Noor",
-            "text": "Het is de zestiende. Woensdag 16 september."
+            "text": "Het is de zestiende. Woensdag 16 september.",
+            "translation": "It's the sixteenth. Wednesday, September 16."
           },
           {
             "speaker": "Sofia",
-            "text": "Dank je. En wanneer is Daan jarig?"
+            "text": "Dank je. En wanneer is Daan jarig?",
+            "translation": "Thanks. And when is Daan's birthday?"
           },
           {
             "speaker": "Noor",
-            "text": "Op zaterdag. Op zaterdag 19 september."
+            "text": "Op zaterdag. Op zaterdag 19 september.",
+            "translation": "On Saturday. On Saturday, September 19."
           },
           {
             "speaker": "Sofia",
-            "text": "Is het feest ook in zaterdag?"
+            "text": "Is het feest ook in zaterdag?",
+            "translation": "Is the party also on Saturday?"
           },
           {
             "speaker": "Noor",
-            "text": "Ja, ook op zaterdag. En op vrijdag 2 oktober heb ik een tentamen."
+            "text": "Ja, ook op zaterdag. En op vrijdag 2 oktober heb ik een tentamen.",
+            "translation": "Yes, also on Saturday. And I have an exam on Friday, October 2."
           },
           {
             "speaker": "Sofia",
-            "text": "Succes! En Fleur? Wanneer komt je zus terug?"
+            "text": "Succes! En Fleur? Wanneer komt je zus terug?",
+            "translation": "Good luck! And Fleur? When is your sister coming back?"
           },
           {
             "speaker": "Noor",
-            "text": "Fleur komt op 1 november terug. De kamer is vrij tot 31 oktober."
+            "text": "Fleur komt op 1 november terug. De kamer is vrij tot 31 oktober.",
+            "translation": "Fleur is coming back on November 1. The room is available until October 31."
           },
           {
             "speaker": "Sofia",
-            "text": "Tot 31 oktober. Dat is een zaterdag. In oktober zoek ik dus een appartement!"
+            "text": "Tot 31 oktober. Dat is een zaterdag. In oktober zoek ik dus een appartement!",
+            "translation": "Until October 31. That's a Saturday. So I'll look for an apartment in October!"
           },
           {
             "speaker": "Noor",
-            "text": "Ja! Maar eerst het feest van Daan!"
+            "text": "Ja! Maar eerst het feest van Daan!",
+            "translation": "Yes! But first, Daan's party!"
           }
         ]
       },
@@ -2375,51 +2387,63 @@
         "turns": [
           {
             "speaker": "Daan",
-            "text": "Goedemorgen, Sofia. Een nieuwe agenda?"
+            "text": "Goedemorgen, Sofia. Een nieuwe agenda?",
+            "translation": "Good morning, Sofia. A new calendar?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja! Vandaag is het woensdag 16 september. En op zaterdag ben jij jarig!"
+            "text": "Ja! Vandaag is het woensdag 16 september. En op zaterdag ben jij jarig!",
+            "translation": "Yes! Today is Wednesday, September 16. And your birthday is on Saturday!"
           },
           {
             "speaker": "Daan",
-            "text": "Precies. Op zaterdag geef ik een feest."
+            "text": "Precies. Op zaterdag geef ik een feest.",
+            "translation": "Exactly. I'm having a party on Saturday."
           },
           {
             "speaker": "Sofia",
-            "text": "Gezellig! Hoe laat begint het feest?"
+            "text": "Gezellig! Hoe laat begint het feest?",
+            "translation": "Nice! What time does the party start?"
           },
           {
             "speaker": "Daan",
-            "text": "Om acht uur. Lotte komt ook, en Noor."
+            "text": "Om acht uur. Lotte komt ook, en Noor.",
+            "translation": "At eight o'clock. Lotte and Noor are coming too."
           },
           {
             "speaker": "Sofia",
-            "text": "Leuk! Ik schrijf de datum in mijn agenda."
+            "text": "Leuk! Ik schrijf de datum in mijn agenda.",
+            "translation": "Great! I'll write the date in my calendar."
           },
           {
             "speaker": "Daan",
-            "text": "En op vrijdag trakteer ik op taart, hier op kantoor."
+            "text": "En op vrijdag trakteer ik op taart, hier op kantoor.",
+            "translation": "And on Friday I'll treat everyone to cake here at the office."
           },
           {
             "speaker": "Sofia",
-            "text": "Lekker! Op vrijdag? Niet op zaterdag?"
+            "text": "Lekker! Op vrijdag? Niet op zaterdag?",
+            "translation": "Yum! On Friday? Not on Saturday?"
           },
           {
             "speaker": "Daan",
-            "text": "Nee, op zaterdag werk ik niet. Wanneer ben jij jarig, Sofia?"
+            "text": "Nee, op zaterdag werk ik niet. Wanneer ben jij jarig, Sofia?",
+            "translation": "No, I don't work on Saturday. When is your birthday, Sofia?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ik ben op 23 april jarig."
+            "text": "Ik ben op 23 april jarig.",
+            "translation": "My birthday is on April 23."
           },
           {
             "speaker": "Daan",
-            "text": "Op 23 april? Kijk, in 2027 is dat een vrijdag. Dan trakteer jij!"
+            "text": "Op 23 april? Kijk, in 2027 is dat een vrijdag. Dan trakteer jij!",
+            "translation": "On April 23? Look, in 2027 that's a Friday. Then you'll treat everyone!"
           },
           {
             "speaker": "Sofia",
-            "text": "Prima! Dan trakteer ik op taart."
+            "text": "Prima! Dan trakteer ik op taart.",
+            "translation": "Great! Then I'll treat everyone to cake."
           }
         ]
       },

@@ -102,43 +102,53 @@
         "turns": [
           {
             "speaker": "Daan",
-            "text": "Sofia, waar kom je vandaan?"
+            "text": "Sofia, waar kom je vandaan?",
+            "translation": "Sofia, where are you from?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ik kom uit Spanje, uit Valencia."
+            "text": "Ik kom uit Spanje, uit Valencia.",
+            "translation": "I’m from Spain, from Valencia."
           },
           {
             "speaker": "Daan",
-            "text": "Ah, Valencia! Is Valencia groot?"
+            "text": "Ah, Valencia! Is Valencia groot?",
+            "translation": "Ah, Valencia! Is Valencia big?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, Valencia is heel groot. En jij, Daan? Waar kom jij vandaan?"
+            "text": "Ja, Valencia is heel groot. En jij, Daan? Waar kom jij vandaan?",
+            "translation": "Yes, Valencia is very big. And you, Daan? Where are you from?"
           },
           {
             "speaker": "Daan",
-            "text": "Ik kom uit Utrecht. Utrecht is gezellig!"
+            "text": "Ik kom uit Utrecht. Utrecht is gezellig!",
+            "translation": "I’m from Utrecht. Utrecht is lovely!"
           },
           {
             "speaker": "Sofia",
-            "text": "Karin, kom jij ook uit Utrecht?"
+            "text": "Karin, kom jij ook uit Utrecht?",
+            "translation": "Karin, are you also from Utrecht?"
           },
           {
             "speaker": "Karin",
-            "text": "Nee, ik kom uit Amersfoort."
+            "text": "Nee, ik kom uit Amersfoort.",
+            "translation": "No, I’m from Amersfoort."
           },
           {
             "speaker": "Sofia",
-            "text": "Amersfoort? Waar is Amersfoort?"
+            "text": "Amersfoort? Waar is Amersfoort?",
+            "translation": "Amersfoort? Where is Amersfoort?"
           },
           {
             "speaker": "Karin",
-            "text": "Amersfoort is in Nederland, heel dichtbij."
+            "text": "Amersfoort is in Nederland, heel dichtbij.",
+            "translation": "Amersfoort is in the Netherlands, very close by."
           },
           {
             "speaker": "Daan",
-            "text": "Amersfoort is klein. Utrecht is groot!"
+            "text": "Amersfoort is klein. Utrecht is groot!",
+            "translation": "Amersfoort is small. Utrecht is big!"
           }
         ]
       },
@@ -1759,43 +1769,53 @@
         "turns": [
           {
             "speaker": "Collega",
-            "text": "Hoi allemaal! Eet smakelijk!"
+            "text": "Hoi allemaal! Eet smakelijk!",
+            "translation": "Hi everyone! Enjoy your meal!"
           },
           {
             "speaker": "Karin",
-            "text": "Dank je! Hoe gaat het?"
+            "text": "Dank je! Hoe gaat het?",
+            "translation": "Thank you! How are you?"
           },
           {
             "speaker": "Collega",
-            "text": "Goed, dank je. Ben jij Sofia?"
+            "text": "Goed, dank je. Ben jij Sofia?",
+            "translation": "Good, thank you. Are you Sofia?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, dat ben ik! Hoi!"
+            "text": "Ja, dat ben ik! Hoi!",
+            "translation": "Yes, that’s me! Hi!"
           },
           {
             "speaker": "Collega",
-            "text": "Welkom! Waar kom je vandaan?"
+            "text": "Welkom! Waar kom je vandaan?",
+            "translation": "Welcome! Where are you from?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ik kom uit Valencia, in Spanje. En jij? Kom jij ook uit Utrecht?"
+            "text": "Ik kom uit Valencia, in Spanje. En jij? Kom jij ook uit Utrecht?",
+            "translation": "I’m from Valencia, in Spain. And you? Are you also from Utrecht?"
           },
           {
             "speaker": "Collega",
-            "text": "Nee hoor, ik kom uit België, uit Antwerpen."
+            "text": "Nee hoor, ik kom uit België, uit Antwerpen.",
+            "translation": "No, I’m from Belgium, from Antwerp."
           },
           {
             "speaker": "Sofia",
-            "text": "Echt? Karin komt uit Amersfoort en Daan komt uit Utrecht."
+            "text": "Echt? Karin komt uit Amersfoort en Daan komt uit Utrecht.",
+            "translation": "Really? Karin is from Amersfoort and Daan is from Utrecht."
           },
           {
             "speaker": "Collega",
-            "text": "En jij komt uit Valencia! Het bedrijf is klein, maar internationaal."
+            "text": "En jij komt uit Valencia! Het bedrijf is klein, maar internationaal.",
+            "translation": "And you’re from Valencia! The company is small, but international."
           },
           {
             "speaker": "Daan",
-            "text": "Precies!"
+            "text": "Precies!",
+            "translation": "Exactly!"
           }
         ]
       },

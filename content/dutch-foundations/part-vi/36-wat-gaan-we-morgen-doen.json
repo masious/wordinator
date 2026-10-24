@@ -29,43 +29,53 @@
         "turns": [
           {
             "speaker": "Sofia",
-            "text": "De les is bijna afgelopen. Hoe laat begint de les volgende week?"
+            "text": "De les is bijna afgelopen. Hoe laat begint de les volgende week?",
+            "translation": "The class is almost over. What time does class start next week?"
           },
           {
             "speaker": "Piotr",
-            "text": "Volgende week dinsdag begint de les om zeven uur 's avonds. Dat staat in het rooster."
+            "text": "Volgende week dinsdag begint de les om zeven uur 's avonds. Dat staat in het rooster.",
+            "translation": "Next Tuesday, class starts at seven in the evening. It is on the schedule."
           },
           {
             "speaker": "Sofia",
-            "text": "O ja, vandaag is de les op dinsdagavond. Ik ga morgen mijn woorden herhalen."
+            "text": "O ja, vandaag is de les op dinsdagavond. Ik ga morgen mijn woorden herhalen.",
+            "translation": "Oh yes, class is on Tuesday evening today. I am going to review my words tomorrow."
           },
           {
             "speaker": "Piotr",
-            "text": "Goed idee. Ik ga vanavond mijn aantekeningen lezen."
+            "text": "Goed idee. Ik ga vanavond mijn aantekeningen lezen.",
+            "translation": "Good idea. I am going to read my notes tonight."
           },
           {
             "speaker": "Sofia",
-            "text": "Denk je dat het morgen regent?"
+            "text": "Denk je dat het morgen regent?",
+            "translation": "Do you think it will rain tomorrow?"
           },
           {
             "speaker": "Piotr",
-            "text": "Ik denk dat het misschien regent, maar ik weet het niet zeker."
+            "text": "Ik denk dat het misschien regent, maar ik weet het niet zeker.",
+            "translation": "I think it might rain, but I am not sure."
           },
           {
             "speaker": "Sofia",
-            "text": "Dan neem ik mijn jas mee."
+            "text": "Dan neem ik mijn jas mee.",
+            "translation": "Then I will bring my coat."
           },
           {
             "speaker": "Piotr",
-            "text": "Ik zal je morgen een bericht sturen als ik meer weet."
+            "text": "Ik zal je morgen een bericht sturen als ik meer weet.",
+            "translation": "I will send you a message tomorrow if I find out more."
           },
           {
             "speaker": "Sofia",
-            "text": "Dank je. Zal ik de woordenlijst voor je meenemen?"
+            "text": "Dank je. Zal ik de woordenlijst voor je meenemen?",
+            "translation": "Thank you. Shall I bring the word list for you?"
           },
           {
             "speaker": "Piotr",
-            "text": "Ja, graag. Dan kunnen we die voor de les bekijken."
+            "text": "Ja, graag. Dan kunnen we die voor de les bekijken.",
+            "translation": "Yes, please. Then we can look at it before class."
           }
         ]
       },
@@ -580,43 +590,53 @@
         "turns": [
           {
             "speaker": "Piotr",
-            "text": "Staat de les van volgende week al in het rooster?"
+            "text": "Staat de les van volgende week al in het rooster?",
+            "translation": "Is next week’s class already on the schedule?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, dinsdag om zeven uur 's avonds. Dat is de vaste tijd."
+            "text": "Ja, dinsdag om zeven uur 's avonds. Dat is de vaste tijd.",
+            "translation": "Yes, Tuesday at seven in the evening. That is the regular time."
           },
           {
             "speaker": "Piotr",
-            "text": "Ik ga morgenavond de nieuwe woorden leren."
+            "text": "Ik ga morgenavond de nieuwe woorden leren.",
+            "translation": "I am going to learn the new words tomorrow evening."
           },
           {
             "speaker": "Sofia",
-            "text": "Ik ga de woorden ook herhalen. Misschien oefen ik met Noor."
+            "text": "Ik ga de woorden ook herhalen. Misschien oefen ik met Noor.",
+            "translation": "I am going to review the words too. Maybe I will practice with Noor."
           },
           {
             "speaker": "Piotr",
-            "text": "Denk je dat het morgen regenachtig is?"
+            "text": "Denk je dat het morgen regenachtig is?",
+            "translation": "Do you think it will be rainy tomorrow?"
           },
           {
             "speaker": "Sofia",
-            "text": "Misschien zal het morgen regenachtig zijn."
+            "text": "Misschien zal het morgen regenachtig zijn.",
+            "translation": "Maybe it will be rainy tomorrow."
           },
           {
             "speaker": "Piotr",
-            "text": "Ik zal je na de les een bericht sturen."
+            "text": "Ik zal je na de les een bericht sturen.",
+            "translation": "I will send you a message after class."
           },
           {
             "speaker": "Sofia",
-            "text": "Dank je. Zal ik mijn aantekeningen delen?"
+            "text": "Dank je. Zal ik mijn aantekeningen delen?",
+            "translation": "Thank you. Shall I share my notes?"
           },
           {
             "speaker": "Piotr",
-            "text": "Ja, graag. Dat is handig."
+            "text": "Ja, graag. Dat is handig.",
+            "translation": "Yes, please. That is useful."
           },
           {
             "speaker": "Sofia",
-            "text": "Prima. Dan zien we elkaar volgende week weer in de les."
+            "text": "Prima. Dan zien we elkaar volgende week weer in de les.",
+            "translation": "Great. Then we will see each other in class again next week."
           }
         ]
       },

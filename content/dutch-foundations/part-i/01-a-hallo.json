@@ -96,39 +96,48 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Sofia! Hoi!"
+            "text": "Sofia! Hoi!",
+            "translation": "Sofia! Hi!"
           },
           {
             "speaker": "Sofia",
-            "text": "Hoi Noor!"
+            "text": "Hoi Noor!",
+            "translation": "Hi Noor!"
           },
           {
             "speaker": "Noor",
-            "text": "Welkom in Utrecht!"
+            "text": "Welkom in Utrecht!",
+            "translation": "Welcome to Utrecht!"
           },
           {
             "speaker": "Sofia",
-            "text": "Dank je wel!"
+            "text": "Dank je wel!",
+            "translation": "Thank you!"
           },
           {
             "speaker": "Noor",
-            "text": "Hoe gaat het?"
+            "text": "Hoe gaat het?",
+            "translation": "How are you?"
           },
           {
             "speaker": "Sofia",
-            "text": "Goed, dank je. Ik ben een beetje moe. En met jou?"
+            "text": "Goed, dank je. Ik ben een beetje moe. En met jou?",
+            "translation": "Good, thank you. I’m a little tired. And you?"
           },
           {
             "speaker": "Noor",
-            "text": "Met mij gaat het heel goed!"
+            "text": "Met mij gaat het heel goed!",
+            "translation": "I’m doing very well!"
           },
           {
             "speaker": "Sofia",
-            "text": "Het station is groot!"
+            "text": "Het station is groot!",
+            "translation": "The station is big!"
           },
           {
             "speaker": "Noor",
-            "text": "Ja, Utrecht Centraal is heel groot."
+            "text": "Ja, Utrecht Centraal is heel groot.",
+            "translation": "Yes, Utrecht Central is very big."
           }
         ]
       },
@@ -1951,47 +1960,58 @@
         "turns": [
           {
             "speaker": "Els",
-            "text": "Goedemiddag, Noor!"
+            "text": "Goedemiddag, Noor!",
+            "translation": "Good afternoon, Noor!"
           },
           {
             "speaker": "Noor",
-            "text": "Hallo Els! Hoe gaat het met u?"
+            "text": "Hallo Els! Hoe gaat het met u?",
+            "translation": "Hello Els! How are you?"
           },
           {
             "speaker": "Els",
-            "text": "Prima, dank je. En wie ben jij?"
+            "text": "Prima, dank je. En wie ben jij?",
+            "translation": "Fine, thank you. And who are you?"
           },
           {
             "speaker": "Sofia",
-            "text": "Goedemiddag. Ik ben Sofia."
+            "text": "Goedemiddag. Ik ben Sofia.",
+            "translation": "Good afternoon. I’m Sofia."
           },
           {
             "speaker": "Els",
-            "text": "Dag Sofia. Ik ben Els, de buurvrouw."
+            "text": "Dag Sofia. Ik ben Els, de buurvrouw.",
+            "translation": "Hello Sofia. I’m Els, the neighbor."
           },
           {
             "speaker": "Sofia",
-            "text": "Aangenaam."
+            "text": "Aangenaam.",
+            "translation": "Nice to meet you."
           },
           {
             "speaker": "Els",
-            "text": "Aangenaam. Welkom in Utrecht!"
+            "text": "Aangenaam. Welkom in Utrecht!",
+            "translation": "Nice to meet you. Welcome to Utrecht!"
           },
           {
             "speaker": "Sofia",
-            "text": "Dank u wel."
+            "text": "Dank u wel.",
+            "translation": "Thank you."
           },
           {
             "speaker": "Els",
-            "text": "Tot ziens!"
+            "text": "Tot ziens!",
+            "translation": "Goodbye!"
           },
           {
             "speaker": "Sofia",
-            "text": "Tot ziens!"
+            "text": "Tot ziens!",
+            "translation": "Goodbye!"
           },
           {
             "speaker": "Noor",
-            "text": "Dag Els!"
+            "text": "Dag Els!",
+            "translation": "Bye, Els!"
           }
         ]
       },

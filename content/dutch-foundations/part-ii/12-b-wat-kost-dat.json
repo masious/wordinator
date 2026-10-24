@@ -122,51 +122,63 @@
         "turns": [
           {
             "speaker": "Sofia",
-            "text": "Goedemorgen! Wat kost deze witte lamp?"
+            "text": "Goedemorgen! Wat kost deze witte lamp?",
+            "translation": "Good morning! How much does this white lamp cost?"
           },
           {
             "speaker": "Verkoper",
-            "text": "Die lamp? Die kost vijftien euro."
+            "text": "Die lamp? Die kost vijftien euro.",
+            "translation": "That lamp? It costs fifteen euros."
           },
           {
             "speaker": "Sofia",
-            "text": "Vijftien euro? Dat is te duur. De lamp is tweedehands!"
+            "text": "Vijftien euro? Dat is te duur. De lamp is tweedehands!",
+            "translation": "Fifteen euros? That's too expensive. The lamp is second-hand!"
           },
           {
             "speaker": "Verkoper",
-            "text": "Hm. Voor u twaalf euro vijftig. Dat is goedkoop!"
+            "text": "Hm. Voor u twaalf euro vijftig. Dat is goedkoop!",
+            "translation": "Hmm. For you, twelve euros fifty. That's cheap!"
           },
           {
             "speaker": "Sofia",
-            "text": "Goed, ik neem de lamp. En wat kosten die zwarte mokken?"
+            "text": "Goed, ik neem de lamp. En wat kosten die zwarte mokken?",
+            "translation": "Okay, I'll take the lamp. And how much do those black mugs cost?"
           },
           {
             "speaker": "Verkoper",
-            "text": "Die mokken kosten drie euro vijftig per stuk."
+            "text": "Die mokken kosten drie euro vijftig per stuk.",
+            "translation": "Those mugs cost three euros fifty each."
           },
           {
             "speaker": "Sofia",
-            "text": "Dan neem ik twee mokken."
+            "text": "Dan neem ik twee mokken.",
+            "translation": "Then I'll take two mugs."
           },
           {
             "speaker": "Verkoper",
-            "text": "Prima. Anders nog iets?"
+            "text": "Prima. Anders nog iets?",
+            "translation": "Fine. Anything else?"
           },
           {
             "speaker": "Sofia",
-            "text": "Nee, dank u, dat is alles. Mag ik pinnen?"
+            "text": "Nee, dank u, dat is alles. Mag ik pinnen?",
+            "translation": "No, thank you, that's all. May I pay by card?"
           },
           {
             "speaker": "Verkoper",
-            "text": "Nee, sorry, hier niet. Alleen contant. Samen is dat negentien euro vijftig."
+            "text": "Nee, sorry, hier niet. Alleen contant. Samen is dat negentien euro vijftig.",
+            "translation": "No, sorry, not here. Cash only. That comes to nineteen euros fifty."
           },
           {
             "speaker": "Sofia",
-            "text": "Negentien euros vijftig? Oké. Alstublieft, twintig euro."
+            "text": "Negentien euros vijftig? Oké. Alstublieft, twintig euro.",
+            "translation": "Nineteen euros fifty? Okay. Here are twenty euros."
           },
           {
             "speaker": "Verkoper",
-            "text": "Ja, negentien euro vijftig. Hier is uw wisselgeld, vijftig cent. En hier is uw bon."
+            "text": "Ja, negentien euro vijftig. Hier is uw wisselgeld, vijftig cent. En hier is uw bon.",
+            "translation": "Yes, nineteen euros fifty. Here's your change, fifty cents. And here's your receipt."
           }
         ]
       },
@@ -2022,51 +2034,63 @@
         "turns": [
           {
             "speaker": "Henk",
-            "text": "Zo! Daar bent u weer! Uw oude kaas, alstublieft."
+            "text": "Zo! Daar bent u weer! Uw oude kaas, alstublieft.",
+            "translation": "Well! There you are again! Here's your aged cheese."
           },
           {
             "speaker": "Sofia",
-            "text": "Dank u wel, meneer. Wat kost de kaas?"
+            "text": "Dank u wel, meneer. Wat kost de kaas?",
+            "translation": "Thank you, sir. How much does the cheese cost?"
           },
           {
             "speaker": "Henk",
-            "text": "Acht euro. Maar meneer? Nee, nee. Zeg maar Henk!"
+            "text": "Acht euro. Maar meneer? Nee, nee. Zeg maar Henk!",
+            "translation": "Eight euros. But “sir”? No, no. Just call me Henk!"
           },
           {
             "speaker": "Sofia",
-            "text": "Oké, Henk! Mag ik pinnen?"
+            "text": "Oké, Henk! Mag ik pinnen?",
+            "translation": "Okay, Henk! May I pay by card?"
           },
           {
             "speaker": "Henk",
-            "text": "Ja hoor. Zo, dat is goed. En waar woon je, Sofia?"
+            "text": "Ja hoor. Zo, dat is goed. En waar woon je, Sofia?",
+            "translation": "Sure. There we go, that's good. And where do you live, Sofia?"
           },
           {
             "speaker": "Sofia",
-            "text": "In Utrecht-Oost, bij mijn vriendin Noor. Maar mijn kamer is alleen tot 31 oktober vrij. En de appartementen in Utrecht zijn zo duur!"
+            "text": "In Utrecht-Oost, bij mijn vriendin Noor. Maar mijn kamer is alleen tot 31 oktober vrij. En de appartementen in Utrecht zijn zo duur!",
+            "translation": "In Utrecht-Oost, with my friend Noor. But my room is only available until October 31. And the apartments in Utrecht are so expensive!"
           },
           {
             "speaker": "Henk",
-            "text": "Nou, nou! Boven mij is een appartement te huur. Met balkon!"
+            "text": "Nou, nou! Boven mij is een appartement te huur. Met balkon!",
+            "translation": "Well, well! There's an apartment for rent above me. With a balcony!"
           },
           {
             "speaker": "Sofia",
-            "text": "Echt? Waar woon jij, Henk?"
+            "text": "Echt? Waar woon jij, Henk?",
+            "translation": "Really? Where do you live, Henk?"
           },
           {
             "speaker": "Henk",
-            "text": "In de Kastanjestraat, nummer 14, in Lombok. Ik woon op de eerste verdieping en het appartement is op de tweede."
+            "text": "In de Kastanjestraat, nummer 14, in Lombok. Ik woon op de eerste verdieping en het appartement is op de tweede.",
+            "translation": "On Kastanjestraat, number 14, in Lombok. I live on the first floor and the apartment is on the second."
           },
           {
             "speaker": "Sofia",
-            "text": "Wat kost het appartement per maand?"
+            "text": "Wat kost het appartement per maand?",
+            "translation": "How much does the apartment cost per month?"
           },
           {
             "speaker": "Henk",
-            "text": "Dat weet ik niet. Maar de eigenaar is Ingrid Visser. Ik stuur straks het telefoonnummer van Ingrid."
+            "text": "Dat weet ik niet. Maar de eigenaar is Ingrid Visser. Ik stuur straks het telefoonnummer van Ingrid.",
+            "translation": "I don't know. But the owner is Ingrid Visser. I'll send Ingrid's phone number later."
           },
           {
             "speaker": "Sofia",
-            "text": "Dank je wel, Henk! Een appartement met balkon! Wat leuk!"
+            "text": "Dank je wel, Henk! Een appartement met balkon! Wat leuk!",
+            "translation": "Thank you, Henk! An apartment with a balcony! How nice!"
           }
         ]
       },

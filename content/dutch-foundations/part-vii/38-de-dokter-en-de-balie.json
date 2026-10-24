@@ -29,39 +29,48 @@
         "turns": [
           {
             "speaker": "Marieke",
-            "text": "We oefenen twee gesprekken. Eerst bij de huisarts, daarna bij de balie."
+            "text": "We oefenen twee gesprekken. Eerst bij de huisarts, daarna bij de balie.",
+            "translation": "We’re practicing two conversations. First at the family doctor’s office, then at the desk."
           },
           {
             "speaker": "Sofia",
-            "text": "Ik voel me niet lekker. Is dat goed Nederlands?"
+            "text": "Ik voel me niet lekker. Is dat goed Nederlands?",
+            "translation": "I don’t feel well. Is that correct Dutch?"
           },
           {
             "speaker": "Marieke",
-            "text": "Ja. Je zegt: Ik voel me niet lekker."
+            "text": "Ja. Je zegt: Ik voel me niet lekker.",
+            "translation": "Yes. You say: I don’t feel well."
           },
           {
             "speaker": "Piotr",
-            "text": "En als ik zeg: Ik ben ziek?"
+            "text": "En als ik zeg: Ik ben ziek?",
+            "translation": "And what if I say: I’m sick?"
           },
           {
             "speaker": "Marieke",
-            "text": "Dat kan ook. Dat is een andere zin."
+            "text": "Dat kan ook. Dat is een andere zin.",
+            "translation": "That works too. That’s a different sentence."
           },
           {
             "speaker": "Sofia",
-            "text": "Kunt u mij helpen? Ik wil een afspraak maken."
+            "text": "Kunt u mij helpen? Ik wil een afspraak maken.",
+            "translation": "Can you help me? I’d like to make an appointment."
           },
           {
             "speaker": "Marieke",
-            "text": "Goed. En vraag rustig om herhaling als iets niet duidelijk is."
+            "text": "Goed. En vraag rustig om herhaling als iets niet duidelijk is.",
+            "translation": "Good. And calmly ask for repetition if something isn’t clear."
           },
           {
             "speaker": "Piotr",
-            "text": "Zou u dat kunnen herhalen, alstublieft?"
+            "text": "Zou u dat kunnen herhalen, alstublieft?",
+            "translation": "Could you repeat that, please?"
           },
           {
             "speaker": "Marieke",
-            "text": "Prima. Dit is een oefening; we bellen niemand."
+            "text": "Prima. Dit is een oefening; we bellen niemand.",
+            "translation": "Great. This is just a practice exercise; we’re not calling anyone."
           }
         ]
       },
@@ -582,47 +591,58 @@
         "turns": [
           {
             "speaker": "Marieke",
-            "text": "Nu oefenen jullie bij een gemeentelijke balie."
+            "text": "Nu oefenen jullie bij een gemeentelijke balie.",
+            "translation": "Now you’re practicing at a municipal service desk."
           },
           {
             "speaker": "Piotr",
-            "text": "Goedemiddag. Kunt u mij helpen?"
+            "text": "Goedemiddag. Kunt u mij helpen?",
+            "translation": "Good afternoon. Can you help me?"
           },
           {
             "speaker": "Sofia",
-            "text": "Natuurlijk. Wat zoekt u?"
+            "text": "Natuurlijk. Wat zoekt u?",
+            "translation": "Of course. What are you looking for?"
           },
           {
             "speaker": "Piotr",
-            "text": "Ik zoek een formulier."
+            "text": "Ik zoek een formulier.",
+            "translation": "I’m looking for a form."
           },
           {
             "speaker": "Sofia",
-            "text": "Welk formulier zoekt u?"
+            "text": "Welk formulier zoekt u?",
+            "translation": "Which form are you looking for?"
           },
           {
             "speaker": "Piotr",
-            "text": "Dat weet ik niet. Het gaat om een adres."
+            "text": "Dat weet ik niet. Het gaat om een adres.",
+            "translation": "I don’t know. It’s about an address."
           },
           {
             "speaker": "Sofia",
-            "text": "Zou u de naam kunnen spellen?"
+            "text": "Zou u de naam kunnen spellen?",
+            "translation": "Could you spell the name?"
           },
           {
             "speaker": "Piotr",
-            "text": "Ja, natuurlijk. Kunt u dat herhalen?"
+            "text": "Ja, natuurlijk. Kunt u dat herhalen?",
+            "translation": "Yes, of course. Could you repeat that?"
           },
           {
             "speaker": "Sofia",
-            "text": "De naam van het formulier, alstublieft."
+            "text": "De naam van het formulier, alstublieft.",
+            "translation": "The name of the form, please."
           },
           {
             "speaker": "Piotr",
-            "text": "Dank u wel."
+            "text": "Dank u wel.",
+            "translation": "Thank you."
           },
           {
             "speaker": "Marieke",
-            "text": "Goed gedaan. Dit blijft een rollenspel."
+            "text": "Goed gedaan. Dit blijft een rollenspel.",
+            "translation": "Well done. This is still a role-play."
           }
         ]
       },

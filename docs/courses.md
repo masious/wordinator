@@ -124,11 +124,13 @@ Approved product change (C7). It replaced per-row blocks with one rich document 
 | `columnList` → `column` | xl-multi-column | 2–3 columns, `width`; top level only, never nested |
 | `callout` | custom | inline content, `variant`, optional `icon` |
 | `example` | custom | inline content for the sentence, plain-text `translation` and `note` |
-| `dialogue` | custom | turns, as today |
+| `dialogue` | custom | ordered plain-text turns (`speaker`, `text`, and an optional English `translation`) |
 | `practice` | custom | instruction, passage, and items, as today, kept plain text so fill-in tokens and answer snapshots work |
 | `vocabulary` | custom (C8) | ordered words, JSON-encoded like practice; see [new words](#new-words-and-recap) |
 
 Every block is left-aligned; text alignment is not offered. Paragraphs, headings, and list items may carry a block `textColor` and `backgroundColor` from the same palette as inline colours; callouts take their colour from their variant. Only list items nest, up to 3 levels; no other block has children except `columnList` and `column`.
+
+Dialogue translations are stored with the lesson document so a future reader can reveal an English line translation without changing the Dutch text or speech behavior. Existing dialogues may omit the field; authored Dutch Foundations dialogue sources populate it for every turn.
 
 Callout variants are `hint`, `important`, `warning`, `grammar`, `culture`, `false-friend`, and `pronunciation`. Each variant sets a tone token and a default icon; `icon` may override the icon from a fixed list in the contracts. Any block, including practice and dialogue, may sit inside a column. Columns stack on narrow screens.
 

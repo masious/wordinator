@@ -115,43 +115,53 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Goedemorgen! Koffie, Sofia? Jij drinkt altijd koffie."
+            "text": "Goedemorgen! Koffie, Sofia? Jij drinkt altijd koffie.",
+            "translation": "Good morning! Coffee, Sofia? You always drink coffee."
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, graag! En jij drinkt altijd thee, hè?"
+            "text": "Ja, graag! En jij drinkt altijd thee, hè?",
+            "translation": "Yes, please! And you always drink tea, right?"
           },
           {
             "speaker": "Noor",
-            "text": "Ja, ik drink nooit koffie. Thee is lekker!"
+            "text": "Ja, ik drink nooit koffie. Thee is lekker!",
+            "translation": "Yes, I never drink coffee. Tea is delicious!"
           },
           {
             "speaker": "Sofia",
-            "text": "Wij ontbijten samen. Gezellig!"
+            "text": "Wij ontbijten samen. Gezellig!",
+            "translation": "We have breakfast together. Nice!"
           },
           {
             "speaker": "Noor",
-            "text": "Super! Werk jij thuis of op kantoor?"
+            "text": "Super! Werk jij thuis of op kantoor?",
+            "translation": "Great! Do you work at home or at the office?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ik werk meestal op kantoor. En jij? Studeer jij thuis?"
+            "text": "Ik werk meestal op kantoor. En jij? Studeer jij thuis?",
+            "translation": "I usually work at the office. And you? Do you study at home?"
           },
           {
             "speaker": "Noor",
-            "text": "Ja, ik studeer 's middags thuis. En ik kook 's avonds."
+            "text": "Ja, ik studeer 's middags thuis. En ik kook 's avonds.",
+            "translation": "Yes, I study at home in the afternoon. And I cook in the evening."
           },
           {
             "speaker": "Sofia",
-            "text": "Jij kookt altijd lekker! Wij eet samen, toch?"
+            "text": "Jij kookt altijd lekker! Wij eet samen, toch?",
+            "translation": "You always cook delicious food! We eat together, right?"
           },
           {
             "speaker": "Noor",
-            "text": "Ja, wij eten 's avonds samen. Joh, en jij gaat altijd laat naar bed!"
+            "text": "Ja, wij eten 's avonds samen. Joh, en jij gaat altijd laat naar bed!",
+            "translation": "Yes, we eat dinner together in the evening. Wow, and you always go to bed late!"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, en ik ben elke ochtend moe!"
+            "text": "Ja, en ik ben elke ochtend moe!",
+            "translation": "Yes, and I'm tired every morning!"
           }
         ]
       },
@@ -2255,51 +2265,63 @@
         "turns": [
           {
             "speaker": "Sofia",
-            "text": "Goedemorgen, Daan! Jij bent altijd vroeg."
+            "text": "Goedemorgen, Daan! Jij bent altijd vroeg.",
+            "translation": "Good morning, Daan! You're always early."
           },
           {
             "speaker": "Daan",
-            "text": "Precies. Ik ben elke dag vroeg op kantoor. En ik ga ook vroeg naar huis."
+            "text": "Precies. Ik ben elke dag vroeg op kantoor. En ik ga ook vroeg naar huis.",
+            "translation": "Exactly. I'm at the office early every day. And I also go home early."
           },
           {
             "speaker": "Collega",
-            "text": "Daan, fiets jij elke dag naar kantoor?"
+            "text": "Daan, fiets jij elke dag naar kantoor?",
+            "translation": "Daan, do you cycle to the office every day?"
           },
           {
             "speaker": "Daan",
-            "text": "Ja, elke dag. En jullie? Wat doen jullie 's avonds?"
+            "text": "Ja, elke dag. En jullie? Wat doen jullie 's avonds?",
+            "translation": "Yes, every day. And you all? What do you do in the evenings?"
           },
           {
             "speaker": "Collega",
-            "text": "Ik sport vaak. En ik kijk soms tv."
+            "text": "Ik sport vaak. En ik kijk soms tv.",
+            "translation": "I often exercise. And sometimes I watch TV."
           },
           {
             "speaker": "Sofia",
-            "text": "Noor en ik eten 's avonds samen. Gezellig!"
+            "text": "Noor en ik eten 's avonds samen. Gezellig!",
+            "translation": "Noor and I eat dinner together in the evening. Nice!"
           },
           {
             "speaker": "Daan",
-            "text": "Lekker! Wie kookt? Jij?"
+            "text": "Lekker! Wie kookt? Jij?",
+            "translation": "Great! Who cooks? You?"
           },
           {
             "speaker": "Sofia",
-            "text": "Nee, Noor kookt meestal. Ik kook soms."
+            "text": "Nee, Noor kookt meestal. Ik kook soms.",
+            "translation": "No, Noor usually cooks. I cook sometimes."
           },
           {
             "speaker": "Collega",
-            "text": "En jij, Daan? Wat doen jij en Lotte 's avonds?"
+            "text": "En jij, Daan? Wat doen jij en Lotte 's avonds?",
+            "translation": "And you, Daan? What do you and Lotte do in the evenings?"
           },
           {
             "speaker": "Daan",
-            "text": "Wij lezen vaak de krant en ik luister soms naar muziek. En we gaan vroeg naar bed."
+            "text": "Wij lezen vaak de krant en ik luister soms naar muziek. En we gaan vroeg naar bed.",
+            "translation": "We often read the newspaper and I sometimes listen to music. And we go to bed early."
           },
           {
             "speaker": "Sofia",
-            "text": "Vroeg naar bed? Ik ga nooit vroeg naar bed!"
+            "text": "Vroeg naar bed? Ik ga nooit vroeg naar bed!",
+            "translation": "To bed early? I never go to bed early!"
           },
           {
             "speaker": "Daan",
-            "text": "Ja, en jij bent soms laat op kantoor!"
+            "text": "Ja, en jij bent soms laat op kantoor!",
+            "translation": "Yes, and you're sometimes at the office late!"
           }
         ]
       },

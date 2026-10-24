@@ -129,43 +129,53 @@
         "turns": [
           {
             "speaker": "Fleur",
-            "text": "Hoi Sofia! Ik ben Fleur, de zus van Noor. Ik woon nu in jouw oude kamer!"
+            "text": "Hoi Sofia! Ik ben Fleur, de zus van Noor. Ik woon nu in jouw oude kamer!",
+            "translation": "Hi Sofia! I am Fleur, Noor's sister. I am living in your old room now!"
           },
           {
             "speaker": "Sofia",
-            "text": "Hoi Fleur! Welkom terug! Surf je nog veel?"
+            "text": "Hoi Fleur! Welkom terug! Surf je nog veel?",
+            "translation": "Hi Fleur! Welcome back! Do you still surf a lot?"
           },
           {
             "speaker": "Fleur",
-            "text": "Ja, ik surf heel graag! Maar Utrecht heeft geen zee. Dus schaats ik!"
+            "text": "Ja, ik surf heel graag! Maar Utrecht heeft geen zee. Dus schaats ik!",
+            "translation": "Yes, I really enjoy surfing! But Utrecht has no sea. So I go ice-skating!"
           },
           {
             "speaker": "Daan",
-            "text": "Kom op, Sofia! Nog een rondje!"
+            "text": "Kom op, Sofia! Nog een rondje!",
+            "translation": "Come on, Sofia! One more lap!"
           },
           {
             "speaker": "Sofia",
-            "text": "Wacht even! Ik val heel vaak. Schaatsen is best eng!"
+            "text": "Wacht even! Ik val heel vaak. Schaatsen is best eng!",
+            "translation": "Wait a moment! I fall very often. Ice-skating is quite scary!"
           },
           {
             "speaker": "Fleur",
-            "text": "Schaats je graag, Sofia?"
+            "text": "Schaats je graag, Sofia?",
+            "translation": "Do you enjoy ice-skating, Sofia?"
           },
           {
             "speaker": "Sofia",
-            "text": "Nee, ik zwem liever! Zwemmen is veel makkelijker."
+            "text": "Nee, ik zwem liever! Zwemmen is veel makkelijker.",
+            "translation": "No, I would rather swim! Swimming is much easier."
           },
           {
             "speaker": "Daan",
-            "text": "Je bent nog een beginner. Het gaat al beter!"
+            "text": "Je bent nog een beginner. Het gaat al beter!",
+            "translation": "You are still a beginner. You are already doing better!"
           },
           {
             "speaker": "Sofia",
-            "text": "Oké, nog één rondje. Maar daarna heb ik liever warme chocolademelk!"
+            "text": "Oké, nog één rondje. Maar daarna heb ik liever warme chocolademelk!",
+            "translation": "Okay, one more lap. But after that I would rather have hot chocolate!"
           },
           {
             "speaker": "Fleur",
-            "text": "Goed idee! Maar ik schaats eerst nog even."
+            "text": "Goed idee! Maar ik schaats eerst nog even.",
+            "translation": "Good idea! But I will ice-skate for a little while first."
           }
         ]
       },
@@ -1324,51 +1334,63 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Kom binnen! Wil je warme chocolademelk, Sofia?"
+            "text": "Kom binnen! Wil je warme chocolademelk, Sofia?",
+            "translation": "Come in! Would you like hot chocolate, Sofia?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, heel graag! Ik ben moe van het schaatsen."
+            "text": "Ja, heel graag! Ik ben moe van het schaatsen.",
+            "translation": "Yes, very much! I am tired from ice-skating."
           },
           {
             "speaker": "Noor",
-            "text": "Blijf je eten? Ik maak pasta."
+            "text": "Blijf je eten? Ik maak pasta.",
+            "translation": "Are you staying for dinner? I am making pasta."
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, graag!"
+            "text": "Ja, graag!",
+            "translation": "Yes, please!"
           },
           {
             "speaker": "Noor",
-            "text": "En jij, Fleur? Blijf je ook eten?"
+            "text": "En jij, Fleur? Blijf je ook eten?",
+            "translation": "And you, Fleur? Are you staying for dinner too?"
           },
           {
             "speaker": "Fleur",
-            "text": "Ja, graag! Ik blijf vanavond lekker thuis."
+            "text": "Ja, graag! Ik blijf vanavond lekker thuis.",
+            "translation": "Yes, please! I am happy to stay home tonight."
           },
           {
             "speaker": "Sofia",
-            "text": "Noor kookt heel graag. En jij, Fleur?"
+            "text": "Noor kookt heel graag. En jij, Fleur?",
+            "translation": "Noor really enjoys cooking. And you, Fleur?"
           },
           {
             "speaker": "Fleur",
-            "text": "Ik? Nee, ik kook niet graag. Ik sport liever!"
+            "text": "Ik? Nee, ik kook niet graag. Ik sport liever!",
+            "translation": "Me? No, I do not like cooking. I would rather play sports!"
           },
           {
             "speaker": "Noor",
-            "text": "Dat klopt! Fleur surft, schaatst en fietst, maar ze kookt nooit."
+            "text": "Dat klopt! Fleur surft, schaatst en fietst, maar ze kookt nooit.",
+            "translation": "That is right! Fleur surfs, ice-skates, and cycles, but she never cooks."
           },
           {
             "speaker": "Fleur",
-            "text": "Nee, ik eet liever! Noor kookt en ik was af."
+            "text": "Nee, ik eet liever! Noor kookt en ik was af.",
+            "translation": "No, I would rather eat! Noor cooks and I do the dishes."
           },
           {
             "speaker": "Sofia",
-            "text": "Deze chocolademelk is heel lekker! En ik zwem veel liever dan ik schaats."
+            "text": "Deze chocolademelk is heel lekker! En ik zwem veel liever dan ik schaats.",
+            "translation": "This hot chocolate is delicious! And I much prefer swimming to ice-skating."
           },
           {
             "speaker": "Noor",
-            "text": "Maar het gaat al beter met het schaatsen, hè?"
+            "text": "Maar het gaat al beter met het schaatsen, hè?",
+            "translation": "But you are already getting better at ice-skating, right?"
           }
         ]
       },

@@ -84,35 +84,43 @@
         "turns": [
           {
             "speaker": "Sofia",
-            "text": "Hoi Daan! Op zaterdag 12 december geef ik een housewarming. Kom je ook?"
+            "text": "Hoi Daan! Op zaterdag 12 december geef ik een housewarming. Kom je ook?",
+            "translation": "Hi Daan! I'm having a housewarming party on Saturday, December 12. Are you coming too?"
           },
           {
             "speaker": "Daan",
-            "text": "Ja, natuurlijk! Ik kom graag. Hoe laat begint het?"
+            "text": "Ja, natuurlijk! Ik kom graag. Hoe laat begint het?",
+            "translation": "Yes, of course! I'd love to come. What time does it start?"
           },
           {
             "speaker": "Sofia",
-            "text": "Om zeven uur, op Kastanjestraat 14. Ken je het adres?"
+            "text": "Om zeven uur, op Kastanjestraat 14. Ken je het adres?",
+            "translation": "At seven, at Kastanjestraat 14. Do you know the address?"
           },
           {
             "speaker": "Daan",
-            "text": "Ja, ik ken het. Ik haal Lotte op en we komen samen."
+            "text": "Ja, ik ken het. Ik haal Lotte op en we komen samen.",
+            "translation": "Yes, I know it. I'll pick up Lotte and we'll come together."
           },
           {
             "speaker": "Sofia",
-            "text": "Leuk! Ik nodig Piotr ook uit. Ken je hem?"
+            "text": "Leuk! Ik nodig Piotr ook uit. Ken je hem?",
+            "translation": "Great! I'm inviting Piotr too. Do you know him?"
           },
           {
             "speaker": "Daan",
-            "text": "Ja, ik ken hem van jouw Nederlandse les."
+            "text": "Ja, ik ken hem van jouw Nederlandse les.",
+            "translation": "Yes, I know him from your Dutch class."
           },
           {
             "speaker": "Sofia",
-            "text": "En Noor en Fleur? Ik app ze straks."
+            "text": "En Noor en Fleur? Ik app ze straks.",
+            "translation": "And Noor and Fleur? I'll message them later."
           },
           {
             "speaker": "Daan",
-            "text": "Goed. Laat je het even weten? Dan app ik Lotte ook."
+            "text": "Goed. Laat je het even weten? Dan app ik Lotte ook.",
+            "translation": "Okay. Will you let me know? Then I'll message Lotte too."
           }
         ]
       },
@@ -1068,43 +1076,53 @@
         "turns": [
           {
             "speaker": "Sofia",
-            "text": "Hoi Piotr! Ik app je over mijn housewarming."
+            "text": "Hoi Piotr! Ik app je over mijn housewarming.",
+            "translation": "Hi Piotr! I’ll message you over mijn housewarming party."
           },
           {
             "speaker": "Piotr",
-            "text": "Hoi Sofia! Ja, Kasia en ik komen graag."
+            "text": "Hoi Sofia! Ja, Kasia en ik komen graag.",
+            "translation": "Hi Sofia! Yes, Kasia en ik komen graag."
           },
           {
             "speaker": "Sofia",
-            "text": "Fijn! Ken je het adres?"
+            "text": "Fijn! Ken je het adres?",
+            "translation": "Great! Do you know the address?"
           },
           {
             "speaker": "Piotr",
-            "text": "Nee, stuur je het naar mij?"
+            "text": "Nee, stuur je het naar mij?",
+            "translation": "No, could you send it to me?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, ik stuur het straks. Kastanjestraat 14."
+            "text": "Ja, ik stuur het straks. Kastanjestraat 14.",
+            "translation": "Yes, ik stuur het later. Kastanjestraat 14."
           },
           {
             "speaker": "Piotr",
-            "text": "Dank je. Wij kennen Lombok niet goed."
+            "text": "Dank je. Wij kennen Lombok niet goed.",
+            "translation": "Thanks. We don’t know Lombok very well."
           },
           {
             "speaker": "Sofia",
-            "text": "Geen probleem. Ik haal jullie om half zeven op bij de bushalte."
+            "text": "Geen probleem. Ik haal jullie om half zeven op bij de bushalte.",
+            "translation": "No problem. I’ll pick up jullie at half past six op bij de bushalte."
           },
           {
             "speaker": "Piotr",
-            "text": "Dat is fijn. Bel je me bij de halte?"
+            "text": "Dat is fijn. Bel je me bij de halte?",
+            "translation": "Dat is fijn. Bel you me bij de halte?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ik bel je bij de bushalte. Ik kom met de fiets."
+            "text": "Ik bel je bij de bushalte. Ik kom met de fiets.",
+            "translation": "I’ll call you bij de bushalte. I’ll come by bike."
           },
           {
             "speaker": "Piotr",
-            "text": "Prima. Tot zaterdag!"
+            "text": "Prima. Tot zaterdag!",
+            "translation": "Great. See you Saturday!"
           }
         ]
       },

@@ -7,6 +7,7 @@ Content workspace for the "Dutch Foundations" courses. Lessons are authored as J
 | `outline.md` | user | The 40-row curriculum. Part I = rows 1–6, Part II = rows 7–12, Part III = rows 13–18, Part IV = rows 19–24, Part V = rows 25–29, Part VI = rows 30–36, Part VII = rows 37–40. |
 | [`docs/content/`](../../docs/content/index.md) | coordinator | Curriculum docs: storyline and cast, style guide, per-lesson briefs, ledgers of what each lesson actually taught, topic map, and gaps. Start at `docs/content/index.md`. |
 | `part-i/` through `part-vii/` | workers | One file per lesson: `NN-slug.json`, or `NN-a-slug.json` and `NN-b-slug.json` when a row is split. File-name order = lesson order. |
+| `dialogues/` | coordinator | Dialogue source records keyed by lesson and dialogue block ID. Each turn includes the Dutch text and, when completed, its English `translation`; `tools/sync-dialogue-translations.ts` copies them into lesson files before import. |
 | `part-iii/existing/` | reference | The two lessons already in the course for row 13. Do not edit; do not re-cover them. |
 | `*/course.json` | — | Import manifest (course ID, local group/owner, position offset). Part I has none yet: the user must create the Part I course in the app and give its ID first (see [`ledger-part-i.md`](../../docs/content/ledger-part-i.md)). |
 | `tools/lesson.ts` | — | Validator and SQL generator. |
@@ -24,6 +25,8 @@ apps/api/node_modules/.bin/tsx content/dutch-foundations/tools/lesson.ts sql con
 ```
 
 `check` assigns missing IDs and **writes them back into the file**, validates with the real `lessonDocumentSchema` and publish rules, and prints feature-usage counts. A lesson is done only when `check` prints `OK`.
+
+After changing a dialogue source, run `apps/api/node_modules/.bin/tsx content/dutch-foundations/tools/sync-dialogue-translations.ts` from the repository root, then run `lesson.ts check` on the affected lesson files. The sync checks block IDs, speaker/text equality, turn counts, and complete translations before writing.
 
 ## File format (authoring shorthand)
 

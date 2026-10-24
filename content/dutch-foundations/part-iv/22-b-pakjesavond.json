@@ -29,35 +29,43 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Wat gezellig! Wie is er aan het voorlezen?"
+            "text": "Wat gezellig! Wie is er aan het voorlezen?",
+            "translation": "How lovely! Wie is er ing voorlezen?"
           },
           {
             "speaker": "Daan",
-            "text": "Ik zit Sofia’s Sinterklaasgedicht voor te lezen."
+            "text": "Ik zit Sofia’s Sinterklaasgedicht voor te lezen.",
+            "translation": "I am reading Sofia’s Sinterklaas poem aloud."
           },
           {
             "speaker": "Sofia",
-            "text": "En? Is het grappig?"
+            "text": "En? Is het grappig?",
+            "translation": "En? Is het funny?"
           },
           {
             "speaker": "Daan",
-            "text": "Ja! En ik zit erin met een fiets van karton."
+            "text": "Ja! En ik zit erin met een fiets van karton.",
+            "translation": "Yes! En I’m in it met een bike van karton."
           },
           {
             "speaker": "Fleur",
-            "text": "Daan, ben je aan het raden?"
+            "text": "Daan, ben je aan het raden?",
+            "translation": "Daan, are you guessing?"
           },
           {
             "speaker": "Daan",
-            "text": "Nee, ik ben niet aan het raden. Ik weet het!"
+            "text": "Nee, ik ben niet aan het raden. Ik weet het!",
+            "translation": "No, ik ben niet ing raden. I know!"
           },
           {
             "speaker": "Noor",
-            "text": "Fleur, ben jij bezig met je pakje?"
+            "text": "Fleur, ben jij bezig met je pakje?",
+            "translation": "Fleur, ben jij working on your present?"
           },
           {
             "speaker": "Fleur",
-            "text": "Ja, ik ben bezig met mijn pakje."
+            "text": "Ja, ik ben bezig met mijn pakje.",
+            "translation": "Yes, ik ben busy with mijn present."
           }
         ]
       },
@@ -591,35 +599,43 @@
         "turns": [
           {
             "speaker": "Lotte",
-            "text": "Wat zijn ze aan het doen in de woonkamer?"
+            "text": "Wat zijn ze aan het doen in de woonkamer?",
+            "translation": "What are they doing in the living room?"
           },
           {
             "speaker": "Sofia",
-            "text": "Noor zit te lachen. Fleur staat te dansen!"
+            "text": "Noor zit te lachen. Fleur staat te dansen!",
+            "translation": "Noor is laughing. Fleur is dancing!"
           },
           {
             "speaker": "Lotte",
-            "text": "En Daan?"
+            "text": "En Daan?",
+            "translation": "En Daan?"
           },
           {
             "speaker": "Sofia",
-            "text": "Hij zit zijn gedicht voor te lezen."
+            "text": "Hij zit zijn gedicht voor te lezen.",
+            "translation": "Hij zit reading his poem aloud."
           },
           {
             "speaker": "Lotte",
-            "text": "En wij?"
+            "text": "En wij?",
+            "translation": "En wij?"
           },
           {
             "speaker": "Sofia",
-            "text": "We zijn thee aan het maken."
+            "text": "We zijn thee aan het maken.",
+            "translation": "We are making tea."
           },
           {
             "speaker": "Lotte",
-            "text": "Wat gezellig!"
+            "text": "Wat gezellig!",
+            "translation": "How lovely!"
           },
           {
             "speaker": "Sofia",
-            "text": "Ik ben bezig met mijn berichtje voor de les."
+            "text": "Ik ben bezig met mijn berichtje voor de les.",
+            "translation": "I am busy with mijn berichtje for class."
           }
         ]
       },

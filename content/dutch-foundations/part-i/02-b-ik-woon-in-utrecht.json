@@ -78,43 +78,53 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Hoi Sofia! Hoe is het werk?"
+            "text": "Hoi Sofia! Hoe is het werk?",
+            "translation": "Hi Sofia! How is work?"
           },
           {
             "speaker": "Sofia",
-            "text": "Goed! Het team is klein, maar heel aardig."
+            "text": "Goed! Het team is klein, maar heel aardig.",
+            "translation": "Good! The team is small, but very nice."
           },
           {
             "speaker": "Noor",
-            "text": "Super! Wie is de teamleider?"
+            "text": "Super! Wie is de teamleider?",
+            "translation": "Great! Who is the team leader?"
           },
           {
             "speaker": "Sofia",
-            "text": "Karin. Ze komt uit Amersfoort en ze woont ook in Amersfoort."
+            "text": "Karin. Ze komt uit Amersfoort en ze woont ook in Amersfoort.",
+            "translation": "Karin. She’s from Amersfoort and she also lives in Amersfoort."
           },
           {
             "speaker": "Noor",
-            "text": "En ze werkt in Utrecht?"
+            "text": "En ze werkt in Utrecht?",
+            "translation": "And does she work in Utrecht?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja. Ze reist met de trein."
+            "text": "Ja. Ze reist met de trein.",
+            "translation": "Yes. She travels by train."
           },
           {
             "speaker": "Noor",
-            "text": "En Daan? Waar woont Daan?"
+            "text": "En Daan? Waar woont Daan?",
+            "translation": "And Daan? Where does Daan live?"
           },
           {
             "speaker": "Sofia",
-            "text": "Daan komt uit Utrecht en hij woont in Utrecht."
+            "text": "Daan komt uit Utrecht en hij woont in Utrecht.",
+            "translation": "Daan is from Utrecht and he lives in Utrecht."
           },
           {
             "speaker": "Noor",
-            "text": "En de collega uit België?"
+            "text": "En de collega uit België?",
+            "translation": "And the colleague from Belgium?"
           },
           {
             "speaker": "Sofia",
-            "text": "Hij komt uit Antwerpen, maar hij woont in Utrecht."
+            "text": "Hij komt uit Antwerpen, maar hij woont in Utrecht.",
+            "translation": "He’s from Antwerp, but he lives in Utrecht."
           }
         ]
       },
@@ -2083,43 +2093,53 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Ik maak thee. Jij ook?"
+            "text": "Ik maak thee. Jij ook?",
+            "translation": "I’m making tea. You too?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, graag! Noor, kom jij uit Utrecht?"
+            "text": "Ja, graag! Noor, kom jij uit Utrecht?",
+            "translation": "Yes, please! Noor, are you from Utrecht?"
           },
           {
             "speaker": "Noor",
-            "text": "Nee, ik kom uit Groningen. Maar ik woon in Utrecht."
+            "text": "Nee, ik kom uit Groningen. Maar ik woon in Utrecht.",
+            "translation": "No, I’m from Groningen. But I live in Utrecht."
           },
           {
             "speaker": "Sofia",
-            "text": "Groningen? Is Groningen ver?"
+            "text": "Groningen? Is Groningen ver?",
+            "translation": "Groningen? Is Groningen far away?"
           },
           {
             "speaker": "Noor",
-            "text": "Ja, ver. Groningen is in het noorden."
+            "text": "Ja, ver. Groningen is in het noorden.",
+            "translation": "Yes, far away. Groningen is in the north."
           },
           {
             "speaker": "Sofia",
-            "text": "En jij studeert hier, in Utrecht."
+            "text": "En jij studeert hier, in Utrecht.",
+            "translation": "And you study here, in Utrecht."
           },
           {
             "speaker": "Noor",
-            "text": "Ja, ik studeer psychologie. En ik werk in een café, in het centrum."
+            "text": "Ja, ik studeer psychologie. En ik werk in een café, in het centrum.",
+            "translation": "Yes, I study psychology. And I work in a café in the city center."
           },
           {
             "speaker": "Sofia",
-            "text": "Echt? Gezellig!"
+            "text": "Echt? Gezellig!",
+            "translation": "Really? Nice!"
           },
           {
             "speaker": "Noor",
-            "text": "En jij, Sofia? Waar woon jij nu?"
+            "text": "En jij, Sofia? Waar woon jij nu?",
+            "translation": "And you, Sofia? Where do you live now?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ik woon in Utrecht-Oost. Bij Noor!"
+            "text": "Ik woon in Utrecht-Oost. Bij Noor!",
+            "translation": "I live in East Utrecht. With Noor!"
           }
         ]
       },

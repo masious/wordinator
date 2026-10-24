@@ -130,43 +130,53 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Hoi Sofia! Ik ben thuis!"
+            "text": "Hoi Sofia! Ik ben thuis!",
+            "translation": "Hi Sofia! I’m home!"
           },
           {
             "speaker": "Sofia",
-            "text": "Hoi Noor! Ben je moe?"
+            "text": "Hoi Noor! Ben je moe?",
+            "translation": "Hi Noor! Are you tired?"
           },
           {
             "speaker": "Noor",
-            "text": "Ja, een beetje. Maar De Zwaluw is gezellig!"
+            "text": "Ja, een beetje. Maar De Zwaluw is gezellig!",
+            "translation": "Yes, a little. But De Zwaluw is lively!"
           },
           {
             "speaker": "Sofia",
-            "text": "De Zwaluw? Wat is De Zwaluw?"
+            "text": "De Zwaluw? Wat is De Zwaluw?",
+            "translation": "De Zwaluw? What is De Zwaluw?"
           },
           {
             "speaker": "Noor",
-            "text": "Het café! Ik werk in Café De Zwaluw, in het centrum."
+            "text": "Het café! Ik werk in Café De Zwaluw, in het centrum.",
+            "translation": "The café! I work at Café De Zwaluw, in the city center."
           },
           {
             "speaker": "Sofia",
-            "text": "Is het ver?"
+            "text": "Is het ver?",
+            "translation": "Is it far?"
           },
           {
             "speaker": "Noor",
-            "text": "Nee hoor. Ik heb een fiets."
+            "text": "Nee hoor. Ik heb een fiets.",
+            "translation": "No. I have a bicycle."
           },
           {
             "speaker": "Sofia",
-            "text": "Ah. Ik heb geen fiets."
+            "text": "Ah. Ik heb geen fiets.",
+            "translation": "Ah. I don’t have a bicycle."
           },
           {
             "speaker": "Noor",
-            "text": "Heb jij geen fiets? In Utrecht?!"
+            "text": "Heb jij geen fiets? In Utrecht?!",
+            "translation": "You don’t have a bicycle? In Utrecht?!"
           },
           {
             "speaker": "Sofia",
-            "text": "Nee! Ik loop of ik neem de bus."
+            "text": "Nee! Ik loop of ik neem de bus.",
+            "translation": "No! I walk or take the bus."
           }
         ]
       },
@@ -1667,43 +1677,53 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Sofia, wat is je nummer?"
+            "text": "Sofia, wat is je nummer?",
+            "translation": "Sofia, what’s your number?"
           },
           {
             "speaker": "Sofia",
-            "text": "Nul zes, achtendertig, tweeëntwintig, negentien, vierenzeventig."
+            "text": "Nul zes, achtendertig, tweeëntwintig, negentien, vierenzeventig.",
+            "translation": "Zero six, thirty-eight, twenty-two, nineteen, seventy-four."
           },
           {
             "speaker": "Noor",
-            "text": "Dank je! Heeft Daan het nummer ook?"
+            "text": "Dank je! Heeft Daan het nummer ook?",
+            "translation": "Thank you! Does Daan have the number too?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, Daan heeft het nummer. En Karin ook."
+            "text": "Ja, Daan heeft het nummer. En Karin ook.",
+            "translation": "Yes, Daan has the number. And Karin does too."
           },
           {
             "speaker": "Noor",
-            "text": "Spreek je Nederlands met Daan?"
+            "text": "Spreek je Nederlands met Daan?",
+            "translation": "Do you speak Dutch with Daan?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, een beetje. Daan spreekt geen Spaans!"
+            "text": "Ja, een beetje. Daan spreekt geen Spaans!",
+            "translation": "Yes, a little. Daan doesn’t speak Spanish!"
           },
           {
             "speaker": "Noor",
-            "text": "Hoeveel talen spreekt Daan?"
+            "text": "Hoeveel talen spreekt Daan?",
+            "translation": "How many languages does Daan speak?"
           },
           {
             "speaker": "Sofia",
-            "text": "Drie: Nederlands, Engels en een beetje Duits."
+            "text": "Drie: Nederlands, Engels en een beetje Duits.",
+            "translation": "Three: Dutch, English, and a little German."
           },
           {
             "speaker": "Noor",
-            "text": "En jij? Hoeveel talen spreek jij?"
+            "text": "En jij? Hoeveel talen spreek jij?",
+            "translation": "And you? How many languages do you speak?"
           },
           {
             "speaker": "Sofia",
-            "text": "Spaans, Engels en een beetje Nederlands. Ook drie!"
+            "text": "Spaans, Engels en een beetje Nederlands. Ook drie!",
+            "translation": "Spanish, English, and a little Dutch. Three as well!"
           }
         ]
       },

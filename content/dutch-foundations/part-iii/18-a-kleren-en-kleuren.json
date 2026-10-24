@@ -85,39 +85,48 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Sofia, kijk eens naar buiten. Het wordt nu echt koud!"
+            "text": "Sofia, kijk eens naar buiten. Het wordt nu echt koud!",
+            "translation": "Sofia, look outside. It is really getting cold now!"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, het is hier erg koud. Maar ik heb genoeg kleren, toch?"
+            "text": "Ja, het is hier erg koud. Maar ik heb genoeg kleren, toch?",
+            "translation": "Yes, it is very cold here. But I have enough clothes, right?"
           },
           {
             "speaker": "Noor",
-            "text": "Nee, joh! Je hebt geen warme jas!"
+            "text": "Nee, joh! Je hebt geen warme jas!",
+            "translation": "No way! You do not have a warm coat!"
           },
           {
             "speaker": "Sofia",
-            "text": "Dat klopt. Ik heb een dunne jas en een rode trui. Dat is alles uit Valencia."
+            "text": "Dat klopt. Ik heb een dunne jas en een rode trui. Dat is alles uit Valencia.",
+            "translation": "That is true. I have a thin coat and a red sweater. That is all from Valencia."
           },
           {
             "speaker": "Noor",
-            "text": "Dat is niet genoeg voor de winter hier. Je hebt een dikke trui nodig, een warme winterjas en ook een nieuw shirt."
+            "text": "Dat is niet genoeg voor de winter hier. Je hebt een dikke trui nodig, een warme winterjas en ook een nieuw shirt.",
+            "translation": "That is not enough for winter here. You need a thick sweater, a warm winter coat, and a new shirt too."
           },
           {
             "speaker": "Sofia",
-            "text": "Ja! En ik wil een rode shirt."
+            "text": "Ja! En ik wil een rode shirt.",
+            "translation": "Yes! And I want a red shirt."
           },
           {
             "speaker": "Noor",
-            "text": "Een rood shirt, Sofia! Shirt is een het-woord. Dus: een rood shirt, zonder -e."
+            "text": "Een rood shirt, Sofia! Shirt is een het-woord. Dus: een rood shirt, zonder -e.",
+            "translation": "A red shirt, Sofia! Shirt is a neuter noun. So: a red shirt, without -e."
           },
           {
             "speaker": "Sofia",
-            "text": "O ja, natuurlijk. Een rood shirt dan. En ik wil ook nieuwe schoenen."
+            "text": "O ja, natuurlijk. Een rood shirt dan. En ik wil ook nieuwe schoenen.",
+            "translation": "Oh yes, of course. A red shirt, then. And I also want new shoes."
           },
           {
             "speaker": "Noor",
-            "text": "Goed idee. Kom, we gaan naar het centrum! Daar zijn veel leuke kledingwinkels."
+            "text": "Goed idee. Kom, we gaan naar het centrum! Daar zijn veel leuke kledingwinkels.",
+            "translation": "Good idea. Come on, let us go to the city center! There are lots of nice clothing stores there."
           }
         ]
       },
@@ -2035,47 +2044,58 @@
         "turns": [
           {
             "speaker": "Verkoopster",
-            "text": "Goedemiddag! Kan ik u helpen?"
+            "text": "Goedemiddag! Kan ik u helpen?",
+            "translation": "Good afternoon! Can I help you?"
           },
           {
             "speaker": "Noor",
-            "text": "Ja, graag! Mijn vriendin heeft een trui en een broek nodig, en ook een warme winterjas."
+            "text": "Ja, graag! Mijn vriendin heeft een trui en een broek nodig, en ook een warme winterjas.",
+            "translation": "Yes, please! My friend needs a sweater and trousers, and a warm winter coat too."
           },
           {
             "speaker": "Verkoopster",
-            "text": "Natuurlijk. Welke maat hebt u?"
+            "text": "Natuurlijk. Welke maat hebt u?",
+            "translation": "Of course. What size are you?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ik heb maat 38. Hebt u deze trui ook in het blauw?"
+            "text": "Ik heb maat 38. Hebt u deze trui ook in het blauw?",
+            "translation": "I am size 38. Do you also have this sweater in blue?"
           },
           {
             "speaker": "Verkoopster",
-            "text": "Ja, deze wollen trui hebben we in blauw, grijs en donkergroen."
+            "text": "Ja, deze wollen trui hebben we in blauw, grijs en donkergroen.",
+            "translation": "Yes, we have this woolen sweater in blue, gray, and dark green."
           },
           {
             "speaker": "Sofia",
-            "text": "Mooi! En deze zwarte spijkerbroek? Mag ik deze broek passen?"
+            "text": "Mooi! En deze zwarte spijkerbroek? Mag ik deze broek passen?",
+            "translation": "Nice! And these black jeans? May I try on these trousers?"
           },
           {
             "speaker": "Verkoopster",
-            "text": "Natuurlijk, de paskamer is achterin."
+            "text": "Natuurlijk, de paskamer is achterin.",
+            "translation": "Of course, the fitting room is at the back."
           },
           {
             "speaker": "Sofia",
-            "text": "De broek past goed! En de blauwe trui is lekker warm."
+            "text": "De broek past goed! En de blauwe trui is lekker warm.",
+            "translation": "The trousers fit well! And the blue sweater is nice and warm."
           },
           {
             "speaker": "Verkoopster",
-            "text": "Fijn! Wilt u de trui en de broek meenemen?"
+            "text": "Fijn! Wilt u de trui en de broek meenemen?",
+            "translation": "Great! Would you like to take the sweater and trousers?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, graag! Dank u wel."
+            "text": "Ja, graag! Dank u wel.",
+            "translation": "Yes, please! Thank you."
           },
           {
             "speaker": "Noor",
-            "text": "Kijk, Sofia, daar hangen de winterjassen!"
+            "text": "Kijk, Sofia, daar hangen de winterjassen!",
+            "translation": "Look, Sofia, the winter coats are hanging over there!"
           }
         ]
       },

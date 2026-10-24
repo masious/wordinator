@@ -97,43 +97,53 @@
         "turns": [
           {
             "speaker": "Els",
-            "text": "Goedemorgen, Noor! Goedemorgen, Sofia!"
+            "text": "Goedemorgen, Noor! Goedemorgen, Sofia!",
+            "translation": "Good morning, Noor! Good morning, Sofia!"
           },
           {
             "speaker": "Sofia",
-            "text": "Goedemorgen, Els! Is dit uw kleindochter?"
+            "text": "Goedemorgen, Els! Is dit uw kleindochter?",
+            "translation": "Good morning, Els! Is this your granddaughter?"
           },
           {
             "speaker": "Els",
-            "text": "Ja! Dit is Tess."
+            "text": "Ja! Dit is Tess.",
+            "translation": "Yes! This is Tess."
           },
           {
             "speaker": "Tess",
-            "text": "Hoi! Ik ben zes!"
+            "text": "Hoi! Ik ben zes!",
+            "translation": "Hi! I'm six!"
           },
           {
             "speaker": "Sofia",
-            "text": "Hoi Tess! Ik ben Sofia. Ik ben achtentwintig."
+            "text": "Hoi Tess! Ik ben Sofia. Ik ben achtentwintig.",
+            "translation": "Hi Tess! I'm Sofia. I'm twenty-eight."
           },
           {
             "speaker": "Tess",
-            "text": "Achtentwintig? Oud!"
+            "text": "Achtentwintig? Oud!",
+            "translation": "Twenty-eight? Old!"
           },
           {
             "speaker": "Els",
-            "text": "Tess! Achtentwintig is niet oud."
+            "text": "Tess! Achtentwintig is niet oud.",
+            "translation": "Tess! Twenty-eight isn't old."
           },
           {
             "speaker": "Noor",
-            "text": "Een kopje thee, Els? En jij, Tess?"
+            "text": "Een kopje thee, Els? En jij, Tess?",
+            "translation": "A cup of tea, Els? And you, Tess?"
           },
           {
             "speaker": "Els",
-            "text": "Ja, graag."
+            "text": "Ja, graag.",
+            "translation": "Yes, please."
           },
           {
             "speaker": "Tess",
-            "text": "Water, graag! En een koekje, alsjeblieft!"
+            "text": "Water, graag! En een koekje, alsjeblieft!",
+            "translation": "Water, please! And a cookie, please!"
           }
         ]
       },
@@ -464,43 +474,53 @@
         "turns": [
           {
             "speaker": "Tess",
-            "text": "Sofia, spreek jij Nederlands?"
+            "text": "Sofia, spreek jij Nederlands?",
+            "translation": "Sofia, do you speak Dutch?"
           },
           {
             "speaker": "Sofia",
-            "text": "Een beetje. Ik leer Nederlands."
+            "text": "Een beetje. Ik leer Nederlands.",
+            "translation": "A little. I'm learning Dutch."
           },
           {
             "speaker": "Tess",
-            "text": "Huis: de of het?"
+            "text": "Huis: de of het?",
+            "translation": "House: de or het?"
           },
           {
             "speaker": "Sofia",
-            "text": "De huis?"
+            "text": "De huis?",
+            "translation": "De huis?"
           },
           {
             "speaker": "Tess",
-            "text": "Nee! Het huis!"
+            "text": "Nee! Het huis!",
+            "translation": "No! Het huis!"
           },
           {
             "speaker": "Sofia",
-            "text": "Oké, het huis. En meisje? De meisje?"
+            "text": "Oké, het huis. En meisje? De meisje?",
+            "translation": "Okay, het huis. And girl? De meisje?"
           },
           {
             "speaker": "Tess",
-            "text": "Nee! Het meisje! Ik ben een meisje."
+            "text": "Nee! Het meisje! Ik ben een meisje.",
+            "translation": "No! Het meisje! I'm a girl."
           },
           {
             "speaker": "Sofia",
-            "text": "Het meisje? Maar de vrouw!"
+            "text": "Het meisje? Maar de vrouw!",
+            "translation": "Het meisje? But de vrouw!"
           },
           {
             "speaker": "Els",
-            "text": "Ja. De vrouw, de man, de jongen. Maar het meisje en het kind."
+            "text": "Ja. De vrouw, de man, de jongen. Maar het meisje en het kind.",
+            "translation": "Yes. The woman, the man, the boy. But the girl and the child."
           },
           {
             "speaker": "Tess",
-            "text": "Nederlands is makkelijk!"
+            "text": "Nederlands is makkelijk!",
+            "translation": "Dutch is easy!"
           }
         ]
       },

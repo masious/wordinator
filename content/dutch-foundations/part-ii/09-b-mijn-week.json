@@ -115,51 +115,63 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Joh, Sofia, jouw agenda is vol! Wat doe je elke week?"
+            "text": "Joh, Sofia, jouw agenda is vol! Wat doe je elke week?",
+            "translation": "Wow, Sofia, your schedule is full! What do you do every week?"
           },
           {
             "speaker": "Sofia",
-            "text": "Veel! Ik ga naar de bibliotheek elke dinsdag."
+            "text": "Veel! Ik ga naar de bibliotheek elke dinsdag.",
+            "translation": "A lot! I go to the library every Tuesday."
           },
           {
             "speaker": "Noor",
-            "text": "O, je gaat elke dinsdag naar de bibliotheek? Wat doe je daar?"
+            "text": "O, je gaat elke dinsdag naar de bibliotheek? Wat doe je daar?",
+            "translation": "Oh, you go to the library every Tuesday? What do you do there?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ik heb daar Nederlandse les. De les is van zeven tot negen uur."
+            "text": "Ik heb daar Nederlandse les. De les is van zeven tot negen uur.",
+            "translation": "I have Dutch class there. The class is from seven to nine o'clock."
           },
           {
             "speaker": "Noor",
-            "text": "Super! Hoe ga je naar de bibliotheek? Lopend?"
+            "text": "Super! Hoe ga je naar de bibliotheek? Lopend?",
+            "translation": "Great! How do you get to the library? On foot?"
           },
           {
             "speaker": "Sofia",
-            "text": "Nee, ik ga om half zeven met de bus. De bibliotheek is in het centrum."
+            "text": "Nee, ik ga om half zeven met de bus. De bibliotheek is in het centrum.",
+            "translation": "No, I take the bus at half past six. The library is in the city center."
           },
           {
             "speaker": "Noor",
-            "text": "En ik sport elke donderdag in de sportschool. Vanavond ook! Kom je mee?"
+            "text": "En ik sport elke donderdag in de sportschool. Vanavond ook! Kom je mee?",
+            "translation": "And I work out at the gym every Thursday. Tonight too! Are you coming?"
           },
           {
             "speaker": "Sofia",
-            "text": "Vanavond niet, ik ben moe. Maar volgende week kom ik mee!"
+            "text": "Vanavond niet, ik ben moe. Maar volgende week kom ik mee!",
+            "translation": "Not tonight, I'm tired. But I'll come along next week!"
           },
           {
             "speaker": "Noor",
-            "text": "Leuk! Dan gaan we volgende week samen naar de sportschool."
+            "text": "Leuk! Dan gaan we volgende week samen naar de sportschool.",
+            "translation": "Great! Then we'll go to the gym together next week."
           },
           {
             "speaker": "Sofia",
-            "text": "En zaterdag is het feest van Daan!"
+            "text": "En zaterdag is het feest van Daan!",
+            "translation": "And Saturday is Daan's party!"
           },
           {
             "speaker": "Noor",
-            "text": "Ja! Op zaterdag werk ik van tien tot vier in het café. Daarna koken we samen."
+            "text": "Ja! Op zaterdag werk ik van tien tot vier in het café. Daarna koken we samen.",
+            "translation": "Yes! On Saturday I work from ten to four at the café. After that we'll cook together."
           },
           {
             "speaker": "Sofia",
-            "text": "En om acht uur gaan we samen met de tram naar Daan. Gezellig!"
+            "text": "En om acht uur gaan we samen met de tram naar Daan. Gezellig!",
+            "translation": "And at eight o'clock we'll take the tram to Daan together. That'll be fun!"
           }
         ]
       },
@@ -1995,51 +2007,63 @@
         "turns": [
           {
             "speaker": "Sofia",
-            "text": "Hoi Daan! Gefeliciteerd met je verjaardag!"
+            "text": "Hoi Daan! Gefeliciteerd met je verjaardag!",
+            "translation": "Hi Daan! Happy birthday!"
           },
           {
             "speaker": "Daan",
-            "text": "Dank je wel, Sofia! Kom binnen!"
+            "text": "Dank je wel, Sofia! Kom binnen!",
+            "translation": "Thank you, Sofia! Come in!"
           },
           {
             "speaker": "Sofia",
-            "text": "Alsjeblieft, een cadeau!"
+            "text": "Alsjeblieft, een cadeau!",
+            "translation": "Here you go, a present!"
           },
           {
             "speaker": "Daan",
-            "text": "Een boek! Wat leuk, dank je wel!"
+            "text": "Een boek! Wat leuk, dank je wel!",
+            "translation": "A book! How nice, thank you!"
           },
           {
             "speaker": "Sofia",
-            "text": "Hoi Lotte! Gefeliciteerd met Daan!"
+            "text": "Hoi Lotte! Gefeliciteerd met Daan!",
+            "translation": "Hi Lotte! Congratulations on Daan!"
           },
           {
             "speaker": "Lotte",
-            "text": "Dank je! Kijk, daar is de moeder van Daan."
+            "text": "Dank je! Kijk, daar is de moeder van Daan.",
+            "translation": "Thanks! Look, there's Daan's mother."
           },
           {
             "speaker": "Sofia",
-            "text": "Dag mevrouw! Gefeliciteerd met Daan!"
+            "text": "Dag mevrouw! Gefeliciteerd met Daan!",
+            "translation": "Hello, ma'am! Congratulations on Daan!"
           },
           {
             "speaker": "Daans moeder",
-            "text": "Dank je wel! Ga zitten. Koffie? Taart?"
+            "text": "Dank je wel! Ga zitten. Koffie? Taart?",
+            "translation": "Thank you! Sit down. Coffee? Cake?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, graag! Lotte, wat doe jij volgende week?"
+            "text": "Ja, graag! Lotte, wat doe jij volgende week?",
+            "translation": "Yes, please! Lotte, what are you doing next week?"
           },
           {
             "speaker": "Lotte",
-            "text": "Ik werk elke dag op school. Op woensdag ga ik 's middags met de trein naar Amersfoort."
+            "text": "Ik werk elke dag op school. Op woensdag ga ik 's middags met de trein naar Amersfoort.",
+            "translation": "I work at school every day. On Wednesday afternoon I take the train to Amersfoort."
           },
           {
             "speaker": "Daan",
-            "text": "En ik ga elke dag om acht uur met de fiets naar kantoor."
+            "text": "En ik ga elke dag om acht uur met de fiets naar kantoor.",
+            "translation": "And I cycle to the office at eight o'clock every day."
           },
           {
             "speaker": "Sofia",
-            "text": "Om acht uur? Ik ga om half negen lopend naar kantoor. Ik ben vaak een beetje te laat!"
+            "text": "Om acht uur? Ik ga om half negen lopend naar kantoor. Ik ben vaak een beetje te laat!",
+            "translation": "At eight o'clock? I walk to the office at half past eight. I'm often a little late!"
           }
         ]
       },

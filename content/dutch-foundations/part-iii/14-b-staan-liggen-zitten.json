@@ -115,7 +115,48 @@
       "id": "c30a20e9-9405-40fb-a99c-566ad9c0bb66",
       "type": "dialogue",
       "props": {
-        "turns": "[{\"speaker\":\"Henk\",\"text\":\"Zo! Hier is een plant voor je nieuwe huis.\"},{\"speaker\":\"Sofia\",\"text\":\"Wat leuk! Waar zet ik de plant?\"},{\"speaker\":\"Henk\",\"text\":\"Ik zet hem op de vensterbank. Daar staat hij in de zon.\"},{\"speaker\":\"Sofia\",\"text\":\"Prima. En waar is Tijger?\"},{\"speaker\":\"Henk\",\"text\":\"Hij zit in die doos naast de bank.\"},{\"speaker\":\"Sofia\",\"text\":\"Tijger, kijk! Ik leg dit kussen op de bank.\"},{\"speaker\":\"Henk\",\"text\":\"Nu ligt Tijger op het kussen. Gezellig hier!\"},{\"speaker\":\"Sofia\",\"text\":\"Mooi. Nu hang ik alleen het schilderij nog aan de muur.\"}]"
+        "turns": [
+          {
+            "speaker": "Henk",
+            "text": "Zo! Hier is een plant voor je nieuwe huis.",
+            "translation": "Here we go! Here's a plant for your new home."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Wat leuk! Waar zet ik de plant?",
+            "translation": "How nice! Where should I put the plant?"
+          },
+          {
+            "speaker": "Henk",
+            "text": "Ik zet hem op de vensterbank. Daar staat hij in de zon.",
+            "translation": "I'll put it on the windowsill. It stands there in the sun."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Prima. En waar is Tijger?",
+            "translation": "Great. And where is Tijger?"
+          },
+          {
+            "speaker": "Henk",
+            "text": "Hij zit in die doos naast de bank.",
+            "translation": "He is sitting in that box next to the sofa."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Tijger, kijk! Ik leg dit kussen op de bank.",
+            "translation": "Tijger, look! I'm putting this cushion on the sofa."
+          },
+          {
+            "speaker": "Henk",
+            "text": "Nu ligt Tijger op het kussen. Gezellig hier!",
+            "translation": "Now Tijger is lying on the cushion. It's cosy here!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Mooi. Nu hang ik alleen het schilderij nog aan de muur.",
+            "translation": "Nice. Now I only have to hang the painting on the wall."
+          }
+        ]
       },
       "children": []
     },
@@ -1726,7 +1767,48 @@
       "id": "3352fe85-97c7-4531-adff-92075d15c4dd",
       "type": "dialogue",
       "props": {
-        "turns": "[{\"speaker\":\"Noor\",\"text\":\"Hoi Sofia! Waar liggen de handdoeken?\"},{\"speaker\":\"Sofia\",\"text\":\"Ze liggen in de kast in de badkamer.\"},{\"speaker\":\"Noor\",\"text\":\"En waar staat de koffie?\"},{\"speaker\":\"Sofia\",\"text\":\"Het pak staat naast de koelkast.\"},{\"speaker\":\"Noor\",\"text\":\"Waar zit je sleutel?\"},{\"speaker\":\"Sofia\",\"text\":\"Die zit in mijn jas. Wacht even, ik leg hem op de tafel.\"},{\"speaker\":\"Noor\",\"text\":\"En het schilderij? Hangt het al aan de muur?\"},{\"speaker\":\"Sofia\",\"text\":\"Ja! Het hangt boven de bank. Kom binnen!\"}]"
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Hoi Sofia! Waar liggen de handdoeken?",
+            "translation": "Hi Sofia! Where are the towels?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ze liggen in de kast in de badkamer.",
+            "translation": "They are in the cupboard in the bathroom."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En waar staat de koffie?",
+            "translation": "And where is the coffee?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Het pak staat naast de koelkast.",
+            "translation": "The packet is next to the fridge."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Waar zit je sleutel?",
+            "translation": "Where is your key?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Die zit in mijn jas. Wacht even, ik leg hem op de tafel.",
+            "translation": "It's in my coat. Wait a moment, I'll put it on the table."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En het schilderij? Hangt het al aan de muur?",
+            "translation": "And the painting? Is it already hanging on the wall?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja! Het hangt boven de bank. Kom binnen!",
+            "translation": "Yes! It's hanging above the sofa. Come in!"
+          }
+        ]
       },
       "children": []
     },

@@ -144,43 +144,53 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Ik maak thee. Jij ook?"
+            "text": "Ik maak thee. Jij ook?",
+            "translation": "I'm making tea. You too?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, graag! Kijk, een foto van de Domtoren."
+            "text": "Ja, graag! Kijk, een foto van de Domtoren.",
+            "translation": "Yes, please! Look, a photo of the Dom Tower."
           },
           {
             "speaker": "Noor",
-            "text": "Mooie foto! De oude toren is heel mooi."
+            "text": "Mooie foto! De oude toren is heel mooi.",
+            "translation": "Beautiful photo! The old tower is very beautiful."
           },
           {
             "speaker": "Sofia",
-            "text": "Ja. Utrecht is een mooie stad!"
+            "text": "Ja. Utrecht is een mooie stad!",
+            "translation": "Yes. Utrecht is a beautiful city!"
           },
           {
             "speaker": "Noor",
-            "text": "En kijk: Café De Zwaluw!"
+            "text": "En kijk: Café De Zwaluw!",
+            "translation": "And look: Café De Zwaluw!"
           },
           {
             "speaker": "Sofia",
-            "text": "De Zwaluw is een klein café, maar heel gezellig."
+            "text": "De Zwaluw is een klein café, maar heel gezellig.",
+            "translation": "De Zwaluw is a small café, but very cozy."
           },
           {
             "speaker": "Noor",
-            "text": "En hier: het grote station."
+            "text": "En hier: het grote station.",
+            "translation": "And here: the large station."
           },
           {
             "speaker": "Sofia",
-            "text": "Utrecht Centraal is een groot station. En mooi!"
+            "text": "Utrecht Centraal is een groot station. En mooi!",
+            "translation": "Utrecht Centraal is a large station. And beautiful!"
           },
           {
             "speaker": "Noor",
-            "text": "Mooi? Het grote station is niet mooi!"
+            "text": "Mooi? Het grote station is niet mooi!",
+            "translation": "Beautiful? The large station isn't beautiful!"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja hoor! Utrecht Centraal is een mooi station!"
+            "text": "Ja hoor! Utrecht Centraal is een mooi station!",
+            "translation": "Oh yes! Utrecht Centraal is a beautiful station!"
           }
         ]
       },
@@ -1295,43 +1305,53 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "En de mensen? Hoe zijn de mensen hier?"
+            "text": "En de mensen? Hoe zijn de mensen hier?",
+            "translation": "And the people? What are the people like here?"
           },
           {
             "speaker": "Sofia",
-            "text": "Heel aardig! Ik heb een leuk team."
+            "text": "Heel aardig! Ik heb een leuk team.",
+            "translation": "Very nice! I have a great team."
           },
           {
             "speaker": "Noor",
-            "text": "Is Karin een goede teamleider?"
+            "text": "Is Karin een goede teamleider?",
+            "translation": "Is Karin a good team leader?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, Karin is een goede teamleider. En Daan is een aardige collega."
+            "text": "Ja, Karin is een goede teamleider. En Daan is een aardige collega.",
+            "translation": "Yes, Karin is a good team leader. And Daan is a nice colleague."
           },
           {
             "speaker": "Noor",
-            "text": "En de collega uit Antwerpen?"
+            "text": "En de collega uit Antwerpen?",
+            "translation": "And the colleague from Antwerp?"
           },
           {
             "speaker": "Sofia",
-            "text": "Hij is ook aardig. Een leuke man!"
+            "text": "Hij is ook aardig. Een leuke man!",
+            "translation": "He's nice too. A great guy!"
           },
           {
             "speaker": "Noor",
-            "text": "En Tess?"
+            "text": "En Tess?",
+            "translation": "And Tess?"
           },
           {
             "speaker": "Sofia",
-            "text": "Tess is een grappig meisje. Maar een strenge lerares!"
+            "text": "Tess is een grappig meisje. Maar een strenge lerares!",
+            "translation": "Tess is a funny girl. But a strict teacher!"
           },
           {
             "speaker": "Noor",
-            "text": "En ik?"
+            "text": "En ik?",
+            "translation": "And me?"
           },
           {
             "speaker": "Sofia",
-            "text": "Jij bent een goede vriendin, Noor. Ik ben heel blij in Utrecht."
+            "text": "Jij bent een goede vriendin, Noor. Ik ben heel blij in Utrecht.",
+            "translation": "You're a good friend, Noor. I'm very happy in Utrecht."
           }
         ]
       },
