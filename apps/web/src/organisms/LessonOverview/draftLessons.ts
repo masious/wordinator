@@ -3,11 +3,15 @@ import { authoredDocument } from "../../../../../content/dutch-foundations/tools
 import { buildOverview, type LessonOverview } from "./overviewModel";
 
 // Prototype only: the lesson overview reads authored lesson files straight from `content/` so its design can be settled before
-// it has an API. Production builds replace the glob with an empty object, so no lesson file is bundled.
+// it has an API. Production builds bundle only the lessons the open /temp-conv prototype stages (docs/conversation-scenes.md);
+// every other lesson file stays out of them.
 type AuthoredLesson = { title: string; goal?: string | null; blocks: unknown[] };
+const conversationLessons = import.meta.glob<AuthoredLesson>(
+  ["../../../../../content/*/*/11-b-de-rekening-alstublieft.json", "../../../../../content/*/*/23-a-mag-ik-vrij-nemen.json"], { import: "default" },
+);
 const files: Record<string, () => Promise<AuthoredLesson>> = import.meta.env.DEV
   ? import.meta.glob<AuthoredLesson>("../../../../../content/*/*/[0-9]*.json", { import: "default" })
-  : {};
+  : conversationLessons;
 
 export async function loadDraftLesson(slug: string): Promise<LessonOverview | null> {
   const lesson = await loadDraftDocument(slug);

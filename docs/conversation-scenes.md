@@ -58,7 +58,7 @@ Instead of an empty location with portraits standing in front, 11-b's dialogue s
 
 ### Built the prototype page (2026-10-24)
 
-`/temp-conv` (development only) stages the first dialogue of `23-a-mag-ik-vrij-nemen` over the office (since switched to 11-b; `TEMP_CONV_LESSON` and `STAGES` in `TempConv.tsx` pick the lesson), with the intro boxes, the portraits, line-by-line entry from alternating sides, speech per line from the production clips, and per-line or global translations. The owner is iterating on its design there. Code: `apps/web/src/pages/TempConv/` (`Conversation.tsx` is the component, `TempConv.tsx` feeds it a lesson file) and `apps/web/src/routes/temp-conv.tsx`.
+`/temp-conv` (open in production too since 2026-10-24, unlinked from the app; production builds bundle only its two lesson files, `11-b` and `23-a`) stages the first dialogue of `23-a-mag-ik-vrij-nemen` over the office (since switched to 11-b; `TEMP_CONV_LESSON` and `STAGES` in `TempConv.tsx` pick the lesson), with the intro boxes, the portraits, line-by-line entry from alternating sides, speech per line from the production clips, and per-line or global translations. The owner is iterating on its design there. Code: `apps/web/src/pages/TempConv/` (`Conversation.tsx` is the component, `TempConv.tsx` feeds it a lesson file) and `apps/web/src/routes/temp-conv.tsx`.
 
 ## How
 
