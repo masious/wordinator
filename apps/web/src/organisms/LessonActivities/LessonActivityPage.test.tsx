@@ -8,13 +8,6 @@ import "../../i18n";
 import type { ActivityDescriptor, ActivityType, LessonActivityRun } from "@wordinator/contracts/lesson-activities";
 import { LessonActivityPage, type LessonActivityPageProps } from "./LessonActivityPage";
 
-// Review words embeds the word drill (its own tests cover the cards); here it is a stand-in that shows its settings and finishes.
-vi.mock("../../pages/WordDrillPage", () => ({
-  EmbeddedWordDrill: ({ settings, onFinished, backLabel }: { settings: Record<string, unknown>; onFinished: () => void; backLabel: string }) => <div>
-    <p>Drill of {JSON.stringify(settings)}</p><button type="button" onClick={onFinished}>Finish drill</button><span>{backLabel}</span>
-  </div>,
-}));
-
 const groupId = "20000000-0000-4000-8000-000000000001";
 const courseId = "30000000-0000-4000-8000-000000000001";
 const lessonId = "40000000-0000-4000-8000-000000000001";
@@ -26,13 +19,12 @@ const uuid = (n: number) => `80000000-0000-4000-8000-${String(n).padStart(12, "0
 
 const storyDescriptor: ActivityDescriptor = {
   sourceId: "section-story", sourceKind: "section", sourceLabel: "Story", returnBlockId: uuid(1), returnHeadingId: uuid(2), practiceBlockId: null, fingerprint,
-  activityTypes: ["tricky_grammar", "review_words"],
+  activityTypes: ["tricky_grammar", "read_aloud"],
 };
 const introDescriptor: ActivityDescriptor = {
   sourceId: "intro", sourceKind: "section", sourceLabel: "Introduction", returnBlockId: uuid(3), returnHeadingId: null, practiceBlockId: null, fingerprint,
   activityTypes: ["tricky_grammar"],
 };
-const wordsPayload = { type: "review_words", recipeVersion: 1, schemaVersion: 1, wordIds: [uuid(700), uuid(701)] };
 const descriptorList = { descriptors: [storyDescriptor, introDescriptor] };
 
 const run = (overrides: Partial<LessonActivityRun> = {}): LessonActivityRun => ({
@@ -56,6 +48,16 @@ const trickyActivity = () => ({
   id: activityId, sourceId: "section-story", sourceLabel: "Story", sourceFingerprint: fingerprint, generatedBy: "gpt-5.6-luna",
   payload: { type: "tricky_grammar", recipeVersion: 1, schemaVersion: 1, questions: [wordOrderQuestion, choice(2, "Tricky question 2?"), choice(3, "Tricky question 3?"), choice(4, "Tricky question 4?")] },
 });
+
+// The last story question answered correctly, then the button that ends the run.
+const lastAnswer = () => ({ answerId: uuid(904), itemId: uuid(104), correct: true, reference: "Option B4", explanation: "Because B is right.", pronunciation: null });
+async function finishLastQuestion() {
+  fireEvent.click(await screen.findByRole("button", { name: "Option B4" }));
+  fireEvent.click(screen.getByRole("button", { name: "Check answer" }));
+  await screen.findByText("Because B is right.");
+  const buttons = screen.getAllByRole("button").filter((button) => /finish|complete|continue/i.test(button.textContent ?? ""));
+  fireEvent.click(buttons.at(-1)!);
+}
 
 type Call = { method: string; path: string; body: Record<string, unknown> | null };
 type Routes = {
@@ -199,30 +201,26 @@ describe("Lesson activity page", () => {
   it("reloads the lesson's activity list when the run is completed and when it is restarted", async () => {
     const calls = serve({
       descriptors: () => descriptorList,
-      open: () => ({
-        status: "ready", ephemeral: false, run: run(),
-        activity: { id: activityId, sourceId: "section-story", sourceLabel: "Story", sourceFingerprint: fingerprint,
-          payload: wordsPayload },
-      }),
-      run: (body) => ({ run: run({ status: body.action === "complete" ? "completed" : "active", completedAt: body.action === "complete" ? 2 : null }) }),
+      open: () => readyResponse({ run: { cursor: 3 } }),
+      answer: lastAnswer,
+      run: (body) => ({ run: run({ cursor: body.action === "restart" ? 0 : 3, status: body.action === "complete" ? "completed" : "active", completedAt: body.action === "complete" ? 2 : null }) }),
     });
     const listReads = () => callsTo(calls, "/activities", "GET").length;
-    renderPage({ type: "review_words" });
-    fireEvent.click(await screen.findByRole("button", { name: "Finish drill" }));
+    renderPage();
+    await finishLastQuestion();
     expect(await screen.findByText("Activity complete")).toBeInTheDocument();
     await waitFor(() => expect(listReads()).toBe(2));
 
     fireEvent.click(screen.getByRole("button", { name: "Start again" }));
-    expect(await screen.findByRole("button", { name: "Finish drill" })).toBeInTheDocument();
+    expect(await screen.findByText("Story question 1?")).toBeInTheDocument();
     await waitFor(() => expect(listReads()).toBe(3));
-    expect(callsTo(calls, "/run", "PATCH").map((call) => call.body)).toEqual([{ action: "complete" }, { action: "restart" }]);
+    expect(callsTo(calls, "/run", "PATCH").map((call) => call.body).filter((body) => body?.action !== "continue")).toEqual([{ action: "complete" }, { action: "restart" }]);
   });
 
   describe("routes each activity type to its component", () => {
     const paragraph = (n: number) => ({ id: uuid(500 + n), type: "paragraph", props: { textColor: "default", backgroundColor: "default" }, content: [{ type: "text", text: `Lesson text ${n}.`, styles: {} }], children: [] });
     const guidedStep = (n: number) => ({ blocks: [paragraph(n)], question: choice(n, `Guided question ${n}?`) });
     const payloads: Record<string, { payload: Record<string, unknown>; marker: string }> = {
-      review_words: { payload: wordsPayload, marker: `Drill of ${JSON.stringify({ source: "lesson", lesson: lessonId, section: "section-story", direction: "mixed" })}` },
       guided_grammar: { payload: { type: "guided_grammar", recipeVersion: 1, schemaVersion: 1, steps: [guidedStep(1), guidedStep(2)], followUps: [] }, marker: "Guided question 1?" },
       read_aloud: { payload: { type: "read_aloud", recipeVersion: 1, schemaVersion: 1, lines: [{ id: uuid(601), index: 0, speaker: "Dirk", dutchText: "Goedemorgen, Dirk." }] }, marker: "Whose lines do you read?" },
     };
@@ -241,11 +239,12 @@ describe("Lesson activity page", () => {
   it("shows only the changed metrics on completion, then Up next and the back links", async () => {
     serve({
       descriptors: () => descriptorList,
-      open: () => ({ status: "ready", ephemeral: false, run: run(), activity: { id: activityId, sourceId: "section-story", sourceLabel: "Story", sourceFingerprint: fingerprint, payload: wordsPayload } }),
+      open: () => readyResponse({ run: { cursor: 3 } }),
+      answer: lastAnswer,
       run: () => ({ run: run({ status: "completed", completedAt: 2 }), metrics: [{ key: "lesson_reading", before: 0.2, after: 0.5 }, { key: "lesson_grammar", before: 0.1, after: 0.1 }] }),
     });
-    renderPage({ type: "review_words" });
-    fireEvent.click(await screen.findByRole("button", { name: "Finish drill" }));
+    renderPage();
+    await finishLastQuestion();
     expect(await screen.findByRole("progressbar", { name: "+30% of this lesson's reading" })).toBeInTheDocument();
     expect(screen.queryByRole("progressbar", { name: /grammar/ })).toBeNull();
     expect(screen.getByRole("link", { name: /Tricky grammar practice · Introduction/ })).toBeInTheDocument();

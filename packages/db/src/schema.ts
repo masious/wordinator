@@ -427,8 +427,8 @@ export const learningTime = sqliteTable(
 export const lessonActivities = sqliteTable("lesson_activities", {
   id: text("id").primaryKey(), lessonId: text("lesson_id").notNull().references(() => courseLessons.id, { onDelete: "cascade" }),
   courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }), sourceId: text("source_id").notNull(),
-  // 0045 rebuilt the table for dialogue sections' review words and read aloud, retiring the story and role-play types.
-  activityType: text("activity_type", { enum: ["tricky_grammar", "mixed_practice", "guided_grammar", "read_aloud", "review_words"] }).notNull(),
+  // 0045 rebuilt the table for dialogue sections' read aloud, retiring the story and role-play types; 0046 retired review words.
+  activityType: text("activity_type", { enum: ["tricky_grammar", "mixed_practice", "guided_grammar", "read_aloud"] }).notNull(),
   sourceFingerprint: text("source_fingerprint").notNull(), recipeVersion: integer("recipe_version").notNull(), schemaVersion: integer("schema_version").notNull(),
   language: text("language", { enum: ["nl", "de"] }).notNull(), cacheKey: text("cache_key").notNull(),
   status: text("status", { enum: ["generating", "ready", "failed"] }).notNull(), leaseToken: text("lease_token"), leaseExpiresAt: integer("lease_expires_at"),
@@ -439,7 +439,7 @@ export const lessonActivities = sqliteTable("lesson_activities", {
   check("lesson_activities_status_check", sql`${table.status} in ('generating', 'ready', 'failed')`),
   check("lesson_activities_lease_check", sql`(${table.status} = 'generating') = (${table.leaseToken} IS NOT NULL AND ${table.leaseExpiresAt} IS NOT NULL)`),
   check("lesson_activities_payload_check", sql`(${table.status} = 'ready') = (${table.payload} IS NOT NULL)`),
-  check("lesson_activities_type_check", sql`${table.activityType} in ('tricky_grammar', 'mixed_practice', 'guided_grammar', 'read_aloud', 'review_words')`),
+  check("lesson_activities_type_check", sql`${table.activityType} in ('tricky_grammar', 'mixed_practice', 'guided_grammar', 'read_aloud')`),
   check("lesson_activities_language_check", sql`${table.language} in ('nl', 'de')`),
 ]);
 

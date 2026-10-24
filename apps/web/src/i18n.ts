@@ -260,7 +260,7 @@ export const resources = {
         got: "Got it",
         unsaved_one: "{{count}} answer could not be saved.",
         unsaved_other: "{{count}} answers could not be saved.",
-        backToWords: "Back to words", finishing: "Finishing the drill",
+        backToWords: "Back to words",
         drillAgain: "Drill again",
         practiceMore: "Practise drill words and more",
         wordPractice: {
@@ -418,7 +418,7 @@ export const resources = {
           audioUnavailable: "Dialogue audio is unavailable right now. The text is shown, so you can carry on.",
           pronunciation: "Pronunciation of this line"
         },
-        types: { guided_grammar: "Guided grammar", tricky_grammar: "Tricky grammar practice", mixed_practice: "Mixed lesson practice", read_aloud: "Read aloud", review_words: "Review words" },
+        types: { guided_grammar: "Guided grammar", tricky_grammar: "Tricky grammar practice", mixed_practice: "Mixed lesson practice", read_aloud: "Read aloud" },
         speaking: { progress: "Your line {{n}} of {{total}}", original: "Original line: {{text}}" },
         backToPractices: "Back to the lesson's practices", listen: "Listen", differentLine: "Different from the original line",
         metrics: { lesson_share: "This lesson is now {{percent}}% done (+{{delta}}%)", lesson_reading: "+{{delta}}% of this lesson's reading", lesson_grammar: "+{{delta}}% of this lesson's grammar", lesson_activities: "{{percent}}% of this lesson's activities done (+{{delta}}%)" }

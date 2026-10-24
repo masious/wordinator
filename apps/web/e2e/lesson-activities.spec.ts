@@ -55,14 +55,13 @@ test("each section's activities sit in the text after it, and the lesson's actio
   await page.goto(`/courses/${courseId}`);
   await openLesson(page);
   const cards = page.getByRole("complementary", { name: "Do more with AI" });
-  // A dialogue section offers exactly review words and read aloud; the grammar section leads with guided grammar.
-  await expect(cards.nth(0).getByRole("link")).toHaveCount(2);
-  await expect(cards.nth(0).getByRole("link", { name: `Review words · ${STORY}`, exact: true })).toBeVisible();
+  // A dialogue section offers only read aloud; the grammar section leads with guided grammar.
+  await expect(cards.nth(0).getByRole("link")).toHaveCount(1);
   await expect(cards.nth(0).getByRole("link", { name: `Read aloud · ${STORY}`, exact: true })).toBeVisible();
   await expect(activity(page, `Guided grammar · ${GRAMMAR}`)).toBeVisible();
   await expect(activity(page, `Tricky grammar practice · ${GRAMMAR}`)).toBeVisible();
-  // Story summary, speak from English, role-play and grammar explanation are retired.
-  await expect(cards.getByRole("link", { name: /Story summary|Speak from English|role-play|Grammar explanation/ })).toHaveCount(0);
+  // Story summary, speak from English, role-play, grammar explanation and review words are retired.
+  await expect(cards.getByRole("link", { name: /Story summary|Speak from English|role-play|Grammar explanation|Review words/ })).toHaveCount(0);
   // The lesson's actions carry no AI activities.
   const actions = page.getByRole("group", { name: "Lesson actions" }).first();
   await expect(actions.getByRole("link")).toHaveCount(1);
@@ -110,24 +109,21 @@ test("a two-step guided grammar flow advances the lesson's progress meter, shows
   }).toPass();
 });
 
-test("review words drills the section's words in the page and completes the activity", async ({ page }, testInfo) => {
+test("the lesson's word batch is a button in a Do more with AI card, whose Peek ends with Drill and Practice", async ({ page }, testInfo) => {
   testInfo.setTimeout(90_000);
-  const { courseId, story } = await seedActivityLesson(page, testInfo);
+  const { courseId } = await seedActivityLesson(page, testInfo);
   await page.goto(`/courses/${courseId}`);
   await openLesson(page);
-  await readTo(page, story);
-  await activity(page, `Review words · ${STORY}`).click();
-  await expect(page.getByRole("heading", { name: "Review words", level: 1 })).toBeVisible();
-
-  // The deck is the story section's two words, not the grammar section's.
-  const card = page.getByRole("article", { name: "Drill card" });
-  await expect(page.getByText("0 of 2 done", { exact: true })).toBeVisible();
-  for (let step = 0; step < 2; step += 1) {
-    await expect(card).not.toContainText("het huis");
-    await card.getByRole("button", { name: "Show answer" }).click();
-    await card.getByRole("button", { name: "Got it" }).click();
-  }
-  await expect(page.getByRole("heading", { name: "Activity complete", level: 2 })).toBeVisible();
+  // The lesson's few words make one batch, offered after its last section (docs/words.md#word-batches).
+  const review = page.getByRole("complementary", { name: "Do more with AI" }).getByRole("button", { name: "Review batch 1 words of this lesson" });
+  await expect(review).toHaveCount(1);
+  await review.click();
+  const peek = page.getByRole("dialog", { name: /^Batch 1 of / });
+  await expect(peek.getByRole("article").first()).toBeVisible();
+  while (await peek.getByRole("button", { name: "Next", exact: true }).isVisible()) await peek.getByRole("button", { name: "Next", exact: true }).click();
+  await expect(peek.getByRole("button", { name: "Practice batch 1 with the tutor" })).toBeVisible();
+  await peek.getByRole("button", { name: "Drill batch 1" }).click();
+  await expect(page).toHaveURL(/\/words\/drill\?.*batch=1/);
 });
 
 test("reloading a tricky grammar page resumes at the question reached, and so does opening its address again", async ({ page }, testInfo) => {

@@ -184,7 +184,7 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
   const renderAfterBlock = (id: string) => {
     const placed = placements.get(id);
     const practices = slots?.afterBlock(id);
-    const batches = batchAnchors.has(id) ? (classes: { action: string; label: string }) =>
+    const batches = batchAnchors.has(id) ? (classes: { action: string | undefined; label: string | undefined }) =>
       <WordBatchButtons scope={scope} lesson={lesson} title={box.title} afterBlock={id} classes={classes} /> : undefined;
     if (!placed?.length && !batches) return practices;
     return <>{practices}<SectionActivities courseSlug={scope.courseSlug} lessonSlug={lesson.slug} extra={batches}

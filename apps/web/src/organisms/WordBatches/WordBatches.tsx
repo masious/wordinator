@@ -236,7 +236,7 @@ export function WordBatches({ scope, lesson, peekIn = "dialog", title }: {
 // `afterBlock`, inside that section's Do more with AI box and styled by its `classes`. A button opens the batch's Peek in a dialog,
 // whose last page offers Drill and Practice.
 export function WordBatchButtons({ scope, lesson, title, afterBlock, classes }: {
-  scope: PlayerScope; lesson: CourseLesson; title: string; afterBlock: string; classes: { action: string; label: string };
+  scope: PlayerScope; lesson: CourseLesson; title: string; afterBlock: string; classes: { action: string | undefined; label: string | undefined };
 }) {
   const { t } = useTranslation();
   const published = lesson.document !== null;

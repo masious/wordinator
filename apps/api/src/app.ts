@@ -107,8 +107,6 @@ import { registerAiPracticeRoutes } from "./learning/aiPracticeRoutes";
 import { registerLearningActivityRoutes } from "./learning/activity";
 import { peekKnownTermsSql, termBands, type BandMemoryRow } from "./learning/wordBands";
 import { registerLessonActivityRoutes, type ActivityLesson } from "./lessonActivities/routes";
-import { activitySourceBlocks } from "./lessonActivities/generate";
-import { sectionWordIds } from "@wordinator/contracts/lesson-activities";
 import { aiPracticeCounts, lessonAiPracticeDeletion } from "./tutor/aiPractices";
 import { recentResults } from "./wordMemory";
 import { decodeWeakCursor, readWeakWords, setWordKnown } from "./weakWords";
@@ -2451,12 +2449,6 @@ app.get("/api/groups/:groupId/word-drill", requireGroupAccess, async (context) =
       const batches = lesson.lesson.publishedDoc === null ? [] : lessonWordBatches(storedDocument(lesson.lesson.publishedDoc, lesson.lesson.id));
       source.sql += " AND w.word_id IN (SELECT value FROM json_each(?))";
       source.values.push(jsonList(batches[parsed.data.batch - 1]?.wordIds ?? []));
-    }
-    // A review-words drill (docs/lesson-activities.md#review-words) keeps one activity section's words; an unknown section is an empty deck.
-    if (parsed.data.section !== undefined) {
-      const blocks = lesson.lesson.publishedDoc === null ? [] : activitySourceBlocks(storedDocument(lesson.lesson.publishedDoc, lesson.lesson.id), parsed.data.section, true);
-      source.sql += " AND w.word_id IN (SELECT value FROM json_each(?))";
-      source.values.push(jsonList(sectionWordIds(blocks)));
     }
   } else if (parsed.data.source === "course") {
     // A course drill takes the published words of every lesson of one visible course; any miss is the course read's 404.

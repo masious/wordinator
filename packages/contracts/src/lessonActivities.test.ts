@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { emptyLessonDocument, type LessonBlock, type LessonDocument } from "./lessonDocument";
-import { activitySpeechRequestSchema, LESSON_ACTIVITY_RECIPE_VERSION, activityRunPatchResponseSchema, LESSON_ACTIVITY_SCHEMA_VERSION, gradeLessonActivityAnswer, lessonActivityFocus, lessonActivityMetricSchema, lessonActivityPayloadSchema, lessonActivityTypeSchema, lessonActivityViewSchema, normalizeLessonSentence, readerLines, resolveLessonActivitySources, dialogueLines, dialogueSpeakers, sectionWordIds, toLessonActivityView, verifyLessonActivitySource } from "./lessonActivities";
+import { activitySpeechRequestSchema, LESSON_ACTIVITY_RECIPE_VERSION, activityRunPatchResponseSchema, LESSON_ACTIVITY_SCHEMA_VERSION, gradeLessonActivityAnswer, lessonActivityFocus, lessonActivityMetricSchema, lessonActivityPayloadSchema, lessonActivityTypeSchema, lessonActivityViewSchema, normalizeLessonSentence, readerLines, resolveLessonActivitySources, dialogueLines, dialogueSpeakers, toLessonActivityView, verifyLessonActivitySource } from "./lessonActivities";
 
 const uid = (n: number) => `00000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 const props = { textColor: "default" as const, backgroundColor: "default" as const };
@@ -16,7 +16,6 @@ const step = (n: number, blocks: LessonBlock[] = [para(n * 100, "Uitleg.")]) => 
 const guidedPayload = { type: "guided_grammar", recipeVersion: 2, schemaVersion: 2, metrics, steps: [step(10), step(20)], followUps: ["tricky_grammar", "mixed_practice"] };
 const readAloudLine = (n: number, speaker = "Sofia", text = "Goedemorgen.") => ({ id: uid(n), index: n, speaker, dutchText: text, referenceText: text });
 const readAloudPayload = { type: "read_aloud", recipeVersion: 2, schemaVersion: 2, metrics, lines: [readAloudLine(50)] };
-const reviewWordsPayload = { type: "review_words", recipeVersion: 2, schemaVersion: 2, metrics, wordIds: [uid(80), uid(81)] };
 const words = (id: number, ...ids: number[]): LessonBlock => ({ id: uid(id), type: "vocabulary", props: { data: JSON.stringify({ words: ids.map((n) => ({ id: uid(n), term: `woord${n}`, meaning: "word" })) }) }, content: undefined, children: [] } as unknown as LessonBlock);
 const viewOf = (payload: unknown) => toLessonActivityView({ id: uid(10), sourceId: uid(11), sourceLabel: "Lesson", sourceFingerprint: fingerprint, payload: lessonActivityPayloadSchema.parse(payload) });
 
@@ -119,7 +118,7 @@ describe("lesson activity contracts", () => {
     const again = await resolveLessonActivitySources({ document: doc, title: "Lesson" });
     expect(first).toEqual(again);
     expect(first.find((source) => source.sourceId === "intro")?.activityTypes).toEqual(["read_aloud"]);
-    expect(first.find((source) => source.sourceId === uid(2))?.activityTypes).toEqual(["review_words", "read_aloud"]);
+    expect(first.find((source) => source.sourceId === uid(2))?.activityTypes).toEqual(["read_aloud"]);
     expect(first.every((source) => source.sourceKind !== ("dialogue" as string))).toBe(true);
     expect(first.find((source) => source.sourceId === uid(8))?.activityTypes).toContain("tricky_grammar");
     expect(first.find((source) => source.sourceId === "lesson_end")?.activityTypes).toContain("mixed_practice");
@@ -128,7 +127,7 @@ describe("lesson activity contracts", () => {
     expect(verifyLessonActivitySource(first, story.sourceId, "read_aloud", "0".repeat(64))).toBeNull();
   });
 
-  it("offers read aloud on any dialogue, Sofia or not, and review words only where the section has words", async () => {
+  it("offers read aloud on any dialogue, Sofia or not, and nothing for a section of words alone", async () => {
     const doc = { ...emptyLessonDocument(), blocks: [
       heading(1, "Story", 1), dialogue(2, [{ speaker: "Anna", text: "Hi" }, { speaker: "Mira", text: "Hello" }]),
       heading(3, "Words", 1), words(4, 5),
@@ -144,12 +143,12 @@ describe("lesson activity contracts", () => {
     const sources = await resolveLessonActivitySources({ document: doc, includeLessonEnd: false });
     expect(sources.map((source) => source.sourceId)).not.toContain(uid(3));
     expect(sources.some((source) => source.sourceLabel === "Details")).toBe(false);
-    expect(sources.find((source) => source.sourceId === uid(1))?.activityTypes).toEqual(["review_words", "read_aloud"]);
+    expect(sources.find((source) => source.sourceId === uid(1))?.activityTypes).toEqual(["read_aloud"]);
   });
 
-  it("has five activity types, rejects every retired one, and maps focus", () => {
-    expect(lessonActivityTypeSchema.options).toHaveLength(5);
-    for (const retired of ["quick_grammar", "grammar_explanation", "story_comprehension", "story_summary", "speak_from_english", "roleplay"]) expect(lessonActivityTypeSchema.safeParse(retired).success).toBe(false);
+  it("has four activity types, rejects every retired one, and maps focus", () => {
+    expect(lessonActivityTypeSchema.options).toHaveLength(4);
+    for (const retired of ["quick_grammar", "grammar_explanation", "story_comprehension", "story_summary", "speak_from_english", "roleplay", "review_words"]) expect(lessonActivityTypeSchema.safeParse(retired).success).toBe(false);
     expect(lessonActivityTypeSchema.safeParse("guided_grammar").success).toBe(true);
     expect(lessonActivityPayloadSchema.safeParse({ type: "quick_grammar", recipeVersion: 2, schemaVersion: 2 }).success).toBe(false);
     expect(lessonActivityFocus("read_aloud")).toBe("speaking");
@@ -207,15 +206,8 @@ describe("lesson activity contracts", () => {
     expect(lessonActivityPayloadSchema.safeParse({ ...readAloudPayload, lines: [{ ...readAloudLine(50), speaker: null }] }).success).toBe(false);
   });
 
-  it("validates review-words word IDs and keeps them in the view", () => {
-    expect(lessonActivityPayloadSchema.safeParse(reviewWordsPayload).success).toBe(true);
-    expect(lessonActivityPayloadSchema.safeParse({ ...reviewWordsPayload, wordIds: [] }).success).toBe(false);
-    expect(lessonActivityViewSchema.parse(viewOf(reviewWordsPayload)).payload).toEqual({ type: "review_words", recipeVersion: 2, schemaVersion: 2, wordIds: [uid(80), uid(81)] });
-    expect(gradeLessonActivityAnswer(lessonActivityPayloadSchema.parse(reviewWordsPayload), uid(80), { kind: "text", text: "x" })).toBeNull();
-  });
-
   it("requires one to three metrics on every payload", () => {
-    for (const payload of [guidedPayload, readAloudPayload, reviewWordsPayload]) {
+    for (const payload of [guidedPayload, readAloudPayload]) {
       expect(lessonActivityPayloadSchema.safeParse(payload).success).toBe(true);
       expect(lessonActivityPayloadSchema.safeParse({ ...payload, metrics: [] }).success).toBe(false);
       expect(lessonActivityPayloadSchema.safeParse({ ...payload, metrics: ["lesson_share", "lesson_reading", "lesson_grammar", "lesson_activities"] }).success).toBe(false);
@@ -252,14 +244,6 @@ describe("lesson activity contracts", () => {
     expect(readerLines(lines, null).map((line) => line.id)).toEqual([uid(1), uid(2), uid(3)]);
     expect(readerLines(lines, "Sofia").map((line) => line.id)).toEqual([uid(1), uid(3)]);
     expect(readerLines(lines, "Jan")).toEqual([]);
-  });
-
-  it("collects a section's word IDs once each, columns included", () => {
-    const columns = { id: uid(20), type: "columnList", props: {}, content: undefined, children: [
-      { id: uid(21), type: "column", props: { width: 50 }, content: undefined, children: [words(22, 30, 31)] },
-    ] } as unknown as LessonBlock;
-    expect(sectionWordIds([words(10, 31, 32), columns])).toEqual([uid(31), uid(32), uid(30)]);
-    expect(sectionWordIds([para(1, "Geen woorden")])).toEqual([]);
   });
 
   it("points a section's practice ID at its first practice block and leaves the lesson-end source without one", async () => {

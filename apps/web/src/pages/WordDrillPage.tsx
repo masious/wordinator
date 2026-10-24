@@ -39,10 +39,9 @@ export function validateWordDrillSearch(search: Record<string, unknown>): WordDr
 // kept to retry, and a word that is gone (404) finishes from the session's copy with its grade ignored. The session is timed from
 // its first card to its last grade; with the pronunciation scores heard meanwhile, that is kept locally as the last session.
 // The cards sit on the drill table; the results wait for the last card's flight to its place.
-// With `onFinished` (a lesson's review words, docs/lesson-activities.md#review-words) the session ends there instead of on the results.
-function DrillRun({ groupId, accountId, cards, language, scores, course, onAgain, onBack, onPractice, onFinished, backLabel }: {
+function DrillRun({ groupId, accountId, cards, language, scores, course, onAgain, onBack, onPractice }: {
   groupId: string; accountId: string; cards: readonly DrillCard[]; language: string; scores: RefObject<number[]>; course: string | undefined; onAgain: () => void; onBack: () => void;
-  onPractice?: (conversationId: string) => void; onFinished?: () => void; backLabel?: string;
+  onPractice?: (conversationId: string) => void;
 }) {
   const { t } = useTranslation();
   const [state, setState] = useState(() => startDrill(cards.length));
@@ -96,10 +95,7 @@ function DrillRun({ groupId, accountId, cards, language, scores, course, onAgain
     {t("drill.unsaved", { count: unsaved.size })} <Button variant="quiet" onClick={retry}>{t("common.retry")}</Button>
   </p>;
   const current = state.queue[0];
-  const ended = current === undefined && landed;
-  useEffect(() => { if (ended) onFinished?.(); }, [ended]);
-  if (ended && onFinished) return <LoadingState label={t("drill.finishing")} />;
-  if (ended) {
+  if (current === undefined && landed) {
     return <DrillResults groupId={groupId} cards={cards} first={state.first} finished={finished ?? { durationMs: Date.now() - startedAt, pronunciation: null, previous: null }}
       failure={failure} onAgain={onAgain} onBack={onBack} onPractice={onPractice} />;
   }
@@ -108,18 +104,18 @@ function DrillRun({ groupId, accountId, cards, language, scores, course, onAgain
       <p className={styles.counter}>{t("drill.counter", { retired: state.retired, total: cards.length })}</p>
       <RevealSoundToggle />
     </span>
-    <Button variant="quiet" onClick={onBack}>{backLabel ?? t("drill.backToWords")}</Button>
+    <Button variant="quiet" onClick={onBack}>{t("drill.backToWords")}</Button>
   </div>} card={current !== undefined && <WordDrillCard card={cards[current]!} language={language} revealed={revealed} autoFocus={state.shown > 0}
     onReveal={() => setRevealed(true)} onGrade={grade} />} />;
 }
 
 // A session: its deck, fetched once, then the cards; Drill again starts the next session with a fresh deck.
-function DrillSession({ groupId, accountId, settings, run, language, scores, onAgain, onBack, onPractice, onFinished, backLabel: label }: {
+function DrillSession({ groupId, accountId, settings, run, language, scores, onAgain, onBack, onPractice }: {
   groupId: string; accountId: string; settings: WordDrillSettings; run: number; language: string; scores: RefObject<number[]>; onAgain: () => void; onBack: () => void;
-  onPractice?: (conversationId: string) => void; onFinished?: () => void; backLabel?: string;
+  onPractice?: (conversationId: string) => void;
 }) {
   const { t } = useTranslation();
-  const backLabel = label ?? t("drill.backToWords");
+  const backLabel = t("drill.backToWords");
   const deck = useQuery(wordDrillQueryOptions(groupId, settings, run));
   if (deck.isPending) return <LoadingState label={t("drill.loading")} />;
   if (deck.isError) {
@@ -134,7 +130,7 @@ function DrillSession({ groupId, accountId, settings, run, language, scores, onA
     </EmptyState></Surface>;
   }
   return <DrillRun groupId={groupId} accountId={accountId} cards={deck.data.cards} language={language} scores={scores} course={settings.source === "course" ? settings.course : undefined}
-    onAgain={onAgain} onBack={onBack} onPractice={onPractice} onFinished={onFinished} backLabel={label} />;
+    onAgain={onAgain} onBack={onBack} onPractice={onPractice} />;
 }
 
 // The drill's speech scope: Microsoft assessments of drill cards are stored as pronunciation attempts (docs/words.md#pronunciation-assessment),
@@ -146,21 +142,6 @@ function useDrillScores(groupId: string) {
     sendPronunciationAttempt(groupId, "drill", reference, assessment, word);
   }, [groupId]);
   return { scores, onAssessment };
-}
-
-// One drill session inside another page (a lesson's review words): the same cards, saved grades and speech, without the page frame.
-// The session ends with `onFinished` once every card is retired; `onBack` leaves it.
-export function EmbeddedWordDrill({ groupId, accountId, libraryLanguage, settings, backLabel, onBack, onFinished }: {
-  groupId: string; accountId: string; libraryLanguage: string | undefined; settings: WordDrillSettings; backLabel: string; onBack: () => void; onFinished: () => void;
-}) {
-  const { t } = useTranslation();
-  const token = useMemo(() => speechRecognitionTokenSource(groupId), [groupId]);
-  const { scores, onAssessment } = useDrillScores(groupId);
-  const language = libraryLanguage ? t(`languages.${libraryLanguage}`) : "";
-  const recognitionLocale = libraryLanguage ? RECOGNITION_LOCALES[libraryLanguage as keyof typeof RECOGNITION_LOCALES] ?? null : null;
-  return <SpeechRecognitionScope locale={recognitionLocale} token={token} onAssessment={onAssessment}>
-    <DrillSession groupId={groupId} accountId={accountId} settings={settings} run={0} language={language} scores={scores} onAgain={() => undefined} onBack={onBack} onFinished={onFinished} backLabel={backLabel} />
-  </SpeechRecognitionScope>;
 }
 
 // The drill page (C12e): self-graded cards one at a time, then the results. Desktop only, like other new work.

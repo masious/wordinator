@@ -1,6 +1,6 @@
 import { z } from "zod";
 import {
-  dialogueLines, LESSON_ACTIVITY_RECIPE_VERSION, LESSON_ACTIVITY_SCHEMA_VERSION, LESSON_ACTIVITY_TEXT_MAX, lessonActivityMetricSchema, lessonActivityPayloadSchema, sectionWordIds,
+  dialogueLines, LESSON_ACTIVITY_RECIPE_VERSION, LESSON_ACTIVITY_SCHEMA_VERSION, LESSON_ACTIVITY_TEXT_MAX, lessonActivityMetricSchema, lessonActivityPayloadSchema,
   type ActivityMetric, type ActivityType, type LessonActivityPayload,
 } from "@wordinator/contracts/lesson-activities";
 import {
@@ -103,12 +103,12 @@ async function stableId(seed: string): Promise<string> {
 }
 const speakingLineId = (sourceId: string, index: number) => stableId(`speaking-line:${sourceId}:${index}`);
 
-// Read aloud and review words need no model (docs/lesson-activities.md#dialogue-sections): read aloud's lines are the section's
-// dialogue turns, in order, with stable IDs, and review words names the section's vocabulary words. Metrics are fixed.
-export async function materializeActivity(type: "read_aloud" | "review_words", input: { sourceId: string; blocks: readonly LessonBlock[] }): Promise<LessonActivityPayload> {
+// Read aloud needs no model (docs/lesson-activities.md#dialogue-sections): its lines are the section's dialogue turns, in order,
+// with stable IDs. Metrics are fixed.
+export async function materializeActivity(type: "read_aloud", input: { sourceId: string; blocks: readonly LessonBlock[] }): Promise<LessonActivityPayload> {
   const base = { recipeVersion: LESSON_ACTIVITY_RECIPE_VERSION, schemaVersion: LESSON_ACTIVITY_SCHEMA_VERSION, metrics: ["lesson_share"] };
   const lines = dialogueLines(input.blocks);
-  const payload = lessonActivityPayloadSchema.safeParse(type === "review_words" ? { type, ...base, wordIds: sectionWordIds(input.blocks) } : {
+  const payload = lessonActivityPayloadSchema.safeParse({
     type, ...base,
     lines: await Promise.all(lines.map(async (line, index) => ({ id: await speakingLineId(input.sourceId, index), index, speaker: line.speaker, dutchText: line.text, referenceText: line.text }))),
   });
@@ -274,7 +274,7 @@ export async function generateLessonActivity(input: {
 }): Promise<LessonActivityPayload> {
   const { env, db, userId, type, language, source, lessonGoal } = input;
   if (type === "guided_grammar") return generateGuided({ env, db, userId, language, lessonGoal, blocks: input.blocks ?? [], eligibleFollowUps: input.eligibleFollowUps ?? [], trace: input.trace });
-  // read_aloud and review_words are materialized from the source without a model (materializeActivity), never generated here.
+  // read_aloud is materialized from the source without a model (materializeActivity), never generated here.
   if (!isModelType(type)) throw new Error("ACTIVITY_OUTPUT_INVALID");
   const settings = await readAiSettings(db);
   const response = await completeChat({

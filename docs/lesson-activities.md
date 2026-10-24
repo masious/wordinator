@@ -10,7 +10,7 @@ A lesson's activities sit in its text, after the section each comes from (below)
 
 Each source's activities sit in the lesson text (approved product change, 2026-10-22), on a quiet card headed Do more with AI after the last block of the section they come from: a source runs from its heading (the introduction from the top) to the next level-1 or level-2 heading or grammar part heading. Each grammar part has its own card at the end of the part, its links marked with the part's colour dot; the lesson-end mixed practice follows the lesson's last block. The cards list every activity of their source whatever is on screen, mark completed ones Done, and keep each source's name in the links' accessible names. Behind the start gate, in draft previews, and in archived courses there are none, as there are no suggestions. Selecting an activity navigates to its own page in the same tab, with a link at the top back to the original lesson section. Suggestions require no generation. The list reads one kind of learner data: the viewer's own completed runs, which mark a suggestion **Done** with a check-only mark (the word is visually hidden for assistive technology, and a title tooltip shows it). A completion counts only while its section's source fingerprint is the current one for that activity type, so a republished section that changed is no longer done; restarting the activity clears the mark, and completing it again restores it. Other learners' runs never appear.
 
-The feature is limited to the current lesson's content: no vocabulary activities other than a dialogue section's [review words](#review-words), no word grouping, weak-word selection, personalization, cross-lesson retrieval, two-lesson checkpoints or Tutor conversation. Ordinary words inside source sentences remain lesson content. Existing Tutor-saved and personal practices remain separate.
+The feature is limited to the current lesson's content: no vocabulary activities (a lesson's words are reviewed through its [word batches](words.md#word-batches), whose buttons share the Do more with AI boxes), no weak-word selection, personalization, cross-lesson retrieval, two-lesson checkpoints or Tutor conversation. Ordinary words inside source sentences remain lesson content. Existing Tutor-saved and personal practices remain separate.
 
 Attaching an activity to its source and suggesting it are one feature. Suggestions exist before cached content exists. They replaced the two generic lesson-to-Tutor prompt links of the former AI action area; Practise words stays as a separate lesson utility, and Tutor navigation is unchanged.
 
@@ -18,7 +18,6 @@ Attaching an activity to its source and suggesting it are one feature. Suggestio
 
 | Activity | Source | Content | Completion |
 | --- | --- | --- | --- |
-| Review words | Dialogue section with words | A drill session of the section's vocabulary words, in the page; model-free | The drill session finished |
 | Read aloud | Dialogue section | The section's dialogue lines; the learner chooses one speaker (the app voices the others) or all lines, and reads each aloud with pronunciation feedback; model-free | All the chosen lines read |
 | Guided grammar | Grammar section | Ordered steps over the section's blocks, each with a choice question and feedback | All steps answered |
 | Tricky grammar | Grammar section | Four choice, fill-in or word-order questions using taught distinctions | All answered |
@@ -44,7 +43,7 @@ Drafts, unpublished previews and the unpassed lesson start gate offer no activit
 
 One content version is shared across accounts for each lesson, source and activity type. Cache identity also includes source fingerprint, language, recipe version and payload-schema version. Each version records the model that answered its generation request, after any provider fallback (`generated_by`, 2026-10-22), and the activity page shows it under the title as "Generated with *model*"; content cached before that shows "Model not recorded", and read aloud and review words, which no model writes, show neither. Generation uses the same [AI settings](ai-tutor.md#providers-and-fallback) as the tutor. Learner ID and the read-aloud reader are not cache dimensions. There is no generate-another or variant picker.
 
-Opening triggers generation only on a miss; read aloud and review words are materialized from the published source on their first open, with no model, lease or AI allowance. The model's source contains relevant published text/headings and goal, without private notes, vocabulary blocks, learner context or progress. Mixed practice uses this lesson only.
+Opening triggers generation only on a miss; read aloud is materialized from the published source on their first open, with no model, lease or AI allowance. The model's source contains relevant published text/headings and goal, without private notes, vocabulary blocks, learner context or progress. Mixed practice uses this lesson only.
 
 An expiring generation lease and unique cache key prevent concurrent visitors generating multiple copies. Ready content must pass strict contracts. Recheck lease ownership and source identity before publication. Invalid, failed or stale output is never served as current. Retry recovers a failed generation under the same identity after a 30-second server backoff; it does not produce a second variant.
 
@@ -56,7 +55,7 @@ Generation uses the existing provider fallback without Tutor conversations or to
 
 For the generated types the model writes content only: summary text or questions with `prompt`, `options` (three strings), `correctIndex` (0-2), `explanation`, fill-in `referenceAnswers`, and word-order `tokens` in their correct sentence order. The model never writes IDs, a `type` or version numbers. Wordinator parses that with non-strict schemas (unknown keys are dropped), assigns every ID with `crypto.randomUUID()`, shuffles word-order tokens with a sentence-seeded permutation and derives `expectedOrder`, then validates the result with the strict payload contract. Question counts stay exact (tricky grammar 4, mixed practice 6). A reply wrapped in a Markdown fence or with prose around the JSON is accepted; anything that still fails is `ACTIVITY_OUTPUT_INVALID`, logged as `lesson_activity.output_invalid` with the type, the failure stage and the issue paths only, never the model text or lesson content.
 
-Additional shapes: `guided_grammar` returns ordered `steps`, each with 1-4 chunk indices into the numbered grammar chunks and one choice question (`prompt`, `options`, `correctIndex`, `explanation`). The server maps indices to lesson block IDs and snapshots those blocks into the payload; the model never writes IDs. `guided_grammar` also returns `followUps`, 0-2 values from `tricky_grammar` and `mixed_practice`; the server keeps only the types eligible in this lesson. Every generated payload carries `metrics`: 1-3 keys from the enum `lesson_share`, `lesson_reading`, `lesson_grammar` and `lesson_activities`, chosen by the model, which never sees numbers. `read_aloud` and `review_words` have no model output: read aloud's lines and review words' word IDs come from the published lesson, and their metrics are the fixed default `[lesson_share]`.
+Additional shapes: `guided_grammar` returns ordered `steps`, each with 1-4 chunk indices into the numbered grammar chunks and one choice question (`prompt`, `options`, `correctIndex`, `explanation`). The server maps indices to lesson block IDs and snapshots those blocks into the payload; the model never writes IDs. `guided_grammar` also returns `followUps`, 0-2 values from `tricky_grammar` and `mixed_practice`; the server keeps only the types eligible in this lesson. Every generated payload carries `metrics`: 1-3 keys from the enum `lesson_share`, `lesson_reading`, `lesson_grammar` and `lesson_activities`, chosen by the model, which never sees numbers. `read_aloud` has no model output: its lines come from the published lesson, and its metrics are the fixed default `[lesson_share]`.
 
 ## Guided grammar
 
@@ -70,15 +69,7 @@ Additional shapes: `guided_grammar` returns ordered `steps`, each with 1-4 chunk
 
 ## Dialogue sections
 
-A dialogue section offers exactly two activities (approved product change, 2026-10-24): review words, when the section has vocabulary words, then read aloud. Both are model-free and shared like every activity.
-
-### Review words
-
-`review_words` is a [drill](words.md#drill) session of the section's words inside the activity page, with the drill's own cards, self-grading, Again, speech and saved grades.
-
-- **Words.** The section's vocabulary words, each once, in document order, columns included (`sectionWordIds` in the contracts). The payload stores their IDs; the deck is drawn by the word-drill route with the lesson and `section` (the activity source), under the lesson drill's visibility and deck rules, so it holds at most `WORD_DRILL_SESSION_SIZE` cards in mixed direction.
-- **Word memory.** Each card's first grade is written as a drill review, so review words, unlike every other activity, changes word memory. Pronunciation assessments are stored as drill attempts.
-- **Completion.** The run has no answer items. When the last card is retired the page completes the run and shows the [completion](#completion-and-progress) screen instead of the drill's results; a read-only (archived) run completes nothing. Back to lesson leaves the drill, and the run stays open.
+A dialogue section offers one activity (approved product change, 2026-10-24): read aloud, model-free and shared like every activity. Review words, a drill of the section's words offered beside it the same day, was retired before it shipped (2026-10-24, migration `0046`): the lesson's [word batches](words.md#word-batches) take its place as Review batch *n* words buttons in the same Do more with AI boxes.
 
 ### Read aloud
 
@@ -112,7 +103,6 @@ Every activity type has its own lucide-react icon, on its links in the text's Do
 
 | Activity | Icon |
 | --- | --- |
-| Review words | `BookOpenCheck` |
 | Read aloud | `Mic` |
 | Guided grammar | `Footprints` |
 | Tricky grammar | `Puzzle` |

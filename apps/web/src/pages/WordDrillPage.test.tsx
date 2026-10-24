@@ -6,7 +6,7 @@ import { act, cleanup, fireEvent, render, screen, waitFor, within } from "@testi
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "../i18n";
 import { resetRevealSound, setRevealSound, stopSpeech } from "../molecules/Speech";
-import { EmbeddedWordDrill, validateWordDrillSearch, WordDrillPage } from "./WordDrillPage";
+import { validateWordDrillSearch, WordDrillPage } from "./WordDrillPage";
 
 // A stubbed navigator keeps what the page's tooltips read: spreading the real one drops its prototype's getters.
 const navigatorBasics = () => ({ ...navigator, userAgent: navigator.userAgent, platform: navigator.platform, language: navigator.language, languages: navigator.languages });
@@ -508,29 +508,3 @@ describe("Drill route search", () => {
     expect(validateWordDrillSearch({ source: "lesson", lesson: lessonId, course: courseId })).toEqual({ source: "lesson", lesson: lessonId, direction: "mixed" });
   });
 });
-
-// A lesson's review words (docs/lesson-activities.md#review-words) runs one session inside the activity page.
-describe("Embedded drill", () => {
-  function renderEmbedded(onFinished: () => void, onBack = () => undefined) {
-    const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false }, mutations: { retry: false } } });
-    render(<MantineProvider><QueryClientProvider client={queryClient}>
-      <EmbeddedWordDrill groupId={groupId} accountId={id(2)} libraryLanguage="nl" backLabel="Back to lesson" onBack={onBack} onFinished={onFinished}
-        settings={{ source: "lesson", lesson: lessonId, section: "section-story", direction: "mixed" }} />
-    </QueryClientProvider></MantineProvider>);
-  }
-
-  it("draws the section's deck, saves each grade, and ends with onFinished instead of the results", async () => {
-    const onFinished = vi.fn(); const onBack = vi.fn();
-    renderEmbedded(onFinished, onBack);
-    await screen.findByRole("article", { name: "Drill card" });
-    expect(fetchCalls().find((call) => call.path.includes("/word-drill?"))?.path)
-      .toBe(`/api/groups/${groupId}/word-drill?source=lesson&lessonId=${lessonId}&section=section-story&direction=mixed`);
-    fireEvent.click(screen.getByRole("button", { name: "Back to lesson" }));
-    expect(onBack).toHaveBeenCalledTimes(1);
-    for (let step = 0; step < 2; step += 1) { reveal(); gradeAs("Got it"); }
-    await waitFor(() => expect(onFinished).toHaveBeenCalledTimes(1));
-    expect(grades()).toHaveLength(2);
-    expect(screen.queryByRole("button", { name: "Drill again" })).not.toBeInTheDocument();
-  });
-});
-

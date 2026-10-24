@@ -218,14 +218,13 @@ export const wordBatchesQueryOptions = (groupId: string, courseId: string, lesso
 
 // A drill session's deck (C12e). Each session fetches its deck once: `run` tells sessions with the same settings apart, so Drill
 // again draws a fresh deck, and the deck is never refetched in the background or kept once the session's page is left.
-// `batch` (1-based) narrows a lesson drill to one of the lesson's word batches (docs/words.md#word-batches); `section`, a lesson
-// activity source, narrows it to that section's words (docs/lesson-activities.md#review-words).
-export type WordDrillSettings = { source: WordDrillSource; lesson?: string; batch?: number; section?: string; course?: string; direction: WordDrillMode };
+// `batch` (1-based) narrows a lesson drill to one of the lesson's word batches (docs/words.md#word-batches).
+export type WordDrillSettings = { source: WordDrillSource; lesson?: string; batch?: number; course?: string; direction: WordDrillMode };
 const drillTarget = (settings: WordDrillSettings) => settings.source === "lesson" && settings.lesson
-  ? `&lessonId=${encodeURIComponent(settings.lesson)}${settings.batch ? `&batch=${settings.batch}` : ""}${settings.section ? `&section=${encodeURIComponent(settings.section)}` : ""}`
+  ? `&lessonId=${encodeURIComponent(settings.lesson)}${settings.batch ? `&batch=${settings.batch}` : ""}`
   : settings.source === "course" && settings.course ? `&courseId=${encodeURIComponent(settings.course)}` : "";
 export const wordDrillQueryOptions = (groupId: string, settings: WordDrillSettings, run: number) => queryOptions({
-  queryKey: ["word-drill", groupId, settings.source, settings.lesson ?? settings.course ?? null, settings.batch ?? null, settings.section ?? null, settings.direction, run] as const,
+  queryKey: ["word-drill", groupId, settings.source, settings.lesson ?? settings.course ?? null, settings.batch ?? null, settings.direction, run] as const,
   queryFn: () => apiRequest(
     `/api/groups/${encodeURIComponent(groupId)}/word-drill?source=${settings.source}${drillTarget(settings)}&direction=${settings.direction}`,
     wordDrillDeckSchema,

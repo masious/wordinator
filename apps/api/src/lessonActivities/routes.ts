@@ -132,7 +132,7 @@ export function registerLessonActivityRoutes(app: Hono<AppEnvironment>, deps: Ro
     const db = context.env.DB;
     let row = await db.prepare(`SELECT ${cacheColumns} FROM lesson_activities WHERE cache_key=?`).bind(key).first<CacheRow>();
     if (row?.status === "ready" && validPayload(row)) return open(context, row.id, found, descriptor, row, found.archived);
-    if (type === "read_aloud" || type === "review_words") {
+    if (type === "read_aloud") {
       // No model, no lease and no AI allowance: the payload is written straight from the published source and the row is ready.
       let materialized: LessonActivityPayload;
       try { materialized = await materializeActivity(type, { sourceId, blocks: activitySourceBlocks(found.document, sourceId, true) }); } catch { return apiError(context, 503, "ACTIVITY_GENERATION_FAILED", "This activity could not be prepared. Try again shortly."); }

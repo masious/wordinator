@@ -28,7 +28,7 @@ const dialogue = (turns: Array<{ speaker: string; text: string }>) => ({ id: uui
 const callout = (text: string) => ({ id: uuid(), type: "callout" as const, props: { variant: "grammar" as const, icon: "auto" as const }, content: plain(text), children: [] });
 
 const GRAMMAR_TYPES: ActivityType[] = ["guided_grammar", "tricky_grammar"];
-const STORY_TYPES: ActivityType[] = ["review_words", "read_aloud"];
+const STORY_TYPES: ActivityType[] = ["read_aloud"];
 const SOFIA_LINE = "Goedemorgen, ik wil graag brood kopen.";
 const PIETER_LINE = "Goedemorgen! Wat wilt u hebben?";
 
@@ -709,11 +709,10 @@ describe("dialogue section activities", () => {
     expect(await countRows("SELECT COUNT(*) AS n FROM ai_turn_reservations")).toBe(0);
   });
 
-  it("serves read aloud and review words even at a zero daily AI cap", async () => {
+  it("serves read aloud even at a zero daily AI cap", async () => {
     const s = await setup();
     await writeAiSettings(env.DB, { ...DEFAULT_AI_SETTINGS, dailyTurnCap: 0 });
     await readyOpen(await openStory(s, "read_aloud", scriptedAi([])));
-    await readyOpen(await openStory(s, "review_words", scriptedAi([])));
   });
 
   it("refuses read aloud to anonymous, setup-incomplete and out-of-library requests, and for hidden lessons", async () => {
@@ -749,40 +748,12 @@ describe("dialogue section activities", () => {
     expect(polled.status === "ready" && polled.run.reader).toBe("Pieter");
   });
 
-  it("refuses a reader the dialogue does not name, and a reader for another activity type", async () => {
+  it("refuses a reader the dialogue does not name, and from another account", async () => {
     const s = await setup();
     const opened = await readyOpen(await openStory(s, "read_aloud"));
     expect(await errorCode(await patch(s, opened, { action: "set_reader", reader: "Daan" }))).toBe("ACTIVITY_READER_INVALID");
-    const words = await readyOpen(await openStory(s, "review_words"));
-    expect(await errorCode(await patch(s, words, { action: "set_reader", reader: "Sofia" }))).toBe("ACTIVITY_ACTION_INVALID");
     // Another account cannot set the reader of this run: it has no run of its own here.
     expect(await errorCode(await patch(s, opened, { action: "set_reader", reader: "Sofia" }, s.rival))).toBe("ACTIVITY_RUN_NOT_FOUND");
-  });
-
-  it("names the section's words in review words and completes without answers", async () => {
-    const s = await setup();
-    const opened = await readyOpen(await openStory(s, "review_words", scriptedAi([])));
-    expect(opened.activity.generatedBy).toBeNull();
-    const payload = opened.activity.payload;
-    if (payload.type !== "review_words") throw new Error("Expected review words.");
-    expect(payload.wordIds).toHaveLength(2);
-    const done = await patch(s, opened, { action: "complete" });
-    expect(done.status).toBe(200);
-    const listed = activityDescriptorListResponseSchema.parse(await (await call("GET", s.base, s.learner)).json());
-    expect(listed.completed).toEqual([expect.objectContaining({ sourceId: s.ids.story, type: "review_words", correct: null, total: null })]);
-  });
-
-  it("drills only the section's words for a review-words deck, and refuses a section outside a lesson drill", async () => {
-    const s = await setup();
-    const deck = async (query: string) => call("GET", `/api/groups/${s.groupId}/word-drill?${query}`, s.learner);
-    const section = await deck(`source=lesson&lessonId=${s.lessonId}&section=${encodeURIComponent(s.ids.story)}&direction=understand`);
-    expect(section.status).toBe(200);
-    const cards = (await section.json() as { cards: Array<{ word: { term: string } }> }).cards.map((card) => card.word.term).sort();
-    expect(cards).toEqual(["bakker", "vroeg"]);
-    const unknown = await deck(`source=lesson&lessonId=${s.lessonId}&section=nope&direction=understand`);
-    expect((await unknown.json() as { cards: unknown[] }).cards).toEqual([]);
-    expect(await errorCode(await deck(`source=weak&section=${encodeURIComponent(s.ids.story)}`))).toBe("INVALID_DRILL");
-    expect(await errorCode(await deck(`source=lesson&lessonId=${s.lessonId}&batch=1&section=${encodeURIComponent(s.ids.story)}`))).toBe("INVALID_DRILL");
   });
 });
 

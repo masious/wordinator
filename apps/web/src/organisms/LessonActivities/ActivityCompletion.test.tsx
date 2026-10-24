@@ -12,7 +12,7 @@ const source = (id: string, label: string, activityTypes: ActivityDescriptor["ac
   sourceId: id, sourceKind: "section", sourceLabel: label, returnBlockId: uuid(1), returnHeadingId: uuid(2), practiceBlockId, fingerprint, activityTypes,
 });
 const current = source("grammar", "Grammar", ["guided_grammar", "tricky_grammar"], uuid(9));
-const following = source("reading", "Reading", ["review_words", "guided_grammar"]);
+const following = source("reading", "Reading", ["read_aloud", "guided_grammar"]);
 const descriptors = [current, following];
 
 async function renderCompletion(overrides: Partial<ActivityCompletionProps> = {}) {
@@ -48,7 +48,7 @@ describe("ActivityCompletion", () => {
     expect(links.slice(0, 3)).toEqual([
       "/courses/dutch/lessons/one/activities/grammar/tricky_grammar",
       "/courses/dutch/lessons/one/activities/reading/guided_grammar",
-      "/courses/dutch/lessons/one/activities/reading/review_words",
+      "/courses/dutch/lessons/one/activities/reading/read_aloud",
     ]);
   });
 
@@ -56,10 +56,10 @@ describe("ActivityCompletion", () => {
     const threeDaysAgo = Date.now() - 3 * 86_400_000;
     await renderCompletion({ completed: [
       { sourceId: "reading", type: "guided_grammar", completedAt: threeDaysAgo, correct: 3, total: 4 },
-      { sourceId: "reading", type: "review_words", completedAt: null, correct: null, total: null },
+      { sourceId: "reading", type: "read_aloud", completedAt: null, correct: null, total: null },
     ] });
     expect(screen.getByRole("link", { name: /Guided grammar · Reading/ })).toHaveTextContent("3/4 correct · 3 days ago");
-    expect(screen.getByRole("link", { name: /Review words · Reading/ })).toHaveTextContent(/Done$/);
+    expect(screen.getByRole("link", { name: /Read aloud · Reading/ })).toHaveTextContent(/Done$/);
   });
 
   it("Back to practices targets practiceBlockId, and the return link when it is null", async () => {

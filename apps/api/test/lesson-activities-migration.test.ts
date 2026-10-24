@@ -371,12 +371,12 @@ describe("Migration 0038 lesson activity v2", () => {
     ]));
   });
 
-  it("rejects every retired type and admits the five current ones (0045)", async () => {
+  it("rejects every retired type and admits the four current ones (0046)", async () => {
     const lib = await seedLibrary(env.DB);
-    for (const activityType of ["quick_grammar", "story_summary", "story_comprehension", "grammar_explanation", "roleplay", "speak_from_english"]) {
+    for (const activityType of ["quick_grammar", "story_summary", "story_comprehension", "grammar_explanation", "roleplay", "speak_from_english", "review_words"]) {
       await expect(insertActivity(env.DB, lib, { activityType }).run()).rejects.toThrow(/CHECK/);
     }
-    for (const activityType of ["tricky_grammar", "mixed_practice", "guided_grammar", "read_aloud", "review_words"]) {
+    for (const activityType of ["tricky_grammar", "mixed_practice", "guided_grammar", "read_aloud"]) {
       await insertActivity(env.DB, lib, { activityType }).run();
     }
   });
@@ -476,5 +476,40 @@ describe("Migration 0045 dialogue section activities", () => {
     await insertActivity(legacy, lib, { activityType: "review_words" }).run();
     await legacy.prepare("DELETE FROM lesson_activities WHERE id = ?").bind(kept.tricky).run();
     expect(await legacy.prepare("SELECT COUNT(*) AS n FROM lesson_activity_answers").first<number>("n")).toBe(0);
+  });
+});
+
+describe("Migration 0046 retiring review words", () => {
+  it("deletes review words with their runs and answers, and keeps every other activity with its runs, readers, and answers", async () => {
+    await applyD1Migrations(legacy, migrations.filter((migration) => migration.name < "0046_"));
+    const left = async (table: string, ids: string[]) => sorted((await legacy.prepare(`SELECT id FROM ${table} WHERE id IN (${ids.map(() => "?").join(", ")})`).bind(...ids).all<{ id: string }>()).results.map((row) => row.id));
+    const lib = await seedLibrary(legacy);
+    const [read, tricky, review] = [uuid(), uuid(), uuid()];
+    const [readRun, reviewRun, trickyAnswer, reviewAnswer] = [uuid(), uuid(), uuid(), uuid()];
+    const trickyRun = uuid();
+    await legacy.batch([
+      insertActivity(legacy, lib, { id: read, activityType: "read_aloud" }),
+      insertActivity(legacy, lib, { id: tricky, activityType: "tricky_grammar" }),
+      insertActivity(legacy, lib, { id: review, activityType: "review_words" }),
+      insertRun(legacy, read, lib.learner, { id: readRun, reader: "Sofia" }),
+      insertRun(legacy, tricky, lib.learner, { id: trickyRun }),
+      insertRun(legacy, review, lib.learner, { id: reviewRun }),
+      insertAnswer(legacy, trickyRun, { id: trickyAnswer }),
+      insertAnswer(legacy, reviewRun, { id: reviewAnswer }),
+    ]);
+
+    await applyD1Migrations(legacy, migrations.filter((migration) => migration.name.startsWith("0046_")));
+
+    const types = await legacy.prepare("SELECT DISTINCT activity_type FROM lesson_activities").all<{ activity_type: string }>();
+    expect(types.results.map((row) => row.activity_type)).not.toContain("review_words");
+    expect(await left("lesson_activities", [read, tricky, review])).toEqual(sorted([read, tricky]));
+    expect(await legacy.prepare("SELECT reader FROM lesson_activity_runs WHERE id = ?").bind(readRun).first("reader")).toBe("Sofia");
+    expect(await left("lesson_activity_runs", [readRun, trickyRun, reviewRun])).toEqual(sorted([readRun, trickyRun]));
+    expect(await left("lesson_activity_answers", [trickyAnswer, reviewAnswer])).toEqual([trickyAnswer]);
+    expect(await legacy.prepare("SELECT name FROM sqlite_master WHERE name LIKE '%_keep'").all().then((result) => result.results)).toEqual([]);
+    await expect(insertActivity(legacy, lib, { activityType: "review_words" }).run()).rejects.toThrow(/CHECK/);
+    // Runs keep their cascades.
+    await legacy.prepare("DELETE FROM lesson_activities WHERE id = ?").bind(tricky).run();
+    expect(await left("lesson_activity_answers", [trickyAnswer])).toEqual([]);
   });
 });

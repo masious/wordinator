@@ -10,7 +10,7 @@ import { LessonBoxActions, SectionActivities, type LessonActivitySuggestion, typ
 
 const lesson: LessonBoxLesson = { groupId: "20000000-0000-4000-8000-000000000001", courseId: "30000000-0000-4000-8000-000000000001", courseTitle: "Dutch Foundations", lessonId: "40000000-0000-4000-8000-000000000001", title: "Lesson title", number: 1 };
 const fingerprint = "b".repeat(64);
-const story: ActivityDescriptor = { sourceId: "section-story", sourceKind: "section", sourceLabel: "Story", returnBlockId: null, returnHeadingId: null, practiceBlockId: null, fingerprint, activityTypes: ["review_words", "read_aloud"] };
+const story: ActivityDescriptor = { sourceId: "section-story", sourceKind: "section", sourceLabel: "Story", returnBlockId: null, returnHeadingId: null, practiceBlockId: null, fingerprint, activityTypes: ["read_aloud"] };
 const grammar: ActivityDescriptor = { sourceId: "section-grammar", sourceKind: "section", sourceLabel: "Grammar", returnBlockId: null, returnHeadingId: null, practiceBlockId: null, fingerprint, activityTypes: ["guided_grammar"] };
 
 afterEach(() => cleanup());
@@ -40,13 +40,11 @@ describe("Lesson box actions", () => {
 describe("Section activities in the text", () => {
   it("links each activity to its own route, one link per descriptor and type, each naming its source", async () => {
     renderSection([
-      { descriptor: story, type: "review_words" },
       { descriptor: story, type: "read_aloud" },
       { descriptor: grammar, type: "guided_grammar" },
     ]);
     const card = await screen.findByRole("complementary", { name: "Do more with AI" });
     expect(within(card).getAllByRole("link").map((link) => link.getAttribute("href"))).toEqual([
-      "/courses/dutch-foundations/lessons/lesson-title/activities/section-story/review_words",
       "/courses/dutch-foundations/lessons/lesson-title/activities/section-story/read_aloud",
       "/courses/dutch-foundations/lessons/lesson-title/activities/section-grammar/guided_grammar",
     ]);
@@ -72,7 +70,7 @@ describe("Section activities in the text", () => {
     // The lucide class names come from the icon exports in activityIcons.ts; each type must render a different one.
     const expected: Record<ActivityType, string> = {
       guided_grammar: "lucide-footprints", tricky_grammar: "lucide-puzzle", mixed_practice: "lucide-shuffle",
-      read_aloud: "lucide-mic", review_words: "lucide-book-open-check",
+      read_aloud: "lucide-mic",
     };
     const types = Object.keys(expected) as ActivityType[];
     renderSection(types.map((type) => ({ descriptor: story, type })));

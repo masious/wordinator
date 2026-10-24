@@ -20,8 +20,8 @@ import { typicalMinutes } from "./LessonTime";
 import styles from "./LessonBox.module.css";
 
 // The learning category that colours an action (docs/design-system.md#learning-categories): grammar activities are grammar; read
-// aloud is story. Review words and Practise words are the words category.
-const activityCategory = (type: ActivityType) => type === "review_words" ? "words" : lessonActivityFocus(type) === "grammar" ? "grammar" : "story";
+// aloud is story. Practise words and the word batches are the words category.
+const activityCategory = (type: ActivityType) => lessonActivityFocus(type) === "grammar" ? "grammar" : "story";
 
 export type LessonBoxLesson = { groupId: string; courseId: string; courseTitle: string; lessonId: string; title: string; number: number };
 
@@ -94,7 +94,7 @@ function useActivityLink(courseSlug: string, lessonSlug: string) {
   const activityLabel: Record<ActivityType, string> = {
     guided_grammar: t("lessonActivities.types.guided_grammar"),
     tricky_grammar: t("lessonActivities.types.tricky_grammar"), mixed_practice: t("lessonActivities.types.mixed_practice"),
-    read_aloud: t("lessonActivities.types.read_aloud"), review_words: t("lessonActivities.types.review_words"),
+    read_aloud: t("lessonActivities.types.read_aloud"),
   };
   // A check-only mark: the word is visually hidden (so the accessible name reads "Read aloud Done") and shows as a title tooltip.
   // A space separates it from the label.
@@ -112,7 +112,7 @@ function useActivityLink(courseSlug: string, lessonSlug: string) {
 // Do more with AI heading. Every link keeps its source in its accessible name. `extra` adds actions styled like the links (the
 // lesson's word batches that close at this place), given the action and label classes.
 export function SectionActivities({ suggestions, courseSlug, lessonSlug, extra }: {
-  suggestions: readonly LessonActivitySuggestion[]; courseSlug: string; lessonSlug: string; extra?: (classes: { action: string; label: string }) => ReactNode;
+  suggestions: readonly LessonActivitySuggestion[]; courseSlug: string; lessonSlug: string; extra?: (classes: { action: string | undefined; label: string | undefined }) => ReactNode;
 }) {
   const { t } = useTranslation();
   const activityLink = useActivityLink(courseSlug, lessonSlug);

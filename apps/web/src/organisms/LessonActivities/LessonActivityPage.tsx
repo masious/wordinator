@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { useEffect, useState, type KeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { ArrowLeft } from "lucide-react";
@@ -20,7 +20,6 @@ import { ActivityCompletion, lessonTarget } from "./ActivityCompletion";
 import { suggestedActivities } from "./activitySuggestions";
 import { AnswerResult, ChoiceOptions, CorrectBadge } from "./ChoiceOptions";
 import { GuidedGrammarActivity } from "./GuidedGrammarActivity";
-import { EmbeddedWordDrill } from "../../pages/WordDrillPage";
 import { ReadAloudActivity } from "./ReadAloudActivity";
 import styles from "./LessonActivity.module.css";
 
@@ -43,7 +42,6 @@ export const GENERATION_WAIT_MS = 60_000;
 export function LessonActivityPage(props: LessonActivityPageProps) {
   const { t } = useTranslation();
   const client = useQueryClient();
-  const navigate = useNavigate();
   const descriptorsOptions = lessonActivitiesQueryOptions(props.groupId, props.courseId, props.lessonId);
   const descriptors = useQuery(descriptorsOptions);
   const type = props.type;
@@ -101,8 +99,7 @@ export function LessonActivityPage(props: LessonActivityPageProps) {
     },
   });
 
-  // Review words is timed by its drill, as drill time, so the page claims nothing for it (docs/learning-time.md).
-  useLearningClaim(ready && run && payload && payload.type !== "review_words" && !ready.ephemeral && !props.archived && run.status !== "completed"
+  useLearningClaim(ready && run && payload && !ready.ephemeral && !props.archived && run.status !== "completed"
     ? { groupId: props.groupId, target: () => ({ activity: "lesson_activity", courseId: props.courseId, lessonId: props.lessonId, activityId: ready.activity.id, focus: lessonActivityFocus(payload.type) }) }
     : null);
 
@@ -154,8 +151,8 @@ export function LessonActivityPage(props: LessonActivityPageProps) {
     <header className={styles.header}>
       <span className={styles.eyebrow}>{props.lessonTitle} · {ready.activity.sourceLabel}</span>
       <h1 className={styles.title}>{t(`lessonActivities.types.${ready.activity.payload.type}`)}</h1>
-      {/* The model behind the shared content; read aloud and review words come straight from the lesson, so they name none. */}
-      {ready.activity.payload.type !== "read_aloud" && ready.activity.payload.type !== "review_words" && <span className={styles.model}>
+      {/* The model behind the shared content; read aloud comes straight from the lesson, so it names none. */}
+      {ready.activity.payload.type !== "read_aloud" && <span className={styles.model}>
         {ready.activity.generatedBy ? t("lessonActivities.generatedBy", { model: ready.activity.generatedBy }) : t("lessonActivities.generatedByUnknown")}
       </span>}
       {total > 0 && <ProgressMeter value={completed ? 100 : (100 * cursor) / total} label={t("lessonActivities.progress", { current: Math.min(cursor + 1, total), total })} showLabel />}
@@ -170,9 +167,6 @@ export function LessonActivityPage(props: LessonActivityPageProps) {
       : payload?.type === "read_aloud" && run ? <ReadAloudActivity groupId={props.groupId} language={props.language} endpoint={endpoint} runId={run.id} lines={payload.lines}
         cursor={cursor} reader={run.reader} choosing={cursor === 0} advancing={patchRun.isPending} onChooseReader={(reader) => patchRun.mutateAsync({ action: "set_reader", reader })}
         onContinue={() => advance()} backToLesson={<Link className={styles.back} {...lessonTarget(props, descriptor)}>{t("lessonActivities.backToLesson")}</Link>} />
-      : payload?.type === "review_words" && run ? <EmbeddedWordDrill groupId={props.groupId} accountId={props.accountId} libraryLanguage={props.language}
-        settings={{ source: "lesson", lesson: props.lessonId, section: props.sourceId, direction: "mixed" }} backLabel={t("lessonActivities.backToLesson")}
-        onBack={() => void navigate(lessonTarget(props, descriptor))} onFinished={() => { if (!ready.ephemeral) patchRun.mutate({ action: "complete" }); }} />
       : items[cursor] && run ? <ActivityItem key={items[cursor].id} endpoint={endpoint} runId={run.id} item={items[cursor]} draftKey={items[cursor].kind === "fill_in" ? keyFor(items[cursor].id) : null}
         last={cursor + 1 >= items.length} advancing={patchRun.isPending} onContinue={() => advance()} />
       : <Surface className={styles.panel}><p>{t("lessonActivities.unavailable")}</p><Button onClick={() => { setOpened(null); void open(); }}>{t("common.retry")}</Button></Surface>}

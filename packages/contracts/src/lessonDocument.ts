@@ -666,11 +666,8 @@ export const wordDrillBatchSchema = z.coerce.number().int().min(1).max(WORD_BATC
 export const wordDrillQuerySchema = z.object({
   source: wordDrillSourceSchema, lessonId: opaqueIdSchema.optional(), courseId: opaqueIdSchema.optional(), direction: wordDrillModeSchema.default("mixed"),
   batch: wordDrillBatchSchema.optional(),
-  // A lesson activity source (docs/lesson-activities.md#review-words): the drill keeps that section's vocabulary words.
-  section: z.string().min(1).max(200).optional(),
 }).refine((query) => (query.source === "lesson") === (query.lessonId !== undefined), { message: "A lesson drill names one lesson; other drills name none.", path: ["lessonId"] })
   .refine((query) => query.batch === undefined || query.source === "lesson", { message: "Only a lesson drill names a batch.", path: ["batch"] })
-  .refine((query) => query.section === undefined || (query.source === "lesson" && query.batch === undefined), { message: "Only a lesson drill without a batch names a section.", path: ["section"] })
   .refine((query) => (query.source === "course") === (query.courseId !== undefined), { message: "A course drill names one course; other drills name none.", path: ["courseId"] });
 export type WordDrillQuery = z.infer<typeof wordDrillQuerySchema>;
 export const wordDrillCardSchema = z.object({
