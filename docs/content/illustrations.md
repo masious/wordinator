@@ -4,7 +4,7 @@ Owner: content coordinator. Part of the [content docs](index.md). Covers how a l
 
 ## Why references
 
-Images come from FLUX.2 [pro] in Microsoft Foundry (Azure), through Black Forest Labs' provider API. It accepts up to eight base64 reference images per request (`input_image`, `input_image_2` … `input_image_8`). Every scene is generated from frozen reference images, not from text alone, so faces, outfits and rooms stay the same across lessons. A fixed seed does not hold identity across scenes.
+Images come from FLUX.2 [pro] in Microsoft Foundry (Azure), through Black Forest Labs' provider API. It accepts up to eight base64 reference images per request (`input_image`, `input_image_2` … `input_image_8`). Every scene is generated from frozen reference images, not from text alone, so faces, outfits and rooms stay the same across lessons. A fixed seed does not hold identity across scenes. The production scenes from 13-1 onwards came from ChatGPT instead, and FLUX is being retired; see [gpt-image-2 (trial)](#gpt-image-2-trial).
 
 Workers AI was tried first (`flux-2-klein-9b`, `flux-2-dev`) and dropped on 2026-10-10. Its references had to be under 512×512, and the free daily allowance ran out after about 15 images. Its sheets for Sofia, Noor and Noor's kitchen were discarded. Every reference is regenerated with FLUX.2 [pro].
 
@@ -80,6 +80,12 @@ Candidates are numbered after existing ones and never overwritten. Each one has 
 ## Costs and limits
 
 FLUX.2 [pro] in Foundry costs about $0.04 per image, with references included, so 150 images cost about $6. It is "Direct from Azure", so a new account's trial credit covers it. The low rate tier allows 15 requests per minute. The tool sends one request at a time.
+
+## gpt-image-2 (trial)
+
+The scene images picked for production from 13-1 onwards (`candidates/picked/*.png`, gitignored) were made in ChatGPT with gpt-image, not with this tool; their embedded provenance says so. Their look (painterly, warmer, Sofia with curly hair) differs from the FLUX sheets, so the FLUX references are to be retired (decided 2026-10-24). Until a replacement canon is frozen, `cast.json` and `refs/` still describe the FLUX look. Across the picked scenes Sofia's curls are consistent but her freckles are not (present in 23-a and faintly in 21-b, absent in 26, 34 and 40), so freckles are not canon yet.
+
+On 2026-10-24 gpt-image-2 (deployment `gpt-image-2` on its own Foundry resource, in a region that offers it; `AZURE_IMAGE_ENDPOINT`, `AZURE_IMAGE_API_KEY` and `AZURE_IMAGE_DEPLOYMENT` in `apps/api/.dev.vars`) was tested through `POST {origin}/openai/v1/images/edits` with one picked scene (`part-iv-23-a-0.png`) as the reference. It made an empty version of the office for a dialogue background (1536×864) and head-and-shoulders portraits of Sofia and Karin on a plain background (1024×1024) that stayed true to the scene, in about 40–60 s each at medium quality. The endpoint accepts up to 16 reference images; gpt-image-2 always reads them at high fidelity, takes any size with edges in multiples of 16 (up to 3840, ratio up to 3:1), and only previews transparent backgrounds. Third-party price lists give about $5 per million input tokens and $30 per million output tokens; a test call used about 1.6k input and 1.1–1.8k output tokens, roughly $0.04–0.06. The results are used by the [conversation prototype](../courses.md#conversation-prototype). `illustrate.ts` has no gpt-image backend yet; `tools/gpt-image-trial.mjs` makes single locations and portraits, and [conversation scenes](../conversation-scenes.md#how) describes its use and prompts and the plan for the canon.
 
 ## Known issues
 
