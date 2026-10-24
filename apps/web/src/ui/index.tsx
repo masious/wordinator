@@ -30,6 +30,7 @@ import {
   type HTMLAttributes,
   type PropsWithChildren,
   type ReactNode,
+  type Ref,
 } from "react";
 import { useTranslation } from "react-i18next";
 import styles from "./WordinatorUi.module.css";
@@ -41,6 +42,8 @@ type WordinatorButtonProps = Omit<MantineButtonProps, "variant"> &
   Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof MantineButtonProps> & {
     variant?: ButtonVariant;
     trailingIcon?: ReactNode;
+    // React 19 passes `ref` as a prop; it reaches Mantine's button with the rest (focus moves after an answer use it).
+    ref?: Ref<HTMLButtonElement>;
   };
 
 // The trailing glyph goes in Mantine's right section, outside the label: the label clips its overflow (so long labels end in an

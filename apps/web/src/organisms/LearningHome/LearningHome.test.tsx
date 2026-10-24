@@ -14,7 +14,7 @@ const courseId = "30000000-0000-4000-8000-000000000001";
 const lessonId = "40000000-0000-4000-8000-000000000001";
 const resume = {
   course: { id: courseId, slug: "deutsch-fur-anfanger", title: "Deutsch für Anfänger", summary: "Erste Schritte", level: "A1", coverUrl: null, lessonCount: 4, coursePercent: 25 },
-  lesson: { id: lessonId, slug: "hallo", title: "Hallo", number: 1, total: 4, imageUrl: null, storylinePercent: 50 },
+  lesson: { id: lessonId, slug: "hallo", title: "Hallo", number: 1, total: 4, imageUrl: null as string | null, storylinePercent: 50 },
 };
 
 let activityBody: ReturnType<typeof activity>;
