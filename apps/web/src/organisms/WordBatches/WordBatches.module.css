@@ -39,3 +39,21 @@
 .known[aria-pressed="true"]{color:var(--color-success)}
 .peek{display:grid;gap:var(--space-3);min-width:0}
 .error{margin:0;font-size:var(--type-metadata);color:var(--color-danger-text)}
+/* A batch in the lesson text: a practice card in the words category. Closed, the game's first rows show and fade into the card under
+   Start matching; open, the whole game plays in place. */
+.card{position:relative;display:grid;gap:var(--space-2);padding:var(--space-4);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-lg);box-shadow:var(--shadow-card)}
+.cardHeader{display:flex;align-items:center;gap:var(--space-2);margin:0}
+.eyebrow{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--type-eyebrow);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-category-words-deep)}
+.eyebrow svg{width:1rem;height:1rem;color:var(--color-category-words-accent)}
+.cardSections{margin:0;font-size:var(--type-body);font-weight:var(--weight-semibold);color:var(--color-foreground)}
+.stage{min-width:0}
+.card:not([data-open]) .stage{max-block-size:9rem;overflow:hidden;pointer-events:none}
+.fade{position:absolute;inset-inline:0;inset-block-end:0;display:flex;align-items:flex-end;justify-content:center;block-size:7rem;padding-block-end:var(--space-4);background:linear-gradient(to bottom,transparent,var(--color-core) 70%);border-end-start-radius:var(--radius-lg);border-end-end-radius:var(--radius-lg)}
+.lessonProgress{display:grid;gap:var(--space-1);width:100%;max-width:28rem;margin-top:var(--space-4);text-align:start}
+/* A small last batch: its words listed, term (with forms) then meaning, one to a row on a hairline. */
+.smallWords{display:grid;margin:0;padding:0;list-style:none}
+.smallWords li{display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--space-1) var(--space-3);padding-block:var(--space-2);border-top:var(--ring-hairline)}
+.smallWords li:first-child{border-top:0}
+.smallTerm{font-weight:var(--weight-semibold);color:var(--color-foreground)}
+.smallForms{font-size:var(--type-metadata);color:var(--color-foreground-muted)}
+.smallMeaning{flex:1 1 12rem;min-width:0;color:var(--color-foreground-muted);white-space:pre-line;text-align:end}

@@ -134,8 +134,9 @@ describe("Course shell pages", () => {
   it("renders the learning dashboard, remembers its view, expands metrics, and validates the create form", async () => {
     renderPage("library");
     expect(await screen.findByRole("heading", { name: /, Ada$/, level: 1 })).toBeInTheDocument();
-    expect(await screen.findByRole("heading", { name: "Course library", level: 2 })).toBeInTheDocument();
-    expect(await screen.findByRole("heading", { name: "Hallo", level: 3 })).toBeInTheDocument();
+    const library = (await screen.findByRole("heading", { name: "Course library", level: 2 })).closest("section")!;
+    // The Continue card above also titles the resume lesson "Hallo"; the library's recent-lesson card is the one checked here.
+    expect(await within(library).findByRole("heading", { name: "Hallo", level: 3 })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /Continue/ })).toHaveAttribute("href", "/courses/deutsch-fur-anfanger/lessons/hallo?resume=true");
     fireEvent.click(screen.getByRole("button", { name: "Show learning metrics" }));
     expect(screen.getByText("Strong 1 · Fading 1 · New 1")).toBeInTheDocument();

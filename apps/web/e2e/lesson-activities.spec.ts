@@ -31,7 +31,9 @@ async function seedActivityLesson(page: Page, testInfo: TestInfo) {
     paragraph("Sofia zit in een café in Utrecht. Ze wil koffie bestellen en daarna de weg naar het station vragen."),
     paragraph("Een vriendelijke vreemde wijst haar de weg. Het gesprek is kort en beleefd."),
     dialogue(DIALOGUE),
-    vocabulary({ term: "het café", meaning: "the café", example: "Sofia zit in een café." }, { term: "de weg", meaning: "the way", example: "Ze vraagt de weg." }),
+    // Four words in all, enough for a matching game (a batch of three or fewer lists its words instead).
+    vocabulary({ term: "het café", meaning: "the café", example: "Sofia zit in een café." }, { term: "de weg", meaning: "the way", example: "Ze vraagt de weg." },
+      { term: "de koffie", meaning: "the coffee", example: "Ze wil koffie bestellen." }),
     grammar,
     example("Het huis is groot.", "The house is big."),
     vocabulary({ term: "het huis", meaning: "the house", example: "Het huis is groot." }),
@@ -40,28 +42,47 @@ async function seedActivityLesson(page: Page, testInfo: TestInfo) {
   return { courseId: course.id, story: story.id, grammar: grammar.id };
 }
 
+// Starting a lesson whose opening is a dialogue opens that dialogue's scene; its Back to lesson returns to the text.
+async function openLessonText(page: Page) {
+  await openLesson(page);
+  const scene = await page.waitForURL(/\/dialogues\//, { timeout: 5_000 }).then(() => true, () => false);
+  if (scene) await page.getByRole("button", { name: "Back to lesson" }).click();
+  await expect(page).toHaveURL(/\/lessons\/[^/]+(#.*)?$/);
+}
+
 // Scrolls a section's heading to the top of the window, as reading does, so the reading line is inside that section.
 async function readTo(page: Page, blockId: string) {
   await page.locator(`[data-block-id="${blockId}"]`).first().evaluate((element) => element.scrollIntoView({ block: "start" }));
 }
 
 // A section's activity in the text: each section's activities sit on a Do more with AI card after its last block, every link
-// named by its type and its source (docs/lesson-activities.md#in-the-text).
-const activity = (page: Page, name: string) => page.getByRole("complementary", { name: "Do more with AI" }).getByRole("link", { name, exact: true });
+// named by its type and its source (docs/lesson-activities.md#in-the-text). Cards start closed, their heading counting what each
+// holds; `activity` opens the card holding a link (found by its title, which is its name, since a closed card's links are inert) and
+// returns the link.
+const cards = (page: Page) => page.getByRole("complementary", { name: "Do more with AI" });
+async function activity(page: Page, name: string) {
+  const card = cards(page).filter({ has: page.locator(`a[title="${name}"]`) });
+  const toggle = card.getByRole("button", { name: /^Do more with AI \(\d+\)$/ });
+  await expect(async () => {
+    if (await toggle.getAttribute("aria-expanded", { timeout: 2_000 }) !== "true") await toggle.click({ timeout: 2_000 });
+    await expect(toggle).toHaveAttribute("aria-expanded", "true", { timeout: 1_000 });
+  }).toPass({ timeout: 20_000 });
+  return card.getByRole("link", { name, exact: true });
+}
 
 test("each section's activities sit in the text after it, and the lesson's actions offer only Practise words", async ({ page }, testInfo) => {
   testInfo.setTimeout(90_000);
   const { courseId } = await seedActivityLesson(page, testInfo);
   await page.goto(`/courses/${courseId}`);
-  await openLesson(page);
-  const cards = page.getByRole("complementary", { name: "Do more with AI" });
+  await openLessonText(page);
   // A dialogue section offers only read aloud; the grammar section leads with guided grammar.
-  await expect(cards.nth(0).getByRole("link")).toHaveCount(1);
-  await expect(cards.nth(0).getByRole("link", { name: `Read aloud · ${STORY}`, exact: true })).toBeVisible();
-  await expect(activity(page, `Guided grammar · ${GRAMMAR}`)).toBeVisible();
-  await expect(activity(page, `Tricky grammar practice · ${GRAMMAR}`)).toBeVisible();
+  await expect(cards(page).nth(0).getByRole("button", { name: "Do more with AI (1)" })).toHaveAttribute("aria-expanded", "false");
+  await expect(await activity(page, `Read aloud · ${STORY}`)).toBeVisible();
+  await expect(cards(page).nth(0).getByRole("link")).toHaveCount(1);
+  await expect(await activity(page, `Guided grammar · ${GRAMMAR}`)).toBeVisible();
+  await expect(await activity(page, `Tricky grammar practice · ${GRAMMAR}`)).toBeVisible();
   // Story summary, speak from English, role-play, grammar explanation and review words are retired.
-  await expect(cards.getByRole("link", { name: /Story summary|Speak from English|role-play|Grammar explanation|Review words/ })).toHaveCount(0);
+  await expect(cards(page).getByRole("link", { name: /Story summary|Speak from English|role-play|Grammar explanation|Review words/ })).toHaveCount(0);
   // The lesson's actions carry no AI activities.
   const actions = page.getByRole("group", { name: "Lesson actions" }).first();
   await expect(actions.getByRole("link")).toHaveCount(1);
@@ -73,12 +94,12 @@ test("a two-step guided grammar flow advances the lesson's progress meter, shows
   testInfo.setTimeout(120_000);
   const { courseId, grammar } = await seedActivityLesson(page, testInfo);
   await page.goto(`/courses/${courseId}`);
-  await openLesson(page);
+  await openLessonText(page);
   await readTo(page, grammar);
   const meter = page.getByRole("progressbar", { name: "Lesson progress" });
   const before = Number(await meter.getAttribute("aria-valuenow"));
 
-  await activity(page, `Guided grammar · ${GRAMMAR}`).click();
+  await (await activity(page, `Guided grammar · ${GRAMMAR}`)).click();
   await expect(page).toHaveURL(new RegExp(`/activities/${grammar}/guided_grammar$`));
   const back = page.getByRole("link", { name: `Back to ${GRAMMAR}`, exact: true });
   await expect(back).toBeVisible();
@@ -109,20 +130,24 @@ test("a two-step guided grammar flow advances the lesson's progress meter, shows
   }).toPass();
 });
 
-test("the lesson's word batch is a button in a Do more with AI card, whose Peek ends with Drill and Practice", async ({ page }, testInfo) => {
+test("the lesson's word batch is a Review words card in the text, whose matching game ends with Drill and Practice", async ({ page }, testInfo) => {
   testInfo.setTimeout(90_000);
   const { courseId } = await seedActivityLesson(page, testInfo);
   await page.goto(`/courses/${courseId}`);
-  await openLesson(page);
-  // The lesson's few words make one batch, offered after its last section (docs/words.md#word-batches).
-  const review = page.getByRole("complementary", { name: "Do more with AI" }).getByRole("button", { name: "Review batch 1 words of this lesson" });
-  await expect(review).toHaveCount(1);
-  await review.click();
-  const peek = page.getByRole("dialog", { name: /^Batch 1 of / });
-  await expect(peek.getByRole("article").first()).toBeVisible();
-  while (await peek.getByRole("button", { name: "Next", exact: true }).isVisible()) await peek.getByRole("button", { name: "Next", exact: true }).click();
-  await expect(peek.getByRole("button", { name: "Practice batch 1 with the tutor" })).toBeVisible();
-  await peek.getByRole("button", { name: "Drill batch 1" }).click();
+  await openLessonText(page);
+  // The lesson's few words make one batch, a card after its last section, outside the Do more with AI boxes (docs/words.md#word-batches).
+  const game = page.getByRole("region", { name: /^Review words/ });
+  await expect(game).toHaveCount(1);
+  await expect(cards(page).getByRole("region", { name: /^Review words/ })).toHaveCount(0);
+  await game.getByRole("button", { name: "Start matching" }).click();
+  for (const [term, meaning] of [["het café", "the café"], ["de weg", "the way"], ["de koffie", "the coffee"], ["het huis", "the house"]] as const) {
+    await game.getByRole("list", { name: "Words" }).getByRole("button", { name: term, exact: true }).click();
+    await game.getByRole("list", { name: "Translations" }).getByRole("button", { name: meaning, exact: true }).click();
+  }
+  await expect(game.getByRole("region", { name: "Your result" }).getByText("100%")).toBeVisible();
+  await expect(game.getByRole("progressbar", { name: /^New words of this lesson practised: \d+ of \d+$/ })).toBeVisible();
+  await expect(game.getByRole("button", { name: "Practice", exact: true })).toBeVisible();
+  await game.getByRole("button", { name: "Drill", exact: true }).click();
   await expect(page).toHaveURL(/\/words\/drill\?.*batch=1/);
 });
 
@@ -130,10 +155,10 @@ test("reloading a tricky grammar page resumes at the question reached, and so do
   testInfo.setTimeout(90_000);
   const { courseId, grammar } = await seedActivityLesson(page, testInfo);
   await page.goto(`/courses/${courseId}`);
-  await openLesson(page);
+  await openLessonText(page);
   await readTo(page, grammar);
 
-  await activity(page, `Tricky grammar practice · ${GRAMMAR}`).click();
+  await (await activity(page, `Tricky grammar practice · ${GRAMMAR}`)).click();
   await expect(page.getByRole("heading", { name: "Tricky grammar practice", level: 1 })).toBeVisible();
   const address = page.url();
   await page.getByRole("button", { name: "het", exact: true }).click();
@@ -162,9 +187,9 @@ test("read aloud as Sofia, with a blocked microphone, voices Anna and takes type
   });
   const { courseId, story } = await seedActivityLesson(page, testInfo);
   await page.goto(`/courses/${courseId}`);
-  await openLesson(page);
+  await openLessonText(page);
   await readTo(page, story);
-  await activity(page, `Read aloud · ${STORY}`).click();
+  await (await activity(page, `Read aloud · ${STORY}`)).click();
   await expect(page.getByRole("heading", { name: "Read aloud", level: 1 })).toBeVisible();
 
   // Whose lines: each speaker once, and All lines.

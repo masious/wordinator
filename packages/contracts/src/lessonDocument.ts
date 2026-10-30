@@ -265,9 +265,13 @@ export function collectLessonWords(document: LessonDocument): LessonWord[] {
 // Word batches (docs/words.md#word-batches): a lesson's new words gathered, section by section, into batches that can be reviewed
 // and drilled on their own. Each level-1 or level-2 heading starts a section. A batch takes whole sections in document order and
 // closes once the next section with new words would bring it to `WORD_BATCH_MAX` words or more; a single section with more than
-// `WORD_BATCH_MAX` words is cut into even batches of its own. Each batch sits after the last section it holds (`afterBlockId`).
-// They are worked out from the published document alone, so every learner sees the same ones until the author republishes.
+// `WORD_BATCH_MAX` words is cut into even batches of its own. A batch of `WORD_BATCH_SMALL` words or fewer then joins the next one,
+// so a batch holds at most `WORD_BATCH_LIMIT` words; only the lesson's last batch can stay that small, with nothing to join. Each
+// batch sits after the last section it holds (`afterBlockId`). They are worked out from the published document alone, so every
+// learner sees the same ones until the author republishes.
 export const WORD_BATCH_MAX = 10;
+export const WORD_BATCH_SMALL = 3;
+export const WORD_BATCH_LIMIT = WORD_BATCH_MAX + WORD_BATCH_SMALL;
 export type WordBatch = { wordIds: string[]; headings: string[]; afterBlockId: string };
 
 // Groups section word counts (sections without words left out) into batches: each range runs from its first to its last section
@@ -296,7 +300,7 @@ export const wordBatchesResponseSchema = z.object({ batches: z.array(wordBatchSt
 export type WordBatchesResponse = z.infer<typeof wordBatchesResponseSchema>;
 // `POST .../lessons/:lessonId/word-exposures`: the words a Peek showed, each counted once per request.
 export const wordExposuresRequestSchema = z.strictObject({
-  wordIds: z.array(opaqueIdSchema).min(1).max(WORD_BATCH_MAX).refine((ids) => new Set(ids).size === ids.length, { message: "Name each word once." }),
+  wordIds: z.array(opaqueIdSchema).min(1).max(WORD_BATCH_LIMIT).refine((ids) => new Set(ids).size === ids.length, { message: "Name each word once." }),
 });
 
 // A lesson's word batches. Sections start at top-level level-1 and level-2 headings; a word keeps the first place it appears.
@@ -315,14 +319,26 @@ export function lessonWordBatches(document: LessonDocument): WordBatch[] {
     }
   }
   const filled = sections.filter((section) => section.wordIds.length > 0);
-  return groupWordSections(filled.map((section) => section.wordIds.length)).flatMap(({ from, to, parts }) => {
+  return joinSmallBatches(groupWordSections(filled.map((section) => section.wordIds.length)).flatMap(({ from, to, parts }) => {
     const held = filled.slice(from, to + 1); const wordIds = held.flatMap((section) => section.wordIds);
     const headings = [...new Set(held.flatMap((section) => section.heading ? [section.heading] : []))];
     const afterBlockId = held[held.length - 1]!.lastBlockId;
     return Array.from({ length: parts }, (_, part) => ({
       wordIds: wordIds.slice(Math.round(part * wordIds.length / parts), Math.round((part + 1) * wordIds.length / parts)), headings, afterBlockId,
     }));
-  });
+  }));
+}
+
+// Carries each batch of `WORD_BATCH_SMALL` words or fewer into the next one, which keeps its place; a small batch at the end stays.
+export function joinSmallBatches(batches: readonly WordBatch[]): WordBatch[] {
+  const joined: WordBatch[] = []; let carried: WordBatch | null = null;
+  for (const batch of batches) {
+    const next: WordBatch = carried ? { wordIds: [...carried.wordIds, ...batch.wordIds], headings: [...new Set([...carried.headings, ...batch.headings])], afterBlockId: batch.afterBlockId } : batch;
+    if (next.wordIds.length <= WORD_BATCH_SMALL) carried = next;
+    else { joined.push(next); carried = null; }
+  }
+  if (carried) joined.push(carried);
+  return joined;
 }
 
 // Player steps. A heading is not a step; it labels the steps that follow. Consecutive prose (paragraphs, lists, images,

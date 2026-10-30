@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { Check, Dumbbell, Sparkles } from "lucide-react";
-import { useId, type ReactNode } from "react";
+import { useId, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { TypicalTime } from "@wordinator/contracts/learning";
 import { lessonActivityFocus, type ActivityDescriptor, type ActivityType } from "@wordinator/contracts/lesson-activities";
@@ -108,17 +108,26 @@ function useActivityLink(courseSlug: string, lessonSlug: string) {
   </Link>;
 }
 
-// A source's activities in the text, after the last block of the section they come from, under a small
-// Do more with AI heading. Every link keeps its source in its accessible name. `extra` adds actions styled like the links (the
-// lesson's word batches that close at this place), given the action and label classes.
-export function SectionActivities({ suggestions, courseSlug, lessonSlug, extra }: {
-  suggestions: readonly LessonActivitySuggestion[]; courseSlug: string; lessonSlug: string; extra?: (classes: { action: string | undefined; label: string | undefined }) => ReactNode;
+// A source's activities in the text, after the last block of the section they come from, under a small Do more with AI heading
+// that counts them and opens them, a disclosure triangle at its start; they start closed. Every link keeps its source in its
+// accessible name. The page can hold the open state (`open` and `onToggle`), so it outlives the box being mounted again.
+export function SectionActivities({ suggestions, courseSlug, lessonSlug, open: held, onToggle }: {
+  suggestions: readonly LessonActivitySuggestion[]; courseSlug: string; lessonSlug: string; open?: boolean; onToggle?: () => void;
 }) {
   const { t } = useTranslation();
   const activityLink = useActivityLink(courseSlug, lessonSlug);
+  const [own, setOwn] = useState(false);
+  const open = held ?? own;
+  const toggle = onToggle ?? (() => setOwn((current) => !current));
+  const linksId = useId();
   return <aside className={styles.inline} aria-label={t("courses.lessonBox.doMoreWithAi")}>
-    <p className={styles.inlineHeading}><Sparkles aria-hidden="true" />{t("courses.lessonBox.doMoreWithAi")}</p>
-    <div className={styles.inlineLinks}>{suggestions.map(activityLink)}{extra?.({ action: styles.action, label: styles.label })}</div>
+    <button type="button" className={styles.inlineHeading} aria-expanded={open} aria-controls={linksId} onClick={toggle}>
+      <svg className={styles.inlineTriangle} viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l7-4.5z" fill="currentColor" /></svg>
+      <Sparkles aria-hidden="true" />{t("courses.lessonBox.doMoreWithAiCount", { count: suggestions.length })}
+    </button>
+    <div id={linksId} className={styles.inlineReveal} data-open={open || undefined} inert={!open}>
+      <div className={styles.inlineRevealInner}><div className={styles.inlineLinks}>{suggestions.map(activityLink)}</div></div>
+    </div>
   </aside>;
 }
 

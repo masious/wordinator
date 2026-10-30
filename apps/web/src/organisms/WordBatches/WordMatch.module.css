@@ -1,0 +1,41 @@
+.game{display:grid;gap:var(--space-3);min-width:0}
+/* Matches as a compact meter, the success rate at its end. */
+.header{display:flex;align-items:end;gap:var(--space-4)}
+.progress{flex:1;min-width:0}
+.rate{display:grid;justify-items:end;margin:0;font-size:var(--type-metadata);color:var(--color-foreground-muted);line-height:var(--line-compact)}
+.rate strong{font:var(--weight-bold) var(--text-lg)/1 var(--font-mono);color:var(--color-foreground)}
+.hint{margin:0;font-size:var(--type-metadata);color:var(--color-foreground-faint)}
+/* Terms and translations side by side, also on phones. */
+.board{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--space-3)}
+.column{display:grid;align-content:start;gap:var(--space-2);min-width:0}
+.columnTitle{margin:0;color:var(--color-foreground-muted);font-size:var(--type-eyebrow);font-weight:var(--weight-bold);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase}
+.cards{display:grid;gap:var(--space-2);margin:0;padding:0;list-style:none}
+/* A card: paper on the line border; picked on the soft accent, matched in success and set aside, missed in danger with a shake. */
+.card{display:flex;align-items:center;gap:var(--space-2);width:100%;min-height:var(--touch-target);padding:var(--space-2) var(--space-3);font:inherit;font-size:var(--type-body);text-align:start;color:var(--color-foreground);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-md);cursor:pointer;transition:background-color var(--motion-press) var(--ease-physical),border-color var(--motion-press) var(--ease-physical),opacity var(--motion-standard) ease,transform var(--motion-press) var(--ease-physical)}
+.card[data-side="term"]{font-weight:var(--weight-semibold)}
+.card:hover:not(:disabled){border-color:var(--color-category-words-deep)}
+.card:active:not(:disabled){transform:scale(0.98)}
+.card:focus-visible{outline:var(--focus-ring-width) solid var(--color-focus);outline-offset:2px}
+.card[data-state="picked"]{color:var(--color-action-soft-text);background:var(--color-action-soft);border-color:var(--color-action)}
+.card[data-state="matched"]{color:var(--color-foreground-muted);background:var(--color-success-surface);border-color:var(--color-success);opacity:0.6;cursor:default}
+.card[data-state="missed"]{color:var(--color-danger-text);background:var(--color-danger-surface);border-color:var(--color-danger);animation:miss var(--motion-standard) var(--ease-physical)}
+.cardText{flex:1;min-width:0;overflow-wrap:anywhere;white-space:pre-line}
+.check{flex:none;width:1rem;height:1rem;color:var(--color-success)}
+.live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+@keyframes miss{20%{transform:translateX(-4px)}40%{transform:translateX(4px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
+/* The result: the rate large and centred, coloured by how it went, then the actions. */
+.result{display:grid;justify-items:center;gap:var(--space-1);padding-block:var(--space-6) var(--space-2);text-align:center}
+.verdict{margin:0;font-size:var(--type-section-title);font-weight:var(--weight-bold);color:var(--color-foreground)}
+.score{margin:var(--space-2) 0 0;font:var(--weight-bold) var(--text-4xl)/1 var(--font-mono);color:var(--color-action)}
+.score[data-verdict="great"]{color:var(--color-success)}
+.scoreLabel,.summary{margin:0;font-size:var(--type-metadata);color:var(--color-foreground-muted)}
+/* The words that were part of a miss: a quiet danger-tinted list, with the promise to bring them back. */
+.wrong{display:grid;gap:var(--space-2);width:100%;max-width:28rem;margin-top:var(--space-4);padding:var(--space-3) var(--space-4);text-align:start;background:var(--color-danger-surface);border-radius:var(--radius-md)}
+.wrongTitle{margin:0;font-size:var(--type-metadata);font-weight:var(--weight-semibold);color:var(--color-danger-text)}
+.wrongList{display:grid;gap:var(--space-1);margin:0;padding:0;list-style:none}
+.wrongTerm{font-weight:var(--weight-semibold);color:var(--color-foreground)}
+.wrongMeaning{color:var(--color-foreground-muted);white-space:pre-line}
+.wrongMeaning::before{content:"— "}
+.wrongNote{margin:0;font-size:var(--type-metadata);color:var(--color-foreground-muted)}
+.actions{display:flex;flex-wrap:wrap;justify-content:center;gap:var(--space-2);margin-top:var(--space-4)}
+@media(prefers-reduced-motion:reduce){.card{transition:none}.card[data-state="missed"]{animation:none}}

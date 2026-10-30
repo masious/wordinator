@@ -35,7 +35,21 @@ button.action{width:100%;padding:0;font-family:inherit;text-align:start;cursor:p
 @media(prefers-reduced-motion:reduce){.action,.heading,.titleReveal{transition:none}}
 /* A section's activities in the text, after its last block. A quiet card; links share the rail's action style and sit two
    or more to a row where the column has room. */
-.inline{display:grid;gap:var(--space-3);padding:var(--space-4);background:var(--color-surface);border:var(--ring-hairline);border-radius:var(--radius-lg)}
-.inlineHeading{display:flex;align-items:center;gap:var(--space-2);margin:0;color:var(--color-foreground-muted);font-size:var(--type-eyebrow);font-weight:var(--weight-bold);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase}
+.inline{display:grid}
+/* The heading is the box's disclosure: the whole row toggles the links, a filled triangle at its start pointing down while they are
+   open. */
+.inlineHeading{display:flex;align-items:center;gap:var(--space-2);width:100%;min-height:var(--touch-target);margin:0;padding:0;color:var(--color-foreground-muted);font:inherit;font-size:var(--type-eyebrow);font-weight:var(--weight-bold);letter-spacing:var(--tracking-eyebrow);text-align:start;text-transform:uppercase;background:transparent;border:0;cursor:pointer}
+.inlineHeading:hover{color:var(--color-foreground)}
+.inlineHeading:focus-visible{outline:var(--focus-ring-width) solid var(--color-focus);outline-offset:2px;border-radius:var(--radius-sm)}
 .inlineHeading svg{width:1.25rem;height:1.25rem;flex:none;color:var(--color-action)}
+.inlineHeading .inlineTriangle{width:1.5rem;height:1.5rem;margin-inline-end:calc(var(--space-1) * -1);color:var(--color-foreground-muted);transition:transform var(--motion-standard) var(--ease-physical)}
+.inlineHeading[aria-expanded="true"] .inlineTriangle{transform:rotate(90deg)}
+[dir="rtl"] .inlineHeading[aria-expanded="false"] .inlineTriangle{transform:scaleX(-1)}
+/* Closed, the links take no room; opening grows them from zero height. */
+.inlineReveal{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows var(--motion-standard) var(--ease-physical),opacity var(--motion-standard) ease}
+.inlineReveal[data-open]{grid-template-rows:1fr;opacity:1}
+/* The inner frame clips; its padding leaves room for the links' focus rings. */
+.inlineRevealInner{min-height:0;overflow:hidden;margin-inline:calc(var(--space-1) * -1)}
+.inlineRevealInner>.inlineLinks{padding:var(--space-1) var(--space-1) var(--space-3)}
+@media(prefers-reduced-motion:reduce){.inlineReveal,.inlineHeading .inlineTriangle{transition:none}}
 .inlineLinks{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,15rem),1fr));gap:var(--space-2)}

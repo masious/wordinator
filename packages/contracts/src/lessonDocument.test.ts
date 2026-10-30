@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import fixture from "../../../test/fixtures/courses/dutch-foundations-part-iii.json";
 import { COURSE_BLOCKS_MAX, COURSE_WORDS_PER_BLOCK_MAX, dialoguePayloadSchema, practicePayloadSchema } from ".";
 import {
-  collectImageUrls, collectLessonWords, lessonWordBatches, groupWordSections, collectPracticeIds, courseWordsResponseSchema, findPublishProblems, flattenToSteps, inlineText, isReadingStep, readingReached,
+  collectImageUrls, collectLessonWords, lessonWordBatches, groupWordSections, joinSmallBatches, collectPracticeIds, courseWordsResponseSchema, findPublishProblems, flattenToSteps, inlineText, isReadingStep, readingReached,
   LESSON_DOCUMENT_SCHEMA_VERSION, lessonDocumentSchema, lessonNotReadySchema, lessonPositionRequestSchema, lessonStepKey, mapImageUrls,
   parseStoredLessonDocument, readPracticeBlock, readVocabularyBlock, resolveStepIndex, saveLessonDraftRequestSchema, toLearnerDocument,
   upgradeLegacyBlocks, vocabularyPayloadSchema,
@@ -395,6 +395,26 @@ describe("word batches", () => {
 
   it("cuts a section of more than ten words into even batches of its own", () => {
     expect(groups([2, 23, 1])).toEqual(["0-0", "1-1x3", "2-2"]);
+  });
+
+  it("carries a batch of three words or fewer into the next one, keeping a small last batch on its own", () => {
+    const batch = (size: number, name: string) => ({ wordIds: Array.from({ length: size }, (_, index) => `${name}${index}`), headings: [name], afterBlockId: name });
+    const shape = (batches: ReturnType<typeof joinSmallBatches>) => batches.map((entry) => `${entry.wordIds.length}@${entry.afterBlockId}:${entry.headings.join("+")}`);
+    expect(shape(joinSmallBatches([batch(3, "a"), batch(9, "b")]))).toEqual(["12@b:a+b"]);
+    expect(shape(joinSmallBatches([batch(4, "a"), batch(9, "b")]))).toEqual(["4@a:a", "9@b:b"]);
+    // Small batches add up until the next one takes them past three.
+    expect(shape(joinSmallBatches([batch(2, "a"), batch(1, "b"), batch(2, "c"), batch(10, "d")]))).toEqual(["5@c:a+b+c", "10@d:d"]);
+    expect(shape(joinSmallBatches([batch(10, "a"), batch(1, "b")]))).toEqual(["10@a:a", "1@b:b"]);
+    expect(shape(joinSmallBatches([batch(2, "a")]))).toEqual(["2@a:a"]);
+  });
+
+  it("joins a lesson's small first section into the next batch", () => {
+    const greetings = Array.from({ length: 2 }, (_, index) => word(`een ${index}`));
+    const animals = Array.from({ length: 9 }, (_, index) => word(`dier ${index}`));
+    const animalWords = vocabulary(...animals);
+    const batches = lessonWordBatches(parse(heading("Groeten"), vocabulary(...greetings), heading("Dieren"), animalWords));
+    expect(batches.map((entry) => entry.wordIds)).toEqual([[...greetings, ...animals].map((entry) => entry.id)]);
+    expect(batches.map((entry) => [entry.headings, entry.afterBlockId])).toEqual([[["Groeten", "Dieren"], animalWords.id]]);
   });
 
   it("reads sections from a lesson's level-1 and level-2 headings and places each batch after its last section", () => {

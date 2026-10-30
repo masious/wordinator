@@ -1,7 +1,7 @@
 import { MantineProvider } from "@mantine/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createMemoryHistory, createRootRoute, createRoute, createRouter, RouterProvider } from "@tanstack/react-router";
-import { cleanup, render, screen, within } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { afterEach, describe, expect, it } from "vitest";
 import "../../i18n";
@@ -64,6 +64,21 @@ describe("Section activities in the text", () => {
     expect(within(card).getAllByText("Done")).toHaveLength(1);
     // The full label stays discoverable through the title, since the visible label clamps to two lines.
     expect(done).toHaveAttribute("title", "Read aloud · Story");
+  });
+
+  it("starts closed, counting its activities, and opens from its heading", async () => {
+    renderSection([{ descriptor: story, type: "read_aloud" }, { descriptor: grammar, type: "guided_grammar" }]);
+    const card = await screen.findByRole("complementary", { name: "Do more with AI" });
+    const toggle = within(card).getByRole("button", { name: "Do more with AI (2)" });
+    const links = document.getElementById(toggle.getAttribute("aria-controls")!)!;
+    expect(toggle).toHaveAttribute("aria-expanded", "false");
+    expect(links).toHaveAttribute("inert");
+    expect(within(links).getAllByRole("link")).toHaveLength(2);
+    fireEvent.click(toggle);
+    expect(toggle).toHaveAttribute("aria-expanded", "true");
+    expect(links).not.toHaveAttribute("inert");
+    fireEvent.click(toggle);
+    expect(toggle).toHaveAttribute("aria-expanded", "false");
   });
 
   it("gives each activity type its own icon, marked with data-icon", async () => {

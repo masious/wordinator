@@ -11,7 +11,7 @@ import { ProgressMeter } from "../../molecules/ProgressMeter";
 import { WordOrderBoard } from "../../molecules/WordOrderBoard";
 import { Button, ErrorState, LoadingState, Surface, TextAreaField } from "../../ui";
 import {
-  ApiError, apiRequest, lessonActivitiesQueryOptions, lessonActivityEndpoint, lessonActivityOpen, lessonActivityStatusQueryOptions,
+  ApiError, apiRequest, courseProgressQueryOptions, lessonActivitiesQueryOptions, lessonActivityEndpoint, lessonActivityOpen, lessonActivityStatusQueryOptions,
   type LessonActivityOpenResponse,
 } from "../../api";
 import { useLearningClaim } from "../../learningTime";
@@ -163,7 +163,8 @@ export function LessonActivityPage(props: LessonActivityPageProps) {
         descriptor={descriptor} completed={descriptors.data.completed} followUps={payload?.type === "guided_grammar" ? payload.followUps : undefined} metrics={completionMetrics}
         restarting={patchRun.isPending} onRestart={restart} />
       : payload?.type === "guided_grammar" && run ? <GuidedGrammarActivity endpoint={endpoint} runId={run.id} steps={payload.steps} cursor={cursor}
-        advancing={patchRun.isPending} onContinue={() => advance()} onComplete={() => patchRun.mutate({ action: "complete" })} />
+        advancing={patchRun.isPending} onContinue={() => advance()} onComplete={() => patchRun.mutate({ action: "complete" })}
+        onAnswered={() => void client.invalidateQueries({ queryKey: courseProgressQueryOptions(props.groupId, props.courseId).queryKey })} />
       : payload?.type === "read_aloud" && run ? <ReadAloudActivity groupId={props.groupId} language={props.language} endpoint={endpoint} runId={run.id} lines={payload.lines}
         cursor={cursor} reader={run.reader} choosing={cursor === 0} advancing={patchRun.isPending} onChooseReader={(reader) => patchRun.mutateAsync({ action: "set_reader", reader })}
         onContinue={() => advance()} backToLesson={<Link className={styles.back} {...lessonTarget(props, descriptor)}>{t("lessonActivities.backToLesson")}</Link>} />

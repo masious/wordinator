@@ -259,33 +259,55 @@ describe("Course lessons", () => {
     expect(observed.map((element) => element.getAttribute("data-block-id"))).toEqual([first.id, second.id]);
   });
 
-  it("offers each word batch in a Do more with AI box after its last section, opening its cards with Drill and Practice at the end", async () => {
+  it("shows each word batch as a Review words card after its last section, whose matching game saves reviews and reports the lesson's words", async () => {
     const word = (n: number, term: string) => ({ id: `70000000-0000-4000-8000-0000000000${String(n).padStart(2, "0")}`, term, meaning: `meaning of ${term}` });
     const vocabulary = (n: number, ...words: unknown[]): LessonTopBlock => ({ id: `50000000-0000-4000-8000-00000000002${n}`, type: "vocabulary", props: { data: JSON.stringify({ words }) }, children: [] });
     const section = (n: number, title: string): LessonTopBlock => ({ id: `50000000-0000-4000-8000-00000000004${n}`, type: "heading", props: { textColor: "default", backgroundColor: "default", level: 2 }, content: text(title), children: [] });
-    // Two words, then nine: the next section would bring the first batch to ten, so it closes after its own section.
+    // Two words, nine, then two: the first two are too few for a batch and join the nine; the last two have nothing to join.
     const animals = Array.from({ length: 9 }, (_, index) => word(index + 3, `dier ${index + 1}`));
+    const original = vi.mocked(fetch).getMockImplementation()!;
+    vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith("/metrics")
+      ? response({ pronunciation: { attempts: 0, fluency: null }, words: { total: 13, practised: 11, strong: 0 }, lastStudiedAt: null, time: { readingSeconds: 0, practiceSeconds: 0, typical: { reading: null, practice: null } } })
+      : String(input).includes("/drill/") ? response({ recent: [] }) : original(input, init));
     // A finished lesson: an unstarted one shows its start gate instead of the text and the batches.
     finished = [lessonId(1)];
     const { router } = renderLesson({ course: course(false), outline: [summary(1)], lessons: [lesson(1, [section(1, "Groeten"), example("50000000-0000-4000-8000-000000000011", "De hond blaft."),
-      vocabulary(1, word(1, "de hond"), word(2, "de kat")), section(2, "Dieren"), vocabulary(2, ...animals)])] });
+      vocabulary(1, word(1, "de hond"), word(2, "de kat")), section(2, "Dieren"), vocabulary(2, ...animals), section(3, "Slot"), vocabulary(3, word(20, "tot ziens"), word(21, "dag"))])] });
     await waitFor(() => expect(vi.mocked(fetch).mock.calls.some(([path]) => String(path).endsWith("/progress"))).toBe(true));
-    const boxes = await screen.findAllByRole("complementary", { name: "Do more with AI" });
-    expect(boxes).toHaveLength(2);
-    const heading = screen.getByRole("heading", { name: "Dieren" });
-    expect(boxes[0]!.compareDocumentPosition(heading) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
-    // The box offers the batch alone, without its words.
-    expect(within(boxes[0]!).getAllByRole("button").map((button) => button.textContent)).toEqual(["Review batch 1 words of this lesson"]);
-    expect(within(boxes[0]!).queryByText("de hond")).not.toBeInTheDocument();
-    expect(within(boxes[1]!).getByRole("button", { name: "Review batch 2 words of this lesson" })).toBeInTheDocument();
-    fireEvent.click(within(boxes[0]!).getByRole("button", { name: "Review batch 1 words of this lesson" }));
-    const peek = await screen.findByRole("dialog", { name: "Batch 1 of Lesson title 1" });
-    expect(within(peek).getByRole("article", { name: "de hond" })).toBeInTheDocument();
-    // Drill and Practice wait on the last page, beside Back to the lesson.
-    while (within(peek).queryByRole("button", { name: "Next" })) fireEvent.click(within(peek).getByRole("button", { name: "Next" }));
-    expect(within(peek).getByRole("button", { name: "Practice batch 1 with the tutor" })).toBeInTheDocument();
-    expect(within(peek).getByRole("button", { name: "Back to the lesson" })).toBeInTheDocument();
-    fireEvent.click(within(peek).getByRole("button", { name: "Drill batch 1" }));
+    const cards = await screen.findAllByRole("region", { name: /^Review words/ });
+    expect(cards.map((card) => card.getAttribute("aria-label"))).toEqual(["Review words: Groeten · Dieren", "Review words: Slot"]);
+    // No batch has a Do more with AI box of its own, and no batch number shows.
+    expect(screen.queryByRole("complementary", { name: "Do more with AI" })).toBeNull();
+    expect(cards[0]!.compareDocumentPosition(screen.getByRole("heading", { name: "Slot" })) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "Dieren" }).compareDocumentPosition(cards[0]!) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    for (const card of cards) expect(card).not.toHaveTextContent(/batch|Batch/);
+    // The small last batch lists its words, with Drill and Practice, and no game.
+    expect(within(cards[1]!).getByText("tot ziens")).toBeInTheDocument();
+    expect(within(cards[1]!).getByText("meaning of dag")).toBeInTheDocument();
+    expect(within(cards[1]!).queryByRole("button", { name: "Start matching" })).toBeNull();
+    expect(within(cards[1]!).getByRole("button", { name: "Drill" })).toBeInTheDocument();
+    // Closed, the game shows under the fade and takes no input until Start matching opens it.
+    const card = cards[0]!;
+    expect(within(card).getByRole("list", { name: "Words" }).closest("[inert]")).not.toBeNull();
+    fireEvent.click(within(card).getByRole("button", { name: "Start matching" }));
+    expect(within(card).getByRole("list", { name: "Words" }).closest("[inert]")).toBeNull();
+    const pick = (list: string, name: string) => fireEvent.click(within(within(card).getByRole("list", { name: list })).getByRole("button", { name }));
+    pick("Words", "de hond"); pick("Translations", "meaning of de kat");
+    for (const { term } of [word(1, "de hond"), word(2, "de kat"), ...animals]) { pick("Words", term); pick("Translations", `meaning of ${term}`); }
+    const result = within(card).getByRole("region", { name: "Your result" });
+    expect(within(result).getByText("92%")).toBeInTheDocument();
+    // Both mixed-up words are listed, saved as Again, and promised more practice; the rest are saved as Got it.
+    expect(within(result).getByText("2 words to review")).toBeInTheDocument();
+    expect(within(result).getByText("We'll practise these words more often.")).toBeInTheDocument();
+    await waitFor(() => expect(within(result).getByRole("progressbar", { name: "New words of this lesson practised: 11 of 13" })).toBeInTheDocument());
+    expect(within(result).getByText("This round: 11 words")).toBeInTheDocument();
+    const grades = new Map(vi.mocked(fetch).mock.calls.filter(([path]) => String(path).includes("/drill/understand"))
+      .map(([path, init]) => [String(path).split("/words/")[1]!.split("/")[0], JSON.parse(String(init?.body)).result]));
+    expect(grades.size).toBe(11);
+    expect([word(1, "").id, word(2, "").id].map((id) => grades.get(id))).toEqual(["again", "again"]);
+    expect(animals.every(({ id }) => grades.get(id) === "got")).toBe(true);
+    expect(within(result).getByRole("button", { name: "Practice" })).toBeInTheDocument();
+    fireEvent.click(within(result).getByRole("button", { name: "Drill" }));
     await waitFor(() => expect(landed(router)).toEqual({ path: "/words/drill", search: { source: "lesson", lesson: lessonId(1), batch: 1, direction: "mixed" } }));
   });
 

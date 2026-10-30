@@ -1,13 +1,16 @@
-import { lessonWordBatches, type CourseLesson, type WordBatchStats } from "@wordinator/contracts/lesson-document";
+import { lessonWordBatches, WORD_BATCH_SMALL, wordDrillGradeResponseSchema, type CourseLesson, type WordBatchStats, type WordDrillGradeRequest } from "@wordinator/contracts/lesson-document";
 import { TUTOR_WORD_PRACTICE_MAX, tutorConversationResponseSchema, type CreateTutorConversationRequest } from "@wordinator/contracts/tutor";
 import { okResponseSchema } from "@wordinator/contracts";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { Popover } from "@mantine/core";
 import { Check, ChevronLeft, ChevronRight, Layers, Sparkles } from "lucide-react";
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
-import { apiRequest, wordBatchesKey, wordBatchesQueryOptions } from "../../api";
+import type { TFunction } from "i18next";
+import { apiRequest, lessonMetricsQueryOptions, wordBatchesKey, wordBatchesQueryOptions } from "../../api";
+import { useLearningClaim } from "../../learningTime";
+import { ProgressMeter } from "../../molecules/ProgressMeter";
 import { PlainText } from "../../molecules/PlainText";
 import cardStyles from "../../molecules/PracticeWord.module.css";
 import { lessonSpeech, SpeechScope } from "../../molecules/Speech";
@@ -16,6 +19,7 @@ import { lessonSteps, playableDocument, type PlayerScope } from "../CourseLesson
 import { useLessonBookmarkTarget, WordBookmarkScope } from "../WordBookmark/WordBookmark";
 import { runWords, WordRecap, type RecapWord } from "../WordRecap/WordRecap";
 import styles from "./WordBatches.module.css";
+import { WordMatch } from "./WordMatch";
 
 type Batch = { number: number; words: RecapWord[]; headings: string[]; afterBlockId: string };
 
@@ -131,13 +135,14 @@ function useBatchActions(lesson: CourseLesson) {
   return { drill, practice };
 }
 
-// A batch's Drill and Practice buttons; `variant` sets their weight.
-function BatchActions({ batch, actions, variant }: { batch: Batch; actions: ReturnType<typeof useBatchActions>; variant: "quiet" | "secondary" }) {
+// A batch's Drill and Practice buttons; `variant` sets their weight. `plain` leaves the batch's number out of their names, for a
+// surface that names the batch itself.
+function BatchActions({ batch, actions, variant, plain = false }: { batch: Batch; actions: ReturnType<typeof useBatchActions>; variant: "quiet" | "secondary"; plain?: boolean }) {
   const { t } = useTranslation();
   const named = { number: batch.number }; const { drill, practice } = actions;
   return <>
-    <Button variant={variant} aria-label={t("words.batches.drillNamed", named)} onClick={() => drill(batch)}>{t("words.batches.drill")}</Button>
-    <Button variant={variant} aria-label={t("words.batches.practiceNamed", named)} loading={practice.isPending && practice.variables?.number === batch.number}
+    <Button variant={variant} aria-label={plain ? undefined : t("words.batches.drillNamed", named)} onClick={() => drill(batch)}>{t("words.batches.drill")}</Button>
+    <Button variant={variant} aria-label={plain ? undefined : t("words.batches.practiceNamed", named)} loading={practice.isPending && practice.variables?.number === batch.number}
       disabled={practice.isPending} onClick={() => practice.mutate(batch)}><Sparkles aria-hidden="true" className={styles.ai} />{t("words.batches.practice")}</Button>
   </>;
 }
@@ -150,23 +155,33 @@ function useLessonBatches(lesson: CourseLesson) {
   }, [lesson]);
 }
 
+// Where a lesson's word writes go, and a refresh of its batches' metric once one settles.
+function useLessonWordWrites(scope: PlayerScope, lesson: CourseLesson) {
+  const queryClient = useQueryClient();
+  const lessonPath = `/api/groups/${encodeURIComponent(scope.groupId)}/courses/${encodeURIComponent(scope.courseId)}/lessons/${encodeURIComponent(lesson.id)}`;
+  const refresh = useCallback(() => queryClient.invalidateQueries({ queryKey: wordBatchesKey(scope.groupId, scope.courseId, lesson.id) }), [queryClient, scope, lesson.id]);
+  return { lessonPath, refresh };
+}
+
+// Counts each word of the batch as seen once (a word exposure) when `recorded`, also when development mounts the caller twice.
+function useSeenOnce(scope: PlayerScope, lesson: CourseLesson, batch: Batch, recorded: boolean) {
+  const { lessonPath, refresh } = useLessonWordWrites(scope, lesson);
+  const { mutate: markSeen } = useMutation({
+    mutationFn: () => apiRequest(`${lessonPath}/word-exposures`, okResponseSchema, { method: "POST", body: JSON.stringify({ wordIds: batch.words.map((word) => word.id) }) }),
+    onSettled: refresh,
+  });
+  const counted = useRef(false);
+  useEffect(() => { if (recorded && !counted.current) { counted.current = true; markSeen(); } }, [recorded, markSeen]);
+}
+
 // A Peek: the batch as word cards. Opening it counts each word as seen once, and each card can mark its word known, which counts
 // it Strong; the toggles start off with each Peek. `finish` sits before the done action on the last page, labelled `doneLabel`.
 function Peek({ scope, lesson, batch, recorded, onDone, finish, doneLabel }: {
   scope: PlayerScope; lesson: CourseLesson; batch: Batch; recorded: boolean; onDone: () => void; finish?: ReactNode; doneLabel?: string;
 }) {
   const { t } = useTranslation();
-  const queryClient = useQueryClient();
-  const lessonPath = `/api/groups/${encodeURIComponent(scope.groupId)}/courses/${encodeURIComponent(scope.courseId)}/lessons/${encodeURIComponent(lesson.id)}`;
-  const refresh = useCallback(() => queryClient.invalidateQueries({ queryKey: wordBatchesKey(scope.groupId, scope.courseId, lesson.id) }), [queryClient, scope, lesson.id]);
-  const seen = useMutation({
-    mutationFn: () => apiRequest(`${lessonPath}/word-exposures`, okResponseSchema, { method: "POST", body: JSON.stringify({ wordIds: batch.words.map((word) => word.id) }) }),
-    onSettled: refresh,
-  });
-  const { mutate: markSeen } = seen;
-  // Once per Peek, also when development mounts it twice.
-  const counted = useRef(false);
-  useEffect(() => { if (recorded && !counted.current) { counted.current = true; markSeen(); } }, [recorded, markSeen]);
+  const { lessonPath, refresh } = useLessonWordWrites(scope, lesson);
+  useSeenOnce(scope, lesson, batch, recorded);
   const [known, setKnown] = useState<ReadonlySet<string>>(new Set());
   const [failure, setFailure] = useState(false);
   const mark = useMutation({
@@ -232,32 +247,100 @@ export function WordBatches({ scope, lesson, peekIn = "dialog", title }: {
   </SpeechScope></WordBookmarkScope>;
 }
 
-// The lesson page's batch actions (docs/words.md#word-batches): one button per batch placed after the top-level block
-// `afterBlock`, inside that section's Do more with AI box and styled by its `classes`. A button opens the batch's Peek in a dialog,
-// whose last page offers Drill and Practice.
-export function WordBatchButtons({ scope, lesson, title, afterBlock, classes }: {
-  scope: PlayerScope; lesson: CourseLesson; title: string; afterBlock: string; classes: { action: string | undefined; label: string | undefined };
-}) {
+// Records a finished round of a batch's matching game as drill reviews (docs/words.md#word-batches), in the understand direction:
+// Again for each word that was part of a miss, Got it for the rest, once per word per round. The lesson's metrics and the batches'
+// bands refresh once every review settles.
+function useMatchReviews(scope: PlayerScope, lesson: CourseLesson) {
+  const queryClient = useQueryClient();
+  const { lessonPath, refresh } = useLessonWordWrites(scope, lesson);
+  return useMutation({
+    mutationFn: async ({ batch, missed }: { batch: Batch; missed: ReadonlySet<string> }) => {
+      const ids = [...new Set(batch.words.map((word) => word.id))];
+      await Promise.allSettled(ids.map((wordId) => apiRequest(`${lessonPath}/words/${encodeURIComponent(wordId)}/drill/understand`, wordDrillGradeResponseSchema,
+        { method: "PUT", body: JSON.stringify({ result: missed.has(wordId) ? "again" : "got" } satisfies WordDrillGradeRequest) })));
+    },
+    onSettled: () => Promise.all([refresh(), queryClient.invalidateQueries({ queryKey: lessonMetricsQueryOptions(scope.groupId, scope.courseId, lesson.id).queryKey })]),
+  });
+}
+
+// The lesson's words on a finished round: how many of its new words the viewer has practised, out of all of them, once the round's
+// reviews are saved.
+function LessonWordProgress({ scope, lesson, ready, round }: { scope: PlayerScope; lesson: CourseLesson; ready: boolean; round: number }) {
+  const { t } = useTranslation();
+  const metrics = useQuery({ ...lessonMetricsQueryOptions(scope.groupId, scope.courseId, lesson.id), enabled: ready });
+  const words = ready ? metrics.data?.words : undefined;
+  if (!words || words.total === 0) return null;
+  return <div className={styles.lessonProgress}>
+    <ProgressMeter size="compact" value={(words.practised / words.total) * 100} label={t("words.batches.card.lessonProgress", { practised: words.practised, total: words.total })} showLabel />
+    <p className={styles.caption}>{t("words.batches.card.roundWords", { count: round })}</p>
+  </div>;
+}
+
+// The card's head: the Review words eyebrow, the word count, and the sections the batch holds.
+function BatchCardHead({ batch }: { batch: Batch }) {
+  const { t } = useTranslation();
+  const sections = batch.headings.join(" · ");
+  return <>
+    <p className={styles.cardHeader}>
+      <span className={styles.eyebrow}><Layers aria-hidden="true" />{t("words.batches.card.label")}</span>
+      <span className={styles.count}>{t("words.batches.words", { count: batch.words.length })}</span>
+    </p>
+    {sections && <p className={styles.cardSections}>{sections}</p>}
+  </>;
+}
+const cardLabel = (t: TFunction, batch: Batch) => batch.headings.length ? t("words.batches.card.labelNamed", { sections: batch.headings.join(" · ") }) : t("words.batches.card.label");
+
+// A batch too small for a matching game (`WORD_BATCH_SMALL` words or fewer: only the lesson's last batch can be, see
+// `lessonWordBatches`): its words, each term with its forms and meaning, then Drill and Practice.
+function SmallBatchCard({ lesson, batch, actions }: { lesson: CourseLesson; batch: Batch; actions: ReturnType<typeof useBatchActions> }) {
+  const { t } = useTranslation();
+  return <section className={styles.card} data-open aria-label={cardLabel(t, batch)}>
+    <BatchCardHead batch={batch} />
+    <ul className={styles.smallWords}>{batch.words.map((word) => <li key={word.id}>
+      <span className={styles.smallTerm}>{word.term}</span>{word.forms && <span className={styles.smallForms}>{word.forms}</span>}
+      <span className={styles.smallMeaning}><PlainText>{word.meaning}</PlainText></span>
+    </li>)}</ul>
+    {lesson.document !== null && <div className={styles.actions}><BatchActions batch={batch} actions={actions} variant="secondary" plain /></div>}
+  </section>;
+}
+
+// One batch in the text: a Review words card whose matching game shows its first rows fading out until Start matching opens it in
+// place. Opening counts its words as seen once and its time as drill time; a finished round is saved as reviews (published lessons
+// only) and its result offers Drill and Practice, and Done closes the card to a new round.
+function WordBatchCard({ scope, lesson, batch, actions }: { scope: PlayerScope; lesson: CourseLesson; batch: Batch; actions: ReturnType<typeof useBatchActions> }) {
   const { t } = useTranslation();
   const published = lesson.document !== null;
+  const [open, setOpen] = useState(false);
+  const [round, setRound] = useState(0);
+  const panel = useId(); const startId = useId();
+  useSeenOnce(scope, lesson, batch, published && open);
+  useLearningClaim(published && open ? { groupId: scope.groupId, target: () => ({ activity: "drill", courseId: scope.courseId }) } : null);
+  const reviews = useMatchReviews(scope, lesson);
+  const close = () => { setOpen(false); setRound((current) => current + 1); reviews.reset(); requestAnimationFrame(() => document.getElementById(startId)?.focus()); };
+  return <section className={styles.card} data-open={open || undefined} aria-label={cardLabel(t, batch)}>
+    <BatchCardHead batch={batch} />
+    <div id={panel} className={styles.stage} inert={!open}>
+      <WordMatch key={round} words={batch.words} preview={!open} doneLabel={t("words.batches.card.done")} onDone={close}
+        onFinish={published ? ({ missed }) => reviews.mutate({ batch, missed }) : undefined}
+        progress={published && <LessonWordProgress scope={scope} lesson={lesson} ready={reviews.isSuccess || reviews.isError} round={new Set(batch.words.map((word) => word.id)).size} />}
+        finish={published && <BatchActions batch={batch} actions={actions} variant="secondary" plain />} />
+    </div>
+    {!open && <div className={styles.fade}>
+      <Button id={startId} aria-expanded={false} aria-controls={panel} onClick={() => setOpen(true)}>{t("words.batches.card.start")}</Button>
+    </div>}
+  </section>;
+}
+
+// The lesson page's word batches (docs/words.md#word-batches): a Review words card for each batch that closes after the top-level
+// block `afterBlock`, a matching game, or the words themselves for a small last batch.
+export function WordBatchCards({ scope, lesson, afterBlock }: { scope: PlayerScope; lesson: CourseLesson; afterBlock: string }) {
+  const { t } = useTranslation();
   const shown = useLessonBatches(lesson).filter((batch) => batch.afterBlockId === afterBlock);
-  const [peeking, setPeeking] = useState<Batch | null>(null);
   const actions = useBatchActions(lesson);
-  const bookmarkTarget = useLessonBookmarkTarget(scope.groupId, scope.courseId, lesson.id, lesson.document);
-  const speech = useMemo(() => lessonSpeech(lesson), [lesson]);
-  const resolveSpeech = useCallback((key: string) => speech[key] ?? null, [speech]);
   if (!shown.length) return null;
   return <>
-    {shown.map((batch) => <button key={batch.number} type="button" className={classes.action} data-category="words" onClick={() => setPeeking(batch)}
-      title={batch.headings.join(" · ") || undefined}>
-      <Layers aria-hidden="true" /><span className={classes.label}>{t("words.batches.review", { number: batch.number })}</span>
-    </button>)}
-    <AdaptiveDialog opened={Boolean(peeking)} onClose={() => setPeeking(null)} title={peeking ? t("words.batches.peekTitle", { number: peeking.number, title }) : ""}>
-      {peeking && <WordBookmarkScope resolve={bookmarkTarget}><SpeechScope resolve={resolveSpeech}>
-        <Peek scope={scope} lesson={lesson} batch={peeking} recorded={published} onDone={() => setPeeking(null)} doneLabel={t("words.batches.peekBack")}
-          finish={published && <BatchActions batch={peeking} actions={actions} variant="secondary" />} />
-        {actions.practice.isError && <p className={styles.error} role="alert">{t("words.batches.practiceFailed")}</p>}
-      </SpeechScope></WordBookmarkScope>}
-    </AdaptiveDialog>
+    {shown.map((batch) => batch.words.length <= WORD_BATCH_SMALL ? <SmallBatchCard key={batch.number} lesson={lesson} batch={batch} actions={actions} />
+      : <WordBatchCard key={batch.number} scope={scope} lesson={lesson} batch={batch} actions={actions} />)}
+    {actions.practice.isError && <p className={styles.error} role="alert">{t("words.batches.practiceFailed")}</p>}
   </>;
 }

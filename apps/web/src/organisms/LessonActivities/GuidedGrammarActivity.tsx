@@ -21,9 +21,11 @@ export type GuidedGrammarActivityProps = {
   // Continue on every step but the last; the last step's Continue completes the activity.
   onContinue: () => void;
   onComplete: () => void;
+  // Each saved answer credits the step's lesson text as read on the server (docs/lesson-activities.md), so the page refreshes progress.
+  onAnswered?: () => void;
 };
 
-export function GuidedGrammarActivity({ endpoint, runId, steps, cursor, advancing, onContinue, onComplete }: GuidedGrammarActivityProps) {
+export function GuidedGrammarActivity({ endpoint, runId, steps, cursor, advancing, onContinue, onComplete, onAnswered }: GuidedGrammarActivityProps) {
   const step = steps[cursor];
   if (!step) return null;
   const last = cursor + 1 >= steps.length;
@@ -31,7 +33,7 @@ export function GuidedGrammarActivity({ endpoint, runId, steps, cursor, advancin
     <StepBar current={cursor} total={steps.length} />
     <div className={styles.body}><LessonBlocks blocks={step.blocks} /></div>
     <StepQuestion key={step.question.id} endpoint={endpoint} runId={runId} question={step.question} last={last} advancing={advancing}
-      onContinue={last ? onComplete : onContinue} />
+      onContinue={last ? onComplete : onContinue} onAnswered={onAnswered} />
   </div>;
 }
 
@@ -47,10 +49,10 @@ function StepBar({ current, total }: { current: number; total: number }) {
 
 // The choice question follows ActivityItem: select an option, Check answer, then the marked options, the explanation, and Retry and
 // Continue.
-type StepQuestionProps = { endpoint: string; runId: string; question: GuidedGrammarStep["question"]; last: boolean; advancing: boolean; onContinue: () => void };
-function StepQuestion({ endpoint, runId, question, last, advancing, onContinue }: StepQuestionProps) {
+type StepQuestionProps = { endpoint: string; runId: string; question: GuidedGrammarStep["question"]; last: boolean; advancing: boolean; onContinue: () => void; onAnswered?: (() => void) | undefined };
+function StepQuestion({ endpoint, runId, question, last, advancing, onContinue, onAnswered }: StepQuestionProps) {
   const { t } = useTranslation();
-  const attempt = useAnswerAttempt(endpoint, runId, question.id, () => undefined);
+  const attempt = useAnswerAttempt(endpoint, runId, question.id, () => onAnswered?.());
   const [selected, setSelected] = useState("");
   const result = attempt.result;
   const retry = () => { attempt.retry(); setSelected(""); };

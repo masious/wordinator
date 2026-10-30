@@ -142,7 +142,6 @@ export const resources = {
         drillWeak: "Drill these words",
         batches: {
           heading: "Words in batches",
-          review: "Review batch {{number}} words of this lesson",
           batch: "Batch {{number}}",
           words_one: "{{count}} word",
           words_other: "{{count}} words",
@@ -159,14 +158,39 @@ export const resources = {
           peekNamed: "Peek at batch {{number}}",
           peekTitle: "Batch {{number}} of {{title}}",
           peekDone: "Back to batches",
-          peekBack: "Back to the lesson",
           knownFor: "I know {{term}}",
           knownFailed: "That word could not be marked. Try again.",
           drill: "Drill",
           drillNamed: "Drill batch {{number}}",
           practice: "Practice",
           practiceNamed: "Practice batch {{number}} with the tutor",
-          practiceFailed: "The tutor practice could not start. Try again."
+          practiceFailed: "The tutor practice could not start. Try again.",
+          match: {
+            hint: "Pick a word, then its translation.",
+            terms: "Words",
+            meanings: "Translations",
+            progress: "{{matches}} of {{total}} matched",
+            successRate: "Success rate",
+            matched: "Match: {{term}} is {{meaning}}",
+            missed: "Not a pair: {{term}} and {{meaning}}",
+            resultLabel: "Your result",
+            verdict: { great: "Excellent!", good: "Well done!", keepGoing: "Keep practising!" },
+            summary_one: "{{count}} pair matched, {{misses}} missed",
+            summary_other: "{{count}} pairs matched, {{misses}} missed",
+            again: "Play again",
+            wrongTitle_one: "{{count}} word to review",
+            wrongTitle_other: "{{count}} words to review",
+            wrongNote: "We'll practise these words more often."
+          },
+          card: {
+            label: "Review words",
+            labelNamed: "Review words: {{sections}}",
+            start: "Start matching",
+            done: "Done",
+            lessonProgress: "New words of this lesson practised: {{practised}} of {{total}}",
+            roundWords_one: "This round: {{count}} word",
+            roundWords_other: "This round: {{count}} words"
+          }
         },
         weak: {
           loading: "Finding your weak words",
@@ -511,6 +535,7 @@ export const resources = {
           progress: "Progress",
           actions: "Lesson actions",
           doMoreWithAi: "Do more with AI",
+          doMoreWithAiCount: "Do more with AI ({{count}})",
           upNext: "Up next",
           practiseWords: "Practise words",
           askAi: "Ask AI",
