@@ -146,6 +146,7 @@ function sql(dir: string, manifest: string, existing: Map<string, StoredLesson> 
       if (!merged.success) throw new Error(`${name}: with its ${kept.preserved} stored images the lesson is invalid: ${merged.error.issues.map((issue) => issue.message).join("; ")}`);
       out.push(`UPDATE course_lessons SET title=${q(file.title)}, goal=${q(file.goal ?? null)}, position=${position}, draft_doc=${q(JSON.stringify(merged.data))}, draft_version=draft_version+1, updated_by=${q(course.ownerId)}, updated_at=${now} WHERE id=${q(file.id)} AND course_id=${q(course.courseId)} AND draft_version=${stored.draft_version};`);
       written = `draft_version = ${stored.draft_version + 1} AND updated_at = ${now}`;
+      for (const note of kept.renamed) console.error(`${name}: ${note}`);
       counts.updated += 1; counts.images += kept.preserved;
     } else {
       out.push(`INSERT INTO course_lessons (id, slug, group_id, course_id, title, goal, position, draft_doc, draft_version, published_doc, published_at, created_by, updated_by, created_at, updated_at) VALUES (${q(file.id)}, ${slugSql("course_lessons", ["course_id", course.courseId], file.id!, file.title, "lesson")}, ${q(course.groupId)}, ${q(course.courseId)}, ${q(file.title)}, ${q(file.goal ?? null)}, ${position}, ${q(JSON.stringify(parsedDocument))}, 1, NULL, NULL, ${q(course.ownerId)}, ${q(course.ownerId)}, ${now}, ${now}) ON CONFLICT(id) DO NOTHING;`);

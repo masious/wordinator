@@ -43,6 +43,18 @@ test("leaves images the file already holds alone", () => {
   assert.equal(result.preserved, 0);
 });
 
+test("puts back an image whose ID the file gave to another block, under a new ID", () => {
+  const stored = { blocks: [image("shared"), block("heading"), block("p")] };
+  const result = preserveImages(stored, { blocks: [block("shared", "heading"), block("p")] });
+  const [first, second] = result.document.blocks;
+  assert.equal(first!.type, "image");
+  assert.notEqual(first!.id, "shared");
+  assert.equal(second!.id, "shared");
+  assert.equal(result.preserved, 1);
+  assert.equal(result.renamed.length, 1);
+  assert.match(result.renamed[0]!, /shared.*heading/);
+});
+
 test("reports an image it cannot place instead of guessing", () => {
   const stored = { blocks: [block("gone"), image("lost"), block("also-gone"), block("parent", "column", [image("orphan")])] };
   const result = preserveImages(stored, { blocks: [block("a")] });
