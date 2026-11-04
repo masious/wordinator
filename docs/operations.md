@@ -237,3 +237,5 @@ Migrations `0036_lesson_activities.sql` and `0037_speech_usage_lesson_activity.s
 2. Production, when requested: `pnpm db:migrate:remote`, which carries its own `--remote` flag and applies every pending migration. Then `pnpm --filter @wordinator/api run deploy`, and only then `pnpm --filter @wordinator/web run deploy`. The web bundle calls the activity routes, so the API must serve them first.
 
 Always select local versus production D1 explicitly. Deployment remains a separate action.
+
+On 2026-11-04 migrations `0047_dialogue_scene_images.sql`, `0048_lesson_word_marks.sql`, and `0049_word_match_rounds.sql` (all additive) were applied to production after a D1 export taken at 11:17 UTC the same day, and both apps were deployed from `main` at `0ce038f`.

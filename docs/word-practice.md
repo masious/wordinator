@@ -1,6 +1,6 @@
 # Word practice
 
-Status: experimental product change (2026-10-22), implemented, not yet deployed. It may be rolled back; the roadmap records it under [word practice and answer marks](roadmap.md#word-practice-and-answer-marks--completed-2026-10-22-not-yet-deployed).
+Status: experimental product change (2026-10-22), implemented, deployed by 2026-11-04. It may be rolled back; the roadmap records it under [word practice and answer marks](roadmap.md#word-practice-and-answer-marks--completed-2026-10-22-not-yet-deployed).
 
 A word practice is a short [AI tutor](ai-tutor.md) conversation (about two minutes) about up to 15 words the learner picked: words they just missed in a [drill](words.md#drill), words fading from [word memory](words.md#word-memory), and words of chosen lessons they never practised. This document owns the picker, the word practice conversation, the tutor's script, and practice word marks. The tutor's chat, tools, components, grading, and limits stay with [ai-tutor.md](ai-tutor.md).
 
