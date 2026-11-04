@@ -57,6 +57,10 @@
 4. The button reads Finish later while a question is blank and Done once every question has an answer. Pressing it, or closing the answers any other way (Answer again or Escape), saves how many questions are answered, and the practice shows the new count. Answering every question makes the member done and adds them to the practice's done count.
 5. The answers stay in the browser across visits and sign-out, so the member can come back and change them.
 
+## Read a dialogue scene
+
+On a published lesson the member has not started, Start reading this lesson saves the first reading step and opens the first top-level dialogue's scene. Intro boxes and dialogue lines appear one at a time over the location and available line art; speech, translations, and new-word cards remain usable. Each later line advances the member's lesson position, and active time counts as lesson reading. At the end Continue lesson returns to the next block of the lesson page. Later dialogues stay inline until the member chooses Open dialogue scene after one; a replay never lowers progress. A lesson without an opening dialogue follows the ordinary start transition. See [dialogue scene pages](courses.md#dialogue-scene-pages).
+
 ## Work through a lesson step by step
 
 1. At the top of the course page, below its header, a progress card shows the member's course percentage and one button: Continue lesson for the lesson they last moved in, otherwise Start lesson for the first lesson they have not finished, otherwise Practice again. A focused player opens with a progress bar and a step counter.
@@ -157,7 +161,7 @@ In progress (C11): sharing works from the lesson page, the dialogs, and the play
 
 ## Manage the account
 
-1. `/settings` shows account profile, avatar, password, theme, and appearance controls, and (C14) a Tutor section for native language, reply language, goals, and the tutor's notes. A superuser also sees a link to Analytics, which shows activity counts, AI and speech usage, and the AI settings.
+1. `/settings` shows account profile, avatar, password, theme, and appearance controls, and (C14) a Tutor section for native language, reply language, goals, and the tutor's notes. A superuser also sees a link to Analytics, which shows activity counts, AI and speech usage, and the AI settings. A superuser also sees a link to the image library, which lists every course cover, lesson image, and dialogue scene image with where it is used and replaces an image everywhere at once.
 2. Username is established during required setup. Later profile edits remain account-wide.
 3. Avatar upload is optional and uses the existing square crop, public-by-URL storage, replacement cleanup, and remove flow.
 

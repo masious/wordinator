@@ -24,6 +24,7 @@ import { Route as WordsRouteImport } from './routes/words'
 import { Route as R2overviewLessonSlugRouteImport } from './routes/2overview.$lessonSlug'
 import { Route as AdminAiRouteImport } from './routes/admin.ai'
 import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
+import { Route as AdminImagesRouteImport } from './routes/admin.images'
 import { Route as CoursesCourseSlugRouteImport } from './routes/courses_.$courseSlug'
 import { Route as GroupsGroupIdRouteImport } from './routes/groups.$groupId'
 import { Route as InviteTokenRouteImport } from './routes/invite.$token'
@@ -44,6 +45,7 @@ import { Route as GroupsGroupIdSettingsIndexRouteImport } from './routes/groups.
 import { Route as GroupsGroupIdSettingsAccountRouteImport } from './routes/groups.$groupId_.settings.account'
 import { Route as GroupsGroupIdSettingsGroupRouteImport } from './routes/groups.$groupId_.settings.group'
 import { Route as GroupsGroupIdSettingsMembersRouteImport } from './routes/groups.$groupId_.settings.members'
+import { Route as CoursesCourseSlugLessonsLessonSlugDialoguesBlockIdRouteImport } from './routes/courses_.$courseSlug_.lessons.$lessonSlug_.dialogues.$blockId'
 import { Route as GroupsGroupIdCoursesCourseIdLessonsLessonIdRouteImport } from './routes/groups.$groupId_.courses_.$courseId_.lessons.$lessonId'
 import { Route as CoursesCourseSlugLessonsLessonSlugActivitiesSourceIdActivityTypeRouteImport } from './routes/courses_.$courseSlug_.lessons.$lessonSlug_.activities.$sourceId.$activityType'
 
@@ -120,6 +122,11 @@ const AdminAiRoute = AdminAiRouteImport.update({
 const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
   id: '/admin/analytics',
   path: '/admin/analytics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminImagesRoute = AdminImagesRouteImport.update({
+  id: '/admin/images',
+  path: '/admin/images',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CoursesCourseSlugRoute = CoursesCourseSlugRouteImport.update({
@@ -231,6 +238,12 @@ const GroupsGroupIdSettingsMembersRoute =
     path: '/groups/$groupId/settings/members',
     getParentRoute: () => rootRouteImport,
   } as any)
+const CoursesCourseSlugLessonsLessonSlugDialoguesBlockIdRoute =
+  CoursesCourseSlugLessonsLessonSlugDialoguesBlockIdRouteImport.update({
+    id: '/courses_/$courseSlug_/lessons/$lessonSlug_/dialogues/$blockId',
+    path: '/courses/$courseSlug/lessons/$lessonSlug/dialogues/$blockId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const GroupsGroupIdCoursesCourseIdLessonsLessonIdRoute =
   GroupsGroupIdCoursesCourseIdLessonsLessonIdRouteImport.update({
     id: '/groups/$groupId_/courses_/$courseId_/lessons/$lessonId',
@@ -262,6 +275,7 @@ export interface FileRoutesByFullPath {
   '/2overview/$lessonSlug': typeof R2overviewLessonSlugRoute
   '/admin/ai': typeof AdminAiRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/images': typeof AdminImagesRoute
   '/courses/$courseSlug': typeof CoursesCourseSlugRoute
   '/groups/$groupId': typeof GroupsGroupIdRoute
   '/invite/$token': typeof InviteTokenRoute
@@ -282,6 +296,7 @@ export interface FileRoutesByFullPath {
   '/groups/$groupId/settings/group': typeof GroupsGroupIdSettingsGroupRoute
   '/groups/$groupId/settings/members': typeof GroupsGroupIdSettingsMembersRoute
   '/groups/$groupId/settings/': typeof GroupsGroupIdSettingsIndexRoute
+  '/courses/$courseSlug/lessons/$lessonSlug/dialogues/$blockId': typeof CoursesCourseSlugLessonsLessonSlugDialoguesBlockIdRoute
   '/groups/$groupId/courses/$courseId/lessons/$lessonId': typeof GroupsGroupIdCoursesCourseIdLessonsLessonIdRoute
   '/courses/$courseSlug/lessons/$lessonSlug/activities/$sourceId/$activityType': typeof CoursesCourseSlugLessonsLessonSlugActivitiesSourceIdActivityTypeRoute
 }
@@ -301,6 +316,7 @@ export interface FileRoutesByTo {
   '/2overview/$lessonSlug': typeof R2overviewLessonSlugRoute
   '/admin/ai': typeof AdminAiRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/images': typeof AdminImagesRoute
   '/courses/$courseSlug': typeof CoursesCourseSlugRoute
   '/groups/$groupId': typeof GroupsGroupIdRoute
   '/invite/$token': typeof InviteTokenRoute
@@ -321,6 +337,7 @@ export interface FileRoutesByTo {
   '/groups/$groupId/settings/group': typeof GroupsGroupIdSettingsGroupRoute
   '/groups/$groupId/settings/members': typeof GroupsGroupIdSettingsMembersRoute
   '/groups/$groupId/settings': typeof GroupsGroupIdSettingsIndexRoute
+  '/courses/$courseSlug/lessons/$lessonSlug/dialogues/$blockId': typeof CoursesCourseSlugLessonsLessonSlugDialoguesBlockIdRoute
   '/groups/$groupId/courses/$courseId/lessons/$lessonId': typeof GroupsGroupIdCoursesCourseIdLessonsLessonIdRoute
   '/courses/$courseSlug/lessons/$lessonSlug/activities/$sourceId/$activityType': typeof CoursesCourseSlugLessonsLessonSlugActivitiesSourceIdActivityTypeRoute
 }
@@ -341,6 +358,7 @@ export interface FileRoutesById {
   '/2overview/$lessonSlug': typeof R2overviewLessonSlugRoute
   '/admin/ai': typeof AdminAiRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/images': typeof AdminImagesRoute
   '/courses_/$courseSlug': typeof CoursesCourseSlugRoute
   '/groups/$groupId': typeof GroupsGroupIdRoute
   '/invite/$token': typeof InviteTokenRoute
@@ -361,6 +379,7 @@ export interface FileRoutesById {
   '/groups/$groupId_/settings/group': typeof GroupsGroupIdSettingsGroupRoute
   '/groups/$groupId_/settings/members': typeof GroupsGroupIdSettingsMembersRoute
   '/groups/$groupId_/settings/': typeof GroupsGroupIdSettingsIndexRoute
+  '/courses_/$courseSlug_/lessons/$lessonSlug_/dialogues/$blockId': typeof CoursesCourseSlugLessonsLessonSlugDialoguesBlockIdRoute
   '/groups/$groupId_/courses_/$courseId_/lessons/$lessonId': typeof GroupsGroupIdCoursesCourseIdLessonsLessonIdRoute
   '/courses_/$courseSlug_/lessons/$lessonSlug_/activities/$sourceId/$activityType': typeof CoursesCourseSlugLessonsLessonSlugActivitiesSourceIdActivityTypeRoute
 }
@@ -382,6 +401,7 @@ export interface FileRouteTypes {
     | '/2overview/$lessonSlug'
     | '/admin/ai'
     | '/admin/analytics'
+    | '/admin/images'
     | '/courses/$courseSlug'
     | '/groups/$groupId'
     | '/invite/$token'
@@ -402,6 +422,7 @@ export interface FileRouteTypes {
     | '/groups/$groupId/settings/group'
     | '/groups/$groupId/settings/members'
     | '/groups/$groupId/settings/'
+    | '/courses/$courseSlug/lessons/$lessonSlug/dialogues/$blockId'
     | '/groups/$groupId/courses/$courseId/lessons/$lessonId'
     | '/courses/$courseSlug/lessons/$lessonSlug/activities/$sourceId/$activityType'
   fileRoutesByTo: FileRoutesByTo
@@ -421,6 +442,7 @@ export interface FileRouteTypes {
     | '/2overview/$lessonSlug'
     | '/admin/ai'
     | '/admin/analytics'
+    | '/admin/images'
     | '/courses/$courseSlug'
     | '/groups/$groupId'
     | '/invite/$token'
@@ -441,6 +463,7 @@ export interface FileRouteTypes {
     | '/groups/$groupId/settings/group'
     | '/groups/$groupId/settings/members'
     | '/groups/$groupId/settings'
+    | '/courses/$courseSlug/lessons/$lessonSlug/dialogues/$blockId'
     | '/groups/$groupId/courses/$courseId/lessons/$lessonId'
     | '/courses/$courseSlug/lessons/$lessonSlug/activities/$sourceId/$activityType'
   id:
@@ -460,6 +483,7 @@ export interface FileRouteTypes {
     | '/2overview/$lessonSlug'
     | '/admin/ai'
     | '/admin/analytics'
+    | '/admin/images'
     | '/courses_/$courseSlug'
     | '/groups/$groupId'
     | '/invite/$token'
@@ -480,6 +504,7 @@ export interface FileRouteTypes {
     | '/groups/$groupId_/settings/group'
     | '/groups/$groupId_/settings/members'
     | '/groups/$groupId_/settings/'
+    | '/courses_/$courseSlug_/lessons/$lessonSlug_/dialogues/$blockId'
     | '/groups/$groupId_/courses_/$courseId_/lessons/$lessonId'
     | '/courses_/$courseSlug_/lessons/$lessonSlug_/activities/$sourceId/$activityType'
   fileRoutesById: FileRoutesById
@@ -500,6 +525,7 @@ export interface RootRouteChildren {
   R2overviewLessonSlugRoute: typeof R2overviewLessonSlugRoute
   AdminAiRoute: typeof AdminAiRoute
   AdminAnalyticsRoute: typeof AdminAnalyticsRoute
+  AdminImagesRoute: typeof AdminImagesRoute
   CoursesCourseSlugRoute: typeof CoursesCourseSlugRoute
   GroupsGroupIdRoute: typeof GroupsGroupIdRoute
   InviteTokenRoute: typeof InviteTokenRoute
@@ -520,6 +546,7 @@ export interface RootRouteChildren {
   GroupsGroupIdSettingsGroupRoute: typeof GroupsGroupIdSettingsGroupRoute
   GroupsGroupIdSettingsMembersRoute: typeof GroupsGroupIdSettingsMembersRoute
   GroupsGroupIdSettingsIndexRoute: typeof GroupsGroupIdSettingsIndexRoute
+  CoursesCourseSlugLessonsLessonSlugDialoguesBlockIdRoute: typeof CoursesCourseSlugLessonsLessonSlugDialoguesBlockIdRoute
   GroupsGroupIdCoursesCourseIdLessonsLessonIdRoute: typeof GroupsGroupIdCoursesCourseIdLessonsLessonIdRoute
   CoursesCourseSlugLessonsLessonSlugActivitiesSourceIdActivityTypeRoute: typeof CoursesCourseSlugLessonsLessonSlugActivitiesSourceIdActivityTypeRoute
 }
@@ -629,6 +656,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/analytics'
       fullPath: '/admin/analytics'
       preLoaderRoute: typeof AdminAnalyticsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/images': {
+      id: '/admin/images'
+      path: '/admin/images'
+      fullPath: '/admin/images'
+      preLoaderRoute: typeof AdminImagesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/courses_/$courseSlug': {
@@ -771,6 +805,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GroupsGroupIdSettingsMembersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/courses_/$courseSlug_/lessons/$lessonSlug_/dialogues/$blockId': {
+      id: '/courses_/$courseSlug_/lessons/$lessonSlug_/dialogues/$blockId'
+      path: '/courses/$courseSlug/lessons/$lessonSlug/dialogues/$blockId'
+      fullPath: '/courses/$courseSlug/lessons/$lessonSlug/dialogues/$blockId'
+      preLoaderRoute: typeof CoursesCourseSlugLessonsLessonSlugDialoguesBlockIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/groups/$groupId_/courses_/$courseId_/lessons/$lessonId': {
       id: '/groups/$groupId_/courses_/$courseId_/lessons/$lessonId'
       path: '/groups/$groupId/courses/$courseId/lessons/$lessonId'
@@ -804,6 +845,7 @@ const rootRouteChildren: RootRouteChildren = {
   R2overviewLessonSlugRoute: R2overviewLessonSlugRoute,
   AdminAiRoute: AdminAiRoute,
   AdminAnalyticsRoute: AdminAnalyticsRoute,
+  AdminImagesRoute: AdminImagesRoute,
   CoursesCourseSlugRoute: CoursesCourseSlugRoute,
   GroupsGroupIdRoute: GroupsGroupIdRoute,
   InviteTokenRoute: InviteTokenRoute,
@@ -825,6 +867,8 @@ const rootRouteChildren: RootRouteChildren = {
   GroupsGroupIdSettingsGroupRoute: GroupsGroupIdSettingsGroupRoute,
   GroupsGroupIdSettingsMembersRoute: GroupsGroupIdSettingsMembersRoute,
   GroupsGroupIdSettingsIndexRoute: GroupsGroupIdSettingsIndexRoute,
+  CoursesCourseSlugLessonsLessonSlugDialoguesBlockIdRoute:
+    CoursesCourseSlugLessonsLessonSlugDialoguesBlockIdRoute,
   GroupsGroupIdCoursesCourseIdLessonsLessonIdRoute:
     GroupsGroupIdCoursesCourseIdLessonsLessonIdRoute,
   CoursesCourseSlugLessonsLessonSlugActivitiesSourceIdActivityTypeRoute:

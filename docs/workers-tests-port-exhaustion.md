@@ -29,7 +29,7 @@ Observed on 2026-10-16, when several agents ran the suite in parallel; every fai
 
   ```bash
   cd apps/api
-  files=($(ls test/*.test.ts | grep -v -e phase-five-media -e course-media -e course-speech -e tutor-speech))
+  files=($(ls test/*.test.ts | grep -v -e phase-five-media -e course-media -e admin-images -e course-speech -e tutor-speech))
   for ((i = 0; i < ${#files[@]}; i += 6)); do
     until [ "$(netstat -an | grep -c TIME_WAIT)" -lt 300 ]; do sleep 5; done
     npx vitest run "${files[@]:i:6}" || echo "batch failed: ${files[*]:i:6}"

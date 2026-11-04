@@ -70,6 +70,7 @@ describe("Account settings", () => {
     renderPage();
     expect(await screen.findByRole("link", { name: "Open analytics" })).toHaveAttribute("href", "/admin/analytics");
     expect(screen.getByRole("link", { name: "Open AI providers and models" })).toHaveAttribute("href", "/admin/ai");
+    expect(screen.getByRole("link", { name: "Open the image library" })).toHaveAttribute("href", "/admin/images");
   });
 
   it("saves a daily goal in minutes, or no goal", async () => {

@@ -1,5 +1,12 @@
 /* Temporary page; delete with its route. Text over the image sits on glass (--color-overlay-glass) or carries --shadow-text-on-image. */
 .stage{position:relative;display:grid;grid-template-rows:auto minmax(0,1fr) auto;height:100dvh;overflow:hidden;color:var(--color-foreground);background:var(--color-page-deep);cursor:pointer;user-select:none}
+/* The scene: the background, its masks, the location, the scrim and the cast. The whole stage on a wide screen; on a phone the whole
+   image, at its 16:9 ratio, under the header */
+.scene{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+/* On a phone the header and the lines sit on the empty location, blurred, dimmed and washed so they stay readable */
+.backdrop{display:none;position:relative;overflow:hidden;pointer-events:none}
+.backdrop img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(var(--blur-cover)) brightness(0.7);transform:scale(1.25)}
+.backdrop::after{content:"";position:absolute;inset:0;background:var(--color-overlay)}
 /* The background zooms out by --zoom-distance over the whole dialogue: --zoom-left goes from 1 before the first line to 0 at the last */
 .background{--zoom-distance:72px;position:absolute;inset:calc(var(--zoom-distance) * var(--zoom-left, 1) / -2);transition:inset calc(var(--motion-reveal) * 2) var(--ease-out)}
 .background img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -8,6 +15,9 @@
 .location[data-active]{opacity:1}
 .mask{mix-blend-mode:multiply;opacity:0;transition:opacity var(--motion-overlay) var(--ease-out)}
 .mask[data-active]{opacity:1}
+/* A line's own scene, its mask built in, cross-fades over the background while that line is shown */
+.lineScene{position:absolute;inset:0;opacity:0;transition:opacity var(--motion-overlay) var(--ease-out)}
+.lineScene[data-active]{opacity:1}
 .scrim{position:absolute;inset:0;background:linear-gradient(to bottom,color-mix(in srgb,var(--color-overlay) 70%,transparent),transparent 28%,transparent 45%,var(--color-overlay));transition:opacity var(--motion-overlay) var(--ease-out)}
 .stage[data-phase="stage"] .scrim{opacity:0.4}
 .stage[data-phase="dialogue"] .scrim,.stage[data-phase="end"] .scrim{background:linear-gradient(to bottom,color-mix(in srgb,var(--color-overlay) 70%,transparent),transparent 30%,var(--color-overlay) 75%)}
@@ -20,8 +30,6 @@
 .toggles{display:flex;flex-wrap:wrap;gap:var(--space-2)}
 .pill{padding:var(--space-1) var(--space-3);font:inherit;font-size:var(--text-sm);font-weight:var(--weight-medium);color:var(--color-foreground-muted);background:var(--color-overlay-glass);border:0;border-radius:var(--radius-pill);box-shadow:var(--shadow-card);cursor:pointer}
 .pill[aria-pressed="true"]{color:var(--color-action-text);background:var(--color-action)}
-.autoplay{display:inline-flex;align-items:center;gap:var(--space-2);padding-inline:var(--space-3) var(--space-4);font-weight:var(--weight-semibold);color:var(--color-foreground)}
-.autoplay svg{width:0.95rem;height:0.95rem}
 
 .hint{position:relative;align-self:end;justify-self:center;margin:0 0 var(--space-6);padding:var(--space-2) var(--space-4);font-size:var(--text-sm);color:white;text-shadow:var(--shadow-text-on-image);animation:pulse 2.4s var(--ease-out) infinite}
 
@@ -42,10 +50,15 @@
 .lines{position:relative;display:flex;flex-direction:column;justify-content:flex-end;gap:var(--space-3);width:min(48rem,100%);min-height:0;margin:0 auto;padding:var(--space-6) var(--space-6) var(--space-4);overflow:hidden;list-style:none;mask-image:linear-gradient(to bottom,transparent,black 30%)}
 .line{display:flex;align-items:flex-end;gap:var(--space-3);max-width:85%;flex-shrink:0}
 .line[data-side="end"]{flex-direction:row-reverse;align-self:flex-end}
+.line{transition:opacity var(--motion-overlay) var(--ease-out)}
 .line:not([data-current]){opacity:0.7}
-.line[data-current][data-side="start"]{animation:from-start var(--motion-overlay) var(--ease-physical) both}
-.line[data-current][data-side="end"]{animation:from-end var(--motion-overlay) var(--ease-physical) both}
-.avatar{display:grid;flex:none;place-items:center;width:3rem;height:3rem;overflow:hidden;font-weight:var(--weight-semibold);background:var(--color-overlay-glass);border-radius:var(--radius-pill);box-shadow:var(--shadow-card),0 0 0 2px var(--color-overlay-glass)}
+.line[data-enter][data-side="start"]{animation:from-start var(--motion-overlay) var(--ease-physical) both}
+.line[data-enter][data-side="end"]{animation:from-end var(--motion-overlay) var(--ease-physical) both}
+/* Stepping back: the line left behind, bubble and avatar, slides back out the way it came */
+.line[data-leaving]{pointer-events:none}
+.line[data-leaving][data-side="start"]{animation:from-start var(--motion-overlay) var(--ease-out) reverse both}
+.line[data-leaving][data-side="end"]{animation:from-end var(--motion-overlay) var(--ease-out) reverse both}
+.avatar{display:grid;flex:none;place-items:center;width:3rem;height:3rem;overflow:hidden;font-weight:var(--weight-semibold);background:var(--color-overlay-glass);border-radius:var(--radius-pill);box-shadow:var(--shadow-card),0 0 0 2px var(--color-overlay-glass);transition:width var(--motion-overlay) var(--ease-physical),height var(--motion-overlay) var(--ease-physical)}
 .line[data-current] .avatar{width:4.5rem;height:4.5rem}
 .avatar img{width:100%;height:100%;object-fit:cover}
 .bubble{display:grid;gap:var(--space-1);min-width:0;padding:var(--space-3) var(--space-4);background:var(--color-overlay-glass);border-radius:var(--radius-lg);box-shadow:var(--shadow-floating);cursor:default}
@@ -53,7 +66,7 @@
 .line[data-side="end"] .bubble{border-end-end-radius:var(--radius-sm)}
 .bubbleHead{display:flex;align-items:center;gap:var(--space-1);min-height:var(--control-height-sm)}
 .speaker{margin-inline-end:auto;font-family:var(--font-mono);font-size:var(--type-metadata);font-weight:var(--weight-semibold);color:var(--color-foreground-muted)}
-.text{margin:0;font-size:var(--type-authored);white-space:pre-wrap;overflow-wrap:anywhere}
+.text{margin:0;font-size:var(--type-authored);white-space:pre-wrap;overflow-wrap:anywhere;transition:font-size var(--motion-overlay) var(--ease-physical)}
 .line[data-current] .text{font-size:var(--text-xl);font-weight:var(--weight-semibold)}
 .translation{margin:0;font-size:var(--text-sm);font-style:italic;color:var(--color-foreground-muted)}
 .translate{display:inline-grid;place-items:center;width:var(--control-height-sm);height:var(--control-height-sm);padding:0;color:var(--color-foreground-muted);background:none;border:0;border-radius:var(--radius-sm);cursor:pointer}
@@ -62,27 +75,57 @@
 .translate svg{width:1.05rem;height:1.05rem}
 
 .bar{position:relative;display:flex;align-items:center;justify-content:center;gap:var(--space-3);padding:var(--space-3) var(--space-6) var(--space-6);cursor:default}
-.icon{display:inline-grid;place-items:center;width:var(--control-height-lg);height:var(--control-height-lg);padding:0;color:var(--color-foreground);background:var(--color-overlay-glass);border:0;border-radius:var(--radius-pill);box-shadow:var(--shadow-card);cursor:pointer}
-.icon:disabled{opacity:0.4;cursor:default}
-.primary{display:inline-flex;align-items:center;gap:var(--space-2);height:var(--control-height-lg);padding:0 var(--space-5);font:inherit;font-weight:var(--weight-semibold);color:var(--color-action-text);background:var(--color-action);border:0;border-radius:var(--radius-pill);box-shadow:var(--shadow-floating);cursor:pointer}
-.icon svg,.primary svg{width:1.1rem;height:1.1rem}
+/* Back, the step button, then Autoplay, the primary action, attached in one button group */
+.controls{flex:none;box-shadow:var(--shadow-floating)}
+/* Back and Autoplay are icons alone, square; the doubled class outweighs the group's phone padding */
+.controls .square.square{flex:none;width:var(--control-height);padding-inline:0}
+.square svg{width:1.1rem;height:1.1rem}
+/* Progress dots, on a phone in place of the count: one per line, filled up to the latest, the line in focus drawn long */
+.dots{display:none;flex:0 1 auto;flex-wrap:wrap;align-items:center;gap:var(--space-1);min-width:0;margin-inline-end:auto;padding:var(--space-2) var(--space-3);background:var(--color-overlay-glass);border-radius:var(--radius-pill);box-shadow:var(--shadow-card)}
+.dots span{width:0.4rem;height:0.4rem;background:color-mix(in srgb,var(--color-foreground) 22%,transparent);border-radius:var(--radius-pill);transition:width var(--motion-overlay) var(--ease-out),background var(--motion-overlay) var(--ease-out)}
+.dots span[data-done]{background:var(--color-foreground-muted)}
+.dots span[data-focus]{width:1rem;background:var(--color-action)}
 .count{min-width:6rem;font-family:var(--font-mono);font-size:var(--type-metadata);color:white;text-shadow:var(--shadow-text-on-image)}
-.pill:focus-visible,.icon:focus-visible,.primary:focus-visible,.translate:focus-visible{outline:var(--focus-ring-width) solid var(--color-focus);outline-offset:var(--focus-ring-offset)}
+.pill:focus-visible,.translate:focus-visible{outline:var(--focus-ring-width) solid var(--color-focus);outline-offset:var(--focus-ring-offset)}
 
 @keyframes pulse{50%{opacity:0.55}}
 @keyframes enter{from{opacity:0;translate:0 3rem}}
 @keyframes rise{from{opacity:0;transform:translateY(1.5rem)}}
 @keyframes from-start{from{opacity:0;transform:translateX(-3rem)}}
 @keyframes from-end{from{opacity:0;transform:translateX(3rem)}}
+@keyframes fade-out{to{opacity:0}}
 
+/* Phone: the header, then the whole scene without zooming, then the intro or the lines scrolling in the rest, newest at the bottom.
+   The button group floats at the bottom right over the lines, which leave room for it at their end, with the progress dots at the
+   bottom left */
 @media (max-width:40em){
-  .top,.intro,.lines,.bar{padding-inline:var(--space-4)}
+  .stage{grid-template-rows:auto auto minmax(0,1fr)}
+  .stage>*{grid-column:1}
+  .backdrop{display:block;grid-row:1 / -1}
+  .scene{position:relative;grid-row:2;aspect-ratio:16 / 9}
+  .background{inset:0}
+  .scrim{display:none}
+  .top{grid-row:1;padding:var(--space-4)}
+  .stage[data-phase="stage"] .title{font-size:var(--text-2xl)}
+  .hint,.intro,.lines{grid-row:3}
+  .hint{align-self:center}
+  .intro,.lines{--bar-room:calc(var(--control-height-lg) + var(--space-4) * 2 + env(safe-area-inset-bottom));display:flex;flex-direction:column;justify-content:flex-start;align-self:stretch;width:100%;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:var(--space-4) var(--space-4) var(--bar-room);mask-image:linear-gradient(to bottom,transparent,black var(--space-6))}
+  .intro>:first-child,.lines>:first-child{margin-top:auto}
+  .introBox{flex-shrink:0}
   .line{max-width:100%}
   .line[data-current] .avatar{width:3.5rem;height:3.5rem}
-  .character{width:70vw}
+  .character{width:min(70vw,50dvh)}
+  .dots{display:flex}
+  .bar>*{pointer-events:auto}
+  .bar{gap:var(--space-2)}
+  .dots{padding-inline:var(--space-2)}
+  .bar{position:absolute;left:var(--space-4);right:var(--space-4);align-items:center;justify-content:flex-end;pointer-events:none;bottom:calc(var(--space-4) + env(safe-area-inset-bottom));padding:0}
+  .count{display:none}
 }
 @media (prefers-reduced-motion:reduce){
   .background{transition:none}
   .location{transition:opacity var(--motion-reveal) var(--ease-out)}
-  .hint,.introBox[data-current],.line[data-current][data-side],.character{animation:none}
+  .hint,.introBox[data-current],.line[data-enter][data-side],.character{animation:none}
+  .avatar,.text{transition:none}
+  .line[data-leaving][data-side]{animation:fade-out var(--motion-overlay) linear both}
 }

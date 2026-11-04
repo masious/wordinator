@@ -79,7 +79,7 @@ The [AI tutor](ai-tutor.md) (C14, approved product change 2026-10-15) sends data
 - Email is unverified and has no self-service recovery.
 - The [library creator](groups-and-membership.md#library-creator) can still regenerate any account's password through a compatibility endpoint and thereby access that account.
 - Stateless sessions cannot be individually revoked and survive password changes.
-- There is no sign-out-all, account deletion, ban, report, block, mute, or invite rotation. The C14 superuser flag grants only the read-only analytics page and the AI providers and models page, not account or content administration.
+- There is no sign-out-all, account deletion, ban, report, block, mute, or invite rotation. The C14 superuser flag grants only the read-only analytics page, the AI providers and models page, and the [image library](settings-and-administration.md#image-library), whose image replacement is the one content power; there is no account administration.
 - Tutor conversations may be logged by OpenRouter free-model hosts (see [AI tutor](#ai-tutor)).
 - Public R2 URLs bypass sign-in.
 

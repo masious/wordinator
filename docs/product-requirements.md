@@ -44,7 +44,7 @@ The current release is an installable, connectivity-required web application for
 
 ## Initial exclusions
 
-The release excludes phone-only features (features that exist only on phones), gamification (points, rankings, leaderboards, rewards; the personal streak of [learning time](learning-time.md#daily-goal-and-streak) is the exception), email verification, self-service password recovery, account deletion, a global admin UI (the C14 superuser analytics page is read-only apart from the AI settings), session management, reports, blocking, muting, search, formal accessibility conformance, offline application behavior, push/email notifications, notification badges, CI/CD, and automated backups.
+The release excludes phone-only features (features that exist only on phones), gamification (points, rankings, leaderboards, rewards; the personal streak of [learning time](learning-time.md#daily-goal-and-streak) is the exception), email verification, self-service password recovery, account deletion, a global admin UI (the C14 superuser analytics page is read-only apart from the AI settings; the superuser [image library](settings-and-administration.md#image-library) can only replace course images), session management, reports, blocking, muting, search, formal accessibility conformance, offline application behavior, push/email notifications, notification badges, CI/CD, and automated backups.
 
 ## Acceptance summary
 

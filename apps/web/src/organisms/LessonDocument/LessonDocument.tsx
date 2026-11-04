@@ -32,6 +32,8 @@ export type PracticeGroupRenderer = (items: PracticeGroupItem[]) => ReactNode;
 // The lesson page passes `renderShare` to make examples and dialogues selectable; it renders the selected block's share action.
 export type ShareableBlock = LessonBlockOf<"example"> | LessonBlockOf<"dialogue">;
 export type ShareRenderer = (block: ShareableBlock) => ReactNode;
+export type DialogueActionRenderer = (block: LessonBlockOf<"dialogue">) => ReactNode;
+const DialogueActionContext = createContext<DialogueActionRenderer | null>(null);
 // The lesson page passes `renderAfterBlock` to place content after a block of any depth (AI practices, docs/courses.md#lesson-pages).
 // It is called once for every block ID of the document, in reading order; a block the reader leaves out (a New words block, a
 // trailing blank paragraph, a child of a block that shows no children) still gets its slot where it would have been.
@@ -151,7 +153,11 @@ export function DialogueBlock({
   block: LessonBlockOf<"dialogue">;
   upTo?: number;
 }) {
-  return <DialogueTurns blockId={block.id} turns={readDialogueTurns(block)} upTo={upTo} />;
+  const renderAction = useContext(DialogueActionContext);
+  return <>
+    <DialogueTurns blockId={block.id} turns={readDialogueTurns(block)} upTo={upTo} />
+    {upTo === undefined && renderAction?.(block)}
+  </>;
 }
 
 // A dialogue's turns with their speech, resolved in the current speech scope under the lesson's turn keys. A lesson share renders
@@ -671,6 +677,7 @@ export function LessonDocument({
   document,
   renderPractice,
   renderShare,
+  renderDialogueAction,
   renderAfterBlock,
   anchored = false,
   vocabulary = true,
@@ -682,6 +689,7 @@ export function LessonDocument({
   renderPracticeGroup?: PracticeGroupRenderer;
   renderHeadingBadge?: HeadingBadgeRenderer;
   renderShare?: ShareRenderer;
+  renderDialogueAction?: DialogueActionRenderer;
   renderAfterBlock?: AfterBlockRenderer;
   anchored?: boolean;
   vocabulary?: boolean;
@@ -694,6 +702,7 @@ export function LessonDocument({
   );
   return (
     <ReaderOptionsContext.Provider value={{ anchored, vocabulary, renderPracticeGroup, renderHeadingBadge }}>
+      <DialogueActionContext.Provider value={renderDialogueAction ?? null}>
       <AfterBlockContext.Provider value={renderAfterBlock ?? null}>
         {renderShare ? (
           <SelectionContext.Provider value={{ selected, select: setSelected, renderShare }}>{blocks}</SelectionContext.Provider>
@@ -701,6 +710,7 @@ export function LessonDocument({
           blocks
         )}
       </AfterBlockContext.Provider>
+      </DialogueActionContext.Provider>
     </ReaderOptionsContext.Provider>
   );
 }

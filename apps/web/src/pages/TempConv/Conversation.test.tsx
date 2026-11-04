@@ -34,12 +34,13 @@ const mag = { id: "93000000-0000-4000-8000-000000000002", term: "mogen", meaning
 const spans = [[{ start: 7, end: 11, wordId: vrij.id }], [{ start: 4, end: 7, wordId: mag.id }], []];
 const words = new Map([[vrij.id, vrij], [mag.id, mag]]);
 
-function renderConversation(masks?: Record<string, string>, location?: string) {
+function renderConversation(masks?: Record<string, string>, location?: string, callbacks?: { onLineChange?: (index: number) => void; onContinue?: () => void }) {
   return render(<MantineProvider>
     <HovercardDemoContext.Provider value={{ toneStyle: {}, sayWords: false, words, subtle: true, clickOnly: true }}>
       <SpeechScope resolve={(key) => { const match = /^turn:.+:(\d+)$/.exec(key); return match ? clip(Number(match[1])) : null; }}>
         <Conversation blockId={blockId} title="Mag ik vrij nemen?" scene="Story: asking Karin" intro={[text("It is Monday."), text("Sofia asks Karin.")]}
-          turns={turns} background="office.jpg" portraits={{ sofia: "sofia.jpg" }} masks={masks} location={location} spans={spans} />
+          turns={turns} background="office.jpg" portraits={{ sofia: "sofia.jpg" }} masks={masks} location={location} spans={spans}
+          onLineChange={callbacks?.onLineChange} onContinue={callbacks?.onContinue} />
       </SpeechScope>
     </HovercardDemoContext.Provider>
   </MantineProvider>);
@@ -47,8 +48,28 @@ function renderConversation(masks?: Record<string, string>, location?: string) {
 // Finishes the clip playing now, as the audio element would.
 const end = () => act(() => { (globalThis as { __player?: HTMLMediaElement }).__player?.dispatchEvent(new Event("ended")); });
 const space = () => fireEvent.keyDown(window, { key: " " });
+// jsdom has no layout: the lines' box is 300px tall at the top of the page, over lines 200px tall each, and the learner's
+// scrolling starts at once (outside the quiet time after a step).
+function scrollable(list: HTMLElement, items: Element[], height: number) {
+  Object.defineProperties(list, { scrollHeight: { value: height, configurable: true }, clientHeight: { value: 300, configurable: true }, scrollTop: { value: height - 300, writable: true } });
+  vi.spyOn(Element.prototype, "getBoundingClientRect").mockImplementation(function (this: Element) {
+    const at = items.indexOf(this);
+    return { top: at < 0 ? 0 : at * 200 - list.scrollTop, height: at < 0 ? 300 : 200 } as DOMRect;
+  });
+  vi.spyOn(performance, "now").mockReturnValue(Number.MAX_SAFE_INTEGER / 2);
+}
+const scrollTo = (list: HTMLElement, top: number) => { list.scrollTop = top; fireEvent.scroll(list); };
 
 describe("Conversation prototype", () => {
+  it("reports each reached line and offers the lesson continuation at the end", () => {
+    const onLineChange = vi.fn(); const onContinue = vi.fn();
+    renderConversation(undefined, undefined, { onLineChange, onContinue });
+    for (let step = 0; step < 6; step++) space();
+    expect(onLineChange.mock.calls.map(([index]) => index)).toEqual([0, 1, 2]);
+    space();
+    fireEvent.click(screen.getByRole("button", { name: "Continue lesson" }));
+    expect(onContinue).toHaveBeenCalledOnce();
+  });
   it("brings the intro boxes, then the lines, one step at a time", () => {
     renderConversation();
     expect(screen.getByText(/press Space to begin/)).toBeTruthy();
@@ -83,7 +104,10 @@ describe("Conversation prototype", () => {
   it("shows the empty location during the intro, then dims everyone but the speaker with their mask", () => {
     const { container } = renderConversation({ sofia: "mask-sofia.jpg", karin: "mask-karin.jpg" }, "empty-office.jpg");
     const active = () => container.querySelector("img[data-active]")?.getAttribute("data-speaker") ?? null;
-    const empty = () => container.querySelector("img[src='empty-office.jpg']")!.parentElement!.hasAttribute("data-active");
+    // The first copy of the empty location is the phone's blurred backdrop behind the lines; the second fades in the scene.
+    const [backdrop, location] = container.querySelectorAll("img[src='empty-office.jpg']");
+    expect(backdrop!.parentElement!.hasAttribute("data-active")).toBe(false);
+    const empty = () => location!.parentElement!.hasAttribute("data-active");
     // The empty location shows through the title and the intro, and gives way to the scene with the speakers.
     expect(empty()).toBe(true);
     space();
@@ -109,15 +133,68 @@ describe("Conversation prototype", () => {
     expect(screen.getByText("Line 2 / 3")).toBeTruthy();
   });
 
-  it("reveals a line's translation on request, or all of them with the toggle", () => {
+  it("shows every translation at first, or a line's own on request once the toggle is off", () => {
     renderConversation();
     for (let step = 0; step < 4; step++) space();
+    expect(screen.getByText("May I take time off?")).toBeTruthy();
+    expect(screen.getByRole("button", { name: "Show translations" }).getAttribute("aria-pressed")).toBe("true");
+    fireEvent.click(screen.getByRole("button", { name: "Show translations" }));
     expect(screen.queryByText("May I take time off?")).toBeNull();
     fireEvent.click(screen.getByRole("button", { name: "Translate line 1" }));
     expect(screen.getByText("May I take time off?")).toBeTruthy();
     expect(screen.getByText("Line 2 / 3")).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "Show translations" }));
     expect(screen.getByText("That is allowed.")).toBeTruthy();
+  });
+
+  it("slides the line left behind back out when stepping back, and slides lines in only when stepping forward", () => {
+    const { container } = renderConversation();
+    for (let step = 0; step < 4; step++) space();
+    let lines = container.querySelectorAll("li");
+    expect(lines[1]!.hasAttribute("data-enter")).toBe(true);
+    fireEvent.keyDown(window, { key: "ArrowLeft" });
+    lines = container.querySelectorAll("li");
+    expect(lines).toHaveLength(2);
+    expect(lines[1]!.hasAttribute("data-leaving")).toBe(true);
+    expect(lines[0]!.hasAttribute("data-current")).toBe(true);
+    expect(lines[0]!.hasAttribute("data-enter")).toBe(false);
+    expect(screen.getByRole("img", { name: "Line 1 of 3" })).toBeTruthy();
+    fireEvent.animationEnd(lines[1]!);
+    expect(container.querySelectorAll("li")).toHaveLength(1);
+  });
+
+  it("marks the lines' progress with one dot each", () => {
+    renderConversation();
+    for (let step = 0; step < 4; step++) space();
+    const dots = screen.getByRole("img", { name: "Line 2 of 3" });
+    expect(dots.children).toHaveLength(3);
+    expect([...dots.children].map((dot) => dot.hasAttribute("data-done"))).toEqual([true, true, false]);
+    expect(dots.children[1]!.hasAttribute("data-focus")).toBe(true);
+  });
+
+  it("makes the line scrolled to the middle the current one everywhere, and drops the lines after it once scrolling settles", async () => {
+    const { container } = renderConversation({ sofia: "mask-sofia.jpg", karin: "mask-karin.jpg" });
+    for (let step = 0; step < 5; step++) space();
+    const list = container.querySelector("ol")!;
+    const items = [...list.querySelectorAll("li")];
+    // A 300px box over three 200px lines.
+    scrollable(list, items, 600);
+    const active = () => container.querySelector("img[data-active]")?.getAttribute("data-speaker") ?? null;
+    expect(active()).toBe("sofia");
+    // Scrolled to the top, the first line sits nearest the middle: it becomes the current line, and the lines after it fade out
+    // but stay while scrolling, so scrolling down brings them back.
+    scrollTo(list, 0);
+    expect(screen.getByText("Line 1 / 3")).toBeTruthy();
+    expect(screen.getByRole("img", { name: "Line 1 of 3" }).children[0]!.hasAttribute("data-focus")).toBe(true);
+    expect(items[0]!.hasAttribute("data-current")).toBe(true);
+    expect(items.slice(1).map((item) => item.hasAttribute("data-leaving"))).toEqual([true, true]);
+    scrollTo(list, 150);
+    expect(screen.getByText("Line 2 / 3")).toBeTruthy();
+    expect(active()).toBe("karin");
+    expect(items[1]!.hasAttribute("data-leaving")).toBe(false);
+    await act(() => new Promise((done) => setTimeout(done, 300)));
+    expect(container.querySelectorAll("li")).toHaveLength(2);
+    expect(screen.getByText("Line 2 / 3")).toBeTruthy();
   });
 
   it("does not read lines aloud when that is off, and starts again from the end", () => {
@@ -144,6 +221,44 @@ describe("Conversation prototype", () => {
     expect(screen.getByText("Line 2 / 3")).toBeTruthy();
     fireEvent.click(screen.getByText("free, off"));
     expect(screen.getByText("Line 2 / 3")).toBeTruthy();
+  });
+
+  it("pauses autoplay while the lines are scrolled and plays on from the line scrolled to, and stops it when a word's card opens", async () => {
+    const { container } = renderConversation();
+    const autoplay = () => screen.getByRole("button", { name: /autoplay/i }).getAttribute("aria-pressed");
+    fireEvent.click(screen.getByRole("button", { name: /Autoplay/ }));
+    end();
+    expect(screen.getByText("Line 2 / 3")).toBeTruthy();
+    const list = container.querySelector("ol")!;
+    // The scroll that brings a line into view is not the learner's.
+    fireEvent.scroll(list);
+    expect(autoplay()).toBe("true");
+    scrollable(list, [...list.querySelectorAll("li")], 400);
+    scrollTo(list, 0);
+    expect(autoplay()).toBe("false");
+    expect(screen.getByText("Line 1 / 3")).toBeTruthy();
+    await act(() => new Promise((done) => setTimeout(done, 300)));
+    expect(autoplay()).toBe("true");
+    expect(played).toEqual([clip(0), clip(1), clip(0)]);
+    expect(screen.getByText("Line 1 / 3")).toBeTruthy();
+    end();
+    expect(screen.getByText("Line 2 / 3")).toBeTruthy();
+    expect(screen.getByRole("button", { name: "vrij" })).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "vrij" }));
+    expect(await screen.findByText("free, off")).toBeTruthy();
+    expect(autoplay()).toBe("false");
+    expect(screen.getByText("Line 2 / 3")).toBeTruthy();
+  });
+
+  it("stops autoplay where it is when a word's card opens", async () => {
+    renderConversation();
+    const autoplay = () => screen.getByRole("button", { name: /autoplay/i }).getAttribute("aria-pressed");
+    fireEvent.click(screen.getByRole("button", { name: /Autoplay/ }));
+    expect(autoplay()).toBe("true");
+    fireEvent.click(screen.getByRole("button", { name: "vrij" }));
+    expect(await screen.findByText("free, off")).toBeTruthy();
+    expect(autoplay()).toBe("false");
+    expect(screen.getByText("Line 1 / 3")).toBeTruthy();
   });
 
   it("autoplays the dialogue line by line to the end, and stops when stepped", () => {

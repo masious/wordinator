@@ -1,0 +1,19 @@
+{
+  "prompt": "Warm painterly cartoon illustration in the established Dutch Foundations style. Empty Utrecht office with a desk, blank laptop, and blank wall calendar, winter daylight, calm central negative space, no people. No text, letters, numbers, logos, labels, or watermark.",
+  "model": "gpt-image-2",
+  "size": "1536x864",
+  "quality": "medium",
+  "usage": {
+    "input_tokens": 58,
+    "input_tokens_details": {
+      "image_tokens": 0,
+      "text_tokens": 58
+    },
+    "output_tokens": 1078,
+    "output_tokens_details": {
+      "image_tokens": 1078,
+      "text_tokens": 0
+    },
+    "total_tokens": 1136
+  }
+}

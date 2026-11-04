@@ -215,7 +215,7 @@ The [courses blueprint](courses.md) owns every course rule. Each phase is comple
 - **Practice and activity polish** (completed 2026-10-21): a practice stepper moves from the last matched question, or Done on a completed practice, into the next practice's focused answer field; tricky grammar text answers check with Enter; the activity preparation panel describes its real opening or generation state. The home Continue card's ring keeps its centre text within the ring for a first-time learner. See [practice answers](courses.md#practice-answers), [lesson activities](lesson-activities.md), and [home dashboard](learning-time.md#home-dashboard).
 - **Practice progress** (approved and completed 2026-10-10, migration `0022_course_practice_progress.sql` not yet applied remotely): practice answer threads, reveal, replies, and reactions are retired; the server records only how many questions each learner answered (highest count wins), Done or Finish later and closing the answer dialog both save it, the player saves it when leaving a question, and a practice shows how many people are done and the viewer's questions left. Existing shared answer sets became their authors' progress and were deleted. Beside the New words panel on wide screens the answer dialog is docked over the reading column. See [practice answers](courses.md#practice-answers).
 - **Lesson overview prototype** (experimental, started 2026-10-08, not approved): a development-only per-lesson overview road reading authored lesson files, to settle the design before any data layer or API; a zigzag variation with a docked section panel lives at `/2overview` (added 2026-10-10). See [lesson overview](courses.md#lesson-overview-prototype).
-- **Conversation scenes** (exploration, started 2026-10-24, not approved): dialogues staged over a location image with intro boxes and cast portraits, generated with gpt-image-2 from the production scenes, to replace the dialogue block once the design on `/temp-conv` is settled. See [conversation scenes](conversation-scenes.md).
+- **Conversation scenes** (implementation in progress, started 2026-10-24): dialogues staged over a location image with intro boxes and cast portraits. The learner opens the first dialogue on starting a lesson and can reopen any dialogue from its inline block. See [conversation scenes](conversation-scenes.md).
 
 ## Dutch Foundations content
 
@@ -248,6 +248,14 @@ The Words tab's Bookmarks view lists words as the same word rows as Weak words, 
 ## Word practice and answer marks — completed 2026-10-22, not yet deployed
 
 Experimental; the owner may roll it back. The drill results' Practise drill words and more picks up to 15 words (the drill's Again words, then weak and never-practised words of chosen lessons) and starts a tutor [word practice](word-practice.md): passages with a new Spot the words checklist, practice sets, a `get_words` read tool, and practice word marks shown as highlights with word cards. Across the tutor, the grading model returns a minimal correction of a wrong open answer, answers a few words off show [answer marks](ai-tutor.md#answer-components), and a finished set shows as the learner's answered set. Migration `0039_ai_conversation_word_practice.sql`. A temporary `/temp-feedback` page holds the answer-feedback prototypes.
+
+## Dialogue scene pages — implementation in progress 2026-10-24
+
+The lesson page now has a separate scene route for its dialogues: Start lesson opens the first one for a new learner, and each inline dialogue has an explicit replay link. The scene uses the existing reading clock and line-based lesson positions. Migration `0047_dialogue_scene_images.sql` and the R2-backed image API provide slots for each dialogue's location, portraits, and optional line art. The unified manifest covers 125 authored dialogue blocks with 62 optimized location plates and all 26 speaker portraits staged locally. Wrangler login and a read-only comparison against all 125 live dialogue blocks are complete. A production backup, remote migration, R2 upload, and final visual review remain outstanding. [Conversation scenes](conversation-scenes.md) owns the status and rollout.
+
+## Superuser image library — completed 2026-11-04, not yet deployed
+
+`/admin/images` lists every course cover, lesson image, and dialogue scene image with the course, lesson, and dialogue that use it, filtered by kind, course, lesson, and usage, and replaces an image everywhere it is used. No migration; it reads the dialogue scene tables from `0047`, so it deploys with or after the dialogue scene pages. See [settings and administration](settings-and-administration.md#image-library).
 
 ## Unprioritized future backlog
 

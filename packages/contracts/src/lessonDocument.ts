@@ -1,6 +1,6 @@
 import { z } from "zod";
 import {
-  COURSE_BLOCK_TEXT_MAX, COURSE_BLOCKS_MAX, COURSE_HEADING_MAX, COURSE_NOTE_MAX, COURSE_PRELOADED_LESSONS, COURSE_RECAP_WORDS_MAX, COURSE_SENTENCE_MAX,
+  COURSE_BLOCK_TEXT_MAX, COURSE_BLOCKS_MAX, COURSE_HEADING_MAX, COURSE_NOTE_MAX, COURSE_PRELOADED_LESSONS, COURSE_RECAP_WORDS_MAX, COURSE_SENTENCE_MAX, COURSE_SPEAKER_MAX, COURSE_DIALOGUE_TURNS_MAX,
   COURSE_WORD_FORMS_MAX, COURSE_WORD_MEANING_MAX, COURSE_WORD_TERM_MAX, COURSE_WORDS_PER_BLOCK_MAX, courseLessonSummarySchema, courseSchema, dialoguePayloadSchema, editorRefSchema, opaqueIdSchema, paginationQuerySchema, practicePayloadSchema, practiceProgressSchema, splitPracticePayload, type PracticePayload,
   lessonMySharesSchema, WORD_BOOKMARKS_MAX, wordIpaSchema,
   type PracticeReference, inlineContentSchema, inlineText, lessonColorSchema, type InlineContent,
@@ -552,6 +552,35 @@ export const lessonImageUploadResponseSchema = z.object({
 });
 export type LessonImageUploadResponse = z.infer<typeof lessonImageUploadResponseSchema>;
 
+export const dialogueSceneImageKindSchema = z.enum(["location", "scene", "mask", "portrait"]);
+export type DialogueSceneImageKind = z.infer<typeof dialogueSceneImageKindSchema>;
+export const dialogueSceneImageUploadSchema = z.object({
+  blockId: opaqueIdSchema,
+  kind: dialogueSceneImageKindSchema,
+  speaker: z.string().trim().min(1).max(COURSE_SPEAKER_MAX).nullable().optional(),
+  lineIndex: z.number().int().nonnegative().max(COURSE_DIALOGUE_TURNS_MAX - 1).nullable().optional(),
+}).superRefine((value, context) => {
+  const speaker = value.speaker ?? null; const line = value.lineIndex ?? null;
+  if ((value.kind === "location" || value.kind === "scene" || value.kind === "mask") && speaker !== null) context.addIssue({ code: "custom", path: ["speaker"], message: "This image kind cannot have a speaker." });
+  if ((value.kind === "location" || value.kind === "portrait") && line !== null) context.addIssue({ code: "custom", path: ["lineIndex"], message: "This image kind cannot have a line index." });
+  if (value.kind === "mask" && line === null) context.addIssue({ code: "custom", path: ["lineIndex"], message: "A mask must target a line." });
+  if (value.kind === "portrait" && speaker === null) context.addIssue({ code: "custom", path: ["speaker"], message: "A portrait must name a speaker." });
+});
+export type DialogueSceneImageUpload = z.input<typeof dialogueSceneImageUploadSchema>;
+export const dialogueSceneImageUploadResponseSchema = lessonImageUploadResponseSchema;
+export type DialogueSceneImageUploadResponse = z.infer<typeof dialogueSceneImageUploadResponseSchema>;
+export const dialogueSceneLineImageSchema = z.object({ sceneUrl: z.url().nullable(), maskUrl: z.url().nullable() });
+export const dialogueSceneSchema = z.object({
+  blockId: opaqueIdSchema,
+  locationUrl: z.url().nullable(),
+  backgroundUrl: z.url().nullable(),
+  portraits: z.record(z.string(), z.url()),
+  lineScenes: z.array(dialogueSceneLineImageSchema),
+});
+export type DialogueScene = z.infer<typeof dialogueSceneSchema>;
+export const dialogueScenesResponseSchema = z.object({ scenes: z.array(dialogueSceneSchema) });
+export type DialogueScenesResponse = z.infer<typeof dialogueScenesResponseSchema>;
+
 // The lesson as one reader sees it. Learners receive the published document with practice prompts and authors' versions; the owner and
 // active contributors also receive the full draft, including authors' versions and item notes, and its version.
 export const lessonDraftSchema = z.object({ document: lessonDocumentSchema, version: draftVersionSchema });
@@ -592,6 +621,7 @@ export const courseLessonSchema = courseLessonSummarySchema.extend({
   // AI practices tagged to the published lesson (docs/courses.md#ai-practices); 0 for an unpublished lesson. Optional so lessons
   // built before C14h still parse; a missing count reads as 0.
   aiPracticeCount: z.number().int().nonnegative().optional(),
+  dialogueScenes: z.array(dialogueSceneSchema).optional(),
   // Where the published lesson's new words are used (docs/courses.md#word-marks); null when none were made. Optional so older
   // responses still parse.
   wordMarks: lessonWordMarksSchema.nullable().optional(),

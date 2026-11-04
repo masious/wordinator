@@ -195,6 +195,8 @@ export function AdminAnalyticsPage({ groupId, days, onDays }: { groupId: string;
         <TimeSection days={days} />
         <Surface className={styles.section}><SectionHeader title={t("aiAdmin.linkTitle")} description={t("aiAdmin.linkBody")} />
           <Link className={styles.link} to="/admin/ai">{t("aiAdmin.link")}</Link></Surface>
+        <Surface className={styles.section}><SectionHeader title={t("imageAdmin.linkTitle")} description={t("imageAdmin.linkBody")} />
+          <Link className={styles.link} to="/admin/images">{t("imageAdmin.link")}</Link></Surface>
       </> : <ErrorState title={t("analytics.unavailableTitle")}>{t("analytics.unavailableBody")}</ErrorState>}
     </div>
   </GroupFrame>;

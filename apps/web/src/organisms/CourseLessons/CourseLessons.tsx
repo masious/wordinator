@@ -228,6 +228,11 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
     <div ref={reading} className={gate ? `${styles.body} ${styles.gated}` : styles.body} style={gate && gateHeight !== null ? { maxBlockSize: gateHeight } : undefined}>
       {!lesson.document && <p className={styles.preview}>{t("courses.lessons.draftPreview")}</p>}
       <LessonDocument document={document} anchored vocabulary={false} renderAfterBlock={renderAfterBlock} renderHeadingBadge={renderHeadingBadge}
+        renderDialogueAction={lesson.document && !gate ? (block) => <Link className={styles.dialogueSceneLink}
+          to="/courses/$courseSlug/lessons/$lessonSlug/dialogues/$blockId"
+          params={{ courseSlug: scope.courseSlug, lessonSlug: lesson.slug, blockId: block.id }}>
+          {t("courses.lessons.openDialogueScene")}<ArrowRight aria-hidden="true" />
+        </Link> : undefined}
         renderShare={share ? (block) => <ShareButton piece={block.type === "example" ? { kind: "example", block } : { kind: "dialogue", block }}
           label={t(`lessonShares.shareNamed.${block.type}`)} /> : undefined}
         renderPractice={(block) =>
@@ -497,10 +502,12 @@ export function LessonView({ groupId, courseId, accountId, detail, lessonId, dat
   // A published lesson the viewer has neither started nor finished opens behind the start gate, once their progress is known.
   // Archived courses refuse positions, so nothing would record the start and they open whole.
   const gated = !started && !editing && Boolean(data?.published && data.document) && !archived && progress.isSuccess && !completed && !saved;
-  const start = () => {
+  const start = async () => {
     setStarted(true);
     // The first step becomes the viewer's position, so the lesson is in progress.
-    if (steps[0]) void saveLessonPosition(queryClient, { path: lessonPath, groupId, courseId }, steps[0]);
+    if (steps[0]) await saveLessonPosition(queryClient, { path: lessonPath, groupId, courseId }, steps[0]);
+    const opening = data?.document?.blocks.find((block) => block.type === "dialogue");
+    if (opening) await navigate({ to: "/courses/$courseSlug/lessons/$lessonSlug/dialogues/$blockId", params: { courseSlug: detail.course.slug, lessonSlug: current.slug, blockId: opening.id } });
   };
   const lessonLink = (target: CourseLessonSummary) => ({ to: "/courses/$courseSlug/lessons/$lessonSlug" as const, params: { courseSlug: detail.course.slug, lessonSlug: target.slug } });
   return <article className={styles.page} aria-labelledby="lesson-title">

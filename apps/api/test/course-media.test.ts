@@ -1,6 +1,6 @@
 import { env } from "cloudflare:test";
 import { courseResponseSchema } from "@wordinator/contracts";
-import { lessonImageUploadResponseSchema, lessonResponseSchema } from "@wordinator/contracts/lesson-document";
+import { dialogueScenesResponseSchema, lessonImageUploadResponseSchema, lessonResponseSchema } from "@wordinator/contracts/lesson-document";
 import { beforeAll, describe, expect, it } from "vitest";
 import { sweepLessonMedia } from "../src/app";
 import { hashPassword } from "../src/auth";
@@ -139,5 +139,38 @@ describe("Course cover media", () => {
     const keys = await env.DB.prepare("SELECT key FROM course_media WHERE lesson_id = ? ORDER BY key").bind(lessonId).all<{ key: string }>();
     expect(keys.results.map((row) => row.key)).toEqual([published.key, drafted.key, fresh.key].sort());
     expect(await sweepLessonMedia(env as never)).toBe(0);
+  });
+
+  it("protects dialogue scenes, validates slots, and replaces the R2 object for a slot", async () => {
+    const ownerId = crypto.randomUUID(); const readerId = crypto.randomUUID(); const outsiderId = crypto.randomUUID();
+    const groupId = crypto.randomUUID(); const courseId = crypto.randomUUID(); const lessonId = crypto.randomUUID(); const blockId = crypto.randomUUID(); const now = Date.now();
+    const ownerEmail = `${ownerId}@test.local`; const readerEmail = `${readerId}@test.local`; const outsiderEmail = `${outsiderId}@test.local`;
+    const document = { schemaVersion: 2, blocks: [{ id: blockId, type: "dialogue", props: { turns: JSON.stringify([{ speaker: "Sofia", text: "Hoi!", translation: null }]) }, children: [] }] };
+    await env.DB.batch([
+      env.DB.prepare("INSERT INTO users (id, email, normalized_email, password_hash, display_name, must_change_password, created_at, updated_at) VALUES (?, ?, ?, ?, 'Scene owner', 0, ?, ?)").bind(ownerId, ownerEmail, ownerEmail, passwordHash, now, now),
+      env.DB.prepare("INSERT INTO users (id, email, normalized_email, password_hash, display_name, must_change_password, created_at, updated_at) VALUES (?, ?, ?, ?, 'Scene reader', 0, ?, ?)").bind(readerId, readerEmail, readerEmail, passwordHash, now, now),
+      env.DB.prepare("INSERT INTO users (id, email, normalized_email, password_hash, display_name, must_change_password, created_at, updated_at) VALUES (?, ?, ?, ?, 'Scene outsider', 0, ?, ?)").bind(outsiderId, outsiderEmail, outsiderEmail, passwordHash, now, now),
+      env.DB.prepare("INSERT INTO groups (id, creator_user_id, name, language, invitation_token, created_at, updated_at) VALUES (?, ?, 'Scene group', 'nl', ?, ?, ?)").bind(groupId, ownerId, "z".repeat(40), now, now),
+      env.DB.prepare("INSERT INTO memberships (group_id, user_id, state, requested_at, decided_at, profile_display_name, updated_at) VALUES (?, ?, 'active', ?, ?, 'Scene owner', ?)").bind(groupId, ownerId, now, now, now),
+      env.DB.prepare("INSERT INTO memberships (group_id, user_id, state, requested_at, decided_at, profile_display_name, updated_at) VALUES (?, ?, 'active', ?, ?, 'Scene reader', ?)").bind(groupId, readerId, now, now, now),
+      env.DB.prepare("INSERT INTO courses (id, slug, group_id, owner_id, title, summary, status, created_at, updated_at) VALUES (?, lower(hex(randomblob(6))), ?, ?, 'Scenes', 'Summary', 'published', ?, ?)").bind(courseId, groupId, ownerId, now, now),
+      env.DB.prepare("INSERT INTO course_lessons (id, slug, group_id, course_id, title, position, draft_doc, published_doc, created_by, updated_by, created_at, updated_at) VALUES (?, lower(hex(randomblob(6))), ?, ?, 'Dialogue', 0, json(?), json(?), ?, ?, ?, ?)").bind(lessonId, groupId, courseId, JSON.stringify(document), JSON.stringify(document), ownerId, ownerId, now, now),
+    ]);
+    const owner = await signIn(ownerEmail); const reader = await signIn(readerEmail); const outsider = await signIn(outsiderEmail);
+    const path = `/api/groups/${groupId}/courses/${courseId}/lessons/${lessonId}/dialogue-scenes`;
+    expect((await fetchWorker(`https://wordinator.test${path}`)).status).toBe(401);
+    expect((await fetchWorker(`https://wordinator.test${path}`, { headers: { cookie: outsider } })).status).toBe(404);
+    expect(dialogueScenesResponseSchema.parse(await (await fetchWorker(`https://wordinator.test${path}`, { headers: { cookie: reader } })).json())).toEqual({ scenes: [] });
+    const png = new Uint8Array([137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 0, 3, 0, 0, 0, 2]);
+    const upload = async (cookie: string, kind: string, extra: Record<string, string> = {}, bytes = png) => {
+      const form = new FormData(); form.set("image", new File([bytes.slice().buffer as ArrayBuffer], "scene.png", { type: "image/png" })); form.set("blockId", blockId); form.set("kind", kind); for (const [key, value] of Object.entries(extra)) form.set(key, value);
+      return fetchWorker(`https://wordinator.test${path}/images`, { method: "POST", headers: { cookie }, body: form });
+    };
+    expect((await upload(reader, "location")).status).toBe(403);
+    expect((await upload(owner, "portrait")).status).toBe(400);
+    const first = await upload(owner, "location"); expect(first.status).toBe(201); const firstBody = await first.json<{ url: string }>();
+    const second = await upload(owner, "location", {}, new Uint8Array([...png, 1])); expect(second.status).toBe(201); expect((await fetchWorker(firstBody.url)).status).toBe(404);
+    const read = dialogueScenesResponseSchema.parse(await (await fetchWorker(`https://wordinator.test${path}`, { headers: { cookie: reader } })).json());
+    expect(read.scenes).toEqual([{ blockId, locationUrl: (await second.json<{ url: string }>()).url, backgroundUrl: null, portraits: {}, lineScenes: [] }]);
   });
 });

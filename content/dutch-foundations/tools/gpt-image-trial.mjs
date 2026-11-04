@@ -7,8 +7,9 @@
 // portrait with --person "who" draws someone not in cast.json (the cast id then only names the file).
 //   node content/dutch-foundations/tools/gpt-image-trial.mjs scene <location.png> --refs <portraits> --describe "who does what"
 //   node content/dutch-foundations/tools/gpt-image-trial.mjs mask <scene.png> <cast id> [--person "who"]
+//   node content/dutch-foundations/tools/gpt-image-trial.mjs variant <scene.png> --describe "the one small change" [--name line-3]
 // A scene places the referenced people in the location; a mask is the scene in flat greys with one person white, to multiply
-// over the scene so everyone else dims.
+// over the scene so everyone else dims; a variant redraws a scene with one small change, such as a gesture or a thought bubble.
 // Reads AZURE_IMAGE_ENDPOINT, AZURE_IMAGE_API_KEY and AZURE_IMAGE_DEPLOYMENT from apps/api/.dev.vars. Each result lands in
 // illustrations/candidates/gpt-image/ (gitignored) with a .json sidecar holding its prompt, references and token usage.
 import { mkdir, readFile, writeFile } from "node:fs/promises";
@@ -19,8 +20,8 @@ const castId = (job === "portrait" || job === "mask") && !rest[0]?.startsWith("-
 const option = (name) => { const at = rest.indexOf(`--${name}`); return at < 0 ? "" : rest[at + 1] ?? ""; };
 const notes = option("notes");
 const refs = [ref, ...option("refs").split(",").filter(Boolean)];
-if (!["location", "portrait", "scene", "mask"].includes(job) || !ref || ((job === "portrait" || job === "mask") && !castId) || (job === "scene" && !option("describe"))) {
-  console.error("usage: gpt-image-trial.mjs location <scene.png> [--notes text] | portrait <scene.png> <cast id> | scene <location.png> --describe text | mask <scene.png> <cast id>");
+if (!["location", "portrait", "scene", "mask", "variant"].includes(job) || !ref || ((job === "portrait" || job === "mask") && !castId) || ((job === "scene" || job === "variant") && !option("describe"))) {
+  console.error("usage: gpt-image-trial.mjs location <scene.png> [--notes text] | portrait <scene.png> <cast id> | scene <location.png> --describe text | mask <scene.png> <cast id> | variant <scene.png> --describe text");
   process.exit(2);
 }
 
@@ -49,6 +50,11 @@ if (job === "location") {
   spec = {
     size: "1536x864",
     prompt: `${style} The first reference image is the place; keep it exactly: the same view, furniture, window and light. The other reference images are portraits of the people; keep their faces, hair, glasses and clothes exactly. ${option("describe")} Every person is clearly separate from the others, with a little space between them. ${notes} ${noText}`.replace(/\s+/g, " "),
+  };
+} else if (job === "variant") {
+  spec = {
+    size: "1536x864",
+    prompt: `${style} Redraw the reference image as faithfully as possible: the same room, view, framing and light, and every person in the same place with the same face, hair, glasses and clothes. Make only this small change: ${option("describe")} Everything else stays exactly as it is. A thought bubble, if asked for, is a soft white cloud with a few small circles trailing down to the thinker's head, holding only a small picture. ${notes} ${noText}`.replace(/\s+/g, " "),
   };
 } else if (job === "mask") {
   const cast = JSON.parse(await readFile(join(ill, "cast.json"), "utf8"));
@@ -89,7 +95,7 @@ const body = await response.json();
 if (!response.ok) { console.error(response.status, JSON.stringify(body).slice(0, 600)); process.exit(1); }
 const out = join(ill, "candidates/gpt-image", option("out"));
 await mkdir(out, { recursive: true });
-const file = join(out, `${castId ? `${job}-${castId}` : job}-${basename(ref).replace(/\.\w+$/, "")}-${Date.now()}.png`);
+const file = join(out, option("name") ? `${option("name")}-${Date.now()}.png` : `${castId ? `${job}-${castId}` : job}-${basename(ref).replace(/\.\w+$/, "")}-${Date.now()}.png`);
 await writeFile(file, Buffer.from(body.data[0].b64_json, "base64"));
 await writeFile(file.replace(/\.png$/, ".json"), JSON.stringify({ references: refs, ...spec, usage: body.usage }, null, 2));
 console.log(`${((Date.now() - started) / 1000).toFixed(0)}s`, file, JSON.stringify(body.usage ?? {}));

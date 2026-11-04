@@ -1,0 +1,19 @@
+{
+  "prompt": "Warm painterly cartoon illustration in the established Dutch Foundations style. Empty Utrecht kitchen table with a phone and a simple food and flowers list represented by blurred marks, no people, soft winter daylight, calm central negative space. No text, letters, numbers, logos, labels, or watermark.",
+  "model": "gpt-image-2",
+  "size": "1536x864",
+  "quality": "medium",
+  "usage": {
+    "input_tokens": 63,
+    "input_tokens_details": {
+      "image_tokens": 0,
+      "text_tokens": 63
+    },
+    "output_tokens": 1078,
+    "output_tokens_details": {
+      "image_tokens": 1078,
+      "text_tokens": 0
+    },
+    "total_tokens": 1141
+  }
+}

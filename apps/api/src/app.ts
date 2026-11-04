@@ -74,9 +74,9 @@ import {
 } from "@wordinator/contracts";
 import {
   LESSON_DOCUMENT_SCHEMA_VERSION, collectImageUrls, collectLessonWords, collectPracticeIds, courseDetailResponseSchema, courseWordsResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBookmarkPageSchema, wordBookmarksQuerySchema, wordSearchKey, wordSearchPageSchema, wordSearchQuerySchema, wordDrillDeckSchema, wordDrillDirectionSchema, wordDrillGradeRequestSchema, wordDrillGradeResponseSchema, wordDrillQuerySchema, lessonWordBatches, wordBatchesResponseSchema, wordExposuresRequestSchema, wordMatchRoundRequestSchema, wordMatchRoundResponseSchema, type WordMatchRound, findPublishProblems, flattenToSteps, readingReached, lessonDraftSavedResponseSchema, lessonImageUploadResponseSchema,
-  lessonWordMarksSchema,
   lessonPositionRequestSchema, lessonResponseSchema, lessonStepKey, mapImageUrls, parseStoredLessonDocument, publishLessonRequestSchema, readPracticeBlock, saveLessonDraftRequestSchema,
   toLearnerDocument, walkLessonBlocks, type CourseLesson, type CourseWord, type LessonBlockOf, type LessonDocument,
+  lessonWordMarksSchema, dialogueSceneImageKindSchema, dialogueSceneImageUploadSchema, dialogueSceneImageUploadResponseSchema, dialogueScenesResponseSchema,
 } from "@wordinator/contracts/lesson-document";
 import { dialogueSpeakers, speechItems, voiceSampleItems, wordSpeechItems, type SpeechLanguage } from "@wordinator/contracts/speech";
 import { createDatabase, groups, memberships, users } from "@wordinator/db";
@@ -94,6 +94,7 @@ import {
 } from "./speech";
 import { azureRecognitionToken } from "./speechRecognition";
 import { adminRoutes } from "./admin";
+import { mediaUrlFromBase, storeImage } from "./media";
 import { courseVisibleClause } from "./courseVisibility";
 import { tutorRoutes } from "./tutor";
 import { buildWordDrillDeck, type WordDrillMemory } from "./wordDrill";
@@ -122,86 +123,17 @@ export type AppEnvironment = { Bindings: Bindings; Variables: { user: AuthUser |
 const LOGIN_WINDOW_MS = 15 * 60 * 1000;
 const LOGIN_LIMIT = 5;
 const FALLBACK_HASH = "pbkdf2_sha256$40000$AAAAAAAAAAAAAAAAAAAAAA$AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-const IMAGE_MAX_BYTES = 1_048_576;
 // A full lesson document is up to 256 KB, so draft saves get a larger body limit than other JSON requests.
 const LESSON_REQUEST_BYTES_MAX = 300_000;
 
-const mediaUrlFromBase = (base: string, key: string | null) => key
-  ? `${base.replace(/\/$/, "")}/${key.split("/").map(encodeURIComponent).join("/")}`
-  : null;
 const mediaUrl = (bindings: Bindings, key: string | null) => mediaUrlFromBase(bindings.PUBLIC_MEDIA_BASE_URL, key);
 
-function imageType(bytes: Uint8Array): "image/png" | "image/jpeg" | "image/webp" | null {
-  if (bytes.length >= 8 && bytes.slice(0, 8).every((value, index) => value === [137, 80, 78, 71, 13, 10, 26, 10][index])) {
-    const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
-    for (let offset = 8; offset + 12 <= bytes.length;) {
-      const length = view.getUint32(offset);
-      const chunk = new TextDecoder("latin1").decode(bytes.slice(offset + 4, offset + 8));
-      if (chunk === "acTL") return null;
-      if (length > bytes.length - offset - 12) break;
-      offset += length + 12;
-    }
-    return "image/png";
-  }
-  if (bytes.length >= 3 && bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff) return "image/jpeg";
-  if (bytes.length >= 21 && new TextDecoder("latin1").decode(bytes.slice(0, 4)) === "RIFF" && new TextDecoder("latin1").decode(bytes.slice(8, 12)) === "WEBP") {
-    const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
-    for (let offset = 12; offset + 8 <= bytes.length;) {
-      const chunk = new TextDecoder("latin1").decode(bytes.slice(offset, offset + 4));
-      const length = view.getUint32(offset + 4, true);
-      if (chunk === "ANIM" || chunk === "ANMF" || (chunk === "VP8X" && offset + 8 < bytes.length && Boolean(bytes[offset + 8]! & 0x02))) return null;
-      if (length > bytes.length - offset - 8) break;
-      offset += 8 + length + (length % 2);
-    }
-    return "image/webp";
-  }
-  return null;
-}
-
-// Reads the pixel size from the image header; null when the header is truncated.
-function imageSize(bytes: Uint8Array, type: "image/png" | "image/jpeg" | "image/webp"): { width: number; height: number } | null {
-  const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
-  const size = (width: number, height: number) => width > 0 && height > 0 ? { width, height } : null;
-  if (type === "image/png") return bytes.length >= 24 ? size(view.getUint32(16), view.getUint32(20)) : null;
-  if (type === "image/jpeg") {
-    for (let offset = 2; offset + 9 <= bytes.length;) {
-      if (bytes[offset] !== 0xff) return null;
-      const marker = bytes[offset + 1]!;
-      if (marker === 0xff) { offset += 1; continue; }
-      if (marker === 0x01 || (marker >= 0xd0 && marker <= 0xd9)) { offset += 2; continue; }
-      if (marker >= 0xc0 && marker <= 0xcf && marker !== 0xc4 && marker !== 0xc8 && marker !== 0xcc) return size(view.getUint16(offset + 7), view.getUint16(offset + 5));
-      offset += 2 + view.getUint16(offset + 2);
-    }
-    return null;
-  }
-  const chunk = new TextDecoder("latin1").decode(bytes.slice(12, 16));
-  if (chunk === "VP8 " && bytes.length >= 30) return size(view.getUint16(26, true) & 0x3fff, view.getUint16(28, true) & 0x3fff);
-  if (chunk === "VP8L" && bytes.length >= 25) {
-    const [b0, b1, b2, b3] = [bytes[21]!, bytes[22]!, bytes[23]!, bytes[24]!];
-    return size(1 + (((b1 & 0x3f) << 8) | b0), 1 + (((b3 & 0x0f) << 10) | (b2 << 2) | ((b1 & 0xc0) >> 6)));
-  }
-  if (chunk === "VP8X" && bytes.length >= 30) {
-    const read24 = (at: number) => bytes[at]! | (bytes[at + 1]! << 8) | (bytes[at + 2]! << 16);
-    return size(1 + read24(24), 1 + read24(27));
-  }
-  return null;
-}
-
-async function uploadedImage(context: Context<AppEnvironment>, prefix: "avatars" | "groups" | "courses" | `courses/${string}/lessons/${string}`) {
-  const form = await context.req.formData();
-  const value = form.get("image");
-  if (!(value instanceof File)) return { error: apiError(context, 400, "IMAGE_REQUIRED", "Choose an image to upload.") };
-  if (value.size < 1 || value.size > IMAGE_MAX_BYTES) return { error: apiError(context, 400, "IMAGE_SIZE_INVALID", "Images must be no larger than 1 MB.") };
-  const buffer = await value.arrayBuffer();
-  const bytes = new Uint8Array(buffer);
-  const type = imageType(bytes);
-  if (!type) return { error: apiError(context, 400, "IMAGE_TYPE_INVALID", "Choose a static PNG, JPEG, or WebP image.") };
-  const extension = type === "image/png" ? "png" : type === "image/jpeg" ? "jpg" : "webp";
-  const key = `${prefix}/${crypto.randomUUID()}.${extension}`;
-  await context.env.MEDIA.put(key, buffer, { httpMetadata: { contentType: type, cacheControl: "public, max-age=31536000, immutable" } });
-  // Covers and avatars ignore the size; lesson images report it so the editor can reserve space. Unknown sizes fall back to 1×1.
-  const measured = imageSize(bytes, type);
-  return { key, width: measured?.width ?? 1, height: measured?.height ?? 1 };
+async function uploadedImage(context: Context<AppEnvironment>, prefix: string, existingForm?: FormData) {
+  const form = existingForm ?? await context.req.formData();
+  // Covers and avatars ignore the size; lesson images report it so the editor can reserve space.
+  const stored = await storeImage(context.env.MEDIA, prefix, form.get("image"));
+  if ("error" in stored) return { error: apiError(context, 400, stored.error, stored.message) };
+  return stored;
 }
 
 function temporaryPassword() {
@@ -720,6 +652,34 @@ function storedWordMarks(raw: string | null) {
 // Documents store R2 keys; readers receive public URLs, so a media base URL change never breaks stored lessons.
 const expandImages = (document: LessonDocument, mediaBase: string) => mapImageUrls(document, (key) => mediaUrlFromBase(mediaBase, key)!);
 
+type DialogueSceneImageRow = { blockId: string; kind: "location" | "scene" | "mask" | "portrait"; speaker: string | null; lineIndex: number | null; key: string };
+async function readDialogueScenes(binding: D1Database, lessonId: string, blockIds: readonly string[], mediaBase: string) {
+  if (!blockIds.length) return [];
+  const rows = await binding.prepare(
+    "SELECT block_id AS blockId, kind, speaker, line_index AS lineIndex, key FROM dialogue_scene_images WHERE lesson_id = ? AND block_id IN (SELECT value FROM json_each(?)) ORDER BY block_id, line_index, kind, speaker",
+  ).bind(lessonId, jsonList(blockIds)).all<DialogueSceneImageRow>();
+  const byBlock = new Map<string, { blockId: string; locationUrl: string | null; backgroundUrl: string | null; portraits: Record<string, string>; lineScenes: Array<{ sceneUrl: string | null; maskUrl: string | null }> }>();
+  for (const blockId of blockIds) byBlock.set(blockId, { blockId, locationUrl: null, backgroundUrl: null, portraits: {}, lineScenes: [] });
+  for (const row of rows.results) {
+    const scene = byBlock.get(row.blockId); if (!scene) continue;
+    const url = mediaUrlFromBase(mediaBase, row.key)!;
+    if (row.kind === "location") scene.locationUrl = url;
+    else if (row.kind === "portrait" && row.speaker) scene.portraits[row.speaker] = url;
+    else if (row.kind === "scene" && row.lineIndex === null) scene.backgroundUrl = url;
+    else if (row.kind === "mask" && row.lineIndex !== null) {
+      while (scene.lineScenes.length <= row.lineIndex) scene.lineScenes.push({ sceneUrl: null, maskUrl: null });
+      scene.lineScenes[row.lineIndex]!.maskUrl = url;
+    }
+  }
+  // A scene can be uploaded before its matching mask. Keep sparse line slots stable for the client.
+  for (const row of rows.results.filter((item) => item.kind === "scene" && item.lineIndex !== null)) {
+    const scene = byBlock.get(row.blockId)!; const index = row.lineIndex!;
+    while (scene.lineScenes.length <= index) scene.lineScenes.push({ sceneUrl: null, maskUrl: null });
+    scene.lineScenes[index]!.sceneUrl = mediaUrlFromBase(mediaBase, row.key)!;
+  }
+  return [...byBlock.values()].filter((scene) => scene.locationUrl || scene.backgroundUrl || Object.keys(scene.portraits).length || scene.lineScenes.length);
+}
+
 // Large ID lists travel as one JSON parameter because D1 limits bound parameters per statement.
 const jsonList = (values: readonly string[]) => JSON.stringify([...new Set(values)]);
 
@@ -928,7 +888,15 @@ export async function sweepLessonMedia(env: Bindings, now = Date.now()) {
     WHERE l.group_id = course_media.group_id AND l.id = course_media.lesson_id AND t.key = 'url' AND t.value = course_media.key
   )`;
   const removed = await env.DB.prepare(`DELETE FROM course_media WHERE created_at < ? AND ${unreferenced} RETURNING key`).bind(now - MEDIA_GRACE_MS).all<{ key: string }>();
-  const keys = removed.results.map((row) => row.key);
+  const sceneRemoved = await env.DB.prepare(`DELETE FROM dialogue_scene_images
+    WHERE created_at < ? AND NOT EXISTS (
+      SELECT 1 FROM course_lessons l, json_tree(COALESCE(l.draft_doc, '{}')) t
+      WHERE l.id = dialogue_scene_images.lesson_id AND t.key = 'id' AND t.value = dialogue_scene_images.block_id
+    ) AND NOT EXISTS (
+      SELECT 1 FROM course_lessons l, json_tree(COALESCE(l.published_doc, '{}')) t
+      WHERE l.id = dialogue_scene_images.lesson_id AND t.key = 'id' AND t.value = dialogue_scene_images.block_id
+    ) RETURNING key`).bind(now - MEDIA_GRACE_MS).all<{ key: string }>();
+  const keys = [...removed.results, ...sceneRemoved.results].map((row) => row.key);
   for (let index = 0; index < keys.length; index += 1_000) await env.MEDIA.delete(keys.slice(index, index + 1_000));
   logInfo("lesson_media.swept", { removed: keys.length });
   return keys.length;
@@ -2736,7 +2704,7 @@ app.delete(lessonPath, requireGroupAccess, async (context) => {
   const found = await deletableCourseContent(context); if ("error" in found) return found.error;
   const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
   const { groupId, id: courseId } = found.row; const lessonId = lesson.lesson.id; const db = context.env.DB;
-  const media = await db.prepare("SELECT key FROM course_media WHERE group_id = ? AND lesson_id = ?").bind(groupId, lessonId).all<{ key: string }>();
+  const media = await db.prepare("SELECT key FROM course_media WHERE group_id = ? AND lesson_id = ? UNION ALL SELECT key FROM dialogue_scene_images WHERE group_id = ? AND lesson_id = ?").bind(groupId, lessonId, groupId, lessonId).all<{ key: string }>();
   // Lessons are hard-deleted with their practice progress, completions, positions, word index rows, word bookmarks, speech
   // job, images, and AI practice tags (a practice left without tags is deleted), and every account's practice attempts and word
   // reviews of the lesson; memory of the terms those reviews
@@ -2746,6 +2714,7 @@ app.delete(lessonPath, requireGroupAccess, async (context) => {
     db.prepare("DELETE FROM course_practice_progress WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM course_practices WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM course_media WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
+    db.prepare("DELETE FROM dialogue_scene_images WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM course_lesson_completions WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM course_lesson_positions WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM course_lesson_words WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
@@ -2876,6 +2845,56 @@ app.post(`${lessonPath}/images`, requireGroupAccess, async (context) => {
     throw error;
   }
   return context.json(lessonImageUploadResponseSchema.parse({ key: uploaded.key, url: mediaUrl(context.env, uploaded.key), width: uploaded.width, height: uploaded.height }), 201);
+});
+
+// Dialogue scene images are generated independently of the lesson document and are addressed by semantic slot.
+// Re-uploading a slot replaces the old public R2 object after the database row is updated.
+app.get(`${lessonPath}/dialogue-scenes`, requireGroupAccess, async (context) => {
+  const found = await visibleCourse(context); if ("error" in found) return found.error;
+  const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
+  const { published, draft } = storedDocuments(lesson.lesson);
+  const editor = seesCourseDrafts(found.row, context.get("user")!.id);
+  // Published blocks remain readable while an editor is preparing a draft; include new draft blocks too.
+  const documents = [published, ...(editor && draft ? [draft] : [])];
+  const blocks = [...new Set(documents.flatMap((document) => document ? [...walkLessonBlocks(document.blocks)].map(({ block }) => block).filter((block) => block.type === "dialogue").map((block) => block.id) : []))];
+  const scenes = await readDialogueScenes(context.env.DB, lesson.lesson.id, blocks, context.env.PUBLIC_MEDIA_BASE_URL);
+  return context.json(dialogueScenesResponseSchema.parse({ scenes }));
+});
+
+app.post(`${lessonPath}/dialogue-scenes/images`, requireGroupAccess, async (context) => {
+  const found = await contributableCourse(context); if ("error" in found) return found.error;
+  const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
+  const details = await context.req.formData();
+  const kind = dialogueSceneImageKindSchema.safeParse(details.get("kind")).data;
+  const blockId = opaqueIdSchema.safeParse(details.get("blockId")).data;
+  const speakerValue = details.get("speaker");
+  const lineValue = details.get("lineIndex");
+  const lineIndex = lineValue === null || lineValue === "" ? null : Number(lineValue);
+  const parsed = dialogueSceneImageUploadSchema.safeParse({ blockId, kind, speaker: speakerValue === null || speakerValue === "" ? null : speakerValue, lineIndex });
+  if (!parsed.success) return apiError(context, 400, "DIALOGUE_SCENE_SLOT_INVALID", "Choose a valid dialogue image slot.");
+  const { groupId, id: courseId } = found.row; const lessonId = lesson.lesson.id;
+  const stored = storedDocuments(lesson.lesson);
+  const editor = seesCourseDrafts(found.row, context.get("user")!.id);
+  const dialogue = [stored.published, ...(editor && stored.draft ? [stored.draft] : [])].flatMap((document) => document ? [...walkLessonBlocks(document.blocks)].map(({ block }) => block) : [])
+    .find((block) => block.type === "dialogue" && block.id === parsed.data.blockId);
+  if (!dialogue || dialogue.type !== "dialogue") return apiError(context, 404, "DIALOGUE_NOT_FOUND", "This dialogue is not available.");
+  const turns = dialoguePayloadSchema.shape.turns.safeParse(JSON.parse(dialogue.props.turns)).data;
+  if (!turns) return apiError(context, 400, "DIALOGUE_INVALID", "This dialogue has invalid turns.");
+  if (parsed.data.lineIndex !== null && parsed.data.lineIndex !== undefined && parsed.data.lineIndex >= turns.length) return apiError(context, 400, "DIALOGUE_LINE_INVALID", "The line index is outside this dialogue.");
+  if (parsed.data.speaker && !turns.some((turn) => turn.speaker.trim() === parsed.data.speaker)) return apiError(context, 400, "DIALOGUE_SPEAKER_INVALID", "The speaker is not part of this dialogue.");
+  const uploaded = await uploadedImage(context, `courses/${courseId}/lessons/${lessonId}/dialogues/${parsed.data.blockId}/${parsed.data.kind}`, details);
+  if ("error" in uploaded) return uploaded.error;
+  const id = crypto.randomUUID(); const now = Date.now();
+  const previous = await context.env.DB.prepare("SELECT key FROM dialogue_scene_images WHERE lesson_id = ? AND block_id = ? AND kind = ? AND (speaker IS ? OR speaker = ?) AND (line_index IS ? OR line_index = ?)")
+    .bind(lessonId, parsed.data.blockId, parsed.data.kind, parsed.data.speaker ?? null, parsed.data.speaker ?? null, parsed.data.lineIndex ?? null, parsed.data.lineIndex ?? null).first<{ key: string }>();
+  try {
+    await context.env.DB.batch([
+      context.env.DB.prepare("DELETE FROM dialogue_scene_images WHERE lesson_id = ? AND block_id = ? AND kind = ? AND (speaker IS ? OR speaker = ?) AND (line_index IS ? OR line_index = ?)").bind(lessonId, parsed.data.blockId, parsed.data.kind, parsed.data.speaker ?? null, parsed.data.speaker ?? null, parsed.data.lineIndex ?? null, parsed.data.lineIndex ?? null),
+      context.env.DB.prepare("INSERT INTO dialogue_scene_images (id, group_id, course_id, lesson_id, block_id, kind, speaker, line_index, key, width, height, created_by, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)").bind(id, groupId, courseId, lessonId, parsed.data.blockId, parsed.data.kind, parsed.data.speaker ?? null, parsed.data.lineIndex ?? null, uploaded.key, uploaded.width, uploaded.height, context.get("user")!.id, now),
+    ]);
+  } catch (error) { await context.env.MEDIA.delete(uploaded.key); throw error; }
+  if (previous?.key) await context.env.MEDIA.delete(previous.key);
+  return context.json(dialogueSceneImageUploadResponseSchema.parse({ key: uploaded.key, url: mediaUrl(context.env, uploaded.key), width: uploaded.width, height: uploaded.height }), 201);
 });
 
 // Resolves a practice for progress from the published document by block ID. Editors may also reach a practice

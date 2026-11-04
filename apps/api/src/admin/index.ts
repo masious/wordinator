@@ -1,4 +1,4 @@
-import { adminAnalyticsQuerySchema } from "@wordinator/contracts/admin";
+import { adminAnalyticsQuerySchema, adminImageReplaceKeySchema, adminImageReplaceResponseSchema, adminImagesQuerySchema } from "@wordinator/contracts/admin";
 import { aiProviderTestRequestSchema, aiSettingsSchema } from "@wordinator/contracts/ai";
 import { Hono, type Context } from "hono";
 import { createMiddleware } from "hono/factory";
@@ -7,6 +7,7 @@ import type { AuthUser } from "../auth";
 import { apiError } from "../http";
 import { aiProviderStatuses, testAiProvider } from "./aiProviders";
 import { aiAnalytics, learningAnalytics, speechAnalytics, timeAnalytics } from "./analytics";
+import { imageFilters, listImages, replaceImage } from "./images";
 
 // Superuser routes (C14e, docs/settings-and-administration.md#superuser), mounted at `/api/admin` after the session
 // middleware. Every route needs a signed-in, set-up account whose `users.is_superuser` is set; the flag is read with the
@@ -87,4 +88,28 @@ adminRoutes.post("/ai-providers/test", async (context) => {
   const parsed = aiProviderTestRequestSchema.safeParse(body);
   if (!parsed.success) return apiError(context, 400, "VALIDATION_ERROR", "Choose a provider and enter a valid model ID.");
   return context.json(await testAiProvider(context.env, parsed.data.provider, parsed.data.model));
+});
+
+// The image library (docs/settings-and-administration.md#image-library).
+adminRoutes.get("/images", async (context) => {
+  const parsed = adminImagesQuerySchema.safeParse(context.req.query());
+  if (!parsed.success) return apiError(context, 400, "VALIDATION_ERROR", "Check the image filters and try again.");
+  return context.json(await listImages(context.env, parsed.data));
+});
+
+adminRoutes.get("/images/filters", async (context) => context.json(await imageFilters(context.env.DB)));
+
+// Multipart `key` and `image`; the global body limit bounds the upload.
+adminRoutes.post("/images/replace", async (context) => {
+  let form: FormData;
+  try { form = await context.req.formData(); } catch { return apiError(context, 400, "IMAGE_REQUIRED", "Choose an image to upload."); }
+  const key = adminImageReplaceKeySchema.safeParse(form.get("key"));
+  if (!key.success) return apiError(context, 400, "VALIDATION_ERROR", "Choose an image to replace.");
+  const result = await replaceImage(context.env, context.get("user")!.id, key.data, form.get("image"));
+  if ("error" in result) {
+    return "message" in result
+      ? apiError(context, 400, result.error, result.message)
+      : apiError(context, 404, "IMAGE_NOT_FOUND", "This image no longer exists.");
+  }
+  return context.json(adminImageReplaceResponseSchema.parse(result));
 });

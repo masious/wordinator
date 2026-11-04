@@ -1,0 +1,2251 @@
+{
+  "version": 1,
+  "status": "local-staging",
+  "generatedAt": "2026-10-25T08:18:39.821Z",
+  "coverage": {
+    "dialogueBlocks": 125,
+    "lessons": 62
+  },
+  "notes": [
+    "One row per authored dialogue block (125 blocks across 62 lesson files).",
+    "The legacy content/dutch-foundations/part-iii/existing/13-1.json block is excluded from the authored count.",
+    "Generated assets are local paths only; no R2 objects are written by this manifest.",
+    "Part I through part IV lesson briefs and generated assets are preserved from dialogue-scenes.generated.json.",
+    "Part IV through part VII rows use explicit location and cast briefs; null generatedAsset means art is still pending."
+  ],
+  "dialogues": [
+    {
+      "blockId": "4956d3c9-8385-44c8-b953-eb153084ecdb",
+      "lessonId": "part-i/01-a-hallo",
+      "location": "Utrecht Centraal station platform",
+      "locationPrompt": "Empty Utrecht Centraal railway station platform, winter morning, calm central space for lesson text, no people or signage",
+      "cast": [
+        "Els",
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/01-a-hallo/0-painterly-1.jpg",
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/01-a-hallo/location-text-1792912633645.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Els": "illustrations/generated/els-portrait.webp",
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "6a948e36-f702-4a1e-ab2f-a84588d1b11a",
+      "lessonId": "part-i/01-a-hallo",
+      "location": "Utrecht Centraal station platform",
+      "locationPrompt": "Empty Utrecht Centraal railway station platform, winter morning, calm central space for lesson text, no people or signage",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/01-a-hallo/0-painterly-1.jpg",
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/01-a-hallo/location-text-1792912633645.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "ec2b67f2-c4fc-4251-bcb0-ab136e7ffc94",
+      "lessonId": "part-i/01-b-wie-ben-jij",
+      "location": "Small IT company office",
+      "locationPrompt": "Small IT company office, no people or readable text",
+      "cast": [
+        "Daan",
+        "Sofia"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/missing-locations/small-it-company-office.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Daan": "illustrations/generated/daan-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "fb1d3cb3-2f60-49b4-9d85-e129e87bb5ad",
+      "lessonId": "part-i/01-b-wie-ben-jij",
+      "location": "Small IT company reception",
+      "locationPrompt": "Empty welcoming reception desk in a small Utrecht IT office, Wednesday morning, no people, no readable signage",
+      "cast": [
+        "Receptioniste",
+        "Sofia",
+        "Karin"
+      ],
+      "sourceReference": "illustrations/candidates/01-b-wie-ben-jij/0-painterly-1.jpg",
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/01-b-wie-ben-jij/location-text-1792912770137.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Receptioniste": "illustrations/generated/receptioniste-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Karin": "illustrations/generated/karin-portrait.webp"
+      }
+    },
+    {
+      "blockId": "842e37f9-62b5-4583-8081-26bbdddc48b6",
+      "lessonId": "part-i/02-a-waar-kom-je-vandaan",
+      "location": "IT office lunch table",
+      "locationPrompt": "Empty lunch table in a bright small Utrecht office, midday, three chairs, mugs and simple lunches, no people or text",
+      "cast": [
+        "Collega",
+        "Karin",
+        "Sofia",
+        "Daan"
+      ],
+      "sourceReference": "illustrations/candidates/02-a-waar-kom-je-vandaan/0-painterly-1.jpg",
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/02-a-waar-kom-je-vandaan/location-text-1792912809403.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Collega": "illustrations/generated/collega-portrait.webp",
+        "Karin": "illustrations/generated/karin-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Daan": "illustrations/generated/daan-portrait.webp"
+      }
+    },
+    {
+      "blockId": "9829c512-a078-4f9b-9a7b-17c07dd1cfff",
+      "lessonId": "part-i/02-a-waar-kom-je-vandaan",
+      "location": "IT office lunch table",
+      "locationPrompt": "Empty lunch table in a bright small Utrecht office, midday, three chairs, mugs and simple lunches, no people or text",
+      "cast": [
+        "Daan",
+        "Sofia",
+        "Karin"
+      ],
+      "sourceReference": "illustrations/candidates/02-a-waar-kom-je-vandaan/0-painterly-1.jpg",
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/02-a-waar-kom-je-vandaan/location-text-1792912809403.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Daan": "illustrations/generated/daan-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Karin": "illustrations/generated/karin-portrait.webp"
+      }
+    },
+    {
+      "blockId": "1a17dbcf-3147-4421-98dc-e31c52d7eba5",
+      "lessonId": "part-i/02-b-ik-woon-in-utrecht",
+      "location": "Noor's flat kitchen",
+      "locationPrompt": "Empty cosy Utrecht apartment kitchen at evening, warm practical light, kettle and two mugs, no people or text",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/02-b-ik-woon-in-utrecht/0-painterly-1.jpg",
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/02-b-ik-woon-in-utrecht/location-text-1792912853448.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "67d2fbbb-1e0c-4970-aa06-5fb4435376e1",
+      "lessonId": "part-i/02-b-ik-woon-in-utrecht",
+      "location": "Noor's flat kitchen",
+      "locationPrompt": "Empty cosy Utrecht apartment kitchen at evening, warm practical light, kettle and two mugs, no people or text",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/02-b-ik-woon-in-utrecht/0-painterly-1.jpg",
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/02-b-ik-woon-in-utrecht/location-text-1792912853448.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "525accbe-8104-4a5a-963a-d08a41d4a73c",
+      "lessonId": "part-i/03-a-spreek-je-nederlands",
+      "location": "Utrecht office work area",
+      "locationPrompt": "Empty shared office work area with two desks and laptops, daytime, calm centre for text, no people or readable screens",
+      "cast": [
+        "Daan",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/03-a-spreek-je-nederlands/0-painterly-1.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-office-work-area.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Daan": "illustrations/generated/daan-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "e264684b-437c-4f0b-8b31-487a9b87465a",
+      "lessonId": "part-i/03-a-spreek-je-nederlands",
+      "location": "Utrecht office work area",
+      "locationPrompt": "Empty shared office work area with two desks and laptops, daytime, calm centre for text, no people or readable screens",
+      "cast": [
+        "Collega",
+        "Sofia",
+        "Karin"
+      ],
+      "sourceReference": "illustrations/candidates/03-a-spreek-je-nederlands/0-painterly-1.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-office-work-area.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Collega": "illustrations/generated/collega-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Karin": "illustrations/generated/karin-portrait.webp"
+      }
+    },
+    {
+      "blockId": "0ff122f3-dc28-4ff8-ba08-07f2463fac8f",
+      "lessonId": "part-i/03-b-werk-jij-hier",
+      "location": "Sofia's office desk",
+      "locationPrompt": "Empty small office desk with a closed notebook and blank laptop screen, Friday afternoon light, no people or text",
+      "cast": [
+        "Collega",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/03-b-werk-jij-hier/0-painterly-1.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/sofias-office-desk.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Collega": "illustrations/generated/collega-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "19df46bf-8da8-4e91-9a47-b89cad0cf78c",
+      "lessonId": "part-i/03-b-werk-jij-hier",
+      "location": "Sofia's office desk",
+      "locationPrompt": "Empty small office desk with a closed notebook and blank laptop screen, Friday afternoon light, no people or text",
+      "cast": [
+        "Daan",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/03-b-werk-jij-hier/0-painterly-1.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/sofias-office-desk.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Daan": "illustrations/generated/daan-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "79748e03-1da2-4485-8c72-81b0d6f1189e",
+      "lessonId": "part-i/04-a-hoe-oud-ben-je",
+      "location": "Utrecht phone shop",
+      "locationPrompt": "Empty friendly phone shop in central Utrecht, Saturday morning, display counters with blank devices, no people, logos or readable text",
+      "cast": [
+        "Sofia",
+        "Noor"
+      ],
+      "sourceReference": "illustrations/candidates/04-a-hoe-oud-ben-je/0-painterly-1.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-phone-shop.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Noor": "illustrations/generated/noor-portrait.webp"
+      }
+    },
+    {
+      "blockId": "f71d12a9-ab1e-4086-88cf-03701435fa17",
+      "lessonId": "part-i/04-a-hoe-oud-ben-je",
+      "location": "Utrecht phone shop",
+      "locationPrompt": "Empty friendly phone shop in central Utrecht, Saturday morning, display counters with blank devices, no people, logos or readable text",
+      "cast": [
+        "Verkoper",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/04-a-hoe-oud-ben-je/0-painterly-1.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-phone-shop.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Verkoper": "illustrations/generated/verkoper-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "333f7932-ac8a-4072-989d-2acd2779b297",
+      "lessonId": "part-i/04-b-heb-jij-een-fiets",
+      "location": "Noor's flat kitchen",
+      "locationPrompt": "Empty cosy Utrecht apartment kitchen on Saturday evening, groceries and a bicycle helmet near the doorway, no people or text",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/04-b-heb-jij-een-fiets/0-painterly-1.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/noors-flat-kitchen.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "7186309b-80ba-4ee9-b33d-4b2546e46528",
+      "lessonId": "part-i/04-b-heb-jij-een-fiets",
+      "location": "Noor's flat kitchen",
+      "locationPrompt": "Empty cosy Utrecht apartment kitchen on Saturday evening, groceries and a bicycle helmet near the doorway, no people or text",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/04-b-heb-jij-een-fiets/0-painterly-1.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/noors-flat-kitchen.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "07403220-104c-4c6b-996a-4a165d91dd7e",
+      "lessonId": "part-i/05-a-mijn-familie",
+      "location": "Noor's flat kitchen",
+      "locationPrompt": "Empty warm apartment kitchen on Sunday morning, phone on the table and breakfast things, no people or text",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/05-a-mijn-familie/1-painterly-1.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/noors-flat-kitchen.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "24873c7d-412f-4493-9b5b-74afab98926b",
+      "lessonId": "part-i/05-a-mijn-familie",
+      "location": "Noor's flat kitchen",
+      "locationPrompt": "Empty warm apartment kitchen on Sunday morning, phone on the table and breakfast things, no people or text",
+      "cast": [
+        "Sofia",
+        "Noor"
+      ],
+      "sourceReference": "illustrations/candidates/05-a-mijn-familie/1-painterly-1.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/noors-flat-kitchen.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Noor": "illustrations/generated/noor-portrait.webp"
+      }
+    },
+    {
+      "blockId": "5203240a-24b5-4a14-ab22-074c799c10bf",
+      "lessonId": "part-i/05-b-de-of-het",
+      "location": "Noor's flat doorway",
+      "locationPrompt": "Empty apartment entrance in Utrecht on Sunday late morning, open front door with a small child's coat and shoes, no people or text",
+      "cast": [
+        "Els",
+        "Sofia",
+        "Tess",
+        "Noor"
+      ],
+      "sourceReference": "illustrations/candidates/05-b-de-of-het/0-painterly-1.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/noors-flat-doorway.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Els": "illustrations/generated/els-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Tess": "illustrations/generated/tess-portrait.webp",
+        "Noor": "illustrations/generated/noor-portrait.webp"
+      }
+    },
+    {
+      "blockId": "598b41a4-cdd2-4ba7-95da-d5aedd31a393",
+      "lessonId": "part-i/05-b-de-of-het",
+      "location": "Noor's flat doorway",
+      "locationPrompt": "Empty apartment entrance in Utrecht on Sunday late morning, open front door with a small child's coat and shoes, no people or text",
+      "cast": [
+        "Tess",
+        "Sofia",
+        "Els"
+      ],
+      "sourceReference": "illustrations/candidates/05-b-de-of-het/0-painterly-1.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/noors-flat-doorway.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Tess": "illustrations/generated/tess-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Els": "illustrations/generated/els-portrait.webp"
+      }
+    },
+    {
+      "blockId": "2aa46af8-21f8-479e-ae64-43c26010211a",
+      "lessonId": "part-i/06-a-utrecht-is-mooi",
+      "location": "Utrecht Dom Tower street",
+      "locationPrompt": "Utrecht Dom Tower street, no people or readable text",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-dom-tower-street.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "70706f95-c3ca-41d4-ab09-7788001a83f1",
+      "lessonId": "part-i/06-a-utrecht-is-mooi",
+      "location": "Dom Tower street in Utrecht",
+      "locationPrompt": "Empty Utrecht centre street with the Dom Tower rising above it, Sunday afternoon, winter light, no people or readable signs",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/06-a-utrecht-is-mooi/0-painterly-1.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/dom-tower-street-in-utrecht.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "97374d97-dfd9-4411-b959-f28055f4845f",
+      "lessonId": "part-i/06-b-een-mooie-stad",
+      "location": "Noor's flat living room",
+      "locationPrompt": "Empty cosy living room in Noor's Utrecht flat on Sunday evening, tea tray and photo prints on a table, no people or text",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/06-b-een-mooie-stad/0-painterly-1.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/noors-flat-living-room.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "e52fe5e2-f87c-4456-a5e2-259547219f69",
+      "lessonId": "part-i/06-b-een-mooie-stad",
+      "location": "Noor's flat living room",
+      "locationPrompt": "Empty cosy living room in Noor's Utrecht flat on Sunday evening, tea tray and photo prints on a table, no people or text",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/06-b-een-mooie-stad/0-painterly-1.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/noors-flat-living-room.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "6c08b061-2714-4bda-80b0-5a7ef6585d30",
+      "lessonId": "part-ii/07-a-mijn-dag",
+      "location": "Noor's flat breakfast kitchen",
+      "locationPrompt": "Empty Utrecht apartment kitchen at breakfast time, bowl, bread and tea on the table, morning light, no people or text",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/picked/07-a-mijn-dag--0.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/noors-flat-breakfast-kitchen.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "f84ea039-2db7-49f8-89c9-3cd6074949bc",
+      "lessonId": "part-ii/07-a-mijn-dag",
+      "location": "Utrecht office work area",
+      "locationPrompt": "Utrecht office work area, no people or readable text",
+      "cast": [
+        "Sofia",
+        "Daan",
+        "Collega"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-office-work-area.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Daan": "illustrations/generated/daan-portrait.webp",
+        "Collega": "illustrations/generated/collega-portrait.webp"
+      }
+    },
+    {
+      "blockId": "1da0b521-8e76-4266-9055-05303102fe1d",
+      "lessonId": "part-ii/07-b-ik-sta-vroeg-op",
+      "location": "Noor's flat living room",
+      "locationPrompt": "Empty Utrecht apartment living room in the morning with a little untidy laundry and shopping bags, no people or readable text",
+      "cast": [
+        "Sofia",
+        "Daan"
+      ],
+      "sourceReference": "illustrations/candidates/picked/07-b-ik-sta-vroeg-op--0.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/noors-flat-living-room.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Daan": "illustrations/generated/daan-portrait.webp"
+      }
+    },
+    {
+      "blockId": "c3fdd20f-7979-42ef-bc47-66426ffd45e9",
+      "lessonId": "part-ii/07-b-ik-sta-vroeg-op",
+      "location": "Noor's flat living room",
+      "locationPrompt": "Empty Utrecht apartment living room in the morning with a little untidy laundry and shopping bags, no people or readable text",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/picked/07-b-ik-sta-vroeg-op--0.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/noors-flat-living-room.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "a2354394-43b6-4b41-83ba-137d6e0e072b",
+      "lessonId": "part-ii/08-a-hoe-laat-is-het",
+      "location": "Utrecht street outside office",
+      "locationPrompt": "Empty Utrecht street outside a small office, morning, visible public clock without readable numerals, no people or text",
+      "cast": [
+        "Daan",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/08-a-hoe-laat-is-het/0-pro-1.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-street-outside-office.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Daan": "illustrations/generated/daan-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "e0fa5cba-6b95-46de-9a48-58a5bdefa8e7",
+      "lessonId": "part-ii/08-a-hoe-laat-is-het",
+      "location": "Utrecht street outside office",
+      "locationPrompt": "Empty Utrecht street outside a small office, morning, visible public clock without readable numerals, no people or text",
+      "cast": [
+        "Daan",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/08-a-hoe-laat-is-het/0-pro-1.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-street-outside-office.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Daan": "illustrations/generated/daan-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "89014b86-4b76-4bc8-811c-f1fb3248b99b",
+      "lessonId": "part-ii/08-b-een-afspraak-maken",
+      "location": "Sofia's office desk",
+      "locationPrompt": "Empty small office desk with a blank calendar and closed laptop, weekday afternoon, no people or readable writing",
+      "cast": [
+        "Sofia",
+        "Daan"
+      ],
+      "sourceReference": "illustrations/candidates/picked/08-b-een-afspraak-maken--0.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/sofias-office-desk.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Daan": "illustrations/generated/daan-portrait.webp"
+      }
+    },
+    {
+      "blockId": "9386117a-e113-49d3-9b6d-c88ecd8c5c3d",
+      "lessonId": "part-ii/08-b-een-afspraak-maken",
+      "location": "Utrecht hair salon",
+      "locationPrompt": "Utrecht hair salon, no people or readable text",
+      "cast": [
+        "Kapper",
+        "Sofia"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-hair-salon.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Kapper": "illustrations/generated/kapper-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "2cc60f29-f3d3-4762-9316-291c1fc2c5ef",
+      "lessonId": "part-ii/09-a-maandag-dinsdag",
+      "location": "Noor's flat kitchen table",
+      "locationPrompt": "Empty apartment kitchen table with a weekly planner turned away and two mugs, daytime, no readable writing or people",
+      "cast": [
+        "Sofia",
+        "Noor"
+      ],
+      "sourceReference": "illustrations/candidates/09-a-maandag-dinsdag/0-pro-1.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/noors-flat-kitchen-table.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Noor": "illustrations/generated/noor-portrait.webp"
+      }
+    },
+    {
+      "blockId": "4315c350-be46-46d5-9b56-9df73d1f7516",
+      "lessonId": "part-ii/09-a-maandag-dinsdag",
+      "location": "Noor's flat kitchen table",
+      "locationPrompt": "Empty apartment kitchen table with a weekly planner turned away and two mugs, daytime, no readable writing or people",
+      "cast": [
+        "Daan",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/09-a-maandag-dinsdag/0-pro-1.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/noors-flat-kitchen-table.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Daan": "illustrations/generated/daan-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "36ec4230-b532-418e-923c-16bbf4b15678",
+      "lessonId": "part-ii/09-b-mijn-week",
+      "location": "Noor's flat living room",
+      "locationPrompt": "Empty cosy Utrecht living room with a weekly planner and coat over a chair, daytime, no readable writing or people",
+      "cast": [
+        "Sofia",
+        "Daan",
+        "Lotte",
+        "Daans moeder"
+      ],
+      "sourceReference": "illustrations/candidates/09-b-mijn-week/0-pro-1.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/noors-flat-living-room.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Daan": "illustrations/generated/daan-portrait.webp",
+        "Lotte": "illustrations/generated/lotte-portrait.webp",
+        "Daans moeder": "illustrations/generated/daans-moeder-portrait.webp"
+      }
+    },
+    {
+      "blockId": "7013a519-d9d4-44f4-bc8f-e3dccf48330a",
+      "lessonId": "part-ii/09-b-mijn-week",
+      "location": "Noor's flat living room",
+      "locationPrompt": "Empty cosy Utrecht living room with a weekly planner and coat over a chair, daytime, no readable writing or people",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/09-b-mijn-week/0-pro-1.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/noors-flat-living-room.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "22e73d13-07b5-49e5-9c49-e1caaddbb4eb",
+      "lessonId": "part-ii/10-a-boodschappen",
+      "location": "Noor's flat kitchen",
+      "locationPrompt": "Empty apartment kitchen with an open refrigerator and a short blank shopping list, daytime, no people or readable text",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/picked/07-a-mijn-dag--0.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/noors-flat-kitchen.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "25120ed6-c2aa-4e8c-81c7-d3952d9506cc",
+      "lessonId": "part-ii/10-a-boodschappen",
+      "location": "Noor's flat kitchen",
+      "locationPrompt": "Empty apartment kitchen with an open refrigerator and a short blank shopping list, daytime, no people or readable text",
+      "cast": [
+        "Sofia",
+        "Noor"
+      ],
+      "sourceReference": "illustrations/candidates/picked/07-a-mijn-dag--0.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/noors-flat-kitchen.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Noor": "illustrations/generated/noor-portrait.webp"
+      }
+    },
+    {
+      "blockId": "9d532ee5-647d-4f7c-94a7-fb90208fc2ce",
+      "lessonId": "part-ii/10-b-hoeveel-heb-je-nodig",
+      "location": "Utrecht grocery shop",
+      "locationPrompt": "Empty friendly neighbourhood grocery aisle with baskets and produce, daytime, no people, logos or readable labels",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/picked/07-b-ik-sta-vroeg-op--0.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-grocery-shop.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "a23e07df-c70b-470b-9c3c-59e8075548c0",
+      "lessonId": "part-ii/10-b-hoeveel-heb-je-nodig",
+      "location": "Utrecht grocery shop",
+      "locationPrompt": "Empty friendly neighbourhood grocery aisle with baskets and produce, daytime, no people, logos or readable labels",
+      "cast": [
+        "Daan",
+        "Sofia",
+        "Lotte",
+        "Noor"
+      ],
+      "sourceReference": "illustrations/candidates/picked/07-b-ik-sta-vroeg-op--0.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-grocery-shop.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Daan": "illustrations/generated/daan-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Lotte": "illustrations/generated/lotte-portrait.webp",
+        "Noor": "illustrations/generated/noor-portrait.webp"
+      }
+    },
+    {
+      "blockId": "64c5ee9c-52e0-48dc-8b32-f036e66f6018",
+      "lessonId": "part-ii/11-a-in-het-cafe",
+      "location": "Café De Zwaluw terrace",
+      "locationPrompt": "Empty Utrecht café terrace at Saturday lunchtime, small round tables and warm awning, no people or readable signs",
+      "cast": [
+        "Daan",
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/picked/07-a-mijn-dag--0.jpg",
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/11-a-cafe/location-part-iv-22-b-0-1792912515594.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Daan": "illustrations/generated/daan-portrait.webp",
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "a1fb6569-e90e-4af8-b42c-6eb6790e60ad",
+      "lessonId": "part-ii/11-a-in-het-cafe",
+      "location": "Café De Zwaluw terrace",
+      "locationPrompt": "Empty Utrecht café terrace at Saturday lunchtime, small round tables and warm awning, no people or readable signs",
+      "cast": [
+        "Noor",
+        "Sofia",
+        "Daan"
+      ],
+      "sourceReference": "illustrations/candidates/picked/07-a-mijn-dag--0.jpg",
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/11-a-cafe/location-part-iv-22-b-0-1792912515594.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Daan": "illustrations/generated/daan-portrait.webp"
+      }
+    },
+    {
+      "blockId": "3a95f476-cc32-4f99-b4cd-04bacbfa244d",
+      "lessonId": "part-ii/11-b-de-rekening-alstublieft",
+      "location": "Utrecht restaurant dining room",
+      "locationPrompt": "Empty cosy Utrecht restaurant dining room at autumn dinner, five place settings and warm lights, no people or readable menus",
+      "cast": [
+        "Ober",
+        "Daan",
+        "Sofia",
+        "Noor",
+        "Lotte"
+      ],
+      "sourceReference": "illustrations/candidates/picked/part-iv-22-b-0.png",
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/11-b-de-rekening/location-part-iv-22-b-0-1792912472969.webp",
+      "lineScenePolicy": "reuse location and portraits; per-line variants can change menus, drinks and gestures",
+      "portraitAssets": {
+        "Ober": "illustrations/generated/ober-portrait.webp",
+        "Daan": "illustrations/generated/daan-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Lotte": "illustrations/generated/lotte-portrait.webp"
+      }
+    },
+    {
+      "blockId": "ffe17fb6-fe7f-48dc-ac34-a5b3c9a0965f",
+      "lessonId": "part-ii/11-b-de-rekening-alstublieft",
+      "location": "Utrecht restaurant dining room",
+      "locationPrompt": "Empty cosy Utrecht restaurant dining room at autumn dinner, five place settings and warm lights, no people or readable menus",
+      "cast": [
+        "Ober",
+        "Noor",
+        "Daan",
+        "Lotte",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/picked/part-iv-22-b-0.png",
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/11-b-de-rekening/location-part-iv-22-b-0-1792912472969.webp",
+      "lineScenePolicy": "reuse location and portraits; per-line variants can change menus, drinks and gestures",
+      "portraitAssets": {
+        "Ober": "illustrations/generated/ober-portrait.webp",
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Daan": "illustrations/generated/daan-portrait.webp",
+        "Lotte": "illustrations/generated/lotte-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "a5ce4733-6e73-4f5e-88c0-5c69dd9870e2",
+      "lessonId": "part-ii/12-a-deze-of-die",
+      "location": "Utrecht cheese market stall",
+      "locationPrompt": "Empty Dutch cheese market stall on a bright Saturday, wheels of cheese and a simple counter, no people or readable labels",
+      "cast": [
+        "Henk",
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/picked/part-iv-21-a-0.png",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-cheese-market-stall.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Henk": "illustrations/generated/henk-portrait.webp",
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "cf59c128-2643-4584-8c6b-7e05778d8b3d",
+      "lessonId": "part-ii/12-a-deze-of-die",
+      "location": "Utrecht cheese market stall",
+      "locationPrompt": "Empty Dutch cheese market stall on a bright Saturday, wheels of cheese and a simple counter, no people or readable labels",
+      "cast": [
+        "Verkoopster",
+        "Sofia",
+        "Noor"
+      ],
+      "sourceReference": "illustrations/candidates/picked/part-iv-21-a-0.png",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-cheese-market-stall.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Verkoopster": "illustrations/generated/verkoopster-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Noor": "illustrations/generated/noor-portrait.webp"
+      }
+    },
+    {
+      "blockId": "3fd09900-47be-4bd6-9871-faca53501591",
+      "lessonId": "part-ii/12-b-wat-kost-dat",
+      "location": "Utrecht second-hand shop",
+      "locationPrompt": "Empty friendly Utrecht second-hand shop with a jacket rack and small counter, daytime, no people or readable price tags",
+      "cast": [
+        "Sofia",
+        "Verkoper"
+      ],
+      "sourceReference": "illustrations/candidates/picked/part-iv-20-b-0.png",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-second-hand-shop.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Verkoper": "illustrations/generated/verkoper-portrait.webp"
+      }
+    },
+    {
+      "blockId": "85c4cd93-0636-4728-a731-24fb589016e8",
+      "lessonId": "part-ii/12-b-wat-kost-dat",
+      "location": "Utrecht second-hand shop",
+      "locationPrompt": "Empty friendly Utrecht second-hand shop with a jacket rack and small counter, daytime, no people or readable price tags",
+      "cast": [
+        "Henk",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/picked/part-iv-20-b-0.png",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-second-hand-shop.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Henk": "illustrations/generated/henk-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "3052654e-5235-4380-86dd-e43eaab93091",
+      "lessonId": "part-iii/14-a-waar-is-het",
+      "location": "Utrecht canal street",
+      "locationPrompt": "Utrecht canal street, no people or readable text",
+      "cast": [
+        "Noor",
+        "Sofia",
+        "Daan"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-canal-street.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Daan": "illustrations/generated/daan-portrait.webp"
+      }
+    },
+    {
+      "blockId": "374cd9de-9874-4ccf-a3a6-a8939cbb889d",
+      "lessonId": "part-iii/14-a-waar-is-het",
+      "location": "Utrecht street near a canal",
+      "locationPrompt": "Empty Utrecht canal street with a bridge and clear landmarks, daytime, no people or readable street signs",
+      "cast": [
+        "Ingrid",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/picked/14-a-waar-is-het--0.png",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-street-near-a-canal.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Ingrid": "illustrations/generated/ingrid-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "3352fe85-97c7-4531-adff-92075d15c4dd",
+      "lessonId": "part-iii/14-b-staan-liggen-zitten",
+      "location": "Noor's flat living room",
+      "locationPrompt": "Empty Utrecht apartment living room with chair, sofa and objects placed around the room, daytime, no people or text",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/picked/13-2-een-huis-beschrijven--0.png",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/noors-flat-living-room.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "c30a20e9-9405-40fb-a99c-566ad9c0bb66",
+      "lessonId": "part-iii/14-b-staan-liggen-zitten",
+      "location": "Noor's flat living room",
+      "locationPrompt": "Empty Utrecht apartment living room with chair, sofa and objects placed around the room, daytime, no people or text",
+      "cast": [
+        "Henk",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/picked/13-2-een-huis-beschrijven--0.png",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/noors-flat-living-room.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Henk": "illustrations/generated/henk-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "5adf957b-9fba-404a-81b3-914a4ab9db33",
+      "lessonId": "part-iii/15-a-mijn-buurt",
+      "location": "Neighbourhood pharmacy counter",
+      "locationPrompt": "Neighbourhood pharmacy counter, no people or readable text",
+      "cast": [
+        "Sofia",
+        "Medewerkster"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/missing-locations/neighbourhood-pharmacy-counter.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Medewerkster": "illustrations/generated/medewerkster-portrait.webp"
+      }
+    },
+    {
+      "blockId": "6ec701f6-c1bb-4e46-aebd-5b4a352455ce",
+      "lessonId": "part-iii/15-a-mijn-buurt",
+      "location": "Utrecht neighbourhood square",
+      "locationPrompt": "Empty pleasant Utrecht neighbourhood square with bakery, pharmacy frontage and canal in the distance, sunny day, no people or readable signs",
+      "cast": [
+        "Henk",
+        "Ahmed",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/picked/15-a-mijn-buurt--1.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-neighbourhood-square.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Henk": "illustrations/generated/henk-portrait.webp",
+        "Ahmed": "illustrations/generated/ahmed-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "a7e4785c-ac3c-4710-a3cc-c8aa8f8848b5",
+      "lessonId": "part-iii/15-a-mijn-buurt",
+      "location": "Utrecht neighbourhood square",
+      "locationPrompt": "Empty pleasant Utrecht neighbourhood square with bakery, pharmacy frontage and canal in the distance, sunny day, no people or readable signs",
+      "cast": [
+        "Henk",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/picked/15-a-mijn-buurt--1.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-neighbourhood-square.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Henk": "illustrations/generated/henk-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "7647e98d-557a-477b-b7de-810e376eac23",
+      "lessonId": "part-iii/15-b-rechtdoor-en-dan-links",
+      "location": "Utrecht canal intersection",
+      "locationPrompt": "Empty Utrecht canal intersection viewed from a walking route, clear left and straight paths, daytime, no people or readable signs",
+      "cast": [
+        "Toerist",
+        "Sofia",
+        "Noor"
+      ],
+      "sourceReference": "illustrations/candidates/picked/15-b-rechtdoor-en-dan-links--0.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-canal-intersection.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Toerist": "illustrations/generated/toerist-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Noor": "illustrations/generated/noor-portrait.webp"
+      }
+    },
+    {
+      "blockId": "edc9ef77-e28a-4fc0-b84c-66fdb7ca2a30",
+      "lessonId": "part-iii/15-b-rechtdoor-en-dan-links",
+      "location": "Utrecht canal intersection",
+      "locationPrompt": "Empty Utrecht canal intersection viewed from a walking route, clear left and straight paths, daytime, no people or readable signs",
+      "cast": [
+        "Sofia",
+        "Noor"
+      ],
+      "sourceReference": "illustrations/candidates/picked/15-b-rechtdoor-en-dan-links--0.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-canal-intersection.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Noor": "illustrations/generated/noor-portrait.webp"
+      }
+    },
+    {
+      "blockId": "6e5649de-1260-499d-8788-0332e53e0523",
+      "lessonId": "part-iii/16-a-met-de-tram-en-de-trein",
+      "location": "Utrecht Centraal tram and train station",
+      "locationPrompt": "Empty Utrecht transit concourse with tram platform and train departure area, daytime, no people, logos or readable boards",
+      "cast": [
+        "Daan",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/picked/16-a-met-de-tram-en-de-trein--0.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-centraal-tram-and-train-station.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Daan": "illustrations/generated/daan-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "c53cbb4d-8f82-4300-a7e2-79b2d211f8bb",
+      "lessonId": "part-iii/16-a-met-de-tram-en-de-trein",
+      "location": "Utrecht Centraal tram platform",
+      "locationPrompt": "Utrecht Centraal tram platform, no people or readable text",
+      "cast": [
+        "Conducteur",
+        "Daan",
+        "Sofia"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-centraal-tram-platform.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Conducteur": "illustrations/generated/conducteur-portrait.webp",
+        "Daan": "illustrations/generated/daan-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "2f8670f2-b5ed-43e3-81df-fb505b53daff",
+      "lessonId": "part-iii/16-b-ik-ga-een-fiets-kopen",
+      "location": "Utrecht bicycle shop",
+      "locationPrompt": "Empty Utrecht bicycle shop with several city bicycles and a clear service counter, daytime, no people or readable labels",
+      "cast": [
+        "Daan",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/picked/16-b-ik-ga-een-fiets-kopen--0.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-bicycle-shop.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Daan": "illustrations/generated/daan-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "e1fe170d-fbae-46ec-8556-331913f323ad",
+      "lessonId": "part-iii/16-b-ik-ga-een-fiets-kopen",
+      "location": "Utrecht bicycle shop",
+      "locationPrompt": "Empty Utrecht bicycle shop with several city bicycles and a clear service counter, daytime, no people or readable labels",
+      "cast": [
+        "Ahmed",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/picked/16-b-ik-ga-een-fiets-kopen--0.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-bicycle-shop.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Ahmed": "illustrations/generated/ahmed-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "76334df8-dfd4-4900-8e05-7cce1cdb5edd",
+      "lessonId": "part-iii/17-a-wat-voor-weer-is-het",
+      "location": "Utrecht park path",
+      "locationPrompt": "Utrecht park path, no people or readable text",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-park-path.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "e9633920-dee2-45c4-94ce-0504c6d10dec",
+      "lessonId": "part-iii/17-a-wat-voor-weer-is-het",
+      "location": "Utrecht park in changing weather",
+      "locationPrompt": "Empty Utrecht park path under dramatic cloudy weather with a hint of rain, trees and benches, no people or text",
+      "cast": [
+        "Henk",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/picked/15-a-mijn-buurt--1.jpg",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-park-in-changing-weather.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Henk": "illustrations/generated/henk-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "4bf6e08b-07ec-46fa-94e3-0ecf15421b4f",
+      "lessonId": "part-iii/17-b-lekker-weer",
+      "location": "Utrecht park café",
+      "locationPrompt": "Empty park café terrace in bright weather after rain, umbrellas and wet paving, no people or readable signs",
+      "cast": [
+        "Noor",
+        "Sofia",
+        "Daan",
+        "Ober"
+      ],
+      "sourceReference": "illustrations/candidates/picked/part-iv-19-b-0.png",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-park-caf.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Daan": "illustrations/generated/daan-portrait.webp",
+        "Ober": "illustrations/generated/ober-portrait.webp"
+      }
+    },
+    {
+      "blockId": "9a7e4c90-8246-4aea-857b-5f2d977e5627",
+      "lessonId": "part-iii/17-b-lekker-weer",
+      "location": "Utrecht park café",
+      "locationPrompt": "Empty park café terrace in bright weather after rain, umbrellas and wet paving, no people or readable signs",
+      "cast": [
+        "Daan",
+        "Sofia",
+        "Noor"
+      ],
+      "sourceReference": "illustrations/candidates/picked/part-iv-19-b-0.png",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-park-caf.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Daan": "illustrations/generated/daan-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Noor": "illustrations/generated/noor-portrait.webp"
+      }
+    },
+    {
+      "blockId": "56c8f2ac-83f6-43f6-9209-31b2de1b8abf",
+      "lessonId": "part-iii/18-a-kleren-en-kleuren",
+      "location": "Utrecht clothes shop",
+      "locationPrompt": "Empty central Utrecht clothes shop with colourful coats and a fitting mirror, daytime, no people or readable labels",
+      "cast": [
+        "Verkoopster",
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/picked/part-iv-20-a-0.png",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-clothes-shop.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Verkoopster": "illustrations/generated/verkoopster-portrait.webp",
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "db3aaa59-867e-4a73-9fa7-5c0a80ddc00a",
+      "lessonId": "part-iii/18-a-kleren-en-kleuren",
+      "location": "Utrecht clothes shop",
+      "locationPrompt": "Empty central Utrecht clothes shop with colourful coats and a fitting mirror, daytime, no people or readable labels",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/picked/part-iv-20-a-0.png",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-clothes-shop.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "6a312d9d-1f47-4891-a933-20fb62a32560",
+      "lessonId": "part-iii/18-b-deze-jas-is-warmer",
+      "location": "Utrecht clothes shop fitting area",
+      "locationPrompt": "Empty clothes shop fitting area with two coats on a rack and a mirror, daytime, no people or readable tags",
+      "cast": [
+        "Henk",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/picked/part-iv-20-a-0.png",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-clothes-shop-fitting-area.webp",
+      "lineScenePolicy": "reuse location and portraits; line variants may swap coat colour and gesture",
+      "portraitAssets": {
+        "Henk": "illustrations/generated/henk-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "f149503d-a305-4a05-8ac9-de721e342abc",
+      "lessonId": "part-iii/18-b-deze-jas-is-warmer",
+      "location": "Utrecht clothes shop fitting area",
+      "locationPrompt": "Empty clothes shop fitting area with two coats on a rack and a mirror, daytime, no people or readable tags",
+      "cast": [
+        "Verkoopster",
+        "Sofia",
+        "Noor"
+      ],
+      "sourceReference": "illustrations/candidates/picked/part-iv-20-a-0.png",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-clothes-shop-fitting-area.webp",
+      "lineScenePolicy": "reuse location and portraits; line variants may swap coat colour and gesture",
+      "portraitAssets": {
+        "Verkoopster": "illustrations/generated/verkoopster-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Noor": "illustrations/generated/noor-portrait.webp"
+      }
+    },
+    {
+      "blockId": "1b267d5e-e204-4d70-a925-fcf1515c6035",
+      "lessonId": "part-iv/19-a-ik-hou-van-zwemmen",
+      "location": "Dutch evening language classroom",
+      "locationPrompt": "Empty warm evening language classroom with a whiteboard left blank, desks in a semicircle, no people or writing",
+      "cast": [
+        "Marieke",
+        "Sofia",
+        "Piotr",
+        "Cursist"
+      ],
+      "sourceReference": "illustrations/candidates/picked/part-iv-19-a-0.png",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/dutch-evening-language-classroom.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Marieke": "illustrations/generated/marieke-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Piotr": "illustrations/generated/piotr-portrait.webp",
+        "Cursist": "illustrations/generated/cursist-portrait.webp"
+      }
+    },
+    {
+      "blockId": "df630847-fb54-45f1-8a68-3a6ef5e47d5d",
+      "lessonId": "part-iv/19-a-ik-hou-van-zwemmen",
+      "location": "Dutch evening language classroom",
+      "locationPrompt": "Empty warm evening language classroom with a whiteboard left blank, desks in a semicircle, no people or writing",
+      "cast": [
+        "Piotr",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/picked/part-iv-19-a-0.png",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/dutch-evening-language-classroom.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Piotr": "illustrations/generated/piotr-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "9e1e3451-1eef-4e10-8408-41932db38d5b",
+      "lessonId": "part-iv/19-b-ik-zwem-liever",
+      "location": "Utrecht swimming pool lobby",
+      "locationPrompt": "Empty bright Utrecht swimming pool lobby with lockers and a small pool sign rendered without text, no people or logos",
+      "cast": [
+        "Fleur",
+        "Sofia",
+        "Daan"
+      ],
+      "sourceReference": "illustrations/candidates/picked/part-iv-19-b-0.png",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-swimming-pool-lobby.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Fleur": "illustrations/generated/fleur-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Daan": "illustrations/generated/daan-portrait.webp"
+      }
+    },
+    {
+      "blockId": "f5c01e2d-2070-4237-b7a0-8a9003cb7856",
+      "lessonId": "part-iv/19-b-ik-zwem-liever",
+      "location": "Utrecht swimming pool lobby",
+      "locationPrompt": "Empty bright Utrecht swimming pool lobby with lockers and a small pool sign rendered without text, no people or logos",
+      "cast": [
+        "Noor",
+        "Sofia",
+        "Fleur"
+      ],
+      "sourceReference": "illustrations/candidates/picked/part-iv-19-b-0.png",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/utrecht-swimming-pool-lobby.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Fleur": "illustrations/generated/fleur-portrait.webp"
+      }
+    },
+    {
+      "blockId": "5dd31ae4-d15c-459e-b33d-f262de3b1502",
+      "lessonId": "part-iv/20-a-ik-moet-werken",
+      "location": "IT company meeting room",
+      "locationPrompt": "Empty small IT company meeting room with a blank whiteboard, laptop and three chairs, Monday morning light, no people or writing",
+      "cast": [
+        "Karin",
+        "Daan",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/picked/part-iv-20-a-0.png",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/it-company-meeting-room.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Karin": "illustrations/generated/karin-portrait.webp",
+        "Daan": "illustrations/generated/daan-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "dcedacdc-c1a0-4a5e-8ba7-6508aa0b788a",
+      "lessonId": "part-iv/20-a-ik-moet-werken",
+      "location": "IT company meeting room",
+      "locationPrompt": "Empty small IT company meeting room with a blank whiteboard, laptop and three chairs, Monday morning light, no people or writing",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/picked/part-iv-20-a-0.png",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/it-company-meeting-room.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "3723dd9b-b89e-42f4-96b7-1923c9ff3e15",
+      "lessonId": "part-iv/20-b-donderdag-kan-ik-niet",
+      "location": "Noor's flat living room",
+      "locationPrompt": "Empty cosy Utrecht apartment living room on Wednesday evening, phone on a side table and weekend calendar turned away, no people or readable text",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/picked/part-iv-20-b-0.png",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/noors-flat-living-room.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "51338ed7-7e0e-4a61-87f4-1ac75e6c4f02",
+      "lessonId": "part-iv/20-b-donderdag-kan-ik-niet",
+      "location": "Noor's flat living room",
+      "locationPrompt": "Empty cosy Utrecht apartment living room on Wednesday evening, phone on a side table and weekend calendar turned away, no people or readable text",
+      "cast": [
+        "Daan",
+        "Sofia"
+      ],
+      "sourceReference": "illustrations/candidates/picked/part-iv-20-b-0.png",
+      "generatedAsset": "illustrations/generated/azure/missing-locations/noors-flat-living-room.webp",
+      "lineScenePolicy": "reuse location and portraits",
+      "portraitAssets": {
+        "Daan": "illustrations/generated/daan-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "46154010-d8f6-4991-b135-15d0f2521b33",
+      "lessonId": "part-iv/21-a-zullen-we-sinterklaas-vieren",
+      "location": "Noor's Utrecht kitchen in winter evening light, dinner table and pepernoten bowl",
+      "locationPrompt": "Noor's Utrecht kitchen in winter evening light, dinner table and pepernoten bowl",
+      "cast": [
+        "Noor",
+        "Daan"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/21-a/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Daan": "illustrations/generated/daan-portrait.webp"
+      }
+    },
+    {
+      "blockId": "eae94847-b72f-454a-ab21-f0f0305c1fd0",
+      "lessonId": "part-iv/21-a-zullen-we-sinterklaas-vieren",
+      "location": "Noor's Utrecht kitchen in winter evening light, dinner table and pepernoten bowl",
+      "locationPrompt": "Noor's Utrecht kitchen in winter evening light, dinner table and pepernoten bowl",
+      "cast": [
+        "Noor",
+        "Fleur",
+        "Sofia"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/21-a/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Fleur": "illustrations/generated/fleur-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "d6aabb94-9dcb-413e-acf3-e503a7e3896c",
+      "lessonId": "part-iv/21-b-ik-haal-je-op",
+      "location": "Small Utrecht office desk with phone and calendar",
+      "locationPrompt": "Small Utrecht office desk with phone and calendar",
+      "cast": [
+        "Sofia",
+        "Piotr"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/21-b/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Piotr": "illustrations/generated/piotr-portrait.webp"
+      }
+    },
+    {
+      "blockId": "ebdec1cd-27a7-4619-8c12-8bf68032ce5f",
+      "lessonId": "part-iv/21-b-ik-haal-je-op",
+      "location": "Small Utrecht office desk with phone and calendar",
+      "locationPrompt": "Small Utrecht office desk with phone and calendar",
+      "cast": [
+        "Sofia",
+        "Daan"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/21-b/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Daan": "illustrations/generated/daan-portrait.webp"
+      }
+    },
+    {
+      "blockId": "a3c60c48-ac89-4c7e-9919-2d4d186fb829",
+      "lessonId": "part-iv/22-a-wat-ben-je-aan-het-doen",
+      "location": "Sofia's Lombok apartment table with cardboard bicycle craft and bell",
+      "locationPrompt": "Sofia's Lombok apartment table with cardboard bicycle craft and bell",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/22-a/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "eba28f00-351a-4890-a3af-64dc2e9c3a42",
+      "lessonId": "part-iv/22-a-wat-ben-je-aan-het-doen",
+      "location": "Sofia's Lombok apartment table with cardboard bicycle craft and bell",
+      "locationPrompt": "Sofia's Lombok apartment table with cardboard bicycle craft and bell",
+      "cast": [
+        "Henk",
+        "Sofia"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/22-a/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Henk": "illustrations/generated/henk-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "448e9ef4-ffd0-4a16-8ad6-0086dcef66a6",
+      "lessonId": "part-iv/22-b-pakjesavond",
+      "location": "Cozy Utrecht flat dinner table on Sinterklaas evening",
+      "locationPrompt": "Cozy Utrecht flat dinner table on Sinterklaas evening",
+      "cast": [
+        "Noor",
+        "Daan",
+        "Sofia",
+        "Fleur"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/22-b/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Daan": "illustrations/generated/daan-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Fleur": "illustrations/generated/fleur-portrait.webp"
+      }
+    },
+    {
+      "blockId": "d4c4f66b-5233-455f-ba20-078df2219ba3",
+      "lessonId": "part-iv/22-b-pakjesavond",
+      "location": "Cozy Utrecht flat dinner table on Sinterklaas evening",
+      "locationPrompt": "Cozy Utrecht flat dinner table on Sinterklaas evening",
+      "cast": [
+        "Lotte",
+        "Sofia"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/22-b/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Lotte": "illustrations/generated/lotte-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "cfb56578-ec5a-40dc-9688-08e91de30bb0",
+      "lessonId": "part-iv/23-a-mag-ik-vrij-nemen",
+      "location": "Utrecht office with blank leave calendar and laptop",
+      "locationPrompt": "Utrecht office with blank leave calendar and laptop",
+      "cast": [
+        "Sofia",
+        "Karin"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/23-a/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Karin": "illustrations/generated/karin-portrait.webp"
+      }
+    },
+    {
+      "blockId": "edb8f979-50e8-4575-ad68-89c17b89ee55",
+      "lessonId": "part-iv/23-a-mag-ik-vrij-nemen",
+      "location": "Utrecht office with blank leave calendar and laptop",
+      "locationPrompt": "Utrecht office with blank leave calendar and laptop",
+      "cast": [
+        "Badmeester",
+        "Sofia"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/23-a/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Badmeester": "illustrations/generated/badmeester-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "1128c91b-532d-4a07-b448-3171403c5c75",
+      "lessonId": "part-iv/23-b-dat-hoeft-niet",
+      "location": "Sofia's kitchen table with phone messages",
+      "locationPrompt": "Sofia's kitchen table with phone messages",
+      "cast": [
+        "Henk",
+        "Sofia"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/23-b/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Henk": "illustrations/generated/henk-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "8ac1e041-8a3a-4bff-a547-0bce49055266",
+      "lessonId": "part-iv/23-b-dat-hoeft-niet",
+      "location": "Sofia's kitchen table with phone messages",
+      "locationPrompt": "Sofia's kitchen table with phone messages",
+      "cast": [
+        "Piotr",
+        "Sofia",
+        "Lotte"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/23-b/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Piotr": "illustrations/generated/piotr-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Lotte": "illustrations/generated/lotte-portrait.webp"
+      }
+    },
+    {
+      "blockId": "4225dbc5-8f30-4629-80a7-0363790da73d",
+      "lessonId": "part-iv/24-a-wat-vind-jij-ervan",
+      "location": "Sofia's Lombok housewarming dinner table with shared dishes",
+      "locationPrompt": "Sofia's Lombok housewarming dinner table with shared dishes",
+      "cast": [
+        "Sofia",
+        "Noor",
+        "Henk",
+        "Fleur",
+        "Piotr",
+        "Kasia",
+        "Daan"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/24-a/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Henk": "illustrations/generated/henk-portrait.webp",
+        "Fleur": "illustrations/generated/fleur-portrait.webp",
+        "Piotr": "illustrations/generated/piotr-portrait.webp",
+        "Kasia": "illustrations/generated/kasia-portrait.webp",
+        "Daan": "illustrations/generated/daan-portrait.webp"
+      }
+    },
+    {
+      "blockId": "6c8a8533-444b-458b-afa7-3a913e34eb7c",
+      "lessonId": "part-iv/24-a-wat-vind-jij-ervan",
+      "location": "Sofia's Lombok housewarming dinner table with shared dishes",
+      "locationPrompt": "Sofia's Lombok housewarming dinner table with shared dishes",
+      "cast": [
+        "Daan",
+        "Piotr",
+        "Sofia"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/24-a/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Daan": "illustrations/generated/daan-portrait.webp",
+        "Piotr": "illustrations/generated/piotr-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "389ce6b9-03d6-47f9-9025-3243c1bae340",
+      "lessonId": "part-iv/24-b-ik-denk-dat-het-gaat-sneeuwen",
+      "location": "Utrecht city library classroom after Dutch class",
+      "locationPrompt": "Utrecht city library classroom after Dutch class",
+      "cast": [
+        "Henk",
+        "Sofia"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/24-b/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Henk": "illustrations/generated/henk-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "99a61470-673d-431d-a28a-37ae4c85ea2b",
+      "lessonId": "part-iv/24-b-ik-denk-dat-het-gaat-sneeuwen",
+      "location": "Utrecht city library classroom after Dutch class",
+      "locationPrompt": "Utrecht city library classroom after Dutch class",
+      "cast": [
+        "Marieke",
+        "Piotr",
+        "Sofia"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/24-b/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Marieke": "illustrations/generated/marieke-portrait.webp",
+        "Piotr": "illustrations/generated/piotr-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "9b9c890b-079a-4ff2-b65c-3e550fb99076",
+      "lessonId": "part-v/25-wat-deed-je-gisteren",
+      "location": "Noor's familiar Utrecht kitchen on a winter morning",
+      "locationPrompt": "Noor's familiar Utrecht kitchen on a winter morning",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/25/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "df05b8f6-dc0e-4dbb-8892-2b3cb0cea5f1",
+      "lessonId": "part-v/25-wat-deed-je-gisteren",
+      "location": "Noor's familiar Utrecht kitchen on a winter morning",
+      "locationPrompt": "Noor's familiar Utrecht kitchen on a winter morning",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/25/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "1fa1ee41-5c92-4c5c-99a3-7775bdd2b8d7",
+      "lessonId": "part-v/26-waar-ben-je-heen-gegaan",
+      "location": "Sofia's Utrecht apartment kitchen table with an unlabeled city map",
+      "locationPrompt": "Sofia's Utrecht apartment kitchen table with an unlabeled city map",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/26/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "838c88f5-e1d1-4f84-82bd-9d0f31bfb35e",
+      "lessonId": "part-v/26-waar-ben-je-heen-gegaan",
+      "location": "Sofia's Utrecht apartment kitchen table with an unlabeled city map",
+      "locationPrompt": "Sofia's Utrecht apartment kitchen table with an unlabeled city map",
+      "cast": [
+        "Sofia",
+        "Noor"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/26/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Noor": "illustrations/generated/noor-portrait.webp"
+      }
+    },
+    {
+      "blockId": "73fab6e5-e342-4e36-9726-493822060a05",
+      "lessonId": "part-v/27-wat-heb-je-gezien",
+      "location": "Utrecht home table with holiday photographs and tea",
+      "locationPrompt": "Utrecht home table with holiday photographs and tea",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/27/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "95f0ffd7-e3e3-49a8-a35c-a516966b0ef7",
+      "lessonId": "part-v/27-wat-heb-je-gezien",
+      "location": "Utrecht home table with holiday photographs and tea",
+      "locationPrompt": "Utrecht home table with holiday photographs and tea",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/27/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "0ef35c3d-e71a-4d6a-a588-44f05b3f8574",
+      "lessonId": "part-v/28-toen-ik-jonger-was",
+      "location": "Warm Utrecht kitchen table for childhood memories",
+      "locationPrompt": "Warm Utrecht kitchen table for childhood memories",
+      "cast": [
+        "Sofia",
+        "Noor"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/28/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Noor": "illustrations/generated/noor-portrait.webp"
+      }
+    },
+    {
+      "blockId": "3cae05f8-db7d-4efd-9ed0-4bbbc3aee4e7",
+      "lessonId": "part-v/28-toen-ik-jonger-was",
+      "location": "Warm Utrecht kitchen table for childhood memories",
+      "locationPrompt": "Warm Utrecht kitchen table for childhood memories",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/28/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "17447302-1f96-45d2-96c1-bd7cfe616dc3",
+      "lessonId": "part-v/29-eerst-daarna-uiteindelijk",
+      "location": "Sofia's Utrecht home with an unlabeled route map",
+      "locationPrompt": "Sofia's Utrecht home with an unlabeled route map",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/29/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "5e4ab70a-42fc-4583-bb11-469aff33697c",
+      "lessonId": "part-v/29-eerst-daarna-uiteindelijk",
+      "location": "Sofia's Utrecht home with an unlabeled route map",
+      "locationPrompt": "Sofia's Utrecht home with an unlabeled route map",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/29/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "46ef3591-27aa-4f0d-baa2-83579d68d6ef",
+      "lessonId": "part-vi/30-omdat-ik-werk",
+      "location": "Small Utrecht IT office with desks and blank screens",
+      "locationPrompt": "Small Utrecht IT office with desks and blank screens",
+      "cast": [
+        "Sofia",
+        "Daan"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/30/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Daan": "illustrations/generated/daan-portrait.webp"
+      }
+    },
+    {
+      "blockId": "760b1036-c981-4827-ae3f-91b2b91c4068",
+      "lessonId": "part-vi/30-omdat-ik-werk",
+      "location": "Small Utrecht IT office with desks and blank screens",
+      "locationPrompt": "Small Utrecht IT office with desks and blank screens",
+      "cast": [
+        "Karin",
+        "Sofia",
+        "Daan"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/30/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Karin": "illustrations/generated/karin-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Daan": "illustrations/generated/daan-portrait.webp"
+      }
+    },
+    {
+      "blockId": "92f07c87-a832-4d85-a96b-f76af4fb1d6c",
+      "lessonId": "part-vi/31-want-of-omdat",
+      "location": "Utrecht city library classroom at evening class",
+      "locationPrompt": "Utrecht city library classroom at evening class",
+      "cast": [
+        "Sofia",
+        "Marieke",
+        "Piotr"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/31/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Marieke": "illustrations/generated/marieke-portrait.webp",
+        "Piotr": "illustrations/generated/piotr-portrait.webp"
+      }
+    },
+    {
+      "blockId": "c8e304c3-dca2-4577-96f6-272203132aa4",
+      "lessonId": "part-vi/31-want-of-omdat",
+      "location": "Utrecht city library classroom at evening class",
+      "locationPrompt": "Utrecht city library classroom at evening class",
+      "cast": [
+        "Marieke",
+        "Piotr",
+        "Sofia"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/31/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Marieke": "illustrations/generated/marieke-portrait.webp",
+        "Piotr": "illustrations/generated/piotr-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "2452b6a0-28b9-414a-8681-7c6f3076aaec",
+      "lessonId": "part-vi/32-wat-is-het-leukst",
+      "location": "Warm home dining table with familiar dishes and unlabeled map",
+      "locationPrompt": "Warm home dining table with familiar dishes and unlabeled map",
+      "cast": [
+        "Sofia",
+        "Noor"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/32/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Noor": "illustrations/generated/noor-portrait.webp"
+      }
+    },
+    {
+      "blockId": "5a80bce6-0323-49ee-98a3-c3abc31883fd",
+      "lessonId": "part-vi/32-wat-is-het-leukst",
+      "location": "Warm home dining table with familiar dishes and unlabeled map",
+      "locationPrompt": "Warm home dining table with familiar dishes and unlabeled map",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/32/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "c447a54d-9262-4880-8802-200677c81866",
+      "lessonId": "part-vi/33-de-collega-die-hier-werkt",
+      "location": "Utrecht office with computer, small card and wall picture",
+      "locationPrompt": "Utrecht office with computer, small card and wall picture",
+      "cast": [
+        "Sofia",
+        "Karin"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/33/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Karin": "illustrations/generated/karin-portrait.webp"
+      }
+    },
+    {
+      "blockId": "f7b17a0f-4740-4163-9608-92136e05b38d",
+      "lessonId": "part-vi/33-de-collega-die-hier-werkt",
+      "location": "Utrecht office with computer, small card and wall picture",
+      "locationPrompt": "Utrecht office with computer, small card and wall picture",
+      "cast": [
+        "Daan",
+        "Sofia"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/33/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Daan": "illustrations/generated/daan-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "82dbcf94-1d53-4812-8275-26682b7aaa67",
+      "lessonId": "part-vi/34-om-te-studeren",
+      "location": "Quiet library table with open book, dictionary and notebook",
+      "locationPrompt": "Quiet library table with open book, dictionary and notebook",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/34/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "f04dec36-d3ef-4924-ae35-70bc6c9e1961",
+      "lessonId": "part-vi/34-om-te-studeren",
+      "location": "Quiet library table with open book, dictionary and notebook",
+      "locationPrompt": "Quiet library table with open book, dictionary and notebook",
+      "cast": [
+        "Sofia",
+        "Noor"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/34/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Noor": "illustrations/generated/noor-portrait.webp"
+      }
+    },
+    {
+      "blockId": "20004243-eb38-4df1-8fe1-9e7429be8cdc",
+      "lessonId": "part-vi/35-als-ik-tijd-had",
+      "location": "Utrecht cafe table with unlabeled park and pool map",
+      "locationPrompt": "Utrecht cafe table with unlabeled park and pool map",
+      "cast": [
+        "Sofia",
+        "Noor"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/35/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Noor": "illustrations/generated/noor-portrait.webp"
+      }
+    },
+    {
+      "blockId": "bacf9131-d097-444d-b19e-18e1051a22d2",
+      "lessonId": "part-vi/35-als-ik-tijd-had",
+      "location": "Utrecht cafe table with unlabeled park and pool map",
+      "locationPrompt": "Utrecht cafe table with unlabeled park and pool map",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/35/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "c9380fd2-5240-47d3-b8f0-6c74f61fe786",
+      "lessonId": "part-vi/36-wat-gaan-we-morgen-doen",
+      "location": "Quiet library classroom with blank weekly timetable",
+      "locationPrompt": "Quiet library classroom with blank weekly timetable",
+      "cast": [
+        "Sofia",
+        "Piotr"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/36/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Piotr": "illustrations/generated/piotr-portrait.webp"
+      }
+    },
+    {
+      "blockId": "f4cd2515-1bfb-489b-a461-fb007a128306",
+      "lessonId": "part-vi/36-wat-gaan-we-morgen-doen",
+      "location": "Quiet library classroom with blank weekly timetable",
+      "locationPrompt": "Quiet library classroom with blank weekly timetable",
+      "cast": [
+        "Piotr",
+        "Sofia"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/36/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Piotr": "illustrations/generated/piotr-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "a83289eb-1681-4e36-8d54-b7c7a3af5807",
+      "lessonId": "part-vii/37-een-klein-probleem",
+      "location": "Ahmed's practical bicycle shop on Kanaalstraat",
+      "locationPrompt": "Ahmed's practical bicycle shop on Kanaalstraat",
+      "cast": [
+        "Sofia",
+        "Ahmed"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/37/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Ahmed": "illustrations/generated/ahmed-portrait.webp"
+      }
+    },
+    {
+      "blockId": "c6715475-68e5-416e-8f54-f121ebf6f430",
+      "lessonId": "part-vii/37-een-klein-probleem",
+      "location": "Ahmed's practical bicycle shop on Kanaalstraat",
+      "locationPrompt": "Ahmed's practical bicycle shop on Kanaalstraat",
+      "cast": [
+        "Sofia",
+        "Henk"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/37/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Henk": "illustrations/generated/henk-portrait.webp"
+      }
+    },
+    {
+      "blockId": "a36426f8-8fd9-474a-a288-dfc204fb4ed9",
+      "lessonId": "part-vii/38-de-dokter-en-de-balie",
+      "location": "Central library classroom used for role-play",
+      "locationPrompt": "Central library classroom used for role-play",
+      "cast": [
+        "Marieke",
+        "Piotr",
+        "Sofia"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/38/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Marieke": "illustrations/generated/marieke-portrait.webp",
+        "Piotr": "illustrations/generated/piotr-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "f1e16fc3-583b-4b7f-a34b-91f868203a44",
+      "lessonId": "part-vii/38-de-dokter-en-de-balie",
+      "location": "Central library classroom used for role-play",
+      "locationPrompt": "Central library classroom used for role-play",
+      "cast": [
+        "Marieke",
+        "Sofia",
+        "Piotr"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/38/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Marieke": "illustrations/generated/marieke-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Piotr": "illustrations/generated/piotr-portrait.webp"
+      }
+    },
+    {
+      "blockId": "4d7303f1-c43c-4539-be85-6ed8595500cb",
+      "lessonId": "part-vii/39-een-bericht-schrijven",
+      "location": "Kitchen table with phone and laptop showing blurred drafts",
+      "locationPrompt": "Kitchen table with phone and laptop showing blurred drafts",
+      "cast": [
+        "Sofia",
+        "Noor"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/39/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Sofia": "illustrations/generated/sofia-portrait.webp",
+        "Noor": "illustrations/generated/noor-portrait.webp"
+      }
+    },
+    {
+      "blockId": "ec5f3044-9617-45f8-bb20-1a8d7661c2cb",
+      "lessonId": "part-vii/39-een-bericht-schrijven",
+      "location": "Kitchen table with phone and laptop showing blurred drafts",
+      "locationPrompt": "Kitchen table with phone and laptop showing blurred drafts",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/39/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "b51e4cea-aa06-4b0e-8391-6d93c560cac2",
+      "lessonId": "part-vii/40-sofia-vertelt-haar-verhaal",
+      "location": "Utrecht apartment kitchen table with softly blurred timeline notebook",
+      "locationPrompt": "Utrecht apartment kitchen table with softly blurred timeline notebook",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/40/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    },
+    {
+      "blockId": "c3ceb5eb-d2d7-4bbd-b555-c5fa19286aa0",
+      "lessonId": "part-vii/40-sofia-vertelt-haar-verhaal",
+      "location": "Utrecht apartment kitchen table with softly blurred timeline notebook",
+      "locationPrompt": "Utrecht apartment kitchen table with softly blurred timeline notebook",
+      "cast": [
+        "Noor",
+        "Sofia"
+      ],
+      "sourceReference": null,
+      "generatedAsset": "illustrations/generated/azure/dialogue-scenes/40/location.webp",
+      "lineScenePolicy": "reuse location and portraits; one scene per line only when a gesture is authored",
+      "portraitAssets": {
+        "Noor": "illustrations/generated/noor-portrait.webp",
+        "Sofia": "illustrations/generated/sofia-portrait.webp"
+      }
+    }
+  ]
+}

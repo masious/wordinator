@@ -21,6 +21,13 @@ import karin from "./images/karin.jpg";
 import office from "./images/office.jpg";
 import sofia from "./images/sofia.jpg";
 
+// 11-b's lines each have their own redrawn scene (a gesture, or a thought bubble with what is said) and the mask lighting its speaker.
+const lineArt = import.meta.glob<string>("./images/11-b/lines/*.jpg", { eager: true, import: "default" });
+const lineScenes11b = Array.from({ length: 12 }, (_, index) => ({
+  scene: lineArt[`./images/11-b/lines/scene-${index}.jpg`]!,
+  mask: lineArt[`./images/11-b/lines/mask-${index}.jpg`]!,
+}));
+
 // Temporary page: the first dialogue of an authored lesson file staged over its location, with the blocks before it as intro
 // boxes. The images are gpt-image-2 tests made from picked production scenes (docs/conversation-scenes.md); development only
 // and not translated. Delete with its route (docs/courses.md#conversation-prototype).
@@ -32,6 +39,7 @@ const STAGES = {
     location: restaurant,
     portraits: { sofia: sofia11b, noor, daan, lotte, ober },
     masks: { sofia: maskSofia, noor: maskNoor, daan: maskDaan, lotte: maskLotte, ober: maskOber },
+    lineScenes: lineScenes11b,
   },
 };
 export const TEMP_CONV_LESSON: keyof typeof STAGES = "11-b-de-rekening-alstublieft";

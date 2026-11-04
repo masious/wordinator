@@ -94,7 +94,17 @@ Practice ID, group ID, course ID, lesson ID, user ID, answered count, and update
 
 ### `course_media`
 
-R2 key (primary key), group ID, course ID, lesson ID, created-by user ID, and created timestamp. Every uploaded [lesson image](courses.md#images) has a row, so the API accepts only image keys uploaded to that lesson. Rows referenced by neither document and older than 24 hours are deleted with their R2 objects at publish and discard and by the daily sweep. Rows cascade from their course and lesson. Migration `0015_lesson_documents.sql` adds the table and its `(group_id, lesson_id, created_at)` index.
+R2 key (primary key), group ID, course ID, lesson ID, created-by user ID, and created timestamp. Every uploaded [lesson image](courses.md#images) has a row, so the API accepts only image keys uploaded to that lesson. Rows referenced by neither document and older than 24 hours are deleted with their R2 objects at publish and discard and by the daily sweep. Rows cascade from their course and lesson. Migration `0015_lesson_documents.sql` adds the table and its `(group_id, lesson_id, created_at)` index. The superuser's [image library](settings-and-administration.md#image-library) can replace a row's image: a new row with the same upload time takes its place and the old row is deleted.
+
+### `dialogue_scene_images`
+
+Migration `0047_dialogue_scene_images.sql` stores generated assets for a dialogue block: one `location`, optional
+dialogue `scene` backgrounds, per-line `scene` and `mask` images, and one `portrait` per speaker. Each row carries the
+lesson and course scope, block ID, optional speaker and line index, the public R2 key, dimensions, creator, and timestamp.
+The semantic slot `(lesson_id, block_id, kind, speaker, line_index)` is unique so retries replace an asset cleanly. The
+API serves these through `GET .../dialogue-scenes` as `locationUrl`, `backgroundUrl`, `portraits`, and ordered
+`lineScenes`; the upload route records the D1 row only after the R2 write succeeds. Scene assets are public by URL and
+cascade with their course or lesson.
 
 ### `course_lesson_words`
 
@@ -136,6 +146,10 @@ One row per `(user_id, term_key, direction)`, the primary key, folded from that 
 
 Added by migration `0041_word_exposures.sql` (2026-10-22); see [word exposures](words.md#word-exposures). User ID, course ID, lesson ID, word ID, term key, `seen_count` (default 0, checked non-negative), nullable `last_seen_at`, and nullable `known_at` (a Peek's I know this word on a term without memory). The primary key is `(user_id, lesson_id, word_id)`. Indexed by `(user_id, term_key)`, for the bands and the deck, and by `lesson_id`. Rows cascade from their user, course, and lesson; a lesson reset deletes the learner's rows of the lesson and lesson deletion deletes every account's in its batch. An Again review clears `known_at` on the term like `known_override`. Exposure never changes [`word_memory`](#word_memory), which stays reproducible from reviews.
 
+### `word_match_rounds`
+
+Added by migration `0049_word_match_rounds.sql` (2026-10-30); see [matching game](words.md#matching-game). One row per learner and lesson batch: the last finished round of the batch's matching game. User ID, course ID, lesson ID, `batch_number` (1-based, the batch's place in `lessonWordBatches` of the published lesson), `word_ids` (JSON, the batch's words when played, in order), `missed_ids` (JSON, the words that were part of a miss), `matches`, `tries` (checked `matches > 0` and `tries >= matches`), and `finished_at`. The primary key is `(user_id, lesson_id, batch_number)`; a new round replaces the row. Indexed by `lesson_id`. A row whose `word_ids` no longer equal the batch's words is not shown. Rows cascade from their user, course, and lesson; a lesson reset deletes the learner's rows of the lesson, and lesson deletion deletes every account's in its batch. The round's grades are ordinary [`word_reviews`](#word_reviews) (source `drill`), so memory never depends on this table.
+
 ### `practice_attempts`
 
 ID, user ID, course ID, nullable lesson ID, practice kind (`lesson` or `ai`), practice ID (the practice block ID or the `ai_practices` ID), item index, prompt, answer, reference (the author's version or the AI practice's reference, nullable), nullable `matched`, nullable `ai_verdict` (`acceptable` or `error`), nullable `ai_note`, source (`lesson`, `ai_chat`, or `ai_practice`), nullable conversation ID, `hints_used` (the number of [word hints](ai-tutor.md#word-hints) opened before answering, 0–4, default 0; migration `0032_attempt_hints.sql`), and created timestamp. Checks limit the enums and the hint count. Prompt, answer, and reference are capped at 2,000 characters. Indexed by `(user_id, created_at)` and `(user_id, lesson_id)`. Unlike [`course_practice_progress`](#course_practice_progress), rows keep the answer text.
@@ -145,10 +159,6 @@ ID, user ID, course ID, nullable lesson ID, practice kind (`lesson` or `ai`), pr
 ID, user ID, surface (`drill`, `word_card`, or `ai_chat`), reference text, nullable term key, lesson ID (its foreign key sets null), and word ID, overall, accuracy, fluency, and completeness scores (0–100), word scores (JSON text: word, accuracy, and error type per word), and created timestamp. Indexed by `(user_id, created_at)` and `(user_id, term_key)`. A lesson reset keeps these rows; lesson deletion sets their lesson and word IDs to null.
 
 ### `learning_time`
-
-### `word_match_rounds`
-
-Added by migration `0049_word_match_rounds.sql` (2026-10-30); see [matching game](words.md#matching-game). One row per learner and lesson batch: the last finished round of the batch's matching game. User ID, course ID, lesson ID, `batch_number` (1-based, the batch's place in `lessonWordBatches` of the published lesson), `word_ids` (JSON, the batch's words when played, in order), `missed_ids` (JSON, the words that were part of a miss), `matches`, `tries` (checked `matches > 0` and `tries >= matches`), and `finished_at`. The primary key is `(user_id, lesson_id, batch_number)`; a new round replaces the row. Indexed by `lesson_id`. A row whose `word_ids` no longer equal the batch's words is not shown. Rows cascade from their user, course, and lesson; a lesson reset deletes the learner's rows of the lesson, and lesson deletion deletes every account's in its batch. The round's grades are ordinary [`word_reviews`](#word_reviews) (source `drill`), so memory never depends on this table.
 
 Added in C15 by migration `0034_learning_time.sql` ([learning time](learning-time.md)). User ID (cascading), entry key, local day (`YYYY-MM-DD` in the learner's browser time zone), activity (`reading`, `practice`, `ai_practice`, `lesson_activity`, `tutor`, `drill`, or `words`; `lesson_activity` was added by migration `0036_lesson_activities.sql`, which rebuilt the table), nullable focus (`lesson` or `grammar` for reading; the AI practice's focus for `ai_practice`; `reading`, `grammar`, or `speaking` for `lesson_activity`; null otherwise), nullable course ID and lesson ID (both cascading), nullable practice ID (a practice block ID or an `ai_practices` ID, no foreign key, like `practice_attempts`), seconds (positive), and updated timestamp. The primary key is `(user_id, entry_key)`; the API builds the entry key from the day, activity, focus, course, lesson, and practice, so each send adds its seconds to one row per target and day. Checks limit the activity, the focus per activity, the day format, and seconds. Indexed by `(user_id, day)` for activity, `(user_id, updated_at)` for the elapsed-time limit, and `(lesson_id, activity)` for medians, reset, and lesson deletion. A lesson reset deletes the learner's rows for the lesson; rows for a removed practice block stay.
 

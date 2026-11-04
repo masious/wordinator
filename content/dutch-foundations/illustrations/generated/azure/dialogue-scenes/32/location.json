@@ -1,0 +1,19 @@
+{
+  "prompt": "Warm painterly cartoon illustration in the established Dutch Foundations style. Empty Utrecht dining table with familiar dishes and an unlabeled map suggesting Utrecht, Valencia, and Groningen, no people, calm central negative space. No text, letters, numbers, logos, labels, or watermark.",
+  "model": "gpt-image-2",
+  "size": "1536x864",
+  "quality": "medium",
+  "usage": {
+    "input_tokens": 60,
+    "input_tokens_details": {
+      "image_tokens": 0,
+      "text_tokens": 60
+    },
+    "output_tokens": 1078,
+    "output_tokens_details": {
+      "image_tokens": 1078,
+      "text_tokens": 0
+    },
+    "total_tokens": 1138
+  }
+}

@@ -5,12 +5,13 @@ import { createContext, useContext, useEffect, useId, useRef, useState, type CSS
 import { useTranslation } from "react-i18next";
 import { PlainText } from "../../molecules/PlainText";
 import { playSpeech, SpeechButton, useSpeechUrl } from "../../molecules/Speech";
+import { WordBookmarkToggle } from "../../organisms/WordBookmark/WordBookmark";
 import styles from "./TempHovercard.module.css";
 
 // Prototype: a new word's hovercard. The demo page sets the tone (one of the vivid accents) and whether opening a card speaks its
 // term; cards portalled out of the page take the tone through `toneStyle`. `subtle` marks words with a light tint only, and
-// `clickOnly` opens cards on a click, tap, or Enter alone (the conversation page).
-export type HovercardDemo = { toneStyle: CSSProperties; sayWords: boolean; words: ReadonlyMap<string, VocabularyWord>; subtle?: boolean; clickOnly?: boolean };
+// `clickOnly` opens cards on a click, tap, or Enter alone (the conversation page), which hears of each card opening through `onOpen`.
+export type HovercardDemo = { toneStyle: CSSProperties; sayWords: boolean; words: ReadonlyMap<string, VocabularyWord>; subtle?: boolean; clickOnly?: boolean; persistentBookmarks?: boolean; onOpen?: () => void };
 export const HovercardDemoContext = createContext<HovercardDemo>({ toneStyle: {}, sayWords: false, words: new Map() });
 export const useHovercardDemo = () => useContext(HovercardDemoContext);
 
@@ -20,6 +21,7 @@ const ARTICLE = /^(de|het|der|die|das)\s+(.+)$/i;
 // example (with its speaker) and the note. The bookmark only toggles here; nothing is saved.
 export function WordCard({ word, compact = false }: { word: VocabularyWord; compact?: boolean }) {
   const { t } = useTranslation();
+  const { persistentBookmarks } = useHovercardDemo();
   const [saved, setSaved] = useState(false);
   const termSpeech = useSpeechUrl(`word:${word.id}`);
   const exampleSpeech = useSpeechUrl(`wordExample:${word.id}`);
@@ -33,9 +35,9 @@ export function WordCard({ word, compact = false }: { word: VocabularyWord; comp
           <span>{rest}</span>
         </p>
         <SpeechButton url={termSpeech} label={t("courses.speech.term", { term: word.term })} />
-        <button type="button" className={styles.bookmark} aria-pressed={saved} aria-label={`Bookmark ${word.term}`} onClick={() => setSaved(!saved)}>
+        {persistentBookmarks ? <WordBookmarkToggle wordId={word.id} term={word.term} /> : <button type="button" className={styles.bookmark} aria-pressed={saved} aria-label={t("courses.words.bookmark", { term: word.term })} onClick={() => setSaved(!saved)}>
           <Bookmark aria-hidden="true" />
-        </button>
+        </button>}
       </div>
       {(word.ipa || forms) && (
         <p className={styles.cardForms}>
@@ -61,7 +63,7 @@ const CLOSE_DELAY = 180;
 // A marked word in running text. Hovering opens its card after a short delay and leaving the word and the card closes it; a tap or
 // click toggles it, a keyboard focus opens it, and Escape or a click elsewhere closes it.
 export function HoverWord({ word, children }: { word: VocabularyWord; children: ReactNode }) {
-  const { toneStyle, sayWords, subtle, clickOnly } = useHovercardDemo();
+  const { toneStyle, sayWords, subtle, clickOnly, onOpen } = useHovercardDemo();
   const [opened, setOpened] = useState(false);
   const timer = useRef<number | undefined>(undefined);
   const termSpeech = useSpeechUrl(`word:${word.id}`);
@@ -72,6 +74,7 @@ export function HoverWord({ word, children }: { word: VocabularyWord; children: 
     clear();
     if (opened) return;
     setOpened(true);
+    onOpen?.();
     if (sayWords && termSpeech) playSpeech(owner, [termSpeech]);
   };
   const later = (action: () => void, delay: number) => { clear(); timer.current = window.setTimeout(action, delay); };

@@ -87,7 +87,70 @@ export const timeAnalyticsResponseSchema = z.strictObject({
 });
 export type TimeAnalyticsResponse = z.infer<typeof timeAnalyticsResponseSchema>;
 
+// Image library (docs/settings-and-administration.md#image-library): every stored course image with where it is used.
+// `cover` is a course cover, `lesson` an image block's upload, and the other kinds are dialogue scene assets.
+export const ADMIN_IMAGE_KINDS = ["cover", "lesson", "location", "scene", "mask", "portrait"] as const;
+export const adminImageKindSchema = z.enum(ADMIN_IMAGE_KINDS);
+export type AdminImageKind = z.infer<typeof adminImageKindSchema>;
+// `dialogue` filters to every dialogue scene kind at once.
+export const adminImageKindFilterSchema = z.enum([...ADMIN_IMAGE_KINDS, "dialogue"]);
+export type AdminImageKindFilter = z.infer<typeof adminImageKindFilterSchema>;
+export const ADMIN_IMAGES_PAGE_SIZE = 60;
+const ADMIN_IMAGE_KEY_MAX = 512;
+// The cursor is the last item's `createdAt|key`; the list runs newest first.
+const adminImagesCursorSchema = z.string().max(ADMIN_IMAGE_KEY_MAX + 20).regex(/^\d{1,16}\|.+$/).transform((value) => {
+  const split = value.indexOf("|");
+  return { createdAt: Number(value.slice(0, split)), key: value.slice(split + 1) };
+});
+const emptyAsMissing = (value: unknown) => value === "" || value === null ? undefined : value;
+export const adminImagesQuerySchema = z.object({
+  kind: z.preprocess(emptyAsMissing, adminImageKindFilterSchema.optional()),
+  courseId: z.preprocess(emptyAsMissing, z.string().max(64).optional()),
+  lessonId: z.preprocess(emptyAsMissing, z.string().max(64).optional()),
+  usage: z.preprocess(emptyAsMissing, z.enum(["used", "unused"]).optional()),
+  cursor: z.preprocess(emptyAsMissing, adminImagesCursorSchema.optional()),
+});
+export type AdminImagesQuery = z.input<typeof adminImagesQuerySchema>;
+
+export const adminImageSchema = z.strictObject({
+  key: z.string(),
+  url: z.url(),
+  kind: adminImageKindSchema,
+  // Lesson images and covers do not record their size.
+  width: z.number().int().positive().nullable(),
+  height: z.number().int().positive().nullable(),
+  // A cover takes its course's creation time.
+  createdAt: z.number().int().nonnegative(),
+  course: z.strictObject({ id: z.string(), slug: z.string(), title: z.string(), status: z.enum(["draft", "published", "archived"]) }),
+  lesson: z.strictObject({ id: z.string(), slug: z.string(), title: z.string(), position: z.number().int().nonnegative() }).nullable(),
+  // Dialogue scene assets name their dialogue block and slot; `section` is the heading the dialogue sits under and `line`
+  // the turn a line scene or mask belongs to, both from the published document, or the draft when it has none.
+  dialogue: z.strictObject({
+    blockId: z.string(), speaker: z.string().nullable(), lineIndex: z.number().int().nonnegative().nullable(),
+    section: z.string().nullable(), line: z.strictObject({ speaker: z.string(), text: z.string() }).nullable(),
+  }).nullable(),
+  // Whether the lesson's draft or published document uses the image (a lesson image's key or a dialogue asset's block).
+  // A cover is always in use by its course.
+  usedInDraft: z.boolean(),
+  usedInPublished: z.boolean(),
+});
+export type AdminImage = z.infer<typeof adminImageSchema>;
+export const adminImagesResponseSchema = z.strictObject({ images: z.array(adminImageSchema), nextCursor: z.string().nullable() });
+export type AdminImagesResponse = z.infer<typeof adminImagesResponseSchema>;
+// Courses and their lessons, for the filters.
+export const adminImageFiltersResponseSchema = z.strictObject({
+  courses: z.array(z.strictObject({
+    id: z.string(), title: z.string(),
+    lessons: z.array(z.strictObject({ id: z.string(), title: z.string(), position: z.number().int().nonnegative() })),
+  })),
+});
+export type AdminImageFiltersResponse = z.infer<typeof adminImageFiltersResponseSchema>;
+// `POST /api/admin/images/replace` takes multipart `key` and `image` and answers with the replaced image under its new key.
+export const adminImageReplaceKeySchema = z.string().trim().min(1).max(ADMIN_IMAGE_KEY_MAX);
+export const adminImageReplaceResponseSchema = z.strictObject({ image: adminImageSchema, previousKey: z.string() });
+export type AdminImageReplaceResponse = z.infer<typeof adminImageReplaceResponseSchema>;
+
 // `GET` and `PUT /api/admin/ai-settings` read and replace the whole value with the contracts' `aiSettingsSchema`
 // (`@wordinator/contracts/ai`); an invalid body is `400 AI_SETTINGS_INVALID`.
-export const ADMIN_ERROR_CODES = ["SUPERUSER_REQUIRED", "AI_SETTINGS_INVALID"] as const;
+export const ADMIN_ERROR_CODES = ["SUPERUSER_REQUIRED", "AI_SETTINGS_INVALID", "IMAGE_NOT_FOUND"] as const;
 export type AdminErrorCode = (typeof ADMIN_ERROR_CODES)[number];

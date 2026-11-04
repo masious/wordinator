@@ -332,6 +332,40 @@ export const courseMedia = sqliteTable(
   (table) => [index("course_media_lesson_idx").on(table.groupId, table.lessonId, table.createdAt)],
 );
 
+// Illustrated dialogue assets are kept separately from lesson document images. A row identifies one
+// semantic asset slot; the object itself lives in the public lesson R2 namespace.
+export const dialogueSceneImages = sqliteTable(
+  "dialogue_scene_images",
+  {
+    id: text("id").primaryKey(),
+    groupId: text("group_id").notNull().references(() => groups.id),
+    courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
+    lessonId: text("lesson_id").notNull().references(() => courseLessons.id, { onDelete: "cascade" }),
+    blockId: text("block_id").notNull(),
+    kind: text("kind").notNull(),
+    speaker: text("speaker"),
+    lineIndex: integer("line_index"),
+    key: text("key").notNull().unique(),
+    width: integer("width").notNull(),
+    height: integer("height").notNull(),
+    createdBy: text("created_by").notNull().references(() => users.id),
+    createdAt: integer("created_at").notNull(),
+  },
+  (table) => [
+    uniqueIndex("dialogue_scene_images_slot_unique").on(table.lessonId, table.blockId, table.kind, sql`coalesce(${table.speaker}, '')`, sql`coalesce(${table.lineIndex}, -1)`),
+    index("dialogue_scene_images_lesson_idx").on(table.groupId, table.lessonId, table.blockId),
+    check("dialogue_scene_images_kind_check", sql`${table.kind} in ('location','scene','mask','portrait')`),
+    check("dialogue_scene_images_slot_check", sql`(
+      (${table.kind} = 'location' AND ${table.speaker} IS NULL AND ${table.lineIndex} IS NULL) OR
+      (${table.kind} = 'scene' AND ${table.speaker} IS NULL) OR
+      (${table.kind} = 'mask' AND ${table.speaker} IS NULL AND ${table.lineIndex} IS NOT NULL) OR
+      (${table.kind} = 'portrait' AND ${table.speaker} IS NOT NULL AND ${table.lineIndex} IS NULL)
+    )`),
+    check("dialogue_scene_images_dimensions_check", sql`${table.width} > 0 AND ${table.height} > 0`),
+    check("dialogue_scene_images_line_check", sql`${table.lineIndex} IS NULL OR ${table.lineIndex} >= 0`),
+  ],
+);
+
 // Per-course contributor roles mirror the membership lifecycle; one row per member and course.
 export const courseContributors = sqliteTable(
   "course_contributors",
@@ -628,6 +662,28 @@ export const wordExposures = sqliteTable(
   ],
 );
 
+// A learner's last finished round of a lesson batch's matching game (docs/words.md#matching-game): the batch's words then, the
+// words that were part of a miss (both JSON), and its matches and tries. Migration 0049.
+export const wordMatchRounds = sqliteTable(
+  "word_match_rounds",
+  {
+    userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
+    lessonId: text("lesson_id").notNull().references(() => courseLessons.id, { onDelete: "cascade" }),
+    batchNumber: integer("batch_number").notNull(),
+    wordIds: text("word_ids").notNull(),
+    missedIds: text("missed_ids").notNull(),
+    matches: integer("matches").notNull(),
+    tries: integer("tries").notNull(),
+    finishedAt: integer("finished_at").notNull(),
+  },
+  (table) => [
+    primaryKey({ columns: [table.userId, table.lessonId, table.batchNumber] }),
+    index("word_match_rounds_lesson_idx").on(table.lessonId),
+    check("word_match_rounds_tries_check", sql`${table.matches} > 0 AND ${table.tries} >= ${table.matches}`),
+  ],
+);
+
 export const practiceAttempts = sqliteTable(
   "practice_attempts",
   {
@@ -662,28 +718,6 @@ export const practiceAttempts = sqliteTable(
     check("practice_attempts_length_check", sql`length(${table.prompt}) <= 2000 AND length(${table.answer}) <= 2000 AND (${table.reference} IS NULL OR length(${table.reference}) <= 2000)`),
   ],
 );
-// A learner's last finished round of a lesson batch's matching game (docs/words.md#matching-game): the batch's words then, the
-// words that were part of a miss (both JSON), and its matches and tries. Migration 0049.
-export const wordMatchRounds = sqliteTable(
-  "word_match_rounds",
-  {
-    userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
-    courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
-    lessonId: text("lesson_id").notNull().references(() => courseLessons.id, { onDelete: "cascade" }),
-    batchNumber: integer("batch_number").notNull(),
-    wordIds: text("word_ids").notNull(),
-    missedIds: text("missed_ids").notNull(),
-    matches: integer("matches").notNull(),
-    tries: integer("tries").notNull(),
-    finishedAt: integer("finished_at").notNull(),
-  },
-  (table) => [
-    primaryKey({ columns: [table.userId, table.lessonId, table.batchNumber] }),
-    index("word_match_rounds_lesson_idx").on(table.lessonId),
-    check("word_match_rounds_tries_check", sql`${table.matches} > 0 AND ${table.tries} >= ${table.matches}`),
-  ],
-);
-
 
 // Pronunciation attempts outlive their lesson: lesson deletion sets the lesson and word IDs to null.
 export const pronunciationAttempts = sqliteTable(
