@@ -239,3 +239,5 @@ Migrations `0036_lesson_activities.sql` and `0037_speech_usage_lesson_activity.s
 Always select local versus production D1 explicitly. Deployment remains a separate action.
 
 On 2026-11-04 migrations `0047_dialogue_scene_images.sql`, `0048_lesson_word_marks.sql`, and `0049_word_match_rounds.sql` (all additive) were applied to production after a D1 export taken at 11:17 UTC the same day, and both apps were deployed from `main` at `0ce038f`.
+
+Later on 2026-11-04 the web app alone was deployed from `main` at `7ec4206` (the matching game speaks a Dutch card's term when it is picked); no migration and no API change.
