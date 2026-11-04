@@ -97,7 +97,7 @@ Limits are safeguards, not learning constraints. They live in the shared contrac
 | Practice answer entry | 4,000 characters |
 | Dialogue turns | 50 per block, speaker label 40 characters, line 1,000 characters |
 | Practice items | 50 per block |
-| Blocks per lesson document | 200 |
+| Blocks per lesson document | 300 |
 | Lesson document size | 256 KB |
 | Lessons per course | 200 |
 

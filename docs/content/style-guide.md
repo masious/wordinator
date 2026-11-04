@@ -131,7 +131,7 @@ Part I uses the lighter numbers in [briefs-part-i.md](briefs-part-i.md#volume-ta
 - Inline bold, italic, textColor, backgroundColor per the colour convention.
 - At most 1 link (stable reputable site: https://woordenlijst.org, https://www.ns.nl, https://www.knmi.nl). Optional.
 - `imageIdeas`: 1–3, each with `afterHeading` matching an existing heading text exactly. To have one generated, add `location`, `characters` and `action` as described in [illustrations.md](illustrations.md#scene-ideas).
-- ≤ 200 blocks, < 256 KB, `player.steps` 70–130 (aim 85–115).
+- ≤ 300 blocks, < 256 KB, `player.steps` 70–130 (aim 85–115).
 
 
 
@@ -142,7 +142,7 @@ These are pasted into every worker brief. For Part I lessons, replace the volume
 - **Volume**: at least 7 practice blocks and at least 45 practice items, all with authors' versions, and notes wherever there is a rule, an alternative answer or a typical mistake. Mix: fill-in (including multi-blank and dialogue-completion fill-ins); EN→NL translation; NL→EN translation; word order / sentence building; transformation; a reading passage with at least 6 questions set in the storyline; one free-production item.
 - **Dialogues and examples**: at least 2 dialogues (6–12 turns each, story characters as speakers) and at least 10 examples with translations, with notes where useful.
 - **Features**: heading levels 1–3 (one h1, h2 sections, h3 subsections); at least 4 different callout variants with fitting icons (the brief lists the required ones); at least one `columnList`; at least one nested bullet list; a numbered list; dividers between major sections; inline bold, italic, `textColor` and `backgroundColor` by the colour convention; at most one link; 1–3 `imageIdeas`.
-- **Limits**: at most 200 blocks, under 256 KB, `player.steps` about 70–130.
+- **Limits**: at most 300 blocks, under 256 KB, `player.steps` about 70–130.
 - **Done** = `apps/api/node_modules/.bin/tsx content/dutch-foundations/tools/lesson.ts check <file>` prints `OK` and the counts meet the above.
 - Workers write only their own lesson file. They do not touch the database, other lessons, or anything under `docs/`, and never run the `sql` command or `wrangler`.
 

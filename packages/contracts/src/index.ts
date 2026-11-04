@@ -391,7 +391,7 @@ export const COURSE_SENTENCE_MAX = 1_000;
 export const COURSE_NOTE_MAX = 2_000;
 export const COURSE_DIALOGUE_TURNS_MAX = 50;
 export const COURSE_LESSONS_MAX = 200;
-export const COURSE_BLOCKS_MAX = 200;
+export const COURSE_BLOCKS_MAX = 300;
 // New words (C8): a vocabulary block holds 1–50 words; examples and notes share the sentence and note limits.
 export const COURSE_WORDS_PER_BLOCK_MAX = 50;
 export const COURSE_WORD_TERM_MAX = 200;
