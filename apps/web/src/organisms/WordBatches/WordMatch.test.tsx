@@ -2,13 +2,14 @@ import { MantineProvider } from "@mantine/core";
 import { act, cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import "../../i18n";
+import { SpeechScope, stopSpeech } from "../../molecules/Speech";
 import type { RecapWord } from "../WordRecap/WordRecap";
 import { isPair, shuffled, successRate, WordMatch } from "./WordMatch";
 
 const word = (id: string, term: string, meaning: string): RecapWord => ({ id, term, meaning, forms: null, example: null, note: null });
 const words = [word("1", "de hond", "the dog"), word("2", "de kat", "the cat"), word("3", "het huis", "the house")];
 
-afterEach(() => { cleanup(); vi.useRealTimers(); });
+afterEach(() => { cleanup(); stopSpeech(); vi.useRealTimers(); vi.restoreAllMocks(); });
 
 describe("word match helpers", () => {
   it("shuffles a copy, never repeating the order it must avoid", () => {
@@ -99,6 +100,22 @@ describe("word match game", () => {
     expect(onFinish).toHaveBeenCalledOnce();
     expect(onFinish.mock.calls[0]![0]).toMatchObject({ matches: 3, tries: 4 });
     expect([...onFinish.mock.calls[0]![0].missed].sort()).toEqual(["1", "2"]);
+  });
+
+  it("speaks a Dutch card's term when it is picked, from the word's clip or the lesson's speech", () => {
+    const sources: string[] = [];
+    vi.spyOn(HTMLMediaElement.prototype, "play").mockImplementation(function (this: HTMLMediaElement) { sources.push(this.src); return Promise.resolve(); });
+    vi.spyOn(HTMLMediaElement.prototype, "pause").mockImplementation(() => undefined);
+    vi.spyOn(HTMLMediaElement.prototype, "load").mockImplementation(() => undefined);
+    const spoken = [{ ...words[0]!, speech: { term: "https://media.test/hond.mp3", example: null } }, words[1]!, words[2]!];
+    const resolve = (key: string) => key === "word:2" ? "https://media.test/kat.mp3" : null;
+    render(<MantineProvider><SpeechScope resolve={resolve}><WordMatch words={spoken} doneLabel="Done" onDone={() => {}} /></SpeechScope></MantineProvider>);
+    pick("Words", "de hond");
+    pick("Words", "de kat");
+    // A word without a clip stays silent, and so do translations.
+    pick("Words", "het huis");
+    pick("Translations", "the house");
+    expect(sources).toEqual(["https://media.test/hond.mp3", "https://media.test/kat.mp3"]);
   });
 
   it("shows only the columns as a preview", () => {

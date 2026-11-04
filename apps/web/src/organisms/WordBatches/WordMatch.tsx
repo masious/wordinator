@@ -2,6 +2,7 @@ import { Check } from "lucide-react";
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { PlainText } from "../../molecules/PlainText";
+import { playSpeech, useSpeechResolver, useStopSpeechOnUnmount } from "../../molecules/Speech";
 import { ProgressMeter } from "../../molecules/ProgressMeter";
 import { Button } from "../../ui";
 import type { RecapWord } from "../WordRecap/WordRecap";
@@ -72,7 +73,8 @@ export function MatchResult({ words, matches, tries, missed, label, when, progre
 // aside; a miss shakes both and clears them. The header counts the matches and the success rate (matches over tries). Once every
 // pair is matched it shows the round's `MatchResult`, with Play again, `finish` (the batch's other actions), and the done action.
 // `onFinish` hears once per round its matches, tries, and which word IDs were part of a miss. `preview` shows only the columns, for
-// a card that is not open yet; the round stays the same when it opens.
+// a card that is not open yet; the round stays the same when it opens. Picking a Dutch card speaks its term when its clip is ready
+// (the word's own clip, or the lesson's speech scope), whatever the pick does.
 export type WordMatchResult = { matches: number; tries: number; missed: ReadonlySet<string> };
 export function WordMatch({ words, doneLabel, onDone, finish, progress, onFinish, preview = false, random = Math.random }: {
   words: readonly RecapWord[]; doneLabel: string; onDone: () => void; finish?: ReactNode; progress?: ReactNode;
@@ -80,6 +82,8 @@ export function WordMatch({ words, doneLabel, onDone, finish, progress, onFinish
 }) {
   const { t } = useTranslation();
   const id = useId();
+  const resolveSpeech = useSpeechResolver();
+  useStopSpeechOnUnmount(id);
   const [round, setRound] = useState(() => deal(words, random));
   const [term, setTerm] = useState<number | null>(null);
   const [meaning, setMeaning] = useState<number | null>(null);
@@ -121,6 +125,9 @@ export function WordMatch({ words, doneLabel, onDone, finish, progress, onFinish
     setAnnouncement(t("words.batches.match.missed", { term: left.term, meaning: right.meaning }));
   };
   const pickTerm = (index: number) => {
+    const word = round.terms[index]!;
+    const clip = word.speech ? word.speech.term : resolveSpeech(`word:${word.id}`);
+    if (clip) playSpeech(id, [clip]);
     if (meaning !== null) tryPair(index, meaning);
     else setTerm((current) => current === index ? null : index);
   };
