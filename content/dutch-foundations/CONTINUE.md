@@ -11,7 +11,7 @@ Repo: `/Users/jsninja/myworkspace/2wordinator`. Read `CLAUDE.md` and `content/du
   - 13-1 and 13-2 (`part-iii/existing/`) are published locally and in production, with defects fixed.
   - 14-a, 14-b, 15-a, 15-b, 16-a, 16-b and 17-a are reviewed (`part-iii/review/`), have New words, are accepted in the ledger, and are imported locally as drafts at positions 2–8.
   - In production, 14-a, 15-a, 15-b, 16-a, 16-b and 17-a are imported as **unpublished** drafts at positions 2 and 4–8, using `part-iii/course.prod.json`.
-  - **14-b is left out of production Part III by the user's decision.** It exists in production only as the standalone one-lesson course "Leggen of zetten?", lesson ID `e2b961ef-9449-4112-8b32-53fd8cec3135`, so production Part III has a gap at position 3. Every production Part III import must strip that ID from the SQL (see below).
+  - **14-b is in production Part III** at position 3, published (lesson ID `e2b961ef-9449-4112-8b32-53fd8cec3135`), since the 2026-11-04 import; the standalone "Leggen of zetten?" course it used to live in no longer exists. Production Part III imports need no filtering.
   - 17-b, 18-a and 18-b are not written. Their briefs are in `docs/content/briefs-part-iii.md`.
 
 ## Current priority
@@ -101,35 +101,37 @@ A batch is finished when every one of these is true:
    npx wrangler d1 execute wordinator --local --file=<scratchpad>/part-iii.sql
    ```
 
-   The full file is now too big for one `wrangler d1 execute` (`SQLITE_TOOBIG`). Split it into one file per lesson and run each in turn:
+   The full file is now too big for one `wrangler d1 execute` (`SQLITE_TOOBIG`). Split it into one file per lesson (each lesson's statements start with a `-- lesson <id> <file>` line) and run each in turn:
 
    ```bash
-   awk -v d=<scratchpad> '/^INSERT INTO course_lessons/{n++} {print > sprintf("%s/chunk-%02d.sql", d, n)}' <scratchpad>/part-iii.sql
+   awk -v d=<scratchpad> '/^-- lesson /{n++} {print > sprintf("%s/chunk-%02d.sql", d, n)}' <scratchpad>/part-iii.sql
    for f in <scratchpad>/chunk-*.sql; do npx wrangler d1 execute wordinator --local --file=$f; done
    ```
 
-   Use the same split for the production SQL, with `--remote`. The SQL upserts every Part III lesson file as an unpublished draft at positions 2+, in file-name order, and adds practice anchors. Existing drafts get `draft_version + 1`. Verify with a `select position, title` query.
+   Use the same split for the production SQL, with `--remote`. Without `--existing`, the SQL inserts only the Part III lessons the database does not have yet, as unpublished drafts at positions 2+ in file-name order, with their word marks and practice anchors; lessons already there are left unchanged. To update existing lessons, see [Updating lessons that already exist](#updating-lessons-that-already-exist). Verify with a `select position, title` query.
 3. Note the import in `docs/content/ledger-part-iii.md` (the "Local database" line).
 4. Report to the user briefly and wait.
 
 ## Production import (only after the user's explicit yes in that turn)
 
-**New lessons only (user, 2026-10-12).** Never re-send a lesson that is already in production. The upsert replaces its `draft_doc` with the file version, which discards everything the user added in the app (images, edits) from the draft. Generate the SQL, then keep only the lines that carry the new lessons' IDs (each lesson's `course_lessons` row and its `course_practices` rows all contain the lesson ID):
+Generate the SQL with the production manifest, check that it has no local group ID (`6c75c76c`), split it as above, and run the chunks from `apps/api` with `--remote`:
 
 ```bash
-apps/api/node_modules/.bin/tsx content/dutch-foundations/tools/lesson.ts sql content/dutch-foundations/part-i course.prod.json | grep -F -e <new-lesson-id> > <scratchpad>/new.prod.sql
+apps/api/node_modules/.bin/tsx content/dutch-foundations/tools/lesson.ts sql content/dutch-foundations/part-iii course.prod.json > <scratchpad>/part-iii.prod.sql
 ```
 
-Check the line count (1 lesson row + its practice rows per new lesson), that it has no local group ID (`6c75c76c`), then run it with `--remote`. The same applies to local imports when the user has edited a local draft in the app.
+This adds new lessons only; lessons already in production are not touched. Verify with a `--remote` `select position, title` query, and update the "Production" line in the ledger.
 
+### Updating lessons that already exist
 
-From the repo root, generate the SQL with the production manifest and strip 14-b. Without this, its upsert would overwrite 14-b's draft in the standalone course and set its position to 3:
+Images are added in the app and are not in the lesson files, and the user may have edited drafts in the app. An update replaces the stored draft with the file's document and **keeps only the stored draft's image blocks** (placed after the block each one followed); every other in-app edit to that draft is lost. Ask the user before updating production lessons. Export the target's stored drafts for the part's course right before generating, and pass them with `--existing`:
 
 ```bash
-apps/api/node_modules/.bin/tsx content/dutch-foundations/tools/lesson.ts sql content/dutch-foundations/part-iii course.prod.json | grep -v e2b961ef-9449-4112-8b32-53fd8cec3135 > <scratchpad>/part-iii.prod.sql
+cd apps/api && npx wrangler d1 execute wordinator --remote --json --command "SELECT id, draft_doc, draft_version FROM course_lessons WHERE course_id = '<courseId from course.prod.json>'" > <scratchpad>/existing.json; cd ../..
+apps/api/node_modules/.bin/tsx content/dutch-foundations/tools/lesson.ts sql content/dutch-foundations/part-iii course.prod.json --existing=<scratchpad>/existing.json > <scratchpad>/part-iii.prod.sql
 ```
 
-Check that it has no `e2b961ef` and no local group ID (`6c75c76c`). Then, from `apps/api`, run `npx wrangler d1 execute wordinator --remote --file=<scratchpad>/part-iii.prod.sql`. Verify with a `--remote` `select position, title` query, and update the "Production" line in the ledger.
+Use `--local` for a local update. The tool stops without SQL when a stored image cannot be placed or the lesson with its images breaks a limit. Each update applies only while the lesson is still in the manifest's course at the exported `draft_version`, so a draft edited after the export, or a lesson in another course, is left alone. To leave a lesson out, drop its row from the export. The update changes drafts only; publish afterwards so learners see it, and the published lesson keeps the images.
 
 ## Fixed facts and preferences
 

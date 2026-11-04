@@ -8,14 +8,14 @@ Course: "Dutch Foundations — Part III" (`content/dutch-foundations/part-iii/`,
 
 Local database (2026-10-11): 14-a, 14-b, 15-a, 15-b, 16-a, 16-b, 17-a, 17-b, 18-a and 18-b are imported into the Part III course as unpublished drafts at positions 2–11, after the two published row-13 lessons. In production, 14-b exists only as the standalone course "Leggen of zetten?".
 
-Production (2026-10-11): 14-a, 15-a, 15-b, 16-a, 16-b, 17-a, 17-b, 18-a and 18-b are in the Part III course at positions 2 and 4–11, all published, imported with `part-iii/course.prod.json` with 14-b's statements removed from the SQL. By the user's decision, 14-b stays only in the standalone "Leggen of zetten?" course, so Part III has a gap at position 3. Do not run the unfiltered prod SQL: its 14-b upsert would move that lesson to position 3 inside the standalone course and overwrite its draft.
+Production (2026-10-11): 14-a, 15-a, 15-b, 16-a, 16-b, 17-a, 17-b, 18-a and 18-b are in the Part III course at positions 2 and 4–11, all published, imported with `part-iii/course.prod.json` with 14-b's statements removed from the SQL. 14-b first lived only in the standalone "Leggen of zetten?" course; since the 2026-11-04 import it is in the Part III course at position 3, published, and the standalone course no longer exists.
 
 | File | Title | Status |
 | --- | --- | --- |
 | existing/13-1.json | Mijn huis | existing (in the app; not edited) |
 | existing/13-2.json | Een huis beschrijven | existing (in the app; not edited) |
 | 14-a-waar-is-het.json | Waar is het? | accepted |
-| 14-b-staan-liggen-zitten.json | Leggen of zetten? | published in production as a standalone mini-course |
+| 14-b-staan-liggen-zitten.json | Leggen of zetten? | published in production Part III at position 3 (2026-11-04; formerly a standalone mini-course) |
 | 15-a-mijn-buurt.json | Mijn buurt | accepted |
 | 15-b-rechtdoor-en-dan-links.json | Rechtdoor en dan links | accepted |
 | 16-a-met-de-tram-en-de-trein.json | Met de tram en de trein | accepted |

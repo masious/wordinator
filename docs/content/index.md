@@ -33,7 +33,7 @@ The 40-row curriculum is [`content/dutch-foundations/outline.md`](../../content/
 1. The coordinator writes or updates the storyline, style guide and briefs **before** a lesson is written.
 2. A worker writes one lesson file in `content/dutch-foundations/part-*/` from its brief, the style guide and the relevant ledger excerpt, and runs `lesson.ts check` until it prints `OK`.
 3. The coordinator reviews the lesson (Dutch correctness, brief and ledger compliance, volume and features), fixes or returns it, then records it **from the lesson's actual content** in the part's ledger, and updates the topic map and gaps.
-4. The main session imports accepted lessons into the explicitly selected database target; production imports require the user's authorization and are recorded in the ledger. Nobody edits the database from these documents.
+4. The main session imports accepted lessons into the explicitly selected database target; production imports require the user's authorization and are recorded in the ledger. Nobody edits the database from these documents. The importer never overwrites a lesson that is already in the target: updating one needs an export of its stored draft and keeps the images added in the app ([CONTINUE.md](../../content/dutch-foundations/CONTINUE.md#updating-lessons-that-already-exist)).
 
 ## Rules
 

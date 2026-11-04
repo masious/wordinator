@@ -27,6 +27,8 @@ apps/api/node_modules/.bin/tsx content/dutch-foundations/tools/lesson.ts sql con
 
 `check` assigns missing IDs and **writes them back into the file**, validates with the real `lessonDocumentSchema` and publish rules, and prints feature-usage counts. A lesson is done only when `check` prints `OK`.
 
+`sql` inserts only lessons the database does not have yet; lessons already there are left unchanged. Updating them needs the target's stored drafts (`--existing=<rows.json>`), and keeps the image blocks added in the app ([CONTINUE.md](CONTINUE.md#updating-lessons-that-already-exist)).
+
 Word marks: `apps/api/node_modules/.bin/tsx content/dutch-foundations/tools/word-marks.ts dump <lesson.json>` prints an annotator's input, and `… word-marks.ts check <lesson.json …>` must pass before import. Rerun the annotation for any lesson whose text changes; marks on changed text are dropped, never misplaced.
 
 After changing a dialogue source, run `apps/api/node_modules/.bin/tsx content/dutch-foundations/tools/sync-dialogue-translations.ts` from the repository root, then run `lesson.ts check` on the affected lesson files. The sync checks block IDs, speaker/text equality, turn counts, and complete translations before writing.

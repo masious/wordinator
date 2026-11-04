@@ -1,6 +1,8 @@
 // Authoring tool for course lesson files. Run with apps/api/node_modules/.bin/tsx.
 //   check <lesson.json...>  normalize authoring shorthand, assign missing block IDs (written back), validate, print feature usage
-//   sql <partDir> [manifest] print D1 SQL that upserts the part's course, its lessons (as drafts) and practice anchors
+//   sql <partDir> [manifest] [--existing=<rows.json>]
+//                           print D1 SQL that inserts the part's course, its new lessons (as drafts) and practice anchors; with the
+//                           target's stored drafts, also updates existing lessons and keeps their in-app images (see `sql` below)
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 import {
@@ -9,6 +11,7 @@ import {
 import { countBlanks, practicePayloadSchema, slugify } from "../../../packages/contracts/src/index";
 import { authoredWordMarksSchema, resolveWordMarks } from "../../../packages/contracts/src/wordMarks";
 import { authoredDocument } from "./normalize";
+import { preserveImages } from "./preserve-images";
 
 // Authored word marks (tools/word-marks.ts, docs/courses.md#word-marks) live beside the lessons as word-marks/<lesson file name>.
 // word-marks.ts runs its CLI on import, so the path rule is repeated here.
@@ -89,11 +92,32 @@ const slugSql = (table: "courses" | "course_lessons", scope: [column: string, va
   return `(SELECT CASE WHEN EXISTS (SELECT 1 FROM ${table} WHERE ${scope[0]} = ${q(scope[1])} AND slug = ${q(base)} AND id <> ${q(id)}) THEN ${q(suffixed)} ELSE ${q(base)} END)`;
 };
 
+// Stored drafts of the target database, from `wrangler d1 execute ... --json --command "SELECT id, draft_doc, draft_version FROM
+// course_lessons WHERE course_id = '<courseId>'"` (its output as is: Wrangler may print warnings after the JSON, which ends at the
+// first line that starts with "]"), or a bare array of rows.
+type StoredLesson = { id: string; draft_doc: string; draft_version: number };
+function loadExisting(path: string): Map<string, StoredLesson> {
+  const text = readFileSync(path, "utf8");
+  const start = text.indexOf("[");
+  const end = text.indexOf("\n]", start);
+  const parsed = JSON.parse(end < 0 ? text.slice(start) : text.slice(start, end + 2));
+  const rows: StoredLesson[] = Array.isArray(parsed[0]?.results) ? parsed[0].results : parsed;
+  for (const row of rows) if (typeof row.id !== "string" || typeof row.draft_doc !== "string" || typeof row.draft_version !== "number") {
+    throw new Error(`${path}: every row needs id, draft_doc and draft_version`);
+  }
+  return new Map(rows.map((row) => [row.id, row]));
+}
+
 // course.json (or the manifest named on the command line, e.g. course.prod.json): { courseId, groupId, ownerId, positionOffset, create?: { title, summary, level, intendedLearner } }
-function sql(dir: string, manifest: string) {
+// A lesson missing from the database is inserted as a draft. A lesson already there is left alone, unless `existing` holds its
+// stored draft: then its draft is replaced by the file's document with the stored draft's image blocks kept, and only while
+// the draft version is still the exported one and the lesson is in the manifest's course. Everything else edited in the app is
+// replaced by the file.
+function sql(dir: string, manifest: string, existing: Map<string, StoredLesson> | null) {
   const course = JSON.parse(readFileSync(join(dir, manifest), "utf8"));
   const now = Date.now();
   const out: string[] = [];
+  const counts = { inserted: 0, updated: 0, images: 0 };
   if (course.create) {
     const c = course.create;
     out.push(`INSERT OR IGNORE INTO courses (id, slug, group_id, owner_id, title, summary, level, intended_learner, cover_key, status, first_published_at, created_at, updated_at) VALUES (${q(course.courseId)}, ${slugSql("courses", ["group_id", course.groupId], course.courseId, c.title, "course")}, ${q(course.groupId)}, ${q(course.ownerId)}, ${q(c.title)}, ${q(c.summary)}, ${q(c.level)}, ${q(c.intendedLearner)}, NULL, 'draft', NULL, ${now}, ${now});`);
@@ -103,7 +127,6 @@ function sql(dir: string, manifest: string) {
     if (!check(join(dir, name))) throw new Error(`${name} is invalid; fix it before generating SQL.`);
     const { file, document } = load(join(dir, name));
     const parsedDocument = lessonDocumentSchema.parse(document);
-    const doc = JSON.stringify(parsedDocument);
     let wordMarks: string | null = null;
     const marksFile = marksPath(name);
     if (existsSync(marksFile)) {
@@ -112,14 +135,33 @@ function sql(dir: string, manifest: string) {
       wordMarks = JSON.stringify(marks);
     }
     const position = course.positionOffset + index;
-    out.push(`INSERT INTO course_lessons (id, slug, group_id, course_id, title, goal, position, draft_doc, draft_version, published_doc, published_at, created_by, updated_by, created_at, updated_at) VALUES (${q(file.id)}, ${slugSql("course_lessons", ["course_id", course.courseId], file.id, file.title, "lesson")}, ${q(course.groupId)}, ${q(course.courseId)}, ${q(file.title)}, ${q(file.goal ?? null)}, ${position}, ${q(doc)}, 1, NULL, NULL, ${q(course.ownerId)}, ${q(course.ownerId)}, ${now}, ${now}) ON CONFLICT(id) DO UPDATE SET title=excluded.title, goal=excluded.goal, position=excluded.position, draft_doc=excluded.draft_doc, draft_version=course_lessons.draft_version+1, updated_by=excluded.updated_by, updated_at=excluded.updated_at;`);
-    // A separate statement: the document and its marks together can exceed D1's statement size limit.
-    out.push(`UPDATE course_lessons SET word_marks = ${q(wordMarks)} WHERE id = ${q(file.id)};`);
-    for (const { block } of walkLessonBlocks(lessonDocumentSchema.parse(document).blocks)) {
-      if (block.type === "practice") out.push(`INSERT OR IGNORE INTO course_practices (id, group_id, course_id, lesson_id, created_at) VALUES (${q(block.id)}, ${q(course.groupId)}, ${q(course.courseId)}, ${q(file.id)}, ${now});`);
+    // One comment line per lesson, so a file too big for one `wrangler d1 execute` can be split by lesson.
+    out.push(`-- lesson ${file.id} ${name}`);
+    const stored = existing?.get(file.id!);
+    let written: string;
+    if (stored) {
+      const kept = preserveImages(JSON.parse(stored.draft_doc), parsedDocument);
+      if (kept.problems.length) throw new Error(`${name}: stored images cannot be placed:\n${kept.problems.map((problem) => `  ${problem}`).join("\n")}`);
+      const merged = lessonDocumentSchema.safeParse(kept.document);
+      if (!merged.success) throw new Error(`${name}: with its ${kept.preserved} stored images the lesson is invalid: ${merged.error.issues.map((issue) => issue.message).join("; ")}`);
+      out.push(`UPDATE course_lessons SET title=${q(file.title)}, goal=${q(file.goal ?? null)}, position=${position}, draft_doc=${q(JSON.stringify(merged.data))}, draft_version=draft_version+1, updated_by=${q(course.ownerId)}, updated_at=${now} WHERE id=${q(file.id)} AND course_id=${q(course.courseId)} AND draft_version=${stored.draft_version};`);
+      written = `draft_version = ${stored.draft_version + 1} AND updated_at = ${now}`;
+      counts.updated += 1; counts.images += kept.preserved;
+    } else {
+      out.push(`INSERT INTO course_lessons (id, slug, group_id, course_id, title, goal, position, draft_doc, draft_version, published_doc, published_at, created_by, updated_by, created_at, updated_at) VALUES (${q(file.id)}, ${slugSql("course_lessons", ["course_id", course.courseId], file.id!, file.title, "lesson")}, ${q(course.groupId)}, ${q(course.courseId)}, ${q(file.title)}, ${q(file.goal ?? null)}, ${position}, ${q(JSON.stringify(parsedDocument))}, 1, NULL, NULL, ${q(course.ownerId)}, ${q(course.ownerId)}, ${now}, ${now}) ON CONFLICT(id) DO NOTHING;`);
+      written = `created_at = ${now}`;
+      counts.inserted += 1;
+    }
+    // `written` matches only a row this run wrote, so a lesson left alone keeps its marks and gets no anchors for practices it
+    // does not hold. The marks are a separate statement: the document and its marks together can exceed D1's statement size limit.
+    out.push(`UPDATE course_lessons SET word_marks = ${q(wordMarks)} WHERE id = ${q(file.id)} AND ${written};`);
+    for (const { block } of walkLessonBlocks(parsedDocument.blocks)) {
+      if (block.type === "practice") out.push(`INSERT OR IGNORE INTO course_practices (id, group_id, course_id, lesson_id, created_at) SELECT ${q(block.id)}, ${q(course.groupId)}, ${q(course.courseId)}, ${q(file.id)}, ${now} WHERE EXISTS (SELECT 1 FROM course_lessons WHERE id = ${q(file.id)} AND ${written});`);
     }
   });
   process.stdout.write(out.join("\n") + "\n");
+  console.error(`${counts.inserted} lessons inserted only if new, ${counts.updated} updated with ${counts.images} stored images kept.` +
+    (existing ? "" : " Lessons already in the database are left unchanged; pass --existing=<rows.json> to update them."));
 }
 
 const [command, ...args] = process.argv.slice(2);
@@ -127,8 +169,10 @@ if (command === "check") {
   const results = args.map(check);
   process.exit(results.every(Boolean) ? 0 : 1);
 } else if (command === "sql") {
-  sql(args[0]!, args[1] ?? "course.json");
+  const existing = args.find((arg) => arg.startsWith("--existing="))?.slice("--existing=".length);
+  const [dir, manifest] = args.filter((arg) => !arg.startsWith("--"));
+  sql(dir!, manifest ?? "course.json", existing ? loadExisting(existing) : null);
 } else {
-  console.error("usage: lesson.ts check <files...> | sql <partDir>");
+  console.error("usage: lesson.ts check <files...> | sql <partDir> [manifest] [--existing=<rows.json>]");
   process.exit(2);
 }
