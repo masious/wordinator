@@ -50,7 +50,7 @@ function runWrangler(arguments_) {
     return execFileSync("pnpm", ["--filter", "@wordinator/api", "exec", "wrangler", ...arguments_], { encoding: "utf8", maxBuffer: 64 * 1024 * 1024, stdio: ["ignore", "pipe", "pipe"] });
   } catch (error) {
     const stderr = error && typeof error === "object" && "stderr" in error ? String(error.stderr) : "";
-    const detail = stderr.match(/no such table: [\w_]+|SQLITE_ERROR|Authentication error|fetch failed/i)?.[0];
+    const detail = stderr.match(/no such table: [\w_]+|(?:FOREIGN KEY|CHECK|UNIQUE|NOT NULL) constraint failed[^\n]*|SQLITE_TOOBIG|too (?:big|large)[^\n]*|SQLITE_ERROR[^\n]*|Authentication error|fetch failed/i)?.[0];
     throw new Error(`Wrangler ${arguments_.slice(0, 2).join(" ")} failed${detail ? `: ${detail}` : ""}.`);
   }
 }
@@ -190,8 +190,19 @@ console.log(JSON.stringify({ mode: apply ? "apply" : remoteCheck ? "remote-check
 if (!apply) process.exit();
 
 const sleep = (ms) => new Promise((resolve_) => setTimeout(resolve_, ms));
+// Keys carry a digest of the file, so an object already served at its public URL is this exact asset: a run
+// that stopped partway (rows are inserted only after every upload) resumes without re-uploading it.
+const mediaBase = process.argv.find((value) => value.startsWith("--media-base="))?.slice("--media-base=".length)
+  ?? (await readFile(join(ROOT, "..", "..", "apps", "api", "wrangler.jsonc"), "utf8")).match(/"PUBLIC_MEDIA_BASE_URL":\s*"([^"]+)"/)?.[1];
+const alreadyUploaded = async (key) => {
+  if (!mediaBase?.startsWith("https://")) return false;
+  try { return (await fetch(new URL(key, mediaBase.endsWith("/") ? mediaBase : `${mediaBase}/`), { method: "HEAD" })).status === 200; }
+  catch { return false; }
+};
+let skipped = 0;
 for (const [index, asset] of pendingAssets.entries()) {
   const key = keyFor(asset);
+  if (await alreadyUploaded(key)) { skipped++; console.error(`already uploaded ${index + 1}/${pendingAssets.length}`); continue; }
   let lastError;
   for (let attempt = 0; attempt < 4; attempt++) {
     try { runWrangler(["r2", "object", "put", `wordinator-media/${key}`, `--file=${asset.absolute}`, "--remote", "--content-type", "image/" + (asset.extension === ".jpg" ? "jpeg" : asset.extension.slice(1))]); lastError = null; break; }
@@ -206,10 +217,15 @@ const values = pendingAssets.map((asset) => {
   return `(${sqlQuote(createHash("sha256").update(`${remote.id}\0${asset.row.blockId}\0${asset.kind}\0${asset.speaker ?? ""}\0${asset.lineIndex ?? ""}`).digest("hex").slice(0, 32))},${sqlQuote(remote.groupId ?? course.groupId)},${sqlQuote(course.courseId)},${sqlQuote(remote.id)},${sqlQuote(asset.row.blockId)},${sqlQuote(asset.kind)},${asset.speaker == null ? "NULL" : sqlQuote(asset.speaker)},${asset.lineIndex == null ? "NULL" : asset.lineIndex},${sqlQuote(keyFor(asset))},${asset.width},${asset.height},${sqlQuote(course.ownerId)},${now})`;
 });
 if (values.length) {
-  const sql = `INSERT INTO dialogue_scene_images (id,group_id,course_id,lesson_id,block_id,kind,speaker,line_index,key,width,height,created_by,created_at) VALUES ${values.join(",")} ON CONFLICT DO NOTHING;`;
+  // D1 caps a single statement's size (SQLITE_TOOBIG), so the rows go in several small inserts in one file.
+  const statements = [];
+  for (let start = 0; start < values.length; start += 25) {
+    statements.push(`INSERT INTO dialogue_scene_images (id,group_id,course_id,lesson_id,block_id,kind,speaker,line_index,key,width,height,created_by,created_at) VALUES ${values.slice(start, start + 25).join(",")} ON CONFLICT DO NOTHING;`);
+  }
+  const sql = statements.join("\n");
   const temp = join("/tmp", `wordinator-dialogue-scenes-${process.pid}.sql`);
   await writeFile(temp, sql);
   try { runWrangler(["d1", "execute", "wordinator", "--remote", `--file=${temp}`]); }
   finally { await unlink(temp).catch(() => {}); }
 }
-console.log(`Imported up to ${pendingAssets.length} new dialogue scene assets; preserved ${assets.length - pendingAssets.length} existing slots.`);
+console.log(`Imported up to ${pendingAssets.length} new dialogue scene assets (${skipped} already in R2); preserved ${assets.length - pendingAssets.length} existing slots.`);
