@@ -1550,7 +1550,7 @@
     {
       "type": "example",
       "props": {
-        "translation": "He isn't Dutch. He isn't a Dutchman. He's Belgian. (the Collega)",
+        "translation": "He isn't Dutch. He isn't a Dutchman. He's Belgian.",
         "note": "Nederlands is an adjective → niet; Nederlander is a noun → geen. Both correct, same meaning (03-a)."
       },
       "content": [

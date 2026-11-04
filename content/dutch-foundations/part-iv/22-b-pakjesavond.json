@@ -30,7 +30,7 @@
           {
             "speaker": "Noor",
             "text": "Wat gezellig! Wie is er aan het voorlezen?",
-            "translation": "How lovely! Wie is er ing voorlezen?"
+            "translation": "How lovely! Who is reading aloud?"
           },
           {
             "speaker": "Daan",
@@ -40,12 +40,12 @@
           {
             "speaker": "Sofia",
             "text": "En? Is het grappig?",
-            "translation": "En? Is het funny?"
+            "translation": "And? Is it funny?"
           },
           {
             "speaker": "Daan",
             "text": "Ja! En ik zit erin met een fiets van karton.",
-            "translation": "Yes! En I’m in it met een bike van karton."
+            "translation": "Yes! And I’m in it, with a cardboard bicycle."
           },
           {
             "speaker": "Fleur",
@@ -55,17 +55,17 @@
           {
             "speaker": "Daan",
             "text": "Nee, ik ben niet aan het raden. Ik weet het!",
-            "translation": "No, ik ben niet ing raden. I know!"
+            "translation": "No, I’m not guessing. I know!"
           },
           {
             "speaker": "Noor",
             "text": "Fleur, ben jij bezig met je pakje?",
-            "translation": "Fleur, ben jij working on your present?"
+            "translation": "Fleur, are you working on your present?"
           },
           {
             "speaker": "Fleur",
             "text": "Ja, ik ben bezig met mijn pakje.",
-            "translation": "Yes, ik ben busy with mijn present."
+            "translation": "Yes, I’m busy with my present."
           }
         ]
       },
@@ -610,17 +610,17 @@
           {
             "speaker": "Lotte",
             "text": "En Daan?",
-            "translation": "En Daan?"
+            "translation": "And Daan?"
           },
           {
             "speaker": "Sofia",
             "text": "Hij zit zijn gedicht voor te lezen.",
-            "translation": "Hij zit reading his poem aloud."
+            "translation": "He’s sitting there reading his poem aloud."
           },
           {
             "speaker": "Lotte",
             "text": "En wij?",
-            "translation": "En wij?"
+            "translation": "And us?"
           },
           {
             "speaker": "Sofia",
@@ -635,7 +635,7 @@
           {
             "speaker": "Sofia",
             "text": "Ik ben bezig met mijn berichtje voor de les.",
-            "translation": "I am busy with mijn berichtje for class."
+            "translation": "I’m busy with my message for class."
           }
         ]
       },

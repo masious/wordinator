@@ -13,6 +13,7 @@
     "./admin": "./src/admin.ts",
     "./tutor": "./src/tutor.ts"
     ,"./lesson-activities": "./src/lessonActivities.ts"
+    ,"./word-marks": "./src/wordMarks.ts"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",

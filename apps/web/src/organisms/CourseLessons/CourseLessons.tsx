@@ -20,6 +20,7 @@ import { AdaptiveDialog, Button, ButtonGroup, ConfirmDialog, EmptyState, ErrorSt
 import { LessonDocument } from "../LessonDocument/LessonDocument";
 import { LessonShareScope, ShareButton, useLessonShareScope } from "../LessonShare/LessonShare";
 import { useLessonBookmarkTarget, WordBookmarkScope } from "../WordBookmark/WordBookmark";
+import { WordMarksProvider } from "../WordMarks/WordMarks";
 import { WordBatchCards } from "../WordBatches/WordBatches";
 import { WordRecap } from "../WordRecap/WordRecap";
 import { RAIL_DRAWER_QUERY, useRailSlots } from "../GroupFrame/GroupFrame";
@@ -222,7 +223,7 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
       footer={railDrawer ? undefined : actions} {...props} />;
   // Without a New words panel the actions it would carry stand alone in the same place: the right rail, or under the text.
   const actionsAlone = !hasWords && !railDrawer && !rail.actions ?(!inline && rail.reference ? "rail" : "under") : null;
-  return <LessonShareScope scope={share}><WordBookmarkScope resolve={bookmarkTarget}><SpeechScope resolve={resolveSpeech}><div className={styles.reader} data-action-bar={phone || undefined}>
+  return <WordMarksProvider document={document} marks={lesson.wordMarks}><LessonShareScope scope={share}><WordBookmarkScope resolve={bookmarkTarget}><SpeechScope resolve={resolveSpeech}><div className={styles.reader} data-action-bar={phone || undefined}>
     {!gate && <LessonReadingProgress steps={steps} reading={reading} tracking={tracking} onPercent={setPercent} onReached={setReachedStep} />}
     <div ref={reading} className={gate ? `${styles.body} ${styles.gated}` : styles.body} style={gate && gateHeight !== null ? { maxBlockSize: gateHeight } : undefined}>
       {!lesson.document && <p className={styles.preview}>{t("courses.lessons.draftPreview")}</p>}
@@ -254,7 +255,7 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
       classNames={{ content: styles.sheet, header: styles.sheetHeader, body: styles.sheetBody }}>
       {words({ placement: "sheet" })}
     </Drawer>}
-  </div></SpeechScope></WordBookmarkScope></LessonShareScope>;
+  </div></SpeechScope></WordBookmarkScope></LessonShareScope></WordMarksProvider>;
 }
 
 function LessonForm({ initial, submitLabel, pending, error, onSubmit, onCancel }: {

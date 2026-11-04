@@ -1,0 +1,24 @@
+/* A marked word is a light tint of its lesson colour (docs/design-system.md#word-mark-tints); the card takes the action colour. */
+.mark{--mark-tone:var(--color-action);--mark-tint:color-mix(in srgb,var(--mark-tone) 12%,transparent);--mark-tint-strong:color-mix(in srgb,var(--mark-tone) 26%,transparent);border-radius:0.2em;padding-inline:0.08em;margin-inline:-0.08em;background:var(--mark-tint);cursor:pointer;-webkit-box-decoration-break:clone;box-decoration-break:clone;transition:background-color var(--motion-standard) var(--ease-out)}
+.mark:hover,.mark[data-open]{background:var(--mark-tint-strong)}
+.mark:focus-visible{outline:var(--focus-ring-width) solid var(--color-focus);outline-offset:1px}
+.mark[data-tone="gray"]{--mark-tone:var(--color-lesson-gray-text)}
+.mark[data-tone="brown"]{--mark-tone:var(--color-lesson-brown-text)}
+.mark[data-tone="red"]{--mark-tone:var(--color-lesson-red-text)}
+.mark[data-tone="orange"]{--mark-tone:var(--color-lesson-orange-text)}
+.mark[data-tone="yellow"]{--mark-tone:var(--color-lesson-yellow-text)}
+.mark[data-tone="green"]{--mark-tone:var(--color-lesson-green-text)}
+.mark[data-tone="blue"]{--mark-tone:var(--color-lesson-blue-text)}
+.mark[data-tone="purple"]{--mark-tone:var(--color-lesson-purple-text)}
+.mark[data-tone="pink"]{--mark-tone:var(--color-lesson-pink-text)}
+
+.dropdown{width:max-content;min-width:16rem;max-width:min(30rem,calc(100vw - 2rem));padding:0;border:0;border-radius:var(--radius-lg);background:var(--color-core);box-shadow:var(--shadow-floating)}
+.arrow{border:0;background:var(--color-core)}
+.card{display:grid;gap:var(--space-2);padding:var(--space-4);color:var(--color-foreground);border-radius:var(--radius-lg);box-shadow:inset 0 3px 0 var(--color-action);text-align:start}
+.cardHead{display:flex;align-items:center;gap:var(--space-1)}
+.cardTerm{display:flex;flex:1;flex-wrap:wrap;align-items:center;gap:var(--space-2);min-width:0;margin:0;font-size:var(--text-lg);font-weight:var(--weight-semibold);letter-spacing:var(--tracking-title);overflow-wrap:anywhere}
+.article{padding:0.15em 0.55em;font-family:var(--font-mono);font-size:var(--text-xs);font-weight:var(--weight-semibold);letter-spacing:0;color:var(--color-action-text);background:var(--color-action);border-radius:var(--radius-pill)}
+.cardForms{display:flex;flex-wrap:wrap;gap:var(--space-1) var(--space-3);margin:0;font-family:var(--font-mono);font-size:var(--type-metadata);color:var(--color-foreground-muted)}
+.cardMeaning{margin:0;font-size:var(--text-sm)}
+.cardExample{display:flex;align-items:center;gap:var(--space-2);margin:var(--space-1) 0 0;padding-inline-start:var(--space-3);font-size:var(--text-sm);font-style:italic;border-inline-start:2px solid var(--color-action)}
+.cardNote{margin:0;font-size:var(--text-xs);color:var(--color-foreground-muted)}

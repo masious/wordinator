@@ -152,12 +152,12 @@
      {
       "speaker": "Sofia",
       "text": "Hoi Piotr! Ik app je over mijn housewarming.",
-      "translation": "Hi Piotr! I’ll message you over mijn housewarming party."
+      "translation": "Hi Piotr! I’m messaging you about my housewarming."
      },
      {
       "speaker": "Piotr",
       "text": "Hoi Sofia! Ja, Kasia en ik komen graag.",
-      "translation": "Hi Sofia! Yes, Kasia en ik komen graag."
+      "translation": "Hi Sofia! Yes, Kasia and I would love to come."
      },
      {
       "speaker": "Sofia",
@@ -172,7 +172,7 @@
      {
       "speaker": "Sofia",
       "text": "Ja, ik stuur het straks. Kastanjestraat 14.",
-      "translation": "Yes, ik stuur het later. Kastanjestraat 14."
+      "translation": "Yes, I’ll send it in a bit. Kastanjestraat 14."
      },
      {
       "speaker": "Piotr",
@@ -182,17 +182,17 @@
      {
       "speaker": "Sofia",
       "text": "Geen probleem. Ik haal jullie om half zeven op bij de bushalte.",
-      "translation": "No problem. I’ll pick up jullie at half past six op bij de bushalte."
+      "translation": "No problem. I’ll pick you up at the bus stop at half past six."
      },
      {
       "speaker": "Piotr",
       "text": "Dat is fijn. Bel je me bij de halte?",
-      "translation": "Dat is fijn. Bel you me bij de halte?"
+      "translation": "That’s nice. Will you call me at the stop?"
      },
      {
       "speaker": "Sofia",
       "text": "Ik bel je bij de bushalte. Ik kom met de fiets.",
-      "translation": "I’ll call you bij de bushalte. I’ll come by bike."
+      "translation": "I’ll call you at the bus stop. I’ll come by bike."
      },
      {
       "speaker": "Piotr",
@@ -224,7 +224,7 @@
      {
       "speaker": "Noor",
       "text": "O, leuk! Ik ben pepernoten aan het bakken.",
-      "translation": "O, leuk! I am pepernoten baking."
+      "translation": "Oh, nice! I’m baking pepernoten (little spiced cookies)."
      },
      {
       "speaker": "Sofia",
@@ -239,7 +239,7 @@
      {
       "speaker": "Sofia",
       "text": "Wat gezellig. Ik maak een surprise voor Daan.",
-      "translation": "How lovely. I’m making een surprise for Daan."
+      "translation": "How lovely. I’m making a surprise for Daan."
      },
      {
       "speaker": "Noor",
@@ -264,42 +264,42 @@
      {
       "speaker": "Sofia",
       "text": "Een fiets van karton. Voor Daan!",
-      "translation": "A cardboard bicycle. Voor Daan!"
+      "translation": "A cardboard bicycle. For Daan!"
      },
      {
       "speaker": "Henk",
       "text": "Wat een goed idee. Is de fiets al klaar?",
-      "translation": "What a good idea. Is de bike al klaar?"
+      "translation": "What a good idea. Is the bike ready yet?"
      },
      {
       "speaker": "Sofia",
       "text": "Nee, ik ben de bel aan het vastplakken.",
-      "translation": "No, ik ben de bel ing vastplakken."
+      "translation": "No, I’m sticking the bell on."
      },
      {
       "speaker": "Henk",
       "text": "Zal ik even helpen?",
-      "translation": "Zal ik even helpen?"
+      "translation": "Shall I help for a moment?"
      },
      {
       "speaker": "Sofia",
       "text": "Ja, graag. De lijm staat op de tafel.",
-      "translation": "Yes, graag. De lijm staat op de tafel."
+      "translation": "Yes, please. The glue is on the table."
      },
      {
       "speaker": "Henk",
       "text": "En Tijger? Hij zit in de doos.",
-      "translation": "En Tijger? Hij zit in de doos."
+      "translation": "And Tijger? He’s sitting in the box."
      },
      {
       "speaker": "Sofia",
       "text": "Tijger is niet aan het helpen!",
-      "translation": "Tijger is niet ing helpen!"
+      "translation": "Tijger isn’t helping!"
      },
      {
       "speaker": "Henk",
       "text": "Nee, hij kijkt alleen.",
-      "translation": "No, hij kijkt alleen."
+      "translation": "No, he’s just watching."
      },
      {
       "speaker": "Sofia",
@@ -321,7 +321,7 @@
      {
       "speaker": "Noor",
       "text": "Wat gezellig! Wie is er aan het voorlezen?",
-      "translation": "How lovely! Wie is er ing voorlezen?"
+      "translation": "How lovely! Who is reading aloud?"
      },
      {
       "speaker": "Daan",
@@ -331,12 +331,12 @@
      {
       "speaker": "Sofia",
       "text": "En? Is het grappig?",
-      "translation": "En? Is het funny?"
+      "translation": "And? Is it funny?"
      },
      {
       "speaker": "Daan",
       "text": "Ja! En ik zit erin met een fiets van karton.",
-      "translation": "Yes! En I’m in it met een bike van karton."
+      "translation": "Yes! And I’m in it, with a cardboard bicycle."
      },
      {
       "speaker": "Fleur",
@@ -346,17 +346,17 @@
      {
       "speaker": "Daan",
       "text": "Nee, ik ben niet aan het raden. Ik weet het!",
-      "translation": "No, ik ben niet ing raden. I know!"
+      "translation": "No, I’m not guessing. I know!"
      },
      {
       "speaker": "Noor",
       "text": "Fleur, ben jij bezig met je pakje?",
-      "translation": "Fleur, ben jij working on your present?"
+      "translation": "Fleur, are you working on your present?"
      },
      {
       "speaker": "Fleur",
       "text": "Ja, ik ben bezig met mijn pakje.",
-      "translation": "Yes, ik ben busy with mijn present."
+      "translation": "Yes, I’m busy with my present."
      }
     ]
    },
@@ -376,17 +376,17 @@
      {
       "speaker": "Lotte",
       "text": "En Daan?",
-      "translation": "En Daan?"
+      "translation": "And Daan?"
      },
      {
       "speaker": "Sofia",
       "text": "Hij zit zijn gedicht voor te lezen.",
-      "translation": "Hij zit reading his poem aloud."
+      "translation": "He’s sitting there reading his poem aloud."
      },
      {
       "speaker": "Lotte",
       "text": "En wij?",
-      "translation": "En wij?"
+      "translation": "And us?"
      },
      {
       "speaker": "Sofia",
@@ -401,7 +401,7 @@
      {
       "speaker": "Sofia",
       "text": "Ik ben bezig met mijn berichtje voor de les.",
-      "translation": "I am busy with mijn berichtje for class."
+      "translation": "I’m busy with my message for class."
      }
     ]
    }
@@ -418,42 +418,42 @@
      {
       "speaker": "Sofia",
       "text": "Karin, mag ik vrij nemen van 21 december tot en met 31 december?",
-      "translation": "Karin, mag ik take time off from December 21 through December 31?"
+      "translation": "Karin, may I take time off from December 21 through December 31?"
      },
      {
       "speaker": "Karin",
       "text": "Dat mag. Je moet het wel in het systeem aanvragen.",
-      "translation": "That is allowed. You must het wel request it in the system."
+      "translation": "That’s allowed. You do have to request it in the system."
      },
      {
       "speaker": "Sofia",
       "text": "Dank je. Kan ik vrijdag thuiswerken?",
-      "translation": "Thanks. Kan ik vrijdag work from home?"
+      "translation": "Thanks. Can I work from home on Friday?"
      },
      {
       "speaker": "Karin",
       "text": "Ja, dat kan. Op vrijdag mag je thuiswerken.",
-      "translation": "Yes, dat kan. Op vrijdag mag you work from home."
+      "translation": "Yes, that’s fine. On Fridays you may work from home."
      },
      {
       "speaker": "Sofia",
       "text": "Moet ik acht dagen aanvragen?",
-      "translation": "Do I have to acht dagen aanvragen?"
+      "translation": "Do I have to request eight days?"
      },
      {
       "speaker": "Karin",
       "text": "Ja. Eerste kerstdag en tweede kerstdag zijn feestdagen.",
-      "translation": "Ja. Christmas Day en the second day of Christmas zijn public holidays."
+      "translation": "Yes. Christmas Day and the second day of Christmas are public holidays."
      },
      {
       "speaker": "Sofia",
       "text": "En 1 januari is ook een feestdag.",
-      "translation": "En 1 January is ook een feestdag."
+      "translation": "And January 1 is also a public holiday."
      },
      {
       "speaker": "Karin",
       "text": "Precies. Dan begin je op maandag 4 januari weer, toch?",
-      "translation": "Precies. Dan begin you on Monday, January 4 weer, toch?"
+      "translation": "Exactly. So you start again on Monday, January 4, right?"
      }
     ]
    },
@@ -463,42 +463,42 @@
      {
       "speaker": "Badmeester",
       "text": "Goedemorgen. Je moet eerst douchen.",
-      "translation": "Good morning. You must eerst douchen."
+      "translation": "Good morning. You have to shower first."
      },
      {
       "speaker": "Sofia",
       "text": "Natuurlijk. Mag mijn tas hier staan?",
-      "translation": "Of course. Mag mijn tas hier staan?"
+      "translation": "Of course. May my bag stay here?"
      },
      {
       "speaker": "Badmeester",
       "text": "Nee, dat mag niet. Je moet je tas in een kluis doen.",
-      "translation": "No, that is not allowed. You must you tas in een kluis doen."
+      "translation": "No, that’s not allowed. You have to put your bag in a locker."
      },
      {
       "speaker": "Sofia",
       "text": "Mag ik hier zwemmen?",
-      "translation": "May I hier zwemmen?"
+      "translation": "May I swim here?"
      },
      {
       "speaker": "Badmeester",
       "text": "Ja, dat mag. Maar je mag hier niet rennen.",
-      "translation": "Yes, dat mag. Maar you mag hier niet rennen."
+      "translation": "Yes, that’s allowed. But you may not run here."
      },
      {
       "speaker": "Sofia",
       "text": "En kan ik in het diepe zwemmen?",
-      "translation": "En can I in het diepe zwemmen?"
+      "translation": "And can I swim in the deep end?"
      },
      {
       "speaker": "Badmeester",
       "text": "Dat kan. Je kunt goed zwemmen, toch?",
-      "translation": "That is possible. You can swim well, toch?"
+      "translation": "That’s possible. You can swim well, right?"
      },
      {
       "speaker": "Sofia",
       "text": "Ja, ik kan goed zwemmen. Dank u wel.",
-      "translation": "Yes, ik kan goed zwemmen. Dank u wel."
+      "translation": "Yes, I can swim well. Thank you."
      }
     ]
    }
@@ -520,17 +520,17 @@
      {
       "speaker": "Sofia",
       "text": "Nee, je hoeft niets mee te nemen!",
-      "translation": "No, you don’t have tos mee te nemen!"
+      "translation": "No, you don’t need to bring anything!"
      },
      {
       "speaker": "Piotr",
       "text": "Moet ik echt niets meenemen?",
-      "translation": "Do I have to echt bring anything?"
+      "translation": "Do I really not have to bring anything?"
      },
      {
       "speaker": "Sofia",
       "text": "Nee hoor. Ik maak veel eten.",
-      "translation": "No, not at all. I’m making a lot eten."
+      "translation": "No, really. I’m making a lot of food."
      },
      {
       "speaker": "Lotte",
@@ -540,17 +540,17 @@
      {
       "speaker": "Sofia",
       "text": "Dat hoeft niet. Er staan bloemen op tafel.",
-      "translation": "That isn’t necessary. Er staan bloemen on the table."
+      "translation": "That isn’t necessary. There are flowers on the table."
      },
      {
       "speaker": "Lotte",
       "text": "Oké. Henk neemt kaas mee, toch?",
-      "translation": "Oké. Henk neemt kaas mee, toch?"
+      "translation": "Okay. Henk is bringing cheese, right?"
      },
      {
       "speaker": "Sofia",
       "text": "Ja, Henk neemt kaas mee. Dat vindt hij leuk.",
-      "translation": "Yes, Henk neemt kaas mee. Dat vindt hij leuk."
+      "translation": "Yes, Henk is bringing cheese. He enjoys that."
      }
     ]
    },
@@ -560,52 +560,52 @@
      {
       "speaker": "Henk",
       "text": "Ik geef de planten water. Ik heb een gieter.",
-      "translation": "I geef water the plants. I have een gieter."
+      "translation": "I’ll water the plants. I have a watering can."
      },
      {
       "speaker": "Sofia",
       "text": "Wat lief! Je hoeft niet elke dag te komen.",
-      "translation": "Wat lief! You don’t have to every day te komen."
+      "translation": "How kind! You don’t have to come every day."
      },
      {
       "speaker": "Henk",
       "text": "Hoe vaak is genoeg?",
-      "translation": "Hoe vaak is genoeg?"
+      "translation": "How often is enough?"
      },
      {
       "speaker": "Sofia",
       "text": "Twee keer per week is genoeg.",
-      "translation": "Twice a week is genoeg."
+      "translation": "Twice a week is enough."
      },
      {
       "speaker": "Henk",
       "text": "Moet ik de post ook pakken?",
-      "translation": "Do I have to the mail ook pakken?"
+      "translation": "Do I also have to get the mail?"
      },
      {
       "speaker": "Sofia",
       "text": "Ja, graag. Je hoeft de post niet elke dag te pakken.",
-      "translation": "Yes, graag. Je hoeft the mail niet every day te pakken."
+      "translation": "Yes, please. You don’t have to get the mail every day."
      },
      {
       "speaker": "Henk",
       "text": "En de sleutel?",
-      "translation": "En the key?"
+      "translation": "And the key?"
      },
      {
       "speaker": "Sofia",
       "text": "Hier is de reservesleutel. Je hoeft me niets te betalen, hoor!",
-      "translation": "Hier is de spare key. Je hoeft me pay anything, hoor!"
+      "translation": "Here is the spare key. You don’t have to pay me anything, you know!"
      },
      {
       "speaker": "Henk",
       "text": "Natuurlijk niet. Ik kijk graag naar Tijger.",
-      "translation": "Of course niet. I’m happy to look after Tijger."
+      "translation": "Of course not. I’m happy to look after Tijger."
      },
      {
       "speaker": "Sofia",
       "text": "Dank je wel, Henk. Dat is heel aardig.",
-      "translation": "Thank you, Henk. Dat is heel aardig."
+      "translation": "Thank you, Henk. That’s very kind."
      }
     ]
    }
@@ -622,47 +622,47 @@
      {
       "speaker": "Sofia",
       "text": "Goedenavond, allemaal! Hier is de paella. Eet smakelijk!",
-      "translation": "Good evening, everyone! Hier is de paella. Eet smakelijk!"
+      "translation": "Good evening, everyone! Here is the paella. Enjoy your meal!"
      },
      {
       "speaker": "Noor",
       "text": "Wat vind je van de paella, Henk?",
-      "translation": "What do you think of de paella, Henk?"
+      "translation": "What do you think of the paella, Henk?"
      },
      {
       "speaker": "Henk",
       "text": "Ik vind hem heerlijk. Maar de stamppot vind ik lekkerder.",
-      "translation": "I think it is delicious. Maar de stamppot vind ik goodder."
+      "translation": "I think it’s delicious. But I like the stamppot better."
      },
      {
       "speaker": "Fleur",
       "text": "Ik ben het niet met je eens, Henk! De paella is heerlijk.",
-      "translation": "I disagree with you, Henk! De paella is delicious."
+      "translation": "I disagree with you, Henk! The paella is delicious."
      },
      {
       "speaker": "Noor",
       "text": "Ik ben het met Fleur eens. Wat vind je van de boerenkoolstamppot?",
-      "translation": "I agree with Fleur. What do you think of de kale stamppot?"
+      "translation": "I agree with Fleur. What do you think of the kale stamppot?"
      },
      {
       "speaker": "Henk",
       "text": "Die vind ik ook lekker. Eerlijk gezegd vind ik allebei lekker.",
-      "translation": "Die vind ik ook good. To be honest vind ik both good."
+      "translation": "I like that one too. Honestly, I like both."
      },
      {
       "speaker": "Piotr",
       "text": "Wat vind jij van de pierogi, Sofia?",
-      "translation": "What do you think of de pierogi, Sofia?"
+      "translation": "What do you think of the pierogi, Sofia?"
      },
      {
       "speaker": "Kasia",
       "text": "Ik vind ze heerlijk. De paella is ook lekker.",
-      "translation": "I think they are delicious. De paella is ook good."
+      "translation": "I think they’re delicious. The paella is tasty too."
      },
      {
       "speaker": "Sofia",
       "text": "Dat vind ik ook. Piotr, je hebt gelijk: de pierogi zijn heerlijk.",
-      "translation": "Dat vind ik ook. Piotr, you hebt right: de pierogi zijn delicious."
+      "translation": "I think so too. Piotr, you’re right: the pierogi are delicious."
      },
      {
       "speaker": "Daan",
@@ -672,7 +672,7 @@
      {
       "speaker": "Sofia",
       "text": "Ik vind alles lekker. Het is een gezellige avond.",
-      "translation": "I like everything. It is een gezellige evening."
+      "translation": "I like everything. It’s a cozy evening."
      }
     ]
    },
@@ -682,17 +682,17 @@
      {
       "speaker": "Daan",
       "text": "Volgens mij gaat het volgende week sneeuwen.",
-      "translation": "In my opinion gaat het next week snowen."
+      "translation": "I think it’s going to snow next week."
      },
      {
       "speaker": "Piotr",
       "text": "Ik denk het niet. Het is niet koud genoeg.",
-      "translation": "I don’t think so. It is niet cold genoeg."
+      "translation": "I don’t think so. It isn’t cold enough."
      },
      {
       "speaker": "Daan",
       "text": "Wat vind jij ervan, Sofia?",
-      "translation": "Wat vind jij ervan, Sofia?"
+      "translation": "What do you think, Sofia?"
      },
      {
       "speaker": "Sofia",
@@ -707,22 +707,22 @@
      {
       "speaker": "Sofia",
       "text": "Ja, ik denk van wel.",
-      "translation": "Yes, ik denk van wel."
+      "translation": "Yes, I think so."
      },
      {
       "speaker": "Daan",
       "text": "Vind je sneeuw leuk?",
-      "translation": "Vind you snow leuk?"
+      "translation": "Do you like snow?"
      },
      {
       "speaker": "Sofia",
       "text": "Ik vind van wel. Maar fietsen in de sneeuw vind ik niet leuk.",
-      "translation": "I think so. Maar cycling in de snow vind ik niet leuk."
+      "translation": "I do. But I don’t like cycling in the snow."
      },
      {
       "speaker": "Piotr",
       "text": "Ik vind van niet. Ik fiets liever bij droog weer.",
-      "translation": "I don’t think so. I bike liever bij dry weather."
+      "translation": "I don’t. I’d rather cycle in dry weather."
      }
     ]
    }
@@ -739,42 +739,42 @@
      {
       "speaker": "Marieke",
       "text": "Wat vinden jullie van Nederland?",
-      "translation": "What do you think of Nederland?"
+      "translation": "What do you think of the Netherlands?"
      },
      {
       "speaker": "Piotr",
       "text": "Ik vind dat Nederlanders heel direct zijn.",
-      "translation": "I think dat Dutch people are very direct."
+      "translation": "I think Dutch people are very direct."
      },
      {
       "speaker": "Sofia",
       "text": "Ik denk dat Nederlands minder moeilijk is dan Pools!",
-      "translation": "I think dat Dutch is less difficult than Polish!"
+      "translation": "I think Dutch is less difficult than Polish!"
      },
      {
       "speaker": "Piotr",
       "text": "Echt? Ik denk dat Nederlands soms moeilijk is.",
-      "translation": "Echt? I think dat Dutch is sometimes difficult."
+      "translation": "Really? I think Dutch is sometimes difficult."
      },
      {
       "speaker": "Sofia",
       "text": "Ja, maar ik vind de mensen hier aardig.",
-      "translation": "Yes, maar ik vind the people here nice."
+      "translation": "Yes, but I think the people here are nice."
      },
      {
       "speaker": "Marieke",
       "text": "Ik hoop dat jullie in januari allemaal terugkomen.",
-      "translation": "I hope dat jullie in January allemaal come back."
+      "translation": "I hope you all come back in January."
      },
      {
       "speaker": "Piotr",
       "text": "Marieke zegt dat Sofia goed Nederlands spreekt.",
-      "translation": "Marieke zegt dat Sofia goed Dutch speaks."
+      "translation": "Marieke says that Sofia speaks Dutch well."
      },
      {
       "speaker": "Sofia",
       "text": "Dank je! Ik hoop dat ik in januari weer naar de les kom.",
-      "translation": "Thanks! I hope dat ik in January weer come to class."
+      "translation": "Thanks! I hope I’ll come to class again in January."
      }
     ]
    },
@@ -784,32 +784,32 @@
      {
       "speaker": "Henk",
       "text": "Ik denk dat het met kerst gaat sneeuwen.",
-      "translation": "I think dat het at Christmas will snow."
+      "translation": "I think it’s going to snow at Christmas."
      },
      {
       "speaker": "Sofia",
       "text": "Misschien! Ik denk dat ik mijn fiets ga missen.",
-      "translation": "Misschien! I think dat ik mijn bike ga miss."
+      "translation": "Maybe! I think I’m going to miss my bike."
      },
      {
       "speaker": "Henk",
       "text": "Ik hoop dat je een fijne kerst hebt.",
-      "translation": "I hope dat you een Merry Christmas hebt."
+      "translation": "I hope you have a lovely Christmas."
      },
      {
       "speaker": "Sofia",
       "text": "Dank je, Henk. Ik vind dat Utrecht nu echt mijn stad is.",
-      "translation": "Thanks, Henk. I think dat Utrecht nu echt my city is."
+      "translation": "Thanks, Henk. I think Utrecht is really my city now."
      },
      {
       "speaker": "Henk",
       "text": "Dat vind ik fijn. Tijger mist je ook.",
-      "translation": "Dat vind ik fijn. Tijger misses you ook."
+      "translation": "I’m glad to hear that. Tijger misses you too."
      },
      {
       "speaker": "Sofia",
       "text": "Ik hoop dat jullie allebei een fijne kerst hebben.",
-      "translation": "I hope dat both of you een Merry Christmas hebben."
+      "translation": "I hope you both have a lovely Christmas."
      },
      {
       "speaker": "Henk",
@@ -836,7 +836,7 @@
      {
       "speaker": "Noor",
       "text": "Hoi Sofia! Fijn dat je terug bent!",
-      "translation": "Hi Sofia! Great dat you terug bent!"
+      "translation": "Hi Sofia! Great that you’re back!"
      },
      {
       "speaker": "Sofia",
@@ -846,32 +846,32 @@
      {
       "speaker": "Noor",
       "text": "Wat heb je gisteren gemaakt?",
-      "translation": "Wat heb you yesterday made?"
+      "translation": "What did you make yesterday?"
      },
      {
       "speaker": "Sofia",
       "text": "Ik heb thee gemaakt en mijn kamer opgeruimd.",
-      "translation": "I have thee made en mijn kamer tidied."
+      "translation": "I made tea and tidied my room."
      },
      {
       "speaker": "Noor",
       "text": "En heb je ook gekookt?",
-      "translation": "En heb you ook cooked?"
+      "translation": "And did you cook too?"
      },
      {
       "speaker": "Sofia",
       "text": "Nee, ik heb niet gekookt. Ik heb thee gemaakt.",
-      "translation": "No, ik heb niet cooked. I have thee made."
+      "translation": "No, I didn’t cook. I made tea."
      },
      {
       "speaker": "Noor",
       "text": "En heb je thee gemaakt?",
-      "translation": "En heb you thee made?"
+      "translation": "And did you make tea?"
      },
      {
       "speaker": "Sofia",
       "text": "Ja, en ik heb mijn moeder gebeld.",
-      "translation": "Yes, en ik heb mijn moeder called."
+      "translation": "Yes, and I called my mother."
      }
     ]
    },
@@ -881,42 +881,42 @@
      {
       "speaker": "Noor",
       "text": "Heb je met kerst gekookt?",
-      "translation": "Heb you at Christmas cooked?"
+      "translation": "Did you cook at Christmas?"
      },
      {
       "speaker": "Sofia",
       "text": "Ja, ik heb met mijn moeder gekookt.",
-      "translation": "Yes, ik heb with my mother cooked."
+      "translation": "Yes, I cooked with my mother."
      },
      {
       "speaker": "Noor",
       "text": "Heb je ook gekookt?",
-      "translation": "Heb you ook cooked?"
+      "translation": "Did you cook too?"
      },
      {
       "speaker": "Sofia",
       "text": "Nee, ik heb niet gekookt. Ik heb thee gemaakt.",
-      "translation": "No, ik heb niet cooked. I have thee made."
+      "translation": "No, I didn’t cook. I made tea."
      },
      {
       "speaker": "Noor",
       "text": "Heb je veel Nederlands geleerd?",
-      "translation": "Heb you a lot Dutch learned?"
+      "translation": "Did you learn a lot of Dutch?"
      },
      {
       "speaker": "Sofia",
       "text": "Ja, ik heb veel Nederlands geleerd.",
-      "translation": "Yes, ik heb a lot Dutch learned."
+      "translation": "Yes, I learned a lot of Dutch."
      },
      {
       "speaker": "Noor",
       "text": "Heb je Nederlands geleerd?",
-      "translation": "Heb you Dutch learned?"
+      "translation": "Did you learn Dutch?"
      },
      {
       "speaker": "Sofia",
       "text": "Ja, ik heb Nederlands geleerd.",
-      "translation": "Yes, ik heb Dutch learned."
+      "translation": "Yes, I learned Dutch."
      }
     ]
    }
@@ -943,32 +943,32 @@
      {
       "speaker": "Noor",
       "text": "Fijn! Ben je zondag aangekomen?",
-      "translation": "Great! Ben you zondag arrived?"
+      "translation": "Great! Did you arrive on Sunday?"
      },
      {
       "speaker": "Sofia",
       "text": "Ja, ik ben zondag teruggekomen.",
-      "translation": "Yes, ik ben zondag came back."
+      "translation": "Yes, I came back on Sunday."
      },
      {
       "speaker": "Noor",
       "text": "En gisteren? Ben je thuisgebleven?",
-      "translation": "En yesterday? Ben you stayed home?"
+      "translation": "And yesterday? Did you stay at home?"
      },
      {
       "speaker": "Sofia",
       "text": "Nee, ik ben naar het centrum gegaan.",
-      "translation": "No, ik ben went to the city center."
+      "translation": "No, I went to the city center."
      },
      {
       "speaker": "Noor",
       "text": "Ben je ook naar het park gegaan?",
-      "translation": "Ben you ook went to the park?"
+      "translation": "Did you go to the park too?"
      },
      {
       "speaker": "Sofia",
       "text": "Ja, en daarna ben ik naar huis gegaan.",
-      "translation": "Yes, en afterward ben ik went home."
+      "translation": "Yes, and afterward I went home."
      }
     ]
    },
@@ -978,37 +978,37 @@
      {
       "speaker": "Sofia",
       "text": "Gisteren ben ik naar het centrum gegaan.",
-      "translation": "Gisteren ben ik went to the city center."
+      "translation": "Yesterday I went to the city center."
      },
      {
       "speaker": "Noor",
       "text": "Ben je ook naar de gracht gegaan?",
-      "translation": "Ben you ook naar the canal gegaan?"
+      "translation": "Did you go to the canal too?"
      },
      {
       "speaker": "Sofia",
       "text": "Ja, ik ben langs de gracht gegaan.",
-      "translation": "Yes, ik ben along the canal gegaan."
+      "translation": "Yes, I walked along the canal."
      },
      {
       "speaker": "Noor",
       "text": "We zijn met de trein naar Zandvoort gegaan.",
-      "translation": "We are by train naar Zandvoort gegaan."
+      "translation": "We went to Zandvoort by train."
      },
      {
       "speaker": "Sofia",
       "text": "Ben je daar met Daan en mij naartoe gegaan?",
-      "translation": "Ben you daar met Daan en mij naartoe gegaan?"
+      "translation": "Did you go there with Daan and me?"
      },
      {
       "speaker": "Noor",
       "text": "Ja, ik ben met jullie naar Zandvoort gegaan.",
-      "translation": "Yes, ik ben with you naar Zandvoort gegaan."
+      "translation": "Yes, I went to Zandvoort with you."
      },
      {
       "speaker": "Sofia",
       "text": "Daar zijn we in een strandcafé gebleven.",
-      "translation": "Daar zijn we in een beach café stayed."
+      "translation": "We stayed at a beach café there."
      },
      {
       "speaker": "Noor",

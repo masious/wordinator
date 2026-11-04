@@ -124,3 +124,32 @@ describe("Lesson action counts", () => {
     expect((await readLesson(plain.path, reader)).imageUrl).toEqual(first.url);
   });
 });
+
+describe("Word marks", () => {
+  const stored = { version: 1, fields: [] };
+  const withMarks = async (value: string | null) => {
+    const { reader, owner, rich, groupId, course } = await setup();
+    await env.DB.prepare("UPDATE course_lessons SET word_marks = ? WHERE id = ?").bind(value, rich.lesson.id).run();
+    return { reader, owner, rich, groupId, course };
+  };
+
+  it("returns the stored marks with the lesson and the course's preloaded lessons", async () => {
+    const { reader, rich, groupId, course } = await withMarks(JSON.stringify(stored));
+    expect((await readLesson(rich.path, reader)).wordMarks).toEqual(stored);
+    const detail = await readCourse(coursePath(groupId, course.id), reader);
+    expect(detail.lessons.find((lesson) => lesson.id === rich.lesson.id)?.wordMarks).toEqual(stored);
+  });
+
+  it("returns null when the column is NULL", async () => {
+    const { reader, rich } = await withMarks(null);
+    expect((await readLesson(rich.path, reader)).wordMarks ?? null).toBeNull();
+  });
+
+  it("returns null for unreadable or invalid stored JSON", async () => {
+    for (const garbage of ["{not json", JSON.stringify({ version: 2, fields: [] }), "[]"]) {
+      const { reader, rich } = await withMarks(garbage);
+      expect((await readLesson(rich.path, reader)).wordMarks ?? null).toBeNull();
+      await resetDatabase();
+    }
+  });
+});

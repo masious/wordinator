@@ -20,6 +20,7 @@ import { Callout } from "../../molecules/Callout";
 import { PlainText } from "../../molecules/PlainText";
 import { pauseSpeech, playSpeech, resumeSpeech, SpeechButton, SpeechFailure, stopSpeech, useSpeechElapsed, useSpeechFailure, useSpeechPlayback, useSpeechResolver, useSpeechUrl, useStopSpeechOnUnmount } from "../../molecules/Speech";
 import { WordBookmarkToggle } from "../WordBookmark/WordBookmark";
+import { MarkedInline, MarkedText, MarkedWordField } from "../WordMarks/WordMarks";
 import styles from "./LessonDocument.module.css";
 
 // Wordinator's own lesson renderer. Every piece of authored text becomes a React text node, so nothing is parsed as HTML;
@@ -65,7 +66,7 @@ function Styled({ item }: { item: StyledText }) {
   return className ? <span className={className}>{node}</span> : <>{node}</>;
 }
 
-export function InlineText({ content }: { content: InlineContent }) {
+function PlainInline({ content }: { content: InlineContent }) {
   return (
     <>
       {content.map((item, index) => {
@@ -90,6 +91,12 @@ export function InlineText({ content }: { content: InlineContent }) {
       })}
     </>
   );
+}
+
+// Pass `blockId` where the text is a lesson block's own content, so the lesson's word marks show in it (docs/courses.md#word-marks).
+export function InlineText({ content, blockId }: { content: InlineContent; blockId?: string }) {
+  const inline = <PlainInline content={content} />;
+  return blockId ? <MarkedInline blockId={blockId} content={content}>{inline}</MarkedInline> : inline;
 }
 
 const blockColors = (props: {
@@ -117,7 +124,7 @@ export function ExampleBlock({
     <figure className={styles.example}>
       <div className={styles.spoken}>
         <blockquote className={styles.sentence}>
-          <InlineText content={block.content} />
+          <InlineText content={block.content} blockId={block.id} />
         </blockquote>
         <SpeechButton url={speech} label={t("courses.speech.example")} />
       </div>
@@ -125,10 +132,10 @@ export function ExampleBlock({
         <>
           {translation && (
             <figcaption className={styles.translation}>
-              {translation}
+              <MarkedText blockId={block.id} field="translation" text={translation} />
             </figcaption>
           )}
-          {note && <p className={styles.note}>{note}</p>}
+          {note && <p className={styles.note}><MarkedText blockId={block.id} field="note" text={note} /></p>}
         </>
       )}
     </figure>
@@ -178,7 +185,7 @@ export function DialogueTurns({
             aria-current={turn.index === speaking || undefined}
           >
             <span className={styles.speaker}>{turn.speaker}</span>
-            <span className={styles.line}>{turn.text}</span>
+            <span className={styles.line}><MarkedText blockId={blockId} field={`turn:${turn.index}`} text={turn.text} /></span>
             <SpeechButton url={turn.speech} label={t("courses.speech.turn", { number: turn.index + 1, speaker: turn.speaker })} />
           </li>
         ))}
@@ -308,14 +315,14 @@ function NewWord({ word }: { word: VocabularyWord }) {
               {example && (
                 <p className={styles.spoken}>
                   <span className={styles.wordExample}>
-                    <PlainText>{word.example!}</PlainText>
+                    <MarkedWordField wordId={word.id} field="example" text={word.example!} />
                   </span>
                   <SpeechButton url={exampleSpeech} label={t("courses.speech.wordExample", { term: word.term })} />
                 </p>
               )}
               {note && (
                 <p className={styles.note}>
-                  <PlainText>{word.note!}</PlainText>
+                  <MarkedWordField wordId={word.id} field="note" text={word.note!} />
                 </p>
               )}
             </div>
@@ -351,7 +358,7 @@ const SelectionContext = createContext<Selection | null>(null);
 // on its own controls (speaker buttons, the dialogue transport, links) do not select it. Escape or a click anywhere outside the
 // block clears the selection, except inside a dialog, so the share confirmation keeps it. It clears on click rather than on press:
 // the share row collapses when it clears, and clearing on press would move whatever is below it before the click lands.
-const INTERACTIVE = "a, button, input, textarea, select, summary, [role=slider], [contenteditable]";
+const INTERACTIVE = "a, button, input, textarea, select, summary, [role=slider], [contenteditable], [data-word-mark]";
 function SelectableBlock({ block, children }: { block: ShareableBlock; children: ReactNode }) {
   const { t } = useTranslation();
   const selection = useContext(SelectionContext)!;
@@ -373,6 +380,8 @@ function SelectableBlock({ block, children }: { block: ShareableBlock; children:
     return () => { document.removeEventListener("click", onDocumentClick); document.removeEventListener("keydown", onKeyDown); };
   }, [select, selected]);
   const onClick = (event: MouseEvent<HTMLDivElement>) => {
+    // A word card opens in a portal; its clicks bubble through React but are not the block's own.
+    if (event.target instanceof Node && !event.currentTarget.contains(event.target)) return;
     const target = event.target instanceof Element ? event.target.closest(INTERACTIVE) : null;
     if (target && target !== event.currentTarget && event.currentTarget.contains(target)) return;
     select(block.id);
@@ -425,7 +434,7 @@ function ListItems({
         const first = group[0]!;
         const children = group.map((item) => (
           <li key={item.id} className={blockColors(item.props)}>
-            <InlineText content={item.content} />
+            <InlineText content={item.content} blockId={item.id} />
             {item.children.length > 0 && (
               <ListItems
                 items={item.children}
@@ -462,7 +471,7 @@ function Heading({ block }: { block: Extract<LessonBlock, { type: "heading" }> }
       data-badged={badge ? true : undefined}
     >
       {badge}
-      {badge ? <span><InlineText content={block.content} /></span> : <InlineText content={block.content} />}
+      {badge ? <span><InlineText content={block.content} blockId={block.id} /></span> : <InlineText content={block.content} blockId={block.id} />}
     </Tag>
   );
 }
@@ -478,7 +487,7 @@ function Block({
     case "paragraph":
       return (
         <p className={join(styles.paragraph, blockColors(block.props))}>
-          <InlineText content={block.content} />
+          <InlineText content={block.content} blockId={block.id} />
         </p>
       );
     case "heading":
@@ -506,7 +515,7 @@ function Block({
     case "callout":
       return (
         <Callout variant={block.props.variant} icon={block.props.icon}>
-          <InlineText content={block.content} />
+          <InlineText content={block.content} blockId={block.id} />
         </Callout>
       );
     case "example":

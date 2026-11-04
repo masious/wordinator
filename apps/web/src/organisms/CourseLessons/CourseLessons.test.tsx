@@ -6,6 +6,7 @@ import { createMemoryHistory, createRootRoute, createRoute, createRouter, Router
 import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { type ReactNode, useState } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { wordMarkFingerprint } from "@wordinator/contracts/word-marks";
 import "../../i18n";
 import { RailSlotsContext } from "../GroupFrame/GroupFrame";
 import { CourseLessons, CourseLessonTools, LessonView } from "./CourseLessons";
@@ -563,7 +564,9 @@ describe("Course lessons", () => {
       { id: "50000000-0000-4000-8000-000000000012", type: "heading", props: { textColor: "default", backgroundColor: "default", level: 2 }, content: text("Woorden"), children: [] },
       vocabulary(5, word(5, "het huis")),
     ];
-    const first = lesson(1, blocks);
+    // The word marks put "de tuin" on the first line, which says "tuin"; the other words fall back to the last turn of their block.
+    const wordMarks = { version: 1 as const, fields: [{ blockId: dialogue.id, field: "turn:0", fingerprint: wordMarkFingerprint("Is er een tuin?"), marks: [{ wordId: word(3, "de tuin").id, parts: [[11, 15]] as Array<[number, number]>, color: null }] }] };
+    const first = { ...lesson(1, blocks), wordMarks };
     renderPlayer({ course: course(false), outline: [summary(1)], lessons: [first] });
     const dialog = await playerOpen();
     const panel = () => within(dialog).getByRole("region", { name: "New words" });

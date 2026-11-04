@@ -30,7 +30,7 @@
           {
             "speaker": "Noor",
             "text": "Hoi Sofia! Fijn dat je terug bent!",
-            "translation": "Hi Sofia! Great dat you terug bent!"
+            "translation": "Hi Sofia! Great that you’re back!"
           },
           {
             "speaker": "Sofia",
@@ -40,32 +40,32 @@
           {
             "speaker": "Noor",
             "text": "Wat heb je gisteren gemaakt?",
-            "translation": "Wat heb you yesterday made?"
+            "translation": "What did you make yesterday?"
           },
           {
             "speaker": "Sofia",
             "text": "Ik heb thee gemaakt en mijn kamer opgeruimd.",
-            "translation": "I have thee made en mijn kamer tidied."
+            "translation": "I made tea and tidied my room."
           },
           {
             "speaker": "Noor",
             "text": "En heb je ook gekookt?",
-            "translation": "En heb you ook cooked?"
+            "translation": "And did you cook too?"
           },
           {
             "speaker": "Sofia",
             "text": "Nee, ik heb niet gekookt. Ik heb thee gemaakt.",
-            "translation": "No, ik heb niet cooked. I have thee made."
+            "translation": "No, I didn’t cook. I made tea."
           },
           {
             "speaker": "Noor",
             "text": "En heb je thee gemaakt?",
-            "translation": "En heb you thee made?"
+            "translation": "And did you make tea?"
           },
           {
             "speaker": "Sofia",
             "text": "Ja, en ik heb mijn moeder gebeld.",
-            "translation": "Yes, en ik heb mijn moeder called."
+            "translation": "Yes, and I called my mother."
           }
         ]
       },
@@ -717,42 +717,42 @@
           {
             "speaker": "Noor",
             "text": "Heb je met kerst gekookt?",
-            "translation": "Heb you at Christmas cooked?"
+            "translation": "Did you cook at Christmas?"
           },
           {
             "speaker": "Sofia",
             "text": "Ja, ik heb met mijn moeder gekookt.",
-            "translation": "Yes, ik heb with my mother cooked."
+            "translation": "Yes, I cooked with my mother."
           },
           {
             "speaker": "Noor",
             "text": "Heb je ook gekookt?",
-            "translation": "Heb you ook cooked?"
+            "translation": "Did you cook too?"
           },
           {
             "speaker": "Sofia",
             "text": "Nee, ik heb niet gekookt. Ik heb thee gemaakt.",
-            "translation": "No, ik heb niet cooked. I have thee made."
+            "translation": "No, I didn’t cook. I made tea."
           },
           {
             "speaker": "Noor",
             "text": "Heb je veel Nederlands geleerd?",
-            "translation": "Heb you a lot Dutch learned?"
+            "translation": "Did you learn a lot of Dutch?"
           },
           {
             "speaker": "Sofia",
             "text": "Ja, ik heb veel Nederlands geleerd.",
-            "translation": "Yes, ik heb a lot Dutch learned."
+            "translation": "Yes, I learned a lot of Dutch."
           },
           {
             "speaker": "Noor",
             "text": "Heb je Nederlands geleerd?",
-            "translation": "Heb you Dutch learned?"
+            "translation": "Did you learn Dutch?"
           },
           {
             "speaker": "Sofia",
             "text": "Ja, ik heb Nederlands geleerd.",
-            "translation": "Yes, ik heb Dutch learned."
+            "translation": "Yes, I learned Dutch."
           }
         ]
       },

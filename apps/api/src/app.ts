@@ -74,6 +74,7 @@ import {
 } from "@wordinator/contracts";
 import {
   LESSON_DOCUMENT_SCHEMA_VERSION, collectImageUrls, collectLessonWords, collectPracticeIds, courseDetailResponseSchema, courseWordsResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBookmarkPageSchema, wordBookmarksQuerySchema, wordSearchKey, wordSearchPageSchema, wordSearchQuerySchema, wordDrillDeckSchema, wordDrillDirectionSchema, wordDrillGradeRequestSchema, wordDrillGradeResponseSchema, wordDrillQuerySchema, lessonWordBatches, wordBatchesResponseSchema, wordExposuresRequestSchema, findPublishProblems, flattenToSteps, readingReached, lessonDraftSavedResponseSchema, lessonImageUploadResponseSchema,
+  lessonWordMarksSchema,
   lessonPositionRequestSchema, lessonResponseSchema, lessonStepKey, mapImageUrls, parseStoredLessonDocument, publishLessonRequestSchema, readPracticeBlock, saveLessonDraftRequestSchema,
   toLearnerDocument, walkLessonBlocks, type CourseLesson, type CourseWord, type LessonBlockOf, type LessonDocument,
 } from "@wordinator/contracts/lesson-document";
@@ -667,7 +668,7 @@ type LessonRow = {
   id: string; slug: string; courseId: string; title: string; goal: string | null; position: number; published: number; publishedAt: number | null; changed: number;
   updatedById: string; updatedByName: string; updatedAt: number; wordCount: number; practiceCount: number; imageKey: string | null;
 };
-type LessonDocumentRow = LessonRow & { draftDoc: string; draftVersion: number; publishedDoc: string | null };
+type LessonDocumentRow = LessonRow & { draftDoc: string; draftVersion: number; publishedDoc: string | null; wordMarks: string | null };
 // Attributes the last editor, falling back to their group profile snapshot once they are no longer active.
 const editorColumns = (table: string, alias: string) => `CASE WHEN em.state = 'active' THEN eu.display_name ELSE COALESCE(em.profile_display_name, 'Former member') END AS updatedByName
    FROM ${table} ${alias} JOIN users eu ON eu.id = ${alias}.updated_by
@@ -686,7 +687,7 @@ const LESSON_COLUMNS = `l.id, l.slug, l.course_id AS courseId, l.title, l.goal, 
     (l.published_doc IS NOT NULL AND l.draft_doc != l.published_doc) AS changed, l.updated_by AS updatedById, l.updated_at AS updatedAt,
     ${LESSON_COUNT_COLUMNS}, ${LESSON_IMAGE_COLUMN}`;
 const LESSON_SELECT = `SELECT ${LESSON_COLUMNS}, ${editorColumns("course_lessons", "l")}`;
-const LESSON_DOCUMENT_SELECT = `SELECT ${LESSON_COLUMNS}, l.draft_doc AS draftDoc, l.draft_version AS draftVersion, l.published_doc AS publishedDoc,
+const LESSON_DOCUMENT_SELECT = `SELECT ${LESSON_COLUMNS}, l.draft_doc AS draftDoc, l.draft_version AS draftVersion, l.published_doc AS publishedDoc, l.word_marks AS wordMarks,
     ${editorColumns("course_lessons", "l")}`;
 
 // The course owner and active contributors see unpublished lessons and drafts; everyone else sees published documents only.
@@ -706,6 +707,15 @@ function storedDocument(raw: string, lessonId: string) {
 const storedDocuments = (row: LessonDocumentRow) => ({
   draft: storedDocument(row.draftDoc, row.id), published: row.publishedDoc === null ? null : storedDocument(row.publishedDoc, row.id),
 });
+
+// The stored word marks (docs/courses.md#word-marks), or null when absent or unreadable; clients drop stale fields by fingerprint.
+function storedWordMarks(raw: string | null) {
+  if (raw === null) return null;
+  try {
+    const parsed = lessonWordMarksSchema.safeParse(JSON.parse(raw));
+    return parsed.success ? parsed.data : null;
+  } catch { return null; }
+}
 
 // Documents store R2 keys; readers receive public URLs, so a media base URL change never breaks stored lessons.
 const expandImages = (document: LessonDocument, mediaBase: string) => mapImageUrls(document, (key) => mediaUrlFromBase(mediaBase, key)!);
@@ -761,6 +771,7 @@ async function presentLessons(binding: D1Database, course: CourseRow, viewerId: 
     return {
       ...presentLessonSummary(row, editor, mediaBase),
       document: published && expandImages(toLearnerDocument(published).document, mediaBase),
+      wordMarks: storedWordMarks(row.wordMarks),
       practiceProgress: Object.fromEntries([...ids].map((id) => [id, progress[id]!])),
       draft: editor ? { document: expandImages(draft, mediaBase), version: row.draftVersion } : null,
       speech: presentSpeech(publishedSpeech, clips, media),

@@ -1,13 +1,18 @@
 // Authoring tool for course lesson files. Run with apps/api/node_modules/.bin/tsx.
 //   check <lesson.json...>  normalize authoring shorthand, assign missing block IDs (written back), validate, print feature usage
 //   sql <partDir> [manifest] print D1 SQL that upserts the part's course, its lessons (as drafts) and practice anchors
-import { readdirSync, readFileSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { basename, dirname, join } from "node:path";
 import {
   collectLessonWords, findPublishProblems, flattenToSteps, lessonDocumentSchema, walkLessonBlocks, type LessonDocument,
 } from "../../../packages/contracts/src/lessonDocument";
 import { countBlanks, practicePayloadSchema, slugify } from "../../../packages/contracts/src/index";
+import { authoredWordMarksSchema, resolveWordMarks } from "../../../packages/contracts/src/wordMarks";
 import { authoredDocument } from "./normalize";
+
+// Authored word marks (tools/word-marks.ts, docs/courses.md#word-marks) live beside the lessons as word-marks/<lesson file name>.
+// word-marks.ts runs its CLI on import, so the path rule is repeated here.
+const marksPath = (lessonFile: string) => join(dirname(new URL(import.meta.url).pathname), "..", "word-marks", basename(lessonFile));
 
 type Json = any;
 
@@ -97,9 +102,19 @@ function sql(dir: string, manifest: string) {
   files.forEach((name, index) => {
     if (!check(join(dir, name))) throw new Error(`${name} is invalid; fix it before generating SQL.`);
     const { file, document } = load(join(dir, name));
-    const doc = JSON.stringify(lessonDocumentSchema.parse(document));
+    const parsedDocument = lessonDocumentSchema.parse(document);
+    const doc = JSON.stringify(parsedDocument);
+    let wordMarks: string | null = null;
+    const marksFile = marksPath(name);
+    if (existsSync(marksFile)) {
+      const { marks, problems } = resolveWordMarks(parsedDocument, authoredWordMarksSchema.parse(JSON.parse(readFileSync(marksFile, "utf8"))).marks);
+      if (problems.length) throw new Error(`${name}: word marks do not resolve:\n${problems.map((problem) => `  ${problem}`).join("\n")}`);
+      wordMarks = JSON.stringify(marks);
+    }
     const position = course.positionOffset + index;
     out.push(`INSERT INTO course_lessons (id, slug, group_id, course_id, title, goal, position, draft_doc, draft_version, published_doc, published_at, created_by, updated_by, created_at, updated_at) VALUES (${q(file.id)}, ${slugSql("course_lessons", ["course_id", course.courseId], file.id, file.title, "lesson")}, ${q(course.groupId)}, ${q(course.courseId)}, ${q(file.title)}, ${q(file.goal ?? null)}, ${position}, ${q(doc)}, 1, NULL, NULL, ${q(course.ownerId)}, ${q(course.ownerId)}, ${now}, ${now}) ON CONFLICT(id) DO UPDATE SET title=excluded.title, goal=excluded.goal, position=excluded.position, draft_doc=excluded.draft_doc, draft_version=course_lessons.draft_version+1, updated_by=excluded.updated_by, updated_at=excluded.updated_at;`);
+    // A separate statement: the document and its marks together can exceed D1's statement size limit.
+    out.push(`UPDATE course_lessons SET word_marks = ${q(wordMarks)} WHERE id = ${q(file.id)};`);
     for (const { block } of walkLessonBlocks(lessonDocumentSchema.parse(document).blocks)) {
       if (block.type === "practice") out.push(`INSERT OR IGNORE INTO course_practices (id, group_id, course_id, lesson_id, created_at) VALUES (${q(block.id)}, ${q(course.groupId)}, ${q(course.courseId)}, ${q(file.id)}, ${now});`);
     }

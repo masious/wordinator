@@ -1,0 +1,149 @@
+{
+  "marks": [
+    {
+      "blockId": "f5450424-b558-4b6c-bd91-b30192ebe67a",
+      "field": "word:3b90943b-2423-42dc-8708-62663e5b0100:example",
+      "word": "3b90943b-2423-42dc-8708-62663e5b0100",
+      "tokens": [
+        6
+      ],
+      "color": null
+    },
+    {
+      "blockId": "f5450424-b558-4b6c-bd91-b30192ebe67a",
+      "field": "word:acb5dd76-4c71-478c-b72c-aa33bc71e6c1:example",
+      "word": "acb5dd76-4c71-478c-b72c-aa33bc71e6c1",
+      "tokens": [
+        3
+      ],
+      "color": null
+    },
+    {
+      "blockId": "f5450424-b558-4b6c-bd91-b30192ebe67a",
+      "field": "word:55bbdc13-daca-49fd-9d32-fa44beeac2d6:example",
+      "word": "55bbdc13-daca-49fd-9d32-fa44beeac2d6",
+      "tokens": [
+        1
+      ],
+      "color": null
+    },
+    {
+      "blockId": "f5450424-b558-4b6c-bd91-b30192ebe67a",
+      "field": "word:0a971111-93dc-41d4-9a77-5ee4f3d059dd:example",
+      "word": "0a971111-93dc-41d4-9a77-5ee4f3d059dd",
+      "tokens": [
+        5
+      ],
+      "color": null
+    },
+    {
+      "blockId": "f5450424-b558-4b6c-bd91-b30192ebe67a",
+      "field": "word:d04d896e-6b15-4f5c-8448-51296f706d1a:example",
+      "word": "d04d896e-6b15-4f5c-8448-51296f706d1a",
+      "tokens": [
+        3
+      ],
+      "color": null
+    },
+    {
+      "blockId": "f5450424-b558-4b6c-bd91-b30192ebe67a",
+      "field": "word:b3017a14-8b6b-4e5a-bc8b-1ee56bbec631:example",
+      "word": "b3017a14-8b6b-4e5a-bc8b-1ee56bbec631",
+      "tokens": [
+        3
+      ],
+      "color": null
+    },
+    {
+      "blockId": "f5450424-b558-4b6c-bd91-b30192ebe67a",
+      "field": "word:40ad92a7-87d5-46b0-bc80-6a27275793f7:example",
+      "word": "40ad92a7-87d5-46b0-bc80-6a27275793f7",
+      "tokens": [
+        7
+      ],
+      "color": null
+    },
+    {
+      "blockId": "f5450424-b558-4b6c-bd91-b30192ebe67a",
+      "field": "word:66987516-5502-4632-be70-c62e8e551e18:example",
+      "word": "66987516-5502-4632-be70-c62e8e551e18",
+      "tokens": [
+        4
+      ],
+      "color": null
+    },
+    {
+      "blockId": "b55a0b2b-c5ef-4c3b-8913-9716b131ba21",
+      "field": "word:ddb700c1-7b24-4f9c-be29-539cee92c258:example",
+      "word": "ddb700c1-7b24-4f9c-be29-539cee92c258",
+      "tokens": [
+        3
+      ],
+      "color": null
+    },
+    {
+      "blockId": "b55a0b2b-c5ef-4c3b-8913-9716b131ba21",
+      "field": "word:0274a412-398f-454a-9071-5fb00be00f74:example",
+      "word": "0274a412-398f-454a-9071-5fb00be00f74",
+      "tokens": [
+        6
+      ],
+      "color": null
+    },
+    {
+      "blockId": "b55a0b2b-c5ef-4c3b-8913-9716b131ba21",
+      "field": "word:151da456-380e-4814-b113-5a00ee523b2d:example",
+      "word": "151da456-380e-4814-b113-5a00ee523b2d",
+      "tokens": [
+        1
+      ],
+      "color": null
+    },
+    {
+      "blockId": "b55a0b2b-c5ef-4c3b-8913-9716b131ba21",
+      "field": "word:545cf543-f18d-4432-bac8-81f1522ebfd4:example",
+      "word": "545cf543-f18d-4432-bac8-81f1522ebfd4",
+      "tokens": [
+        1
+      ],
+      "color": null
+    },
+    {
+      "blockId": "b55a0b2b-c5ef-4c3b-8913-9716b131ba21",
+      "field": "word:f6798dd5-ca66-4409-8e56-84c7e535390d:example",
+      "word": "f6798dd5-ca66-4409-8e56-84c7e535390d",
+      "tokens": [
+        3
+      ],
+      "color": null
+    },
+    {
+      "blockId": "b55a0b2b-c5ef-4c3b-8913-9716b131ba21",
+      "field": "word:f960079c-46e8-4816-86dd-abf6a59b5496:example",
+      "word": "f960079c-46e8-4816-86dd-abf6a59b5496",
+      "tokens": [
+        2,
+        5
+      ],
+      "color": null
+    },
+    {
+      "blockId": "b55a0b2b-c5ef-4c3b-8913-9716b131ba21",
+      "field": "word:f960079c-46e8-4816-86dd-abf6a59b5496:example",
+      "word": "3b90943b-2423-42dc-8708-62663e5b0100",
+      "tokens": [
+        4
+      ],
+      "color": null
+    },
+    {
+      "blockId": "b55a0b2b-c5ef-4c3b-8913-9716b131ba21",
+      "field": "word:f8dabb61-4966-425b-967b-6e96e0bf8104:example",
+      "word": "f8dabb61-4966-425b-967b-6e96e0bf8104",
+      "tokens": [
+        11
+      ],
+      "color": null
+    }
+  ]
+}

@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { apiRequest, courseProgressQueryOptions, lessonQueryOptions } from "../../api";
 import { sendPracticeAttempt } from "../../molecules/learningAttempts";
 import { PlainText } from "../../molecules/PlainText";
+import { MarkedText } from "../WordMarks/WordMarks";
 import { WordOrderBoard } from "../../molecules/WordOrderBoard";
 import { DialoguePrompt, dialogueTurns } from "./DialoguePrompt";
 import { ProgressMeter } from "../../molecules/ProgressMeter";
@@ -217,17 +218,17 @@ export function PracticeContent({ block, prompts = true }: { block: Practice; pr
   return <div className={styles.practice}>
     <p className={styles.eyebrow}>{t("courses.practice.label")}</p>
     <p className={styles.instruction}><PlainText>{payload.instruction}</PlainText></p>
-    {payload.passage && <PracticePassage passage={payload.passage} />}
+    {payload.passage && <PracticePassage blockId={block.id} passage={payload.passage} />}
     {prompts && <ol className={styles.prompts}>{payload.items.map((item, index) => <li key={index}><PlainText>{item.prompt}</PlainText></li>)}</ol>}
   </div>;
 }
 
 // A reading passage, shown above its answer set. Neither it nor its questions can be shared (docs/lesson-shares.md).
-function PracticePassage({ passage }: { passage: NonNullable<LearnerPracticePayload["passage"]> }) {
+function PracticePassage({ blockId, passage }: { blockId: string; passage: NonNullable<LearnerPracticePayload["passage"]> }) {
   const { t } = useTranslation();
   return <article className={styles.passage} aria-label={passage.title ?? t("courses.practice.passage")}>
     {passage.title && <h4>{passage.title}</h4>}
-    <p><PlainText>{passage.content}</PlainText></p>
+    <p><MarkedText blockId={blockId} field="passage" text={passage.content} linkify /></p>
   </article>;
 }
 
@@ -287,7 +288,7 @@ export function PracticeSummary({ scope, block, published, archived = false, ste
     {answering && <section id={panel} aria-label={t("courses.practice.dialogTitle")} className={styles.expansion}
       onKeyDown={(event) => { if (event.key === "Escape") close(); }}>
       <PracticePosition current={activeQuestion + 1} total={payload.items.length} labelBelow />
-      {payload.passage && <PracticePassage passage={payload.passage} />}
+      {payload.passage && <PracticePassage blockId={block.id} passage={payload.passage} />}
       <AnswerSetComposer staged scope={scope} block={block} recordAttempts={published && !archived} timed={published} onDone={close} onComplete={onComplete && (() => { close(); onComplete(); })} onActiveChange={setActiveQuestion}
         onAcceptanceChange={(index, accepted) => setAcceptedQuestions((current) => current.map((value, currentIndex) => currentIndex === index ? accepted : value))} />
     </section>}

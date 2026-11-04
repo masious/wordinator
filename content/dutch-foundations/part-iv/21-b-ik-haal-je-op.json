@@ -1077,12 +1077,12 @@
           {
             "speaker": "Sofia",
             "text": "Hoi Piotr! Ik app je over mijn housewarming.",
-            "translation": "Hi Piotr! I’ll message you over mijn housewarming party."
+            "translation": "Hi Piotr! I’m messaging you about my housewarming."
           },
           {
             "speaker": "Piotr",
             "text": "Hoi Sofia! Ja, Kasia en ik komen graag.",
-            "translation": "Hi Sofia! Yes, Kasia en ik komen graag."
+            "translation": "Hi Sofia! Yes, Kasia and I would love to come."
           },
           {
             "speaker": "Sofia",
@@ -1097,7 +1097,7 @@
           {
             "speaker": "Sofia",
             "text": "Ja, ik stuur het straks. Kastanjestraat 14.",
-            "translation": "Yes, ik stuur het later. Kastanjestraat 14."
+            "translation": "Yes, I’ll send it in a bit. Kastanjestraat 14."
           },
           {
             "speaker": "Piotr",
@@ -1107,17 +1107,17 @@
           {
             "speaker": "Sofia",
             "text": "Geen probleem. Ik haal jullie om half zeven op bij de bushalte.",
-            "translation": "No problem. I’ll pick up jullie at half past six op bij de bushalte."
+            "translation": "No problem. I’ll pick you up at the bus stop at half past six."
           },
           {
             "speaker": "Piotr",
             "text": "Dat is fijn. Bel je me bij de halte?",
-            "translation": "Dat is fijn. Bel you me bij de halte?"
+            "translation": "That’s nice. Will you call me at the stop?"
           },
           {
             "speaker": "Sofia",
             "text": "Ik bel je bij de bushalte. Ik kom met de fiets.",
-            "translation": "I’ll call you bij de bushalte. I’ll come by bike."
+            "translation": "I’ll call you at the bus stop. I’ll come by bike."
           },
           {
             "speaker": "Piotr",

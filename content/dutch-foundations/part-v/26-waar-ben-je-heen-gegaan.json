@@ -52,32 +52,32 @@
           {
             "speaker": "Noor",
             "text": "Fijn! Ben je zondag aangekomen?",
-            "translation": "Great! Ben you zondag arrived?"
+            "translation": "Great! Did you arrive on Sunday?"
           },
           {
             "speaker": "Sofia",
             "text": "Ja, ik ben zondag teruggekomen.",
-            "translation": "Yes, ik ben zondag came back."
+            "translation": "Yes, I came back on Sunday."
           },
           {
             "speaker": "Noor",
             "text": "En gisteren? Ben je thuisgebleven?",
-            "translation": "En yesterday? Ben you stayed home?"
+            "translation": "And yesterday? Did you stay at home?"
           },
           {
             "speaker": "Sofia",
             "text": "Nee, ik ben naar het centrum gegaan.",
-            "translation": "No, ik ben went to the city center."
+            "translation": "No, I went to the city center."
           },
           {
             "speaker": "Noor",
             "text": "Ben je ook naar het park gegaan?",
-            "translation": "Ben you ook went to the park?"
+            "translation": "Did you go to the park too?"
           },
           {
             "speaker": "Sofia",
             "text": "Ja, en daarna ben ik naar huis gegaan.",
-            "translation": "Yes, en afterward ben ik went home."
+            "translation": "Yes, and afterward I went home."
           }
         ]
       },
@@ -872,37 +872,37 @@
           {
             "speaker": "Sofia",
             "text": "Gisteren ben ik naar het centrum gegaan.",
-            "translation": "Gisteren ben ik went to the city center."
+            "translation": "Yesterday I went to the city center."
           },
           {
             "speaker": "Noor",
             "text": "Ben je ook naar de gracht gegaan?",
-            "translation": "Ben you ook naar the canal gegaan?"
+            "translation": "Did you go to the canal too?"
           },
           {
             "speaker": "Sofia",
             "text": "Ja, ik ben langs de gracht gegaan.",
-            "translation": "Yes, ik ben along the canal gegaan."
+            "translation": "Yes, I walked along the canal."
           },
           {
             "speaker": "Noor",
             "text": "We zijn met de trein naar Zandvoort gegaan.",
-            "translation": "We are by train naar Zandvoort gegaan."
+            "translation": "We went to Zandvoort by train."
           },
           {
             "speaker": "Sofia",
             "text": "Ben je daar met Daan en mij naartoe gegaan?",
-            "translation": "Ben you daar met Daan en mij naartoe gegaan?"
+            "translation": "Did you go there with Daan and me?"
           },
           {
             "speaker": "Noor",
             "text": "Ja, ik ben met jullie naar Zandvoort gegaan.",
-            "translation": "Yes, ik ben with you naar Zandvoort gegaan."
+            "translation": "Yes, I went to Zandvoort with you."
           },
           {
             "speaker": "Sofia",
             "text": "Daar zijn we in een strandcafé gebleven.",
-            "translation": "Daar zijn we in een beach café stayed."
+            "translation": "We stayed at a beach café there."
           },
           {
             "speaker": "Noor",

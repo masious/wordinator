@@ -1,9 +1,9 @@
 import { ChevronDown } from "lucide-react";
 import { type ReactNode, useId, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { PlainText } from "../../molecules/PlainText";
 import { SpeechButton } from "../../molecules/Speech";
 import { WordBookmarkToggle } from "../WordBookmark/WordBookmark";
+import { MarkedWordField } from "../WordMarks/WordMarks";
 import styles from "./LessonWords.module.css";
 import { WordCopy } from "./WordList";
 
@@ -24,9 +24,9 @@ export function PanelWord({ word, termSpeech, exampleSpeech, active, className, 
       <WordCopy term={word.term} meaning={word.meaning} />
       {open && <div id={detailsId} className={styles.details}>
         {forms && <p className={styles.forms}>{forms}</p>}
-        {example && <p className={styles.example}><span><PlainText>{example}</PlainText></span>
+        {example && <p className={styles.example}><span><MarkedWordField wordId={word.id} field="example" text={example} /></span>
           <SpeechButton url={exampleSpeech} label={t("courses.speech.wordExample", { term: word.term })} /></p>}
-        {note && <p className={styles.note}><PlainText>{note}</PlainText></p>}
+        {note && <p className={styles.note}><MarkedWordField wordId={word.id} field="note" text={note} /></p>}
         {source}
       </div>}
     </div>

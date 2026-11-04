@@ -4,6 +4,7 @@ import {
 import {
   flattenToSteps, lessonStepKey, resolveStepIndex, type CourseLesson, type LessonBlockOf, type LessonStep,
 } from "@wordinator/contracts/lesson-document";
+import { dialogueWordMarks } from "@wordinator/contracts/word-marks";
 import { type QueryClient, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
@@ -16,6 +17,7 @@ import { AdaptiveDialog, Button, ErrorState, LoadingState } from "../../ui";
 import { DialogueBlock, ExampleBlock, InlineText, LessonBlocks, NewWords } from "../LessonDocument/LessonDocument";
 import { LessonShareScope, ShareButton, useLessonShareScope, type SharePiece } from "../LessonShare/LessonShare";
 import { useLessonBookmarkTarget, WordBookmarkScope } from "../WordBookmark/WordBookmark";
+import { MarkedText, WordMarksProvider } from "../WordMarks/WordMarks";
 import { runWords, WordRecap } from "../WordRecap/WordRecap";
 import { CourseErrorMessage } from "./CourseErrorMessage";
 import styles from "./LessonPlayer.module.css";
@@ -25,7 +27,7 @@ import { AnswerField, type AnswerSubmit, PracticePosition, practiceDraftKey, pra
 export const playableDocument = (lesson: CourseLesson) => lesson.document ?? lesson.draft?.document ?? null;
 export const lessonSteps = (lesson: CourseLesson): LessonStep[] => {
   const document = playableDocument(lesson);
-  return document ? flattenToSteps(document) : [];
+  return document ? flattenToSteps(document, dialogueWordMarks(document, lesson.wordMarks)) : [];
 };
 
 export type PlayerScope = { groupId: string; courseId: string; accountId: string };
@@ -37,9 +39,9 @@ function ExampleStep({ block }: { block: LessonBlockOf<"example"> }) {
   const { translation, note } = block.props;
   return <ExampleBlock block={block} details={<>
     {translation && (shown
-      ? <figcaption className={styles.translation}>{translation}</figcaption>
+      ? <figcaption className={styles.translation}><MarkedText blockId={block.id} field="translation" text={translation} /></figcaption>
       : <Button variant="quiet" className={styles.revealButton} onClick={() => setShown(true)}>{t("courses.player.showTranslation")}</Button>)}
-    {note && (shown || !translation) && <p className={styles.note}>{note}</p>}
+    {note && (shown || !translation) && <p className={styles.note}><MarkedText blockId={block.id} field="note" text={note} /></p>}
   </>} />;
 }
 
@@ -51,7 +53,7 @@ export function QuestionPrompt({ block, item }: { block: Practice; item: number 
     <p className={styles.instruction}><PlainText>{payload.instruction}</PlainText></p>
     {payload.passage && <details className={styles.passage} open={item === 0}>
       <summary>{payload.passage.title ?? t("courses.practice.passage")}</summary>
-      <p><PlainText>{payload.passage.content}</PlainText></p>
+      <p><MarkedText blockId={block.id} field="passage" text={payload.passage.content} linkify /></p>
     </details>}
     <p className={styles.prompt}><PlainText>{payload.items[item]!.prompt}</PlainText></p>
   </>;
@@ -107,7 +109,7 @@ function StepContent({ step, renderQuestion }: { step: LessonStep; renderQuestio
   switch (step.kind) {
     case "content": return <div className={styles.content}><LessonBlocks blocks={step.blocks} /></div>;
     case "columns": return <div className={styles.content}><LessonBlocks blocks={[step.block]} /></div>;
-    case "callout": return <Callout variant={step.block.props.variant} icon={step.block.props.icon}><InlineText content={step.block.content} /></Callout>;
+    case "callout": return <Callout variant={step.block.props.variant} icon={step.block.props.icon}><InlineText content={step.block.content} blockId={step.block.id} /></Callout>;
     case "example": return <ExampleStep block={step.block} />;
     case "dialogueTurn": return <DialogueBlock block={step.block} upTo={step.turnIndex} />;
     case "practiceItem": return renderQuestion(step);
@@ -234,7 +236,7 @@ function Player({ scope, lesson, position, next, archived, onNext, onClose }: {
   // Published lessons offer Share on example, dialogue, and question steps; previews offer none.
   const share = useLessonShareScope(scope.groupId, scope.courseId, lesson);
   const sharePiece = share && step ? stepSharePiece(step, lesson) : null;
-  return <LessonShareScope scope={share}><WordBookmarkScope resolve={bookmarkTarget}><SpeechScope resolve={resolveSpeech}><div className={styles.player}>
+  return <WordMarksProvider document={playableDocument(lesson)} marks={lesson.wordMarks}><LessonShareScope scope={share}><WordBookmarkScope resolve={bookmarkTarget}><SpeechScope resolve={resolveSpeech}><div className={styles.player}>
     <div className={styles.status}>
       <span className={styles.stepLabel}>{finished ? t("courses.player.done") : t("courses.player.step", { current: index + 1, total: steps.length })}</span>
       <ProgressMeter value={percent} label={t("courses.player.progressLabel")} />
@@ -261,7 +263,7 @@ function Player({ scope, lesson, position, next, archived, onNext, onClose }: {
       <Button variant="quiet" disabled={index === 0} onClick={() => setIndex((value) => value - 1)}>{t("common.back")}</Button>
       <Button data-next data-autofocus onClick={forward}>{index === steps.length - 1 ? t("courses.player.finish") : t("common.next")}</Button>
     </div>}
-  </div></SpeechScope></WordBookmarkScope></LessonShareScope>;
+  </div></SpeechScope></WordBookmarkScope></LessonShareScope></WordMarksProvider>;
 }
 
 // The player saved the reader's steps while it was open; refresh the positions and percentages it changed, and the course recap,

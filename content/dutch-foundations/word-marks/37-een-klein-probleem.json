@@ -1,0 +1,339 @@
+{
+  "marks": [
+    {
+      "blockId": "a83289eb-1681-4e36-8d54-b7c7a3af5807",
+      "field": "turn:2",
+      "word": "90dff541-144a-4dd2-b3ee-27e4eb037195",
+      "tokens": [
+        4
+      ],
+      "color": null
+    },
+    {
+      "blockId": "a83289eb-1681-4e36-8d54-b7c7a3af5807",
+      "field": "turn:2",
+      "word": "61eda66b-312f-420d-baa8-b2dd4a40ea00",
+      "tokens": [
+        5
+      ],
+      "color": null
+    },
+    {
+      "blockId": "a83289eb-1681-4e36-8d54-b7c7a3af5807",
+      "field": "turn:3",
+      "word": "61eda66b-312f-420d-baa8-b2dd4a40ea00",
+      "tokens": [
+        4
+      ],
+      "color": null
+    },
+    {
+      "blockId": "e79d1c73-1f1c-49b1-b833-592463cb03e0",
+      "field": "word:61eda66b-312f-420d-baa8-b2dd4a40ea00:example",
+      "word": "90dff541-144a-4dd2-b3ee-27e4eb037195",
+      "tokens": [
+        4
+      ],
+      "color": null
+    },
+    {
+      "blockId": "e79d1c73-1f1c-49b1-b833-592463cb03e0",
+      "field": "word:61eda66b-312f-420d-baa8-b2dd4a40ea00:example",
+      "word": "61eda66b-312f-420d-baa8-b2dd4a40ea00",
+      "tokens": [
+        5
+      ],
+      "color": null
+    },
+    {
+      "blockId": "e79d1c73-1f1c-49b1-b833-592463cb03e0",
+      "field": "word:90dff541-144a-4dd2-b3ee-27e4eb037195:example",
+      "word": "90dff541-144a-4dd2-b3ee-27e4eb037195",
+      "tokens": [
+        4
+      ],
+      "color": null
+    },
+    {
+      "blockId": "e79d1c73-1f1c-49b1-b833-592463cb03e0",
+      "field": "word:90dff541-144a-4dd2-b3ee-27e4eb037195:example",
+      "word": "61eda66b-312f-420d-baa8-b2dd4a40ea00",
+      "tokens": [
+        5
+      ],
+      "color": null
+    },
+    {
+      "blockId": "95d5e6bf-5f37-46b3-a91f-f75b7a5d66f9",
+      "field": "content",
+      "word": "ef7ce2c3-d4b6-45f7-a2b6-e20a8cf578c1",
+      "tokens": [
+        5
+      ],
+      "color": null
+    },
+    {
+      "blockId": "95d5e6bf-5f37-46b3-a91f-f75b7a5d66f9",
+      "field": "content",
+      "word": "5d0818dd-bb9c-4295-b445-3d7ea87b94c4",
+      "tokens": [
+        8
+      ],
+      "color": null
+    },
+    {
+      "blockId": "95d5e6bf-5f37-46b3-a91f-f75b7a5d66f9",
+      "field": "content",
+      "word": "fbe9e290-8075-4fe2-b1fb-c80e8ead3102",
+      "tokens": [
+        11
+      ],
+      "color": null
+    },
+    {
+      "blockId": "95d5e6bf-5f37-46b3-a91f-f75b7a5d66f9",
+      "field": "content",
+      "word": "bf1f4df3-1aa5-42f9-8381-0e3f076ec1e8",
+      "tokens": [
+        15
+      ],
+      "color": null
+    },
+    {
+      "blockId": "95d5e6bf-5f37-46b3-a91f-f75b7a5d66f9",
+      "field": "content",
+      "word": "5b69cd26-beb3-4c5f-8cf7-b74a2f20f9e8",
+      "tokens": [
+        18
+      ],
+      "color": null
+    },
+    {
+      "blockId": "95d5e6bf-5f37-46b3-a91f-f75b7a5d66f9",
+      "field": "content",
+      "word": "3a3c214c-7f1f-40f6-a0b0-56d499f67f7e",
+      "tokens": [
+        21
+      ],
+      "color": null
+    },
+    {
+      "blockId": "95d5e6bf-5f37-46b3-a91f-f75b7a5d66f9",
+      "field": "content",
+      "word": "346418f6-169c-40fd-b0df-2aac65f5d4f3",
+      "tokens": [
+        24
+      ],
+      "color": null
+    },
+    {
+      "blockId": "95d5e6bf-5f37-46b3-a91f-f75b7a5d66f9",
+      "field": "content",
+      "word": "0da4ae4d-39e7-4592-b71b-554c5d18da46",
+      "tokens": [
+        26
+      ],
+      "color": null
+    },
+    {
+      "blockId": "95d5e6bf-5f37-46b3-a91f-f75b7a5d66f9",
+      "field": "content",
+      "word": "9f7d4059-8928-4fa1-8a18-00d0f3edc83e",
+      "tokens": [
+        29,
+        30
+      ],
+      "color": null
+    },
+    {
+      "blockId": "95d5e6bf-5f37-46b3-a91f-f75b7a5d66f9",
+      "field": "content",
+      "word": "b7d89b86-3901-49db-87e6-eeff13107a41",
+      "tokens": [
+        35
+      ],
+      "color": null
+    },
+    {
+      "blockId": "40e911aa-2b01-470e-bab6-734360c4aa19",
+      "field": "word:b7d89b86-3901-49db-87e6-eeff13107a41:example",
+      "word": "b7d89b86-3901-49db-87e6-eeff13107a41",
+      "tokens": [
+        2
+      ],
+      "color": "green"
+    },
+    {
+      "blockId": "40e911aa-2b01-470e-bab6-734360c4aa19",
+      "field": "word:b99b5e66-b3f6-4548-a73b-4961593d6f5b:example",
+      "word": "b99b5e66-b3f6-4548-a73b-4961593d6f5b",
+      "tokens": [
+        4
+      ],
+      "color": null
+    },
+    {
+      "blockId": "c6715475-68e5-416e-8f54-f121ebf6f430",
+      "field": "turn:4",
+      "word": "b7d89b86-3901-49db-87e6-eeff13107a41",
+      "tokens": [
+        2
+      ],
+      "color": null
+    },
+    {
+      "blockId": "c6715475-68e5-416e-8f54-f121ebf6f430",
+      "field": "turn:7",
+      "word": "b99b5e66-b3f6-4548-a73b-4961593d6f5b",
+      "tokens": [
+        6
+      ],
+      "color": null
+    },
+    {
+      "blockId": "a6f3dd7f-ec65-4299-b30d-a174632ab865",
+      "field": "word:0da4ae4d-39e7-4592-b71b-554c5d18da46:example",
+      "word": "5d0818dd-bb9c-4295-b445-3d7ea87b94c4",
+      "tokens": [
+        1
+      ],
+      "color": "green"
+    },
+    {
+      "blockId": "a6f3dd7f-ec65-4299-b30d-a174632ab865",
+      "field": "word:0da4ae4d-39e7-4592-b71b-554c5d18da46:example",
+      "word": "0da4ae4d-39e7-4592-b71b-554c5d18da46",
+      "tokens": [
+        3
+      ],
+      "color": null
+    },
+    {
+      "blockId": "a6f3dd7f-ec65-4299-b30d-a174632ab865",
+      "field": "word:ef7ce2c3-d4b6-45f7-a2b6-e20a8cf578c1:example",
+      "word": "ef7ce2c3-d4b6-45f7-a2b6-e20a8cf578c1",
+      "tokens": [
+        5
+      ],
+      "color": null
+    },
+    {
+      "blockId": "a6f3dd7f-ec65-4299-b30d-a174632ab865",
+      "field": "word:3a3c214c-7f1f-40f6-a0b0-56d499f67f7e:example",
+      "word": "3a3c214c-7f1f-40f6-a0b0-56d499f67f7e",
+      "tokens": [
+        5
+      ],
+      "color": null
+    },
+    {
+      "blockId": "a6f3dd7f-ec65-4299-b30d-a174632ab865",
+      "field": "word:346418f6-169c-40fd-b0df-2aac65f5d4f3:example",
+      "word": "5d0818dd-bb9c-4295-b445-3d7ea87b94c4",
+      "tokens": [
+        1
+      ],
+      "color": "green"
+    },
+    {
+      "blockId": "a6f3dd7f-ec65-4299-b30d-a174632ab865",
+      "field": "word:346418f6-169c-40fd-b0df-2aac65f5d4f3:example",
+      "word": "346418f6-169c-40fd-b0df-2aac65f5d4f3",
+      "tokens": [
+        4
+      ],
+      "color": null
+    },
+    {
+      "blockId": "a6f3dd7f-ec65-4299-b30d-a174632ab865",
+      "field": "word:9f7d4059-8928-4fa1-8a18-00d0f3edc83e:example",
+      "word": "9f7d4059-8928-4fa1-8a18-00d0f3edc83e",
+      "tokens": [
+        4,
+        5
+      ],
+      "color": null
+    },
+    {
+      "blockId": "a6f3dd7f-ec65-4299-b30d-a174632ab865",
+      "field": "word:bf1f4df3-1aa5-42f9-8381-0e3f076ec1e8:example",
+      "word": "bf1f4df3-1aa5-42f9-8381-0e3f076ec1e8",
+      "tokens": [
+        4
+      ],
+      "color": null
+    },
+    {
+      "blockId": "a6f3dd7f-ec65-4299-b30d-a174632ab865",
+      "field": "word:5b69cd26-beb3-4c5f-8cf7-b74a2f20f9e8:example",
+      "word": "5b69cd26-beb3-4c5f-8cf7-b74a2f20f9e8",
+      "tokens": [
+        1
+      ],
+      "color": "green"
+    },
+    {
+      "blockId": "a6f3dd7f-ec65-4299-b30d-a174632ab865",
+      "field": "word:5d0818dd-bb9c-4295-b445-3d7ea87b94c4:example",
+      "word": "5d0818dd-bb9c-4295-b445-3d7ea87b94c4",
+      "tokens": [
+        1
+      ],
+      "color": "green"
+    },
+    {
+      "blockId": "a6f3dd7f-ec65-4299-b30d-a174632ab865",
+      "field": "word:fbe9e290-8075-4fe2-b1fb-c80e8ead3102:example",
+      "word": "fbe9e290-8075-4fe2-b1fb-c80e8ead3102",
+      "tokens": [
+        1
+      ],
+      "color": "green"
+    },
+    {
+      "blockId": "dd0805b8-50ac-4f24-861d-79161726817f",
+      "field": "passage",
+      "word": "90dff541-144a-4dd2-b3ee-27e4eb037195",
+      "tokens": [
+        18
+      ],
+      "color": null
+    },
+    {
+      "blockId": "dd0805b8-50ac-4f24-861d-79161726817f",
+      "field": "passage",
+      "word": "61eda66b-312f-420d-baa8-b2dd4a40ea00",
+      "tokens": [
+        19
+      ],
+      "color": null
+    },
+    {
+      "blockId": "dd0805b8-50ac-4f24-861d-79161726817f",
+      "field": "passage",
+      "word": "61eda66b-312f-420d-baa8-b2dd4a40ea00",
+      "tokens": [
+        26
+      ],
+      "color": null
+    },
+    {
+      "blockId": "dd0805b8-50ac-4f24-861d-79161726817f",
+      "field": "passage",
+      "word": "b7d89b86-3901-49db-87e6-eeff13107a41",
+      "tokens": [
+        67
+      ],
+      "color": null
+    },
+    {
+      "blockId": "b16f9699-a74d-475a-b703-dd64adbb8f27",
+      "field": "content",
+      "word": "61eda66b-312f-420d-baa8-b2dd4a40ea00",
+      "tokens": [
+        4
+      ],
+      "color": null
+    }
+  ]
+}

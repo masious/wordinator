@@ -371,8 +371,8 @@ const isFiller = (block: LessonLeafBlock) => block.type === "divider" || (block.
 // section: the prose step it ends, an example or callout, or every turn or item of a dialogue or practice. Words with no step
 // before them in their section join the next block's steps; a section with no other step shows them as a `words` step keyed
 // by its first vocabulary block. A columns step read as one carries the words inside it, which the player shows in place.
-// A dialogue's words then move to the turns that use them (`spreadDialogueWords`).
-export function flattenToSteps(document: LessonDocument): LessonStep[] {
+// A dialogue's words then move to the turns whose word marks name them (`spreadDialogueWords`).
+export function flattenToSteps(document: LessonDocument, marked?: DialogueWordMarks): LessonStep[] {
   const steps: LessonStep[] = [];
   let heading: string | null = null;
   let prose: LessonLeafBlock[] = [];
@@ -442,13 +442,16 @@ export function flattenToSteps(document: LessonDocument): LessonStep[] {
     }
   }
   endSection();
-  spreadDialogueWords(steps);
+  spreadDialogueWords(steps, marked);
   return steps;
 }
 
-// Words attached to a dialogue move to the first turn that uses them, so each line shows only its own new words. Words no
-// turn uses stay on the last turn, so the whole list has appeared by the end of the dialogue.
-function spreadDialogueWords(steps: LessonStep[]) {
+// The word IDs the lesson's word marks mark in one dialogue turn (`dialogueWordMarks` in wordMarks.ts builds this from the stored marks).
+export type DialogueWordMarks = (blockId: string, turnIndex: number) => ReadonlySet<string> | undefined;
+
+// Words attached to a dialogue move to the first turn whose text the lesson's word marks mark them in, so each line shows only its
+// own new words. Words no turn marks (or all words, with no marks) stay on the last turn, so the whole list has appeared by the end.
+function spreadDialogueWords(steps: LessonStep[], marked?: DialogueWordMarks) {
   for (let start = 0; start < steps.length;) {
     const first = steps[start]!;
     let end = start + 1;
@@ -458,42 +461,16 @@ function spreadDialogueWords(steps: LessonStep[]) {
       continue;
     }
     const words = first.words;
-    const turns = readDialogueTurns(first.block).map((turn) => sentenceTokens(turn.text));
-    const placed: VocabularyWord[][] = turns.map(() => []);
+    const count = end - start;
+    const placed: VocabularyWord[][] = Array.from({ length: count }, () => []);
     for (const word of words) {
-      const found = turns.findIndex((sentences) => usesWord(sentences, word));
-      placed[found >= 0 ? found : turns.length - 1]!.push(word);
+      let found = -1;
+      for (let turn = 0; turn < count && found < 0; turn += 1) if (marked?.(first.block.id, turn)?.has(word.id)) found = turn;
+      placed[found >= 0 ? found : count - 1]!.push(word);
     }
     for (let index = start; index < end; index += 1) steps[index]!.words = placed[index - start]!;
     start = end;
   }
-}
-
-// Articles and reflexive pronouns in a term are not needed to recognise the word in a line.
-const skippedTokens = new Set(["de", "het", "een", "der", "die", "das", "den", "dem", "des", "ein", "eine", "einen", "zich", "sich"]);
-const tokens = (text: string) => (text.toLowerCase().match(/[\p{L}\p{N}]+(?:['’-][\p{L}\p{N}]+)*/gu) ?? []);
-const sentenceTokens = (text: string) => text.split(/[.!?;:]+/).map(tokens).filter((sentence) => sentence.length);
-
-// Inflected forms share a stem: at least four letters in common with no more than three letters after it on either side
-// (check · checkt, stapt · stappen). Shorter words must match exactly.
-function sameWord(a: string, b: string) {
-  if (a === b) return true;
-  let common = 0;
-  while (common < a.length && a[common] === b[common]) common += 1;
-  return common >= 4 && a.length - common <= 3 && b.length - common <= 3;
-}
-
-// A word is used when one sentence of the line holds the tokens of its term or of one of its forms, in order. Order keeps a
-// separable verb's particle after its verb ("stappen we in"), so a preposition before it ("in Amsterdam stappen we over") does not count.
-function usesWord(sentences: string[][], word: VocabularyWord) {
-  const candidates = [word.term, ...(word.forms ?? "").split(/[·,;/]/)]
-    .map((text) => tokens(text).filter((token) => !skippedTokens.has(token)))
-    .filter((candidate) => candidate.length);
-  return candidates.some((candidate) => sentences.some((sentence) => {
-    let at = 0;
-    for (const token of sentence) if (at < candidate.length && sameWord(token, candidate[at]!)) at += 1;
-    return at === candidate.length;
-  }));
 }
 
 // A step's key survives edits that do not touch its own block: the block ID, plus the line or item number inside it.
@@ -571,6 +548,23 @@ export const speechStatusSchema = z.enum(["pending", "ready", "failed"]);
 export type SpeechStatus = z.infer<typeof speechStatusSchema>;
 export const draftSpeechSchema = z.record(z.string(), z.object({ status: speechStatusSchema, url: z.url().nullable() }));
 export type DraftSpeech = z.infer<typeof draftSpeechSchema>;
+// Stored word marks (docs/courses.md#word-marks); the helpers that read and build them live in `./word-marks`.
+export const wordMarkFieldSchema = z.string().max(80).regex(/^(content|translation|note|passage|turn:\d{1,3}|turnTranslation:\d{1,3}|word:[0-9a-f-]{36}:(example|note))$/i);
+export const wordMarkColorSchema = lessonColorSchema.exclude(["default"]);
+// One use of a word: its parts in text order (more than one when the word is split, as in "sta … op"), and the palette colour of the
+// role it plays in the lesson's colour legend, or null for the primary colour.
+export const wordMarkSchema = z.strictObject({
+  wordId: opaqueIdSchema,
+  parts: z.array(z.tuple([z.number().int().nonnegative(), z.number().int().positive()])).min(1).max(6),
+  color: wordMarkColorSchema.nullable(),
+});
+export type WordMark = z.infer<typeof wordMarkSchema>;
+export const wordMarkFieldMarksSchema = z.strictObject({
+  blockId: opaqueIdSchema, field: wordMarkFieldSchema, fingerprint: z.string().regex(/^[0-9a-f]{8}$/), marks: z.array(wordMarkSchema).max(200),
+});
+export const lessonWordMarksSchema = z.strictObject({ version: z.literal(1), fields: z.array(wordMarkFieldMarksSchema).max(2_000) });
+export type LessonWordMarks = z.infer<typeof lessonWordMarksSchema>;
+
 export const courseLessonSchema = courseLessonSummarySchema.extend({
   document: lessonDocumentSchema.nullable(),
   practiceProgress: z.record(z.string(), practiceProgressSchema),
@@ -582,6 +576,9 @@ export const courseLessonSchema = courseLessonSummarySchema.extend({
   // AI practices tagged to the published lesson (docs/courses.md#ai-practices); 0 for an unpublished lesson. Optional so lessons
   // built before C14h still parse; a missing count reads as 0.
   aiPracticeCount: z.number().int().nonnegative().optional(),
+  // Where the published lesson's new words are used (docs/courses.md#word-marks); null when none were made. Optional so older
+  // responses still parse.
+  wordMarks: lessonWordMarksSchema.nullable().optional(),
 });
 export type CourseLesson = z.infer<typeof courseLessonSchema>;
 export const lessonResponseSchema = z.object({ lesson: courseLessonSchema });

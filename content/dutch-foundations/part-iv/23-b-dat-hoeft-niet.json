@@ -40,17 +40,17 @@
           {
             "speaker": "Sofia",
             "text": "Nee, je hoeft niets mee te nemen!",
-            "translation": "No, you don’t have tos mee te nemen!"
+            "translation": "No, you don’t need to bring anything!"
           },
           {
             "speaker": "Piotr",
             "text": "Moet ik echt niets meenemen?",
-            "translation": "Do I have to echt bring anything?"
+            "translation": "Do I really not have to bring anything?"
           },
           {
             "speaker": "Sofia",
             "text": "Nee hoor. Ik maak veel eten.",
-            "translation": "No, not at all. I’m making a lot eten."
+            "translation": "No, really. I’m making a lot of food."
           },
           {
             "speaker": "Lotte",
@@ -60,17 +60,17 @@
           {
             "speaker": "Sofia",
             "text": "Dat hoeft niet. Er staan bloemen op tafel.",
-            "translation": "That isn’t necessary. Er staan bloemen on the table."
+            "translation": "That isn’t necessary. There are flowers on the table."
           },
           {
             "speaker": "Lotte",
             "text": "Oké. Henk neemt kaas mee, toch?",
-            "translation": "Oké. Henk neemt kaas mee, toch?"
+            "translation": "Okay. Henk is bringing cheese, right?"
           },
           {
             "speaker": "Sofia",
             "text": "Ja, Henk neemt kaas mee. Dat vindt hij leuk.",
-            "translation": "Yes, Henk neemt kaas mee. Dat vindt hij leuk."
+            "translation": "Yes, Henk is bringing cheese. He enjoys that."
           }
         ]
       },
@@ -515,52 +515,52 @@
           {
             "speaker": "Henk",
             "text": "Ik geef de planten water. Ik heb een gieter.",
-            "translation": "I geef water the plants. I have een gieter."
+            "translation": "I’ll water the plants. I have a watering can."
           },
           {
             "speaker": "Sofia",
             "text": "Wat lief! Je hoeft niet elke dag te komen.",
-            "translation": "Wat lief! You don’t have to every day te komen."
+            "translation": "How kind! You don’t have to come every day."
           },
           {
             "speaker": "Henk",
             "text": "Hoe vaak is genoeg?",
-            "translation": "Hoe vaak is genoeg?"
+            "translation": "How often is enough?"
           },
           {
             "speaker": "Sofia",
             "text": "Twee keer per week is genoeg.",
-            "translation": "Twice a week is genoeg."
+            "translation": "Twice a week is enough."
           },
           {
             "speaker": "Henk",
             "text": "Moet ik de post ook pakken?",
-            "translation": "Do I have to the mail ook pakken?"
+            "translation": "Do I also have to get the mail?"
           },
           {
             "speaker": "Sofia",
             "text": "Ja, graag. Je hoeft de post niet elke dag te pakken.",
-            "translation": "Yes, graag. Je hoeft the mail niet every day te pakken."
+            "translation": "Yes, please. You don’t have to get the mail every day."
           },
           {
             "speaker": "Henk",
             "text": "En de sleutel?",
-            "translation": "En the key?"
+            "translation": "And the key?"
           },
           {
             "speaker": "Sofia",
             "text": "Hier is de reservesleutel. Je hoeft me niets te betalen, hoor!",
-            "translation": "Hier is de spare key. Je hoeft me pay anything, hoor!"
+            "translation": "Here is the spare key. You don’t have to pay me anything, you know!"
           },
           {
             "speaker": "Henk",
             "text": "Natuurlijk niet. Ik kijk graag naar Tijger.",
-            "translation": "Of course niet. I’m happy to look after Tijger."
+            "translation": "Of course not. I’m happy to look after Tijger."
           },
           {
             "speaker": "Sofia",
             "text": "Dank je wel, Henk. Dat is heel aardig.",
-            "translation": "Thank you, Henk. Dat is heel aardig."
+            "translation": "Thank you, Henk. That’s very kind."
           }
         ]
       },

@@ -290,6 +290,8 @@ export const courseLessons = sqliteTable(
     draftVersion: integer("draft_version").notNull().default(1),
     publishedDoc: text("published_doc"),
     publishedAt: integer("published_at"),
+    // JSON of `lessonWordMarksSchema`: where the lesson's new words are used in its text. Written by the content importer only.
+    wordMarks: text("word_marks"),
     createdBy: text("created_by").notNull().references(() => users.id),
     updatedBy: text("updated_by").notNull().references(() => users.id),
     createdAt: integer("created_at").notNull(),

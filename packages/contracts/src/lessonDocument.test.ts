@@ -9,6 +9,7 @@ import {
   upgradeLegacyBlocks, vocabularyPayloadSchema,
   type LessonDocument, type LessonStep,
 } from "./lessonDocument";
+import { dialogueWordMarks, wordMarkFingerprint } from "./wordMarks";
 
 const textProps = { backgroundColor: "default", textColor: "default", textAlignment: "left" };
 const text = (value: string, styles: Record<string, unknown> = {}) => ({ type: "text", text: value, styles });
@@ -287,29 +288,40 @@ describe("new words in player steps", () => {
   it("spreads over every turn of a dialogue and every item of a practice", () => {
     const steps = flattenToSteps(parse(dialogue(), vocabulary(word("hoi")), practice(), vocabulary(word("zien"))));
     expect(summary(steps)).toEqual([
-      ["dialogueTurn", ["hoi"]], ["dialogueTurn", []], ["practiceItem", ["zien"]], ["practiceItem", ["zien"]],
+      ["dialogueTurn", []], ["dialogueTurn", ["hoi"]], ["practiceItem", ["zien"]], ["practiceItem", ["zien"]],
     ]);
     // Each step owns its list, so later words never leak between blocks.
     expect(steps[2]!.words).not.toBe(steps[3]!.words);
   });
 
-  it("shows a dialogue's words on the first turn that uses them and the rest on the last turn", () => {
-    const talk = { ...dialogue(), props: { turns: JSON.stringify([
+  it("places a dialogue's words on the first turn that marks them and the rest on the last turn", () => {
+    const turns = [
       { speaker: "A", text: "Check je in met je bankpas?" },
       { speaker: "B", text: "Ja. In Amsterdam stappen we over. De bankpas is oud." },
       { speaker: "A", text: "Kijk, de trein! Waar stappen we in?" },
       { speaker: "B", text: "Hier." },
-    ]) } };
-    const steps = flattenToSteps(parse(talk, vocabulary(
-      word("de bankpas"), word("inchecken", { forms: "checkt in · checkte in · ingecheckt" }),
-      word("instappen", { forms: "stapt in · stapte in · ingestapt" }), word("overstappen", { forms: "stapt over · stapte over · overgestapt" }),
-      word("het perron"), word("stil"),
-    ), paragraph("Stiltecoupé.")));
-    expect(summary(steps)).toEqual([
-      ["dialogueTurn", ["de bankpas", "inchecken"]], ["dialogueTurn", ["overstappen"]], ["dialogueTurn", ["instappen"]],
-      ["dialogueTurn", ["het perron", "stil"]], ["content", []],
+    ];
+    const talk = { ...dialogue(), props: { turns: JSON.stringify(turns) } };
+    const pass = word("de bankpas"); const over = word("overstappen"); const inn = word("instappen"); const unmarked = word("stil");
+    const doc = parse(talk, vocabulary(pass, over, inn, unmarked), paragraph("Stiltecoupé."));
+    const field = (turn: number, wordId: string, fingerprint = wordMarkFingerprint(turns[turn]!.text)) =>
+      ({ blockId: talk.id, field: `turn:${turn}`, fingerprint, marks: [{ wordId, parts: [[0, 2]] as Array<[number, number]>, color: null }] });
+    // The bankpas is marked in turns 0 and 1: the first turn wins.
+    const stored = { version: 1 as const, fields: [field(0, pass.id), field(1, over.id), field(2, inn.id)] };
+    expect(summary(flattenToSteps(doc, dialogueWordMarks(doc, stored)))).toEqual([
+      ["dialogueTurn", ["de bankpas"]], ["dialogueTurn", ["overstappen"]], ["dialogueTurn", ["instappen"]],
+      ["dialogueTurn", ["stil"]], ["content", []],
     ]);
+    // A mark made for other text is stale: its word falls back to the last turn.
+    const stale = { version: 1 as const, fields: [field(0, pass.id, "00000000"), field(1, over.id)] };
+    expect(summary(flattenToSteps(doc, dialogueWordMarks(doc, stale)))).toEqual([
+      ["dialogueTurn", []], ["dialogueTurn", ["overstappen"]], ["dialogueTurn", []],
+      ["dialogueTurn", ["de bankpas", "instappen", "stil"]], ["content", []],
+    ]);
+    // No marks at all: every word is on the last turn.
+    expect(summary(flattenToSteps(doc))[3]).toEqual(["dialogueTurn", ["de bankpas", "overstappen", "instappen", "stil"]]);
   });
+
 
   it("falls back to the next block's steps when nothing precedes it in the section", () => {
     const steps = flattenToSteps(parse(

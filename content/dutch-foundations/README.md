@@ -11,6 +11,7 @@ Content workspace for the "Dutch Foundations" courses. Lessons are authored as J
 | `part-iii/existing/` | reference | The two lessons already in the course for row 13. Do not edit; do not re-cover them. |
 | `*/course.json` | — | Import manifest (course ID, local group/owner, position offset). Part I has none yet: the user must create the Part I course in the app and give its ID first (see [`ledger-part-i.md`](../../docs/content/ledger-part-i.md)). |
 | `tools/lesson.ts` | — | Validator and SQL generator. |
+| `word-marks/`, `tools/word-marks.ts`, `tools/WORD_MARKS.md` | annotators | Where each lesson's new words are used in its text ([word marks](../../docs/courses.md#word-marks)): `dump` gives an annotator its input, `check` validates `word-marks/<lesson file>.json`; the importer stores the resolved marks with the lesson. |
 | `tools/normalize.ts` | — | Authoring shorthand → stored document; shared with the web app's dev-only lesson overview prototype. |
 | `illustrations/`, `tools/illustrate.ts` | — | Visual canon, frozen reference sheets and the Azure FLUX.2 [pro] generator for `imageIdeas`; see [`docs/content/illustrations.md`](../../docs/content/illustrations.md). |
 | `tools/sample-lesson.json` | — | Reference showing every supported feature in the authoring shorthand. |
@@ -25,6 +26,8 @@ apps/api/node_modules/.bin/tsx content/dutch-foundations/tools/lesson.ts sql con
 ```
 
 `check` assigns missing IDs and **writes them back into the file**, validates with the real `lessonDocumentSchema` and publish rules, and prints feature-usage counts. A lesson is done only when `check` prints `OK`.
+
+Word marks: `apps/api/node_modules/.bin/tsx content/dutch-foundations/tools/word-marks.ts dump <lesson.json>` prints an annotator's input, and `… word-marks.ts check <lesson.json …>` must pass before import. Rerun the annotation for any lesson whose text changes; marks on changed text are dropped, never misplaced.
 
 After changing a dialogue source, run `apps/api/node_modules/.bin/tsx content/dutch-foundations/tools/sync-dialogue-translations.ts` from the repository root, then run `lesson.ts check` on the affected lesson files. The sync checks block IDs, speaker/text equality, turn counts, and complete translations before writing.
 
