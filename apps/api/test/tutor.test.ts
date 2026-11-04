@@ -275,8 +275,8 @@ describe("turns", () => {
     expect(done).toMatchObject({ role: "assistant", status: "complete", provider: "azure", model: preset("azure").model });
     expect(done.parts).toEqual([{ type: "text", text: "Zeg Goedemorgen! Dat betekent good morning.", spans: [{ start: 4, end: 15 }] }]);
     expect(ofType(events, "start")[0]!.messageId).toBe(done.id);
-    // Every request carries the output cap.
-    expect(ai.calls[0]).toMatchObject({ max_tokens: TUTOR_MAX_OUTPUT_TOKENS });
+    // Every request carries the output cap; the default GPT-5-family model takes it as `max_completion_tokens`.
+    expect(ai.calls[0]).toMatchObject({ max_completion_tokens: TUTOR_MAX_OUTPUT_TOKENS });
     const page = await messagesOf(learner, conversationId);
     expect(page.items.map((item) => item.role)).toEqual(["assistant", "user"]);
     expect(page.items[0]).toEqual(done);
