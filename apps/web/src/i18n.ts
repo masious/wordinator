@@ -189,7 +189,10 @@ export const resources = {
             done: "Done",
             lessonProgress: "New words of this lesson practised: {{practised}} of {{total}}",
             roundWords_one: "This round: {{count}} word",
-            roundWords_other: "This round: {{count}} words"
+            roundWords_other: "This round: {{count}} words",
+            lastRound: "Your last round",
+            lastRoundOn: "Last round · {{date}}",
+            saveFailed: "This round could not be saved. Play again to try once more."
           }
         },
         weak: {

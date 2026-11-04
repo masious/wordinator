@@ -73,7 +73,7 @@ import {
   speechRecognitionTokenResponseSchema, SPEECH_RECOGNITION_TOKEN_TTL_MS,
 } from "@wordinator/contracts";
 import {
-  LESSON_DOCUMENT_SCHEMA_VERSION, collectImageUrls, collectLessonWords, collectPracticeIds, courseDetailResponseSchema, courseWordsResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBookmarkPageSchema, wordBookmarksQuerySchema, wordSearchKey, wordSearchPageSchema, wordSearchQuerySchema, wordDrillDeckSchema, wordDrillDirectionSchema, wordDrillGradeRequestSchema, wordDrillGradeResponseSchema, wordDrillQuerySchema, lessonWordBatches, wordBatchesResponseSchema, wordExposuresRequestSchema, findPublishProblems, flattenToSteps, readingReached, lessonDraftSavedResponseSchema, lessonImageUploadResponseSchema,
+  LESSON_DOCUMENT_SCHEMA_VERSION, collectImageUrls, collectLessonWords, collectPracticeIds, courseDetailResponseSchema, courseWordsResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBookmarkPageSchema, wordBookmarksQuerySchema, wordSearchKey, wordSearchPageSchema, wordSearchQuerySchema, wordDrillDeckSchema, wordDrillDirectionSchema, wordDrillGradeRequestSchema, wordDrillGradeResponseSchema, wordDrillQuerySchema, lessonWordBatches, wordBatchesResponseSchema, wordExposuresRequestSchema, wordMatchRoundRequestSchema, wordMatchRoundResponseSchema, type WordMatchRound, findPublishProblems, flattenToSteps, readingReached, lessonDraftSavedResponseSchema, lessonImageUploadResponseSchema,
   lessonWordMarksSchema,
   lessonPositionRequestSchema, lessonResponseSchema, lessonStepKey, mapImageUrls, parseStoredLessonDocument, publishLessonRequestSchema, readPracticeBlock, saveLessonDraftRequestSchema,
   toLearnerDocument, walkLessonBlocks, type CourseLesson, type CourseWord, type LessonBlockOf, type LessonDocument,
@@ -2582,24 +2582,67 @@ app.get(`${lessonPath}/word-batches`, requireGroupAccess, async (context) => {
   const db = context.env.DB; const userId = context.get("user")!.id; const lessonId = found.lesson.id; const now = Date.now();
   await fillWordSearchKeys(db);
   const terms = "SELECT term_key FROM course_lesson_words WHERE lesson_id = ?2 AND term_key IS NOT NULL";
-  const [words, memory, known, seen] = await db.batch([
+  const [words, memory, known, seen, played] = await db.batch([
     db.prepare("SELECT word_id AS wordId, term_key AS termKey FROM course_lesson_words WHERE lesson_id = ?").bind(lessonId),
     db.prepare(`SELECT term_key AS termKey, stability, last_reviewed_at AS lastReviewedAt, known_override AS known
       FROM word_memory WHERE user_id = ?1 AND term_key IN (${terms})`).bind(userId, lessonId),
     db.prepare(peekKnownTermsSql(terms)).bind(userId, lessonId),
     db.prepare("SELECT word_id AS wordId FROM word_exposures WHERE user_id = ? AND lesson_id = ? AND seen_count > 0").bind(userId, lessonId),
+    db.prepare(`SELECT batch_number AS number, word_ids AS wordIds, missed_ids AS missed, matches, tries, finished_at AS finishedAt
+      FROM word_match_rounds WHERE user_id = ? AND lesson_id = ?`).bind(userId, lessonId),
   ]);
   const termOf = new Map(((words?.results ?? []) as Array<{ wordId: string; termKey: string | null }>).map((row) => [row.wordId, row.termKey]));
   const bands = termBands((memory?.results ?? []) as BandMemoryRow[], ((known?.results ?? []) as Array<{ termKey: string }>).map((row) => row.termKey), now);
   const shown = new Set(((seen?.results ?? []) as Array<{ wordId: string }>).map((row) => row.wordId));
+  const rounds = new Map(((played?.results ?? []) as MatchRoundRow[]).map((row) => [row.number, row]));
   return context.json(wordBatchesResponseSchema.parse({
-    batches: lessonWordBatches(found.document).map(({ wordIds }) => {
+    batches: lessonWordBatches(found.document).map(({ wordIds }, index) => {
       const band = (wordId: string) => { const termKey = termOf.get(wordId); return termKey ? bands.get(termKey) : undefined; };
       const strong = wordIds.filter((wordId) => band(wordId) === "strong").length;
       const fading = wordIds.filter((wordId) => band(wordId) === "fading").length;
-      return { strong, fading, new: wordIds.length - strong - fading, total: wordIds.length, seen: wordIds.filter((wordId) => shown.has(wordId)).length };
+      return { strong, fading, new: wordIds.length - strong - fading, total: wordIds.length, seen: wordIds.filter((wordId) => shown.has(wordId)).length,
+        round: matchRound(rounds.get(index + 1), wordIds) };
     }),
   }));
+});
+
+// A batch's last round of its matching game, as stored; shown only while the batch still holds the same words, in the same order.
+type MatchRoundRow = { number: number; wordIds: string; missed: string; matches: number; tries: number; finishedAt: number };
+function matchRound(row: MatchRoundRow | undefined, wordIds: readonly string[]): WordMatchRound | null {
+  if (!row || row.wordIds !== JSON.stringify(wordIds)) return null;
+  return { matches: row.matches, tries: row.tries, missed: JSON.parse(row.missed) as string[], finishedAt: row.finishedAt };
+}
+
+// A finished round of a batch's matching game (docs/words.md#matching-game): every pair of the batch was matched in `tries`. Each
+// of its words is reviewed once in the understand direction, as a drill grade: Again when it was part of a miss, Got it otherwise.
+// The round replaces the batch's last round.
+app.put(`${lessonPath}/word-batches/:number/match`, requireGroupAccess, async (context) => {
+  const number = Number(context.req.param("number"));
+  const parsed = wordMatchRoundRequestSchema.safeParse(await context.req.json().catch(() => undefined));
+  if (!Number.isInteger(number) || number < 1 || !parsed.success) return apiError(context, 400, "INVALID_ROUND", "This round is invalid.");
+  const found = await publishedBatchLesson(context); if ("error" in found) return found.error;
+  const batch = lessonWordBatches(found.document)[number - 1];
+  if (!batch) return apiError(context, 404, "BATCH_NOT_FOUND", "This batch is not available.");
+  const matches = batch.wordIds.length; const { tries, missed } = parsed.data;
+  // Each miss mixes up two words, so a round with misses names at least one; a round without misses names none.
+  if (tries < matches || missed.some((wordId) => !batch.wordIds.includes(wordId)) || (tries > matches) !== (missed.length > 0)) {
+    return apiError(context, 400, "INVALID_ROUND", "This round is invalid.");
+  }
+  const db = context.env.DB; const userId = context.get("user")!.id; const now = Date.now();
+  await fillWordSearchKeys(db);
+  const indexed = await db.prepare(
+    "SELECT word_id AS wordId, term_key AS termKey FROM course_lesson_words WHERE course_id = ? AND lesson_id = ? AND term_key IS NOT NULL AND word_id IN (SELECT value FROM json_each(?))",
+  ).bind(found.course.id, found.lesson.id, JSON.stringify(batch.wordIds)).all<{ wordId: string; termKey: string }>();
+  const wrong = new Set(missed);
+  await recordWordReviews(db, userId, indexed.results.map(({ wordId, termKey }) => ({
+    termKey, direction: "understand", result: wrong.has(wordId) ? "again" : "got", source: "drill", courseId: found.course.id, lessonId: found.lesson.id, wordId,
+  })), now);
+  await db.prepare(
+    `INSERT INTO word_match_rounds (user_id, course_id, lesson_id, batch_number, word_ids, missed_ids, matches, tries, finished_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+     ON CONFLICT (user_id, lesson_id, batch_number) DO UPDATE SET course_id = excluded.course_id, word_ids = excluded.word_ids, missed_ids = excluded.missed_ids,
+       matches = excluded.matches, tries = excluded.tries, finished_at = excluded.finished_at`,
+  ).bind(userId, found.course.id, found.lesson.id, number, JSON.stringify(batch.wordIds), JSON.stringify(missed), matches, tries, now).run();
+  return context.json(wordMatchRoundResponseSchema.parse({ round: { matches, tries, missed, finishedAt: now } }));
 });
 
 // A Peek counts each word it showed once; exposure never changes word memory.
@@ -2708,6 +2751,7 @@ app.delete(lessonPath, requireGroupAccess, async (context) => {
     db.prepare("DELETE FROM course_lesson_words WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM course_word_bookmarks WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM word_exposures WHERE course_id = ? AND lesson_id = ?").bind(courseId, lessonId),
+    db.prepare("DELETE FROM word_match_rounds WHERE course_id = ? AND lesson_id = ?").bind(courseId, lessonId),
     db.prepare("DELETE FROM word_reviews WHERE course_id = ? AND lesson_id = ?").bind(courseId, lessonId),
     db.prepare("DELETE FROM practice_attempts WHERE course_id = ? AND lesson_id = ?").bind(courseId, lessonId),
     db.prepare("DELETE FROM learning_time WHERE lesson_id = ?").bind(lessonId),

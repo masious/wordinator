@@ -1,4 +1,4 @@
-import { lessonWordBatches, WORD_BATCH_SMALL, wordDrillGradeResponseSchema, type CourseLesson, type WordBatchStats, type WordDrillGradeRequest } from "@wordinator/contracts/lesson-document";
+import { lessonWordBatches, WORD_BATCH_SMALL, wordMatchRoundResponseSchema, type CourseLesson, type WordBatchesResponse, type WordBatchStats, type WordMatchRound, type WordMatchRoundRequest } from "@wordinator/contracts/lesson-document";
 import { TUTOR_WORD_PRACTICE_MAX, tutorConversationResponseSchema, type CreateTutorConversationRequest } from "@wordinator/contracts/tutor";
 import { okResponseSchema } from "@wordinator/contracts";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -19,7 +19,7 @@ import { lessonSteps, playableDocument, type PlayerScope } from "../CourseLesson
 import { useLessonBookmarkTarget, WordBookmarkScope } from "../WordBookmark/WordBookmark";
 import { runWords, WordRecap, type RecapWord } from "../WordRecap/WordRecap";
 import styles from "./WordBatches.module.css";
-import { WordMatch } from "./WordMatch";
+import { MatchResult, WordMatch, type WordMatchResult } from "./WordMatch";
 
 type Batch = { number: number; words: RecapWord[]; headings: string[]; afterBlockId: string };
 
@@ -247,17 +247,18 @@ export function WordBatches({ scope, lesson, peekIn = "dialog", title }: {
   </SpeechScope></WordBookmarkScope>;
 }
 
-// Records a finished round of a batch's matching game as drill reviews (docs/words.md#word-batches), in the understand direction:
-// Again for each word that was part of a miss, Got it for the rest, once per word per round. The lesson's metrics and the batches'
-// bands refresh once every review settles.
-function useMatchReviews(scope: PlayerScope, lesson: CourseLesson) {
+// Saves a finished round of a batch's matching game (docs/words.md#matching-game): the server records it as drill reviews in the
+// understand direction (Again for each word that was part of a miss, Got it for the rest) and keeps it as the batch's last round.
+// The saved round goes straight into the batches' cache, so the card shows it on Done; the bands and lesson metrics then refresh.
+function useMatchRound(scope: PlayerScope, lesson: CourseLesson, batch: Batch) {
   const queryClient = useQueryClient();
   const { lessonPath, refresh } = useLessonWordWrites(scope, lesson);
   return useMutation({
-    mutationFn: async ({ batch, missed }: { batch: Batch; missed: ReadonlySet<string> }) => {
-      const ids = [...new Set(batch.words.map((word) => word.id))];
-      await Promise.allSettled(ids.map((wordId) => apiRequest(`${lessonPath}/words/${encodeURIComponent(wordId)}/drill/understand`, wordDrillGradeResponseSchema,
-        { method: "PUT", body: JSON.stringify({ result: missed.has(wordId) ? "again" : "got" } satisfies WordDrillGradeRequest) })));
+    mutationFn: ({ tries, missed }: WordMatchResult) => apiRequest(`${lessonPath}/word-batches/${batch.number}/match`, wordMatchRoundResponseSchema,
+      { method: "PUT", body: JSON.stringify({ tries, missed: [...missed] } satisfies WordMatchRoundRequest) }),
+    onSuccess: ({ round }) => {
+      queryClient.setQueryData<WordBatchesResponse>(wordBatchesKey(scope.groupId, scope.courseId, lesson.id),
+        (data) => data && { batches: data.batches.map((stats, index) => index === batch.number - 1 ? { ...stats, round } : stats) });
     },
     onSettled: () => Promise.all([refresh(), queryClient.invalidateQueries({ queryKey: lessonMetricsQueryOptions(scope.groupId, scope.courseId, lesson.id).queryKey })]),
   });
@@ -304,9 +305,12 @@ function SmallBatchCard({ lesson, batch, actions }: { lesson: CourseLesson; batc
   </section>;
 }
 
-// One batch in the text: a Review words card whose matching game shows its first rows fading out until Start matching opens it in
-// place. Opening counts its words as seen once and its time as drill time; a finished round is saved as reviews (published lessons
-// only) and its result offers Drill and Practice, and Done closes the card to a new round.
+const dateFormat = new Intl.DateTimeFormat(undefined, { dateStyle: "medium" });
+
+// One batch in the text: a Review words card. Before a first round its matching game shows its first rows fading out until Start
+// matching opens it in place; once a round is saved, the card shows that round's result instead, also on later visits, with Play
+// again, Drill and Practice. Opening counts its words as seen once and its time as drill time; a finished round is saved (published
+// lessons only), and Done closes the game back to the card.
 function WordBatchCard({ scope, lesson, batch, actions }: { scope: PlayerScope; lesson: CourseLesson; batch: Batch; actions: ReturnType<typeof useBatchActions> }) {
   const { t } = useTranslation();
   const published = lesson.document !== null;
@@ -315,18 +319,35 @@ function WordBatchCard({ scope, lesson, batch, actions }: { scope: PlayerScope; 
   const panel = useId(); const startId = useId();
   useSeenOnce(scope, lesson, batch, published && open);
   useLearningClaim(published && open ? { groupId: scope.groupId, target: () => ({ activity: "drill", courseId: scope.courseId }) } : null);
-  const reviews = useMatchReviews(scope, lesson);
-  const close = () => { setOpen(false); setRound((current) => current + 1); reviews.reset(); requestAnimationFrame(() => document.getElementById(startId)?.focus()); };
+  const stats = useQuery({ ...wordBatchesQueryOptions(scope.groupId, scope.courseId, lesson.id), enabled: published });
+  const last: WordMatchRound | null = (published && stats.data?.batches[batch.number - 1]?.round) || null;
+  const save = useMatchRound(scope, lesson, batch);
+  const words = new Set(batch.words.map((word) => word.id)).size;
+  const start = () => { save.reset(); setOpen(true); };
+  const close = () => { setOpen(false); setRound((current) => current + 1); requestAnimationFrame(() => document.getElementById(startId)?.focus()); };
+  const failed = save.isError && <p className={styles.error} role="alert">{t("words.batches.card.saveFailed")}</p>;
+  if (!open && last) {
+    return <section className={styles.card} data-open aria-label={cardLabel(t, batch)}>
+      <BatchCardHead batch={batch} />
+      {failed}
+      <MatchResult words={batch.words} matches={last.matches} tries={last.tries} missed={new Set(last.missed)} label={t("words.batches.card.lastRound")}
+        when={t("words.batches.card.lastRoundOn", { date: dateFormat.format(last.finishedAt) })}
+        progress={<LessonWordProgress scope={scope} lesson={lesson} ready round={words} />}
+        actions={<><Button id={startId} variant="secondary" aria-controls={panel} onClick={start}>{t("words.batches.match.again")}</Button>
+          <BatchActions batch={batch} actions={actions} variant="secondary" plain /></>} />
+    </section>;
+  }
   return <section className={styles.card} data-open={open || undefined} aria-label={cardLabel(t, batch)}>
     <BatchCardHead batch={batch} />
+    {!open && failed}
     <div id={panel} className={styles.stage} inert={!open}>
       <WordMatch key={round} words={batch.words} preview={!open} doneLabel={t("words.batches.card.done")} onDone={close}
-        onFinish={published ? ({ missed }) => reviews.mutate({ batch, missed }) : undefined}
-        progress={published && <LessonWordProgress scope={scope} lesson={lesson} ready={reviews.isSuccess || reviews.isError} round={new Set(batch.words.map((word) => word.id)).size} />}
+        onFinish={published ? (result) => save.mutate(result) : undefined}
+        progress={published && <LessonWordProgress scope={scope} lesson={lesson} ready={!save.isPending && !save.isIdle} round={words} />}
         finish={published && <BatchActions batch={batch} actions={actions} variant="secondary" plain />} />
     </div>
     {!open && <div className={styles.fade}>
-      <Button id={startId} aria-expanded={false} aria-controls={panel} onClick={() => setOpen(true)}>{t("words.batches.card.start")}</Button>
+      <Button id={startId} aria-expanded={false} aria-controls={panel} onClick={start}>{t("words.batches.card.start")}</Button>
     </div>}
   </section>;
 }

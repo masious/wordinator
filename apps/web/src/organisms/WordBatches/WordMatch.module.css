@@ -25,6 +25,7 @@
 @keyframes miss{20%{transform:translateX(-4px)}40%{transform:translateX(4px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
 /* The result: the rate large and centred, coloured by how it went, then the actions. */
 .result{display:grid;justify-items:center;gap:var(--space-1);padding-block:var(--space-6) var(--space-2);text-align:center}
+.when{margin:0 0 var(--space-1);font-size:var(--type-eyebrow);font-weight:var(--weight-bold);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-foreground-faint)}
 .verdict{margin:0;font-size:var(--type-section-title);font-weight:var(--weight-bold);color:var(--color-foreground)}
 .score{margin:var(--space-2) 0 0;font:var(--weight-bold) var(--text-4xl)/1 var(--font-mono);color:var(--color-action)}
 .score[data-verdict="great"]{color:var(--color-success)}

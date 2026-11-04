@@ -97,6 +97,7 @@ describe("word match game", () => {
     expect(within(result).queryByText("het huis")).toBeNull();
     expect(within(result).getByText("We'll practise these words more often.")).toBeInTheDocument();
     expect(onFinish).toHaveBeenCalledOnce();
+    expect(onFinish.mock.calls[0]![0]).toMatchObject({ matches: 3, tries: 4 });
     expect([...onFinish.mock.calls[0]![0].missed].sort()).toEqual(["1", "2"]);
   });
 

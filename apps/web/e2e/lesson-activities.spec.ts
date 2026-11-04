@@ -1,4 +1,4 @@
-import { expect, test, type Page, type TestInfo } from "@playwright/test";
+import { expect, test, type Locator, type Page, type TestInfo } from "@playwright/test";
 import { signIn, uniqueTag } from "./auth";
 import { courseApi, dialogue, example, heading, openLesson, paragraph, seedLesson, vocabulary } from "./lessonSeed";
 
@@ -130,7 +130,7 @@ test("a two-step guided grammar flow advances the lesson's progress meter, shows
   }).toPass();
 });
 
-test("the lesson's word batch is a Review words card in the text, whose matching game ends with Drill and Practice", async ({ page }, testInfo) => {
+test("the lesson's word batch is a Review words card in the text, whose saved round shows on later visits, with Drill and Practice", async ({ page }, testInfo) => {
   testInfo.setTimeout(90_000);
   const { courseId } = await seedActivityLesson(page, testInfo);
   await page.goto(`/courses/${courseId}`);
@@ -147,7 +147,16 @@ test("the lesson's word batch is a Review words card in the text, whose matching
   await expect(game.getByRole("region", { name: "Your result" }).getByText("100%")).toBeVisible();
   await expect(game.getByRole("progressbar", { name: /^New words of this lesson practised: \d+ of \d+$/ })).toBeVisible();
   await expect(game.getByRole("button", { name: "Practice", exact: true })).toBeVisible();
-  await game.getByRole("button", { name: "Drill", exact: true }).click();
+  // Done shows the saved round in the card, and it is still there on the next visit (docs/words.md#matching-game).
+  await game.getByRole("button", { name: "Done", exact: true }).click();
+  // The rate; the lesson's progress meter has a 100% of its own.
+  const rate = (region: Locator) => region.getByRole("paragraph").filter({ hasText: /^100%$/ });
+  await expect(rate(game.getByRole("region", { name: "Your last round" }))).toBeVisible();
+  await page.reload();
+  const saved = page.getByRole("region", { name: /^Review words/ }).getByRole("region", { name: "Your last round" });
+  await expect(rate(saved)).toBeVisible();
+  await expect(saved.getByRole("button", { name: "Play again" })).toBeVisible();
+  await saved.getByRole("button", { name: "Drill", exact: true }).click();
   await expect(page).toHaveURL(/\/words\/drill\?.*batch=1/);
 });
 

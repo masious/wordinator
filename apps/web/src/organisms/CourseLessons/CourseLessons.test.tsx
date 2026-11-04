@@ -260,16 +260,27 @@ describe("Course lessons", () => {
     expect(observed.map((element) => element.getAttribute("data-block-id"))).toEqual([first.id, second.id]);
   });
 
-  it("shows each word batch as a Review words card after its last section, whose matching game saves reviews and reports the lesson's words", async () => {
+  it("shows each word batch as a Review words card after its last section, whose matching game saves its round and shows it once done", async () => {
     const word = (n: number, term: string) => ({ id: `70000000-0000-4000-8000-0000000000${String(n).padStart(2, "0")}`, term, meaning: `meaning of ${term}` });
     const vocabulary = (n: number, ...words: unknown[]): LessonTopBlock => ({ id: `50000000-0000-4000-8000-00000000002${n}`, type: "vocabulary", props: { data: JSON.stringify({ words }) }, children: [] });
     const section = (n: number, title: string): LessonTopBlock => ({ id: `50000000-0000-4000-8000-00000000004${n}`, type: "heading", props: { textColor: "default", backgroundColor: "default", level: 2 }, content: text(title), children: [] });
     // Two words, nine, then two: the first two are too few for a batch and join the nine; the last two have nothing to join.
     const animals = Array.from({ length: 9 }, (_, index) => word(index + 3, `dier ${index + 1}`));
     const original = vi.mocked(fetch).getMockImplementation()!;
-    vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith("/metrics")
-      ? response({ pronunciation: { attempts: 0, fluency: null }, words: { total: 13, practised: 11, strong: 0 }, lastStudiedAt: null, time: { readingSeconds: 0, practiceSeconds: 0, typical: { reading: null, practice: null } } })
-      : String(input).includes("/drill/") ? response({ recent: [] }) : original(input, init));
+    // The batches' standing: no round yet, then the round the game saves.
+    const empty = { strong: 0, fading: 0, new: 11, total: 11, seen: 0, round: null as unknown };
+    let saved: unknown = null;
+    vi.mocked(fetch).mockImplementation(async (input, init) => {
+      const path = String(input);
+      if (path.endsWith("/metrics")) return response({ pronunciation: { attempts: 0, fluency: null }, words: { total: 13, practised: 11, strong: 0 }, lastStudiedAt: null, time: { readingSeconds: 0, practiceSeconds: 0, typical: { reading: null, practice: null } } });
+      if (path.endsWith("/word-batches")) return response({ batches: [{ ...empty, round: saved }, { ...empty, new: 2, total: 2 }] });
+      if (path.endsWith("/word-batches/1/match")) {
+        const body = JSON.parse(String(init?.body)) as { tries: number; missed: string[] };
+        saved = { matches: 11, tries: body.tries, missed: body.missed, finishedAt: Date.UTC(2026, 9, 30) };
+        return response({ round: saved });
+      }
+      return original(input, init);
+    });
     // A finished lesson: an unstarted one shows its start gate instead of the text and the batches.
     finished = [lessonId(1)];
     const { router } = renderLesson({ course: course(false), outline: [summary(1)], lessons: [lesson(1, [section(1, "Groeten"), example("50000000-0000-4000-8000-000000000011", "De hond blaft."),
@@ -302,13 +313,26 @@ describe("Course lessons", () => {
     expect(within(result).getByText("We'll practise these words more often.")).toBeInTheDocument();
     await waitFor(() => expect(within(result).getByRole("progressbar", { name: "New words of this lesson practised: 11 of 13" })).toBeInTheDocument());
     expect(within(result).getByText("This round: 11 words")).toBeInTheDocument();
-    const grades = new Map(vi.mocked(fetch).mock.calls.filter(([path]) => String(path).includes("/drill/understand"))
-      .map(([path, init]) => [String(path).split("/words/")[1]!.split("/")[0], JSON.parse(String(init?.body)).result]));
-    expect(grades.size).toBe(11);
-    expect([word(1, "").id, word(2, "").id].map((id) => grades.get(id))).toEqual(["again", "again"]);
-    expect(animals.every(({ id }) => grades.get(id) === "got")).toBe(true);
+    // The round is saved once, with its tries and the two mixed-up words; the server records it as reviews.
+    const saves = vi.mocked(fetch).mock.calls.filter(([path]) => String(path).endsWith("/word-batches/1/match"));
+    expect(saves).toHaveLength(1);
+    expect(JSON.parse(String(saves[0]![1]?.body))).toEqual({ tries: 12, missed: [word(1, "").id, word(2, "").id] });
     expect(within(result).getByRole("button", { name: "Practice" })).toBeInTheDocument();
-    fireEvent.click(within(result).getByRole("button", { name: "Drill" }));
+    // Done closes the game to the saved round's result, which offers Play again.
+    fireEvent.click(within(result).getByRole("button", { name: "Done" }));
+    const last = within(card).getByRole("region", { name: "Your last round" });
+    expect(within(last).getByText("92%")).toBeInTheDocument();
+    expect(within(last).getByText(/^Last round · /)).toBeInTheDocument();
+    expect(within(last).getByText("meaning of de kat")).toBeInTheDocument();
+    expect(within(last).getByRole("progressbar", { name: "New words of this lesson practised: 11 of 13" })).toBeInTheDocument();
+    expect(within(card).queryByRole("button", { name: "Start matching" })).toBeNull();
+    fireEvent.click(within(last).getByRole("button", { name: "Play again" }));
+    expect(within(card).getByRole("list", { name: "Words" }).closest("[inert]")).toBeNull();
+    expect(within(card).queryByRole("region", { name: "Your last round" })).toBeNull();
+    // A new round is fresh: nothing matched yet.
+    expect(within(within(card).getByRole("list", { name: "Words" })).getAllByRole("button").every((button) => !button.hasAttribute("disabled"))).toBe(true);
+    for (const { term } of [word(1, "de hond"), word(2, "de kat"), ...animals]) { pick("Words", term); pick("Translations", `meaning of ${term}`); }
+    fireEvent.click(within(within(card).getByRole("region", { name: "Your result" })).getByRole("button", { name: "Drill" }));
     await waitFor(() => expect(landed(router)).toEqual({ path: "/words/drill", search: { source: "lesson", lesson: lessonId(1), batch: 1, direction: "mixed" } }));
   });
 
@@ -714,7 +738,7 @@ describe("Lesson actions", () => {
     vi.mocked(fetch).mockImplementation(async (input, init) => {
       const path = String(input);
       if (path.endsWith(`/lessons/${lessonId(4)}`)) return response({ lesson: words });
-      if (path.endsWith("/word-batches")) return response({ batches: [{ strong: 2, fading: 1, new: 4, total: 7, seen: 3 }, { strong: 0, fading: 0, new: 7, total: 7, seen: 0 }] });
+      if (path.endsWith("/word-batches")) return response({ batches: [{ strong: 2, fading: 1, new: 4, total: 7, seen: 3, round: null }, { strong: 0, fading: 0, new: 7, total: 7, seen: 0, round: null }] });
       if (path.endsWith("/api/ai/conversations")) return response({ conversation: { id: "80000000-0000-4000-8000-000000000001", title: "Word practice", titleSource: "auto", archivedAt: null, provider: null, createdAt: 1, updatedAt: 1, tokens: 0 } });
       return original(input, init);
     });

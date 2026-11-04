@@ -37,14 +37,43 @@ const deal = (words: readonly RecapWord[], random: () => number): Round => {
   return { terms, meanings: shuffled(words, random, terms) };
 };
 
-// The batch's matching game (docs/words.md#word-batches): its terms in one column and their translations in the other, each in its
+// A finished round (docs/words.md#matching-game): a verdict, the success rate, the pairs matched and missed, `progress` (the
+// lesson's words, from the caller), the words that were part of a miss with a promise to bring them back more often, then `actions`.
+// `label` names the region; `when` sits above the verdict, for a round from an earlier visit.
+export function MatchResult({ words, matches, tries, missed, label, when, progress, actions, status }: {
+  words: readonly RecapWord[]; matches: number; tries: number; missed: ReadonlySet<string>; label: string; when?: ReactNode;
+  progress?: ReactNode; actions: ReactNode; status?: ReactNode;
+}) {
+  const { t } = useTranslation();
+  const score = successRate(matches, tries) ?? 0;
+  const verdict = score >= 0.9 ? "great" : score >= 0.6 ? "good" : "keepGoing";
+  const wrong = words.filter((word) => missed.has(word.id));
+  return <section className={styles.result} aria-label={label}>
+    {status}
+    {when && <p className={styles.when}>{when}</p>}
+    <p className={styles.verdict}>{t(`words.batches.match.verdict.${verdict}`)}</p>
+    <p className={styles.score} data-verdict={verdict}>{percentFormat.format(score)}</p>
+    <p className={styles.scoreLabel}>{t("words.batches.match.successRate")}</p>
+    <p className={styles.summary}>{t("words.batches.match.summary", { count: matches, misses: tries - matches })}</p>
+    {progress}
+    {wrong.length > 0 && <div className={styles.wrong}>
+      <h4 className={styles.wrongTitle}>{t("words.batches.match.wrongTitle", { count: wrong.length })}</h4>
+      <ul className={styles.wrongList}>{wrong.map((word) => <li key={word.id}>
+        <span className={styles.wrongTerm}>{word.term}</span> <span className={styles.wrongMeaning}><PlainText>{word.meaning}</PlainText></span>
+      </li>)}</ul>
+      <p className={styles.wrongNote}>{t("words.batches.match.wrongNote")}</p>
+    </div>}
+    <div className={styles.actions}>{actions}</div>
+  </section>;
+}
+
+// The batch's matching game (docs/words.md#matching-game): its terms in one column and their translations in the other, each in its
 // own random order. Picking one card on each side tries them as a pair, in either order: a match turns both green and sets them
 // aside; a miss shakes both and clears them. The header counts the matches and the success rate (matches over tries). Once every
-// pair is matched the result shows the rate, `progress` (the lesson's words, from the caller), the words that were part of a miss
-// with a promise to bring them back more often, and Play again, `finish` (the batch's other actions), and the done action.
-// `onFinish` hears once per round which word IDs were part of a miss. `preview` shows only the columns, for a card that is not open
-// yet; the round stays the same when it opens.
-export type WordMatchResult = { missed: ReadonlySet<string> };
+// pair is matched it shows the round's `MatchResult`, with Play again, `finish` (the batch's other actions), and the done action.
+// `onFinish` hears once per round its matches, tries, and which word IDs were part of a miss. `preview` shows only the columns, for
+// a card that is not open yet; the round stays the same when it opens.
+export type WordMatchResult = { matches: number; tries: number; missed: ReadonlySet<string> };
 export function WordMatch({ words, doneLabel, onDone, finish, progress, onFinish, preview = false, random = Math.random }: {
   words: readonly RecapWord[]; doneLabel: string; onDone: () => void; finish?: ReactNode; progress?: ReactNode;
   onFinish?: (result: WordMatchResult) => void; preview?: boolean; random?: () => number;
@@ -71,8 +100,8 @@ export function WordMatch({ words, doneLabel, onDone, finish, progress, onFinish
   const reported = useRef(false);
   useEffect(() => {
     if (!done) { reported.current = false; return; }
-    if (!reported.current) { reported.current = true; latestFinish.current?.({ missed: wrong }); }
-  }, [done, wrong]);
+    if (!reported.current) { reported.current = true; latestFinish.current?.({ matches, tries, missed: wrong }); }
+  }, [done, matches, tries, wrong]);
 
   const tryPair = (termIndex: number, meaningIndex: number) => {
     const left = round.terms[termIndex]!; const right = round.meanings[meaningIndex]!;
@@ -109,28 +138,8 @@ export function WordMatch({ words, doneLabel, onDone, finish, progress, onFinish
   const status = <p className={styles.live} role="status">{announcement}</p>;
 
   if (done) {
-    const score = rate ?? 0;
-    const verdict = score >= 0.9 ? "great" : score >= 0.6 ? "good" : "keepGoing";
-    return <section className={styles.result} aria-label={t("words.batches.match.resultLabel")}>
-      {status}
-      <p className={styles.verdict}>{t(`words.batches.match.verdict.${verdict}`)}</p>
-      <p className={styles.score} data-verdict={verdict}>{percentFormat.format(score)}</p>
-      <p className={styles.scoreLabel}>{t("words.batches.match.successRate")}</p>
-      <p className={styles.summary}>{t("words.batches.match.summary", { count: total, misses: tries - matches })}</p>
-      {progress}
-      {wrong.size > 0 && <div className={styles.wrong}>
-        <h4 className={styles.wrongTitle}>{t("words.batches.match.wrongTitle", { count: wrong.size })}</h4>
-        <ul className={styles.wrongList}>{words.filter((word) => wrong.has(word.id)).map((word) => <li key={word.id}>
-          <span className={styles.wrongTerm}>{word.term}</span> <span className={styles.wrongMeaning}><PlainText>{word.meaning}</PlainText></span>
-        </li>)}</ul>
-        <p className={styles.wrongNote}>{t("words.batches.match.wrongNote")}</p>
-      </div>}
-      <div className={styles.actions}>
-        <Button variant="secondary" onClick={again}>{t("words.batches.match.again")}</Button>
-        {finish}
-        <Button onClick={onDone}>{doneLabel}</Button>
-      </div>
-    </section>;
+    return <MatchResult words={words} matches={matches} tries={tries} missed={wrong} label={t("words.batches.match.resultLabel")} progress={progress} status={status}
+      actions={<><Button variant="secondary" onClick={again}>{t("words.batches.match.again")}</Button>{finish}<Button onClick={onDone}>{doneLabel}</Button></>} />;
   }
 
   return <div className={styles.game}>

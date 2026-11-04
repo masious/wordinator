@@ -102,6 +102,7 @@ export async function resetLesson(db: D1Database, target: LessonTarget, by: Prog
     db.prepare(`DELETE FROM pronunciation_attempts WHERE user_id = ?1 AND (lesson_id = ?2 OR term_key IN (${LESSON_TERMS}))`).bind(userId, lessonId),
     db.prepare("DELETE FROM course_word_bookmarks WHERE user_id = ? AND lesson_id = ?").bind(userId, lessonId),
     db.prepare("DELETE FROM word_exposures WHERE user_id = ? AND lesson_id = ?").bind(userId, lessonId),
+    db.prepare("DELETE FROM word_match_rounds WHERE user_id = ? AND lesson_id = ?").bind(userId, lessonId),
     db.prepare("DELETE FROM learning_time WHERE user_id = ? AND lesson_id = ?").bind(userId, lessonId),
     eventStatement(db, target, "lesson_reset", by, now),
   ]);

@@ -662,6 +662,28 @@ export const practiceAttempts = sqliteTable(
     check("practice_attempts_length_check", sql`length(${table.prompt}) <= 2000 AND length(${table.answer}) <= 2000 AND (${table.reference} IS NULL OR length(${table.reference}) <= 2000)`),
   ],
 );
+// A learner's last finished round of a lesson batch's matching game (docs/words.md#matching-game): the batch's words then, the
+// words that were part of a miss (both JSON), and its matches and tries. Migration 0049.
+export const wordMatchRounds = sqliteTable(
+  "word_match_rounds",
+  {
+    userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
+    lessonId: text("lesson_id").notNull().references(() => courseLessons.id, { onDelete: "cascade" }),
+    batchNumber: integer("batch_number").notNull(),
+    wordIds: text("word_ids").notNull(),
+    missedIds: text("missed_ids").notNull(),
+    matches: integer("matches").notNull(),
+    tries: integer("tries").notNull(),
+    finishedAt: integer("finished_at").notNull(),
+  },
+  (table) => [
+    primaryKey({ columns: [table.userId, table.lessonId, table.batchNumber] }),
+    index("word_match_rounds_lesson_idx").on(table.lessonId),
+    check("word_match_rounds_tries_check", sql`${table.matches} > 0 AND ${table.tries} >= ${table.matches}`),
+  ],
+);
+
 
 // Pronunciation attempts outlive their lesson: lesson deletion sets the lesson and word IDs to null.
 export const pronunciationAttempts = sqliteTable(

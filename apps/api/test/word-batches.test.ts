@@ -26,6 +26,10 @@ async function batches(lessonPath: string, cookie: string): Promise<WordBatchSta
   expect(response.status, await response.clone().text()).toBe(200);
   return wordBatchesResponseSchema.parse(await response.json()).batches;
 }
+const reviews = (userId: string) => env.DB.prepare(
+  "SELECT word_id AS wordId, direction, result, source FROM word_reviews WHERE user_id = ? ORDER BY word_id",
+).bind(userId).all<{ wordId: string; direction: string; result: string; source: string }>().then((rows) => rows.results);
+const rounds = (userId: string) => env.DB.prepare("SELECT COUNT(*) AS count FROM word_match_rounds WHERE user_id = ?").bind(userId).first<{ count: number }>().then((row) => row?.count);
 const exposures = (userId: string) => env.DB.prepare(
   "SELECT word_id AS wordId, seen_count AS seen, known_at IS NOT NULL AS known FROM word_exposures WHERE user_id = ? ORDER BY word_id",
 ).bind(userId).all<{ wordId: string; seen: number; known: number }>().then((rows) => rows.results);
@@ -77,7 +81,7 @@ describe("Word batches", () => {
 
   it("counts each batch's words by memory band and Peek, privately per account", async () => {
     const { readerId, reader, owner, path, words, lesson, lessonPath } = await setup();
-    const empty = { strong: 0, fading: 0, new: 6, total: 6, seen: 0 };
+    const empty = { strong: 0, fading: 0, new: 6, total: 6, seen: 0, round: null };
     expect(await batches(lessonPath, reader)).toEqual([empty, empty, empty]);
     // A Peek counts what it showed; a second Peek counts again. Exposure never writes memory.
     const first = words.slice(0, 6).map((entry) => entry.id);
@@ -90,11 +94,11 @@ describe("Word batches", () => {
     await request(`${path}/lessons/${lesson.lesson.id}/words/${words[6]!.id}/drill/understand`, reader, { result: "got" }, "PUT");
     await request(`${path}/lessons/${lesson.lesson.id}/words/${words[7]!.id}/drill/understand`, reader, { result: "got" }, "PUT");
     await env.DB.prepare("UPDATE word_memory SET last_reviewed_at = ? WHERE user_id = ? AND word_id = ?").bind(Date.now() - 365 * 86_400_000, readerId, words[7]!.id).run();
-    expect((await batches(lessonPath, reader))[1]).toEqual({ strong: 1, fading: 1, new: 4, total: 6, seen: 0 });
+    expect((await batches(lessonPath, reader))[1]).toEqual({ strong: 1, fading: 1, new: 4, total: 6, seen: 0, round: null });
     // "I know this word" in a Peek makes a word without memory Strong, and a fading one too.
     await request(`${lessonPath}/words/${words[8]!.id}/known`, reader, undefined, "PUT");
     await request(`${lessonPath}/words/${words[7]!.id}/known`, reader, undefined, "PUT");
-    expect((await batches(lessonPath, reader))[1]).toEqual({ strong: 3, fading: 0, new: 3, total: 6, seen: 0 });
+    expect((await batches(lessonPath, reader))[1]).toEqual({ strong: 3, fading: 0, new: 3, total: 6, seen: 0, round: null });
     // Nobody else sees them.
     expect(await batches(lessonPath, owner)).toEqual([empty, empty, empty]);
   });
@@ -132,5 +136,52 @@ describe("Word batches", () => {
     await request(`${lessonPath}/word-exposures`, reader, { wordIds: [words[0]!.id] });
     expect((await request(`${path}/lessons/${lesson.lesson.id}`, owner, undefined, "DELETE")).status).toBe(200);
     expect(await exposures(readerId)).toEqual([]);
+  });
+
+  it("saves a matching round as the batch's reviews and its last round, shown on later visits", async () => {
+    const { readerId, reader, owner, words, lessonPath } = await setup();
+    const ids = words.slice(6, 12).map((entry) => entry.id);
+    // Six pairs in eight tries: two misses, which mixed up three words.
+    const missed = [ids[0]!, ids[1]!, ids[2]!];
+    const saved = await request(`${lessonPath}/word-batches/2/match`, reader, { tries: 8, missed }, "PUT");
+    expect(saved.status, await saved.clone().text()).toBe(200);
+    const { round } = (await saved.json()) as { round: { matches: number; tries: number; missed: string[]; finishedAt: number } };
+    expect(round).toMatchObject({ matches: 6, tries: 8, missed });
+    expect(await reviews(readerId)).toEqual(ids.map((wordId, index) => ({ wordId, direction: "understand", result: index < 3 ? "again" : "got", source: "drill" })).sort((a, b) => a.wordId.localeCompare(b.wordId)));
+    const [first, second] = await batches(lessonPath, reader);
+    expect(first!.round).toBeNull();
+    expect(second!.round).toEqual(round);
+    // A new round replaces it; nobody else sees it.
+    expect((await request(`${lessonPath}/word-batches/2/match`, reader, { tries: 6, missed: [] }, "PUT")).status).toBe(200);
+    expect((await batches(lessonPath, reader))[1]!.round).toMatchObject({ matches: 6, tries: 6, missed: [] });
+    expect(await rounds(readerId)).toBe(1);
+    expect((await batches(lessonPath, owner))[1]!.round).toBeNull();
+  });
+
+  it("refuses a round that does not fit its batch", async () => {
+    const { readerId, reader, words, lessonPath } = await setup();
+    for (const [number, body, code, status] of [
+      ["0", { tries: 6, missed: [] }, "INVALID_ROUND", 400],
+      ["2", { tries: 5, missed: [] }, "INVALID_ROUND", 400],
+      ["2", { tries: 7, missed: [] }, "INVALID_ROUND", 400],
+      ["2", { tries: 6, missed: [words[6]!.id] }, "INVALID_ROUND", 400],
+      ["2", { tries: 7, missed: [words[0]!.id] }, "INVALID_ROUND", 400],
+      ["4", { tries: 6, missed: [] }, "BATCH_NOT_FOUND", 404],
+    ] as const) {
+      const response = await request(`${lessonPath}/word-batches/${number}/match`, reader, body, "PUT");
+      expect(response.status).toBe(status);
+      expect(await errorCode(response)).toBe(code);
+    }
+    expect(await reviews(readerId)).toEqual([]);
+  });
+
+  it("forgets the lesson's rounds when the lesson is reset or deleted", async () => {
+    const { readerId, reader, owner, path, lesson, lessonPath } = await setup();
+    await request(`${lessonPath}/word-batches/1/match`, reader, { tries: 6, missed: [] }, "PUT");
+    expect((await request(`${path}/lessons/${lesson.lesson.id}/reset`, reader, {})).status).toBe(200);
+    expect(await rounds(readerId)).toBe(0);
+    await request(`${lessonPath}/word-batches/1/match`, reader, { tries: 6, missed: [] }, "PUT");
+    expect((await request(`${path}/lessons/${lesson.lesson.id}`, owner, undefined, "DELETE")).status).toBe(200);
+    expect(await rounds(readerId)).toBe(0);
   });
 });

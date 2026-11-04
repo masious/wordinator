@@ -289,11 +289,27 @@ export function groupWordSections(counts: readonly number[]): Array<{ from: numb
   return groups;
 }
 
+// The learner's last finished round of a batch's matching game (docs/words.md#matching-game): its pairs, its tries (matches plus
+// misses), the word IDs that were part of a miss, and when it ended.
+export const wordMatchRoundSchema = z.strictObject({
+  matches: z.number().int().positive(), tries: z.number().int().positive(), missed: z.array(opaqueIdSchema), finishedAt: z.number().int().nonnegative(),
+}).refine((value) => value.tries >= value.matches, { message: "A round tries each pair at least once." });
+export type WordMatchRound = z.infer<typeof wordMatchRoundSchema>;
+// `PUT .../lessons/:lessonId/word-batches/:number/match`: a finished round, saved as the batch's reviews and its last round.
+export const WORD_MATCH_TRIES_MAX = 1000;
+export const wordMatchRoundRequestSchema = z.strictObject({
+  tries: z.number().int().positive().max(WORD_MATCH_TRIES_MAX),
+  missed: z.array(opaqueIdSchema).max(WORD_BATCH_LIMIT).refine((ids) => new Set(ids).size === ids.length, { message: "Name each word once." }),
+});
+export type WordMatchRoundRequest = z.infer<typeof wordMatchRoundRequestSchema>;
+export const wordMatchRoundResponseSchema = z.object({ round: wordMatchRoundSchema });
+
 // A learner's standing in each of a lesson's batches (`GET .../lessons/:lessonId/word-batches`): the batch's words in the
-// dashboard's memory bands (Strong, Fading, New) and how many of them a Peek has shown. Counts only; recall stays private.
+// dashboard's memory bands (Strong, Fading, New), how many of them a Peek has shown, and the last round of its matching game (null
+// before one, or once the batch's words changed). Counts only; recall stays private.
 export const wordBatchStatsSchema = z.strictObject({
   strong: z.number().int().nonnegative(), fading: z.number().int().nonnegative(), new: z.number().int().nonnegative(),
-  total: z.number().int().nonnegative(), seen: z.number().int().nonnegative(),
+  total: z.number().int().nonnegative(), seen: z.number().int().nonnegative(), round: wordMatchRoundSchema.nullable(),
 }).refine((value) => value.strong + value.fading + value.new === value.total && value.seen <= value.total, { message: "Batch counts must add up." });
 export type WordBatchStats = z.infer<typeof wordBatchStatsSchema>;
 export const wordBatchesResponseSchema = z.object({ batches: z.array(wordBatchStatsSchema) });
