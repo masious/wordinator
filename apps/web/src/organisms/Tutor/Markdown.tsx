@@ -13,7 +13,7 @@ import styles from "./Tutor.module.css";
 
 type Leaf = { type: "text"; start: number; end: number } | { type: "code"; start: number; end: number };
 type Inline = Leaf | { type: "strong"; children: Inline[] } | { type: "em"; children: Inline[] } | { type: "link"; href: string; children: Leaf[] };
-type Block = { type: "paragraph"; lines: Inline[][] } | { type: "list"; ordered: boolean; items: Inline[][] };
+type Block = { type: "paragraph"; lines: Inline[][] } | { type: "list"; ordered: boolean; start: number; items: Inline[][] };
 type Section = { heading: Inline[] | null; blocks: Block[] };
 
 export const HEADING_MAX = 80;
@@ -84,7 +84,14 @@ export function parseMarkdown(text: string): Section[] {
       const ordered = /\d/.test(item[1]!);
       const inline = parseInline(text, start + item[0].length, end);
       if (current?.type === "list" && current.ordered === ordered) current.items.push(inline);
-      else { current = { type: "list", ordered, items: [inline] }; section.blocks.push(current); }
+      else {
+        // A numbered list keeps its written start. Models often restart at 1 after a paragraph between steps; such a list
+        // continues the section's previous numbered list instead of showing 1 again.
+        const written = ordered ? Number.parseInt(item[1]!, 10) : 1;
+        const previous = section.blocks.filter((block): block is Extract<Block, { type: "list" }> => block.type === "list" && block.ordered).pop();
+        const first: number = written === 1 && previous ? previous.start + previous.items.length : written;
+        current = { type: "list", ordered, start: first, items: [inline] }; section.blocks.push(current);
+      }
       continue;
     }
     const inline = parseInline(text, start, end);
@@ -151,7 +158,10 @@ export function AssistantText({ text, spans, words = [], spanBase = 0, speech, l
   const renderBlock = (block: Block, key: number) => block.type === "paragraph"
     ? <p key={key} className={styles.paragraph}>{block.lines.map((line, index) => <Fragment key={index}>{index > 0 && <br />}{renderInline(line)}</Fragment>)}</p>
     : block.ordered
-      ? <ol key={key} role="list" className={`${styles.list} ${styles.orderedList}`}>{block.items.map((entry, index) => <li key={index}>{renderInline(entry)}</li>)}</ol>
+      // Each item's inline content sits in one wrapper, the second grid column beside the number.
+      ? <ol key={key} role="list" start={block.start} className={`${styles.list} ${styles.orderedList}`} style={{ counterReset: `tutor-step ${block.start - 1}` }}>
+        {block.items.map((entry, index) => <li key={index}><span className={styles.listItemText}>{renderInline(entry)}</span></li>)}
+      </ol>
       : <ul key={key} className={styles.list}>{block.items.map((entry, index) => <li key={index}>{renderInline(entry)}</li>)}</ul>;
   return <div className={styles.assistantText}>
     {sections.map((section, index) => <section key={index} className={styles.section}>

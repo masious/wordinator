@@ -30,6 +30,17 @@ describe("Assistant Markdown subset", () => {
     expect(screen.getByRole("link", { name: "the docs" })).toHaveAttribute("href", "https://example.com/docs");
   });
 
+  it("numbers steps across paragraphs between them and keeps each item's content in one column", () => {
+    const { container } = renderText("1. **Finish the lesson** [[De rekening, alstublieft]]\n\nYou're at 68%.\n\n1. **Practise word order**\n\n3. Review");
+    const lists = [...container.querySelectorAll("ol")];
+    expect(lists.map((list) => list.getAttribute("start"))).toEqual(["1", "2", "3"]);
+    expect(lists.map((list) => (list as HTMLElement).style.counterReset)).toEqual(["tutor-step 0", "tutor-step 1", "tutor-step 2"]);
+    const first = lists[0]!.querySelector("li")!;
+    expect(first.children).toHaveLength(1);
+    expect(first.firstElementChild).toHaveTextContent("Finish the lesson De rekening, alstublieft");
+    expect(parseMarkdown("## A\n1. one\n\n## B\n1. again").flatMap((section) => section.blocks.map((block) => block.type === "list" ? block.start : null))).toEqual([1, 1]);
+  });
+
   it("splits sections under short headings shown as labels", () => {
     const { container } = renderText("Intro line.\n\n## Grammar\nDe and het.\n\n## Words\n- huis");
     const sections = container.querySelectorAll("section");

@@ -1,7 +1,9 @@
 import { parseMessageMarks, TUTOR_WORD_PRACTICE_MAX, type TutorComponentAnswer, type TutorConfirmationSummary, type TutorPart } from "@wordinator/contracts/tutor";
 import { BookOpen, Check, ChevronDown, LoaderCircle, Sparkles, X } from "lucide-react";
 import { useId, useState, type ReactNode } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
+import { sessionQueryOptions } from "../../api";
 import { PlainText } from "../../molecules/PlainText";
 import { Avatar, Button } from "../../ui";
 import { AnswerComponent, type ClipSource } from "../TutorComponents";
@@ -19,11 +21,14 @@ type VisibleCall = Pick<ToolCallPart, "name" | "toolCallId"> & { arguments?: Too
 // While a turn streams, text parts hold the raw text so far, still with its `[[...]]` marks.
 export type StreamPart = { type: "raw_text"; raw: string } | Exclude<TutorPart, { type: "text" }>;
 
+// The learner's turn carries their own avatar from the session, falling back to their initials.
 export function UserMessage({ text }: { text: string }) {
   const { t } = useTranslation();
+  const session = useQuery(sessionQueryOptions());
+  const user = session.data?.status === "signedIn" ? session.data.user : null;
   return <div className={styles.userRow}>
     <p className={styles.userBubble} aria-label={t("tutor.you")}><PlainText>{text}</PlainText></p>
-    <span className={styles.turnAvatar} role="img" aria-label={t("tutor.userAvatar")}><Avatar name={t("tutor.you")} size="100%" tone="ink" /></span>
+    <span className={styles.turnAvatar} role="img" aria-label={t("tutor.userAvatar")}><Avatar name={user?.displayName || t("tutor.you")} src={user?.avatarUrl} size="100%" tone="ink" /></span>
   </div>;
 }
 

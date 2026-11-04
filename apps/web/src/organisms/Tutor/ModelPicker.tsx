@@ -1,5 +1,6 @@
 import type { AiProvider } from "@wordinator/contracts/ai";
 import { useQuery } from "@tanstack/react-query";
+import { ChevronDown } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { tutorModelsQueryOptions } from "../../api";
 import { SelectField } from "../../ui";
@@ -22,7 +23,10 @@ export function ModelPicker({ value, onChange, disabled, error }: {
   ]);
   const data = [...details].map(([key, detail]) => ({ value: key, label: key === "" ? t("tutor.model.default", { model: shortModel(detail.model) }) : shortModel(detail.model) }));
   const selected = value && items.some((item) => item.provider === value) ? value : "";
-  return <SelectField className={styles.modelPicker} aria-label={t("tutor.model.label")} allowDeselect={false} disabled={disabled}
+  // Plain text with a chevron, not a boxed field: the header keeps one quiet line (docs/ai-tutor.md#providers-and-fallback).
+  return <SelectField className={styles.modelPicker} classNames={{ input: styles.modelPickerInput }} aria-label={t("tutor.model.label")} allowDeselect={false} disabled={disabled}
+    variant="unstyled" styles={{ input: { color: "var(--color-foreground)" }, error: { color: "var(--color-danger-text)", fontWeight: "var(--weight-medium)" } }}
+    rightSection={<ChevronDown size={16} aria-hidden="true" />} rightSectionPointerEvents="none"
     data={data} value={selected} error={error ?? undefined} comboboxProps={{ width: "max-content", position: "bottom-end" }}
     renderOption={({ option }) => {
       const detail = details.get(option.value)!;
