@@ -43,8 +43,10 @@
 @media(prefers-reduced-motion:reduce){.item,.itemTitle{transition:none}}
 .lessonCopy{display:grid;gap:var(--space-1);min-width:0}
 .lessonTitle{font-family:var(--font-display);font-size:var(--type-card-title);font-weight:var(--weight-medium);line-height:var(--line-title);overflow-wrap:anywhere}
-/* The lesson page's reading column; the index and lesson box live in the app rail, the vocabulary panel in the right rail. */
-.page{display:grid;gap:var(--space-6);min-width:0;max-width:var(--width-reading);margin-inline:auto;width:100%}
+/* The lesson page's reading column; the index and lesson box live in the app rail, the vocabulary panel in the right rail. The
+   explicit column keeps the sticky bar's 100vw width from sizing an implicit auto column: Safari ignores the bar's percentage margin
+   there, so the column grew one gutter past the window and iOS zoomed the page out to fit it. */
+.page{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-6);min-width:0;max-width:var(--width-reading);margin-inline:auto;width:100%}
 /* The lesson cover: the lesson's first image as a full-width banner, cropped to fill. */
 /* The sticky header's slot (LessonStickyHeader): first in the column, taking no room, so the bar hangs over the page's top. The
    next item cancels the column's gap after it. Below 68rem it sticks under the slim header. */
