@@ -1,0 +1,17 @@
+.banner{position:relative;display:block;min-block-size:16rem;margin-block:var(--space-4) var(--space-6);overflow:hidden;border-radius:var(--radius-xl);background:var(--color-feature-surface);color:var(--color-feature-text);text-decoration:none;box-shadow:var(--shadow-card);isolation:isolate}
+.image{position:absolute;inset:0;inline-size:100%;block-size:100%;object-fit:cover;z-index:-2;transition:transform 400ms cubic-bezier(0.32,0.72,0,1)}
+.scrim{position:absolute;inset:0;z-index:-1;background:linear-gradient(to top,rgb(25 26 30 / 88%),rgb(25 26 30 / 35%) 60%,rgb(25 26 30 / 10%))}
+.body{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;gap:var(--space-2);padding:var(--space-6)}
+.eyebrow{display:inline-flex;align-items:center;gap:var(--space-2);font-size:var(--type-eyebrow);font-weight:var(--weight-bold);text-transform:uppercase;letter-spacing:var(--tracking-eyebrow)}
+.eyebrow svg,.cta svg{inline-size:1rem;block-size:1rem}
+.title{font-family:var(--font-display);font-size:var(--type-page-title);font-weight:var(--weight-semibold);line-height:1.15}
+.footer{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-3);margin-block-start:var(--space-3)}
+.cast{display:inline-flex}
+.cast img,.initial{display:grid;place-items:center;inline-size:2.5rem;block-size:2.5rem;border-radius:50%;border:2px solid rgb(255 255 255 / 85%);background:var(--color-core);color:var(--color-foreground);object-fit:cover;object-position:top;font-weight:var(--weight-semibold)}
+.cast>*+*{margin-inline-start:calc(var(--space-2) * -1)}
+.cta{display:inline-flex;align-items:center;gap:var(--space-2);padding:var(--space-3) var(--space-5);border-radius:var(--radius-pill);background:var(--color-core);color:var(--color-foreground);font-weight:var(--weight-semibold)}
+.banner:hover .image{transform:scale(1.03)}
+.banner:hover .cta{background:var(--color-hover);color:var(--color-action-text)}
+.banner:focus-visible{outline:var(--focus-ring-width) solid var(--color-focus);outline-offset:var(--focus-ring-offset)}
+@media (max-width:48em){.body{padding:var(--space-5)}}
+@media (prefers-reduced-motion:reduce){.image{transition:none}.banner:hover .image{transform:none}}

@@ -27,6 +27,8 @@ import { RAIL_DRAWER_QUERY, useRailSlots } from "../GroupFrame/GroupFrame";
 import { CourseErrorMessage } from "./CourseErrorMessage";
 import { LessonResetAction } from "./CourseProgress";
 import { LessonActions } from "./LessonActions";
+import { DialogueBanner } from "./DialogueBanner";
+import { dialogueTitle } from "./dialogueTitle";
 import { lessonSteps, playableDocument } from "./LessonPlayer";
 import styles from "./CourseLessons.module.css";
 import { LessonReadingProgress, type ReadingTracking, saveLessonPosition, useResumeScroll } from "./LessonReadingProgress";
@@ -228,11 +230,8 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
     <div ref={reading} className={gate ? `${styles.body} ${styles.gated}` : styles.body} style={gate && gateHeight !== null ? { maxBlockSize: gateHeight } : undefined}>
       {!lesson.document && <p className={styles.preview}>{t("courses.lessons.draftPreview")}</p>}
       <LessonDocument document={document} anchored vocabulary={false} renderAfterBlock={renderAfterBlock} renderHeadingBadge={renderHeadingBadge}
-        renderDialogueAction={lesson.document && !gate ? (block) => <Link className={styles.dialogueSceneLink}
-          to="/courses/$courseSlug/lessons/$lessonSlug/dialogues/$blockId"
-          params={{ courseSlug: scope.courseSlug, lessonSlug: lesson.slug, blockId: block.id }}>
-          {t("courses.lessons.openDialogueScene")}<ArrowRight aria-hidden="true" />
-        </Link> : undefined}
+        renderDialogueBanner={lesson.document && !gate ? (block) => <DialogueBanner block={block} title={dialogueTitle(lesson.document!, block.id) ?? lesson.title}
+          scene={lesson.dialogueScenes?.find((entry) => entry.blockId === block.id)} courseSlug={scope.courseSlug} lessonSlug={lesson.slug} /> : undefined}
         renderShare={share ? (block) => <ShareButton piece={block.type === "example" ? { kind: "example", block } : { kind: "dialogue", block }}
           label={t(`lessonShares.shareNamed.${block.type}`)} /> : undefined}
         renderPractice={(block) =>

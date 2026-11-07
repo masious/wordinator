@@ -222,7 +222,9 @@ describe("Course lessons", () => {
     expect(await screen.findByRole("heading", { name: "Lesson title 2", level: 1 })).toBeInTheDocument();
     expect(screen.getByText("Er is een balkon.")).toBeInTheDocument();
     expect(screen.getByText("There is a balcony.")).toBeInTheDocument();
-    expect(screen.getByText("Is er een tuin?")).toBeInTheDocument();
+    // A dialogue is a banner to its page, not its lines.
+    expect(screen.queryByText("Is er een tuin?")).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Dialogue · 2 lines.*Play the dialogue/ })).toHaveAttribute("href", `/courses/dutch-foundations/lessons/lesson-title-2/dialogues/${dialogue.id}`);
     expect(screen.queryByText("Lesson title 1", { selector: "h1" })).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Previous: Lesson title 1" })).toHaveAttribute("href", "/courses/dutch-foundations/lessons/lesson-title-1");
     expect(screen.getByRole("link", { name: "Next: Lesson title 3" })).toHaveAttribute("href", "/courses/dutch-foundations/lessons/lesson-title-3");

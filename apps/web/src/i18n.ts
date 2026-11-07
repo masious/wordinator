@@ -612,7 +612,7 @@ export const resources = {
         },
         lessons: {
           startReading: "Start reading this lesson",
-          openDialogueScene: "Open dialogue scene",
+          dialogueBanner: { eyebrow_one: "Dialogue · {{count}} line", eyebrow_other: "Dialogue · {{count}} lines", play: "Play the dialogue" },
           startNotice: "Once you start, Wordinator tracks your reading and practice time and shows you your progress. Your own times stay private; lessons show typical times combined from every learner who finished them.",
           outline: "Lessons",
           outlineEmpty: "No lessons yet.",
