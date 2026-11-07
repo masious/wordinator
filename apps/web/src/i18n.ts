@@ -583,7 +583,32 @@ export const resources = {
           stopAutoplay: "Stop autoplay",
           autoplay: "Autoplay",
           continueLesson: "Continue lesson",
-          theEnd: "The end"
+          theEnd: "The end",
+          player: {
+            label: "Dialogue player",
+            eyebrow: "Dialogue · {{title}}",
+            showConversation: "Show the conversation instead of the picture",
+            showPicture: "Show the picture",
+            more: "More",
+            speed: "Playback speed",
+            speedIs: "Playback speed: {{speed}}",
+            normal: "Normal",
+            previousLine: "Previous line",
+            play: "Play",
+            pause: "Pause",
+            repeatLine: "Repeat this line",
+            stopRepeating: "Stop repeating this line",
+            segment: "Line {{number}}, {{speaker}}",
+            openFullScreen: "Open the conversation full screen",
+            closeFullScreen: "Close full screen",
+            position: "{{speaker}} · line {{number}} of {{total}}",
+            upNext: "Up next in the lesson",
+            playAgain: "Play again",
+            intro: "Before the conversation",
+            newWords: "New words in this dialogue",
+            hideTranslations: "Hide translations",
+            showInLesson: "Show in the lesson"
+          }
         },
         lessons: {
           startReading: "Start reading this lesson",

@@ -36,6 +36,9 @@ export type ConversationProps = {
   location?: string;
   // The new words of each line, marked in its bubble; each opens its card on a click.
   spans?: readonly (readonly WordSpan[])[];
+  // A line to open on instead of the bare stage, when the learner was already in the dialogue (on the phone player, before the
+  // window widened).
+  initialLine?: number;
   onLineChange?: (index: number) => void;
   onContinue?: () => void;
   onExit?: () => void;
@@ -47,7 +50,7 @@ export type ConversationProps = {
 // moves on; the left arrow or Back goes back. Autoplay reads the dialogue from the current line (or its first, before it starts
 // or after it ends) to the end, bringing each line in as it is spoken; stepping, a line's own speaker, or Autoplay again stops
 // it. Development only and not translated.
-export function Conversation({ blockId, title, scene, intro, turns, background, portraits, masks, lineScenes, location, spans, onLineChange, onContinue, onExit }: ConversationProps) {
+export function Conversation({ blockId, title, scene, intro, turns, background, portraits, masks, lineScenes, location, spans, initialLine, onLineChange, onContinue, onExit }: ConversationProps) {
   const { t } = useTranslation();
   const resolve = useSpeechResolver();
   const owner = `conversation:${blockId}`;
@@ -59,7 +62,7 @@ export function Conversation({ blockId, title, scene, intro, turns, background, 
   const autoSteps = useRef<number[]>([]);
   const autoAt = useRef(-1);
   // -1 is the bare stage; then one step per intro box, one per line, and the end.
-  const [step, setStep] = useState(-1);
+  const [step, setStep] = useState(() => (initialLine !== undefined && initialLine >= 0 ? intro.length + Math.min(initialLine, turns.length - 1) : -1));
   const [autoPlay, setAutoPlay] = useState(true);
   const [showTranslations, setShowTranslations] = useState(true);
   const [revealed, setRevealed] = useState<ReadonlySet<number>>(new Set());

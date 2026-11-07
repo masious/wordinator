@@ -1,4 +1,5 @@
-import { readDialogueTurns, walkLessonBlocks, type CourseLesson, type DialogueScene as SceneAsset, type InlineContent, type LessonBlockOf } from "@wordinator/contracts/lesson-document";
+import { inlineText, readDialogueTurns, walkLessonBlocks, type CourseLesson, type DialogueScene as SceneAsset, type InlineContent, type LessonBlockOf } from "@wordinator/contracts/lesson-document";
+import { useMediaQuery } from "@mantine/hooks";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { useCallback, useMemo, useRef, type CSSProperties } from "react";
@@ -13,6 +14,7 @@ import { ErrorState, LoadingState } from "../../ui";
 import { markLesson } from "../TempHovercard/lessonWords";
 import { HovercardDemoContext, type HovercardDemo } from "../TempHovercard/WordHovercard";
 import { Conversation } from "../TempConv/Conversation";
+import { DialoguePlayer } from "./DialoguePlayer";
 import { dialogueScenesResponseSchema } from "@wordinator/contracts/lesson-document";
 
 const toneStyle = { "--hc-tone": "var(--color-action)", "--hc-on-tone": "var(--color-action-text)" } as CSSProperties;
@@ -41,6 +43,8 @@ export function DialogueScenePage({ groupId, courseId, lessonId, courseSlug, les
   const scene = images.data?.scenes.find((entry) => entry.blockId === blockId);
   const blockAt = blocks.findIndex((entry) => entry.id === blockId);
   const nextBlock = blocks.slice(blockAt + 1).find((entry) => entry.type !== "column")?.id ?? blockId;
+  const nextHeading = blocks.slice(blockAt + 1).find((entry) => entry.type === "heading");
+  const upNext = nextHeading && "content" in nextHeading && Array.isArray(nextHeading.content) ? inlineText(nextHeading.content as InlineContent) : null;
   const firstDialogue = document.blocks.find((entry) => entry.type === "dialogue")?.id === blockId;
   const intro: InlineContent[] = [];
   let label: string | null = null;
@@ -49,20 +53,26 @@ export function DialogueScenePage({ groupId, courseId, lessonId, courseSlug, les
     if (firstDialogue && "content" in entry && Array.isArray(entry.content) && entry.content.length) intro.push(entry.content as InlineContent);
   }
   return <SceneContent key={blockId} groupId={groupId} courseId={courseId} lessonId={lessonId} courseSlug={courseSlug}
-    lessonSlug={lessonSlug} lesson={data} block={block} intro={intro} label={label} nextBlock={nextBlock} scene={scene}
+    lessonSlug={lessonSlug} lesson={data} block={block} intro={intro} label={label} nextBlock={nextBlock} upNext={upNext} scene={scene}
     language={session.data?.status === "signedIn" && session.data.groups.find((entry) => entry.id === groupId)?.language === "de" ? "de" : "nl"}
     savedStep={progress.data.positions.find((entry) => entry.lessonId === lessonId)?.stepIndex ?? -1}
     completed={progress.data.completedLessonIds.includes(lessonId)} client={client} navigate={navigate} />;
 }
 
-function SceneContent({ groupId, courseId, lessonId, courseSlug, lessonSlug, lesson, block, intro, label, nextBlock, scene, savedStep, completed, client, navigate, language }: {
+// Phones get the dialogue as a player (DialoguePlayer); wider windows keep the staged conversation. Only one of them is mounted, so
+// playback, keys, and progress saving never run twice; the line reached carries over when a resize swaps them.
+const PHONE_QUERY = "(max-width: 48em)";
+
+function SceneContent({ groupId, courseId, lessonId, courseSlug, lessonSlug, lesson, block, intro, label, nextBlock, upNext, scene, savedStep, completed, client, navigate, language }: {
   groupId: string; courseId: string; lessonId: string; courseSlug: string; lessonSlug: string; lesson: CourseLesson;
-  block: LessonBlockOf<"dialogue">; intro: InlineContent[]; label: string | null; nextBlock: string; scene: SceneAsset | undefined;
+  block: LessonBlockOf<"dialogue">; intro: InlineContent[]; label: string | null; nextBlock: string; upNext: string | null; scene: SceneAsset | undefined;
   savedStep: number; completed: boolean; client: ReturnType<typeof useQueryClient>; navigate: ReturnType<typeof useNavigate>; language: "nl" | "de";
 }) {
   const document = lesson.document!;
   const steps = useMemo(() => lessonSteps(lesson), [lesson]);
   const speech = useMemo(() => lessonSpeech(lesson), [lesson]);
+  const resolveSpeech = useCallback((key: string) => speech[key] ?? null, [speech]);
+  const turns = useMemo(() => readDialogueTurns(block), [block]);
   const marks = useMemo(() => markLesson(document, language), [document, language]);
   const demo = useMemo<HovercardDemo>(() => ({ toneStyle, sayWords: false, words: marks.words, subtle: true, clickOnly: true, persistentBookmarks: true }), [marks]);
   const bookmarkTarget = useLessonBookmarkTarget(groupId, courseId, lessonId, document);
@@ -70,7 +80,10 @@ function SceneContent({ groupId, courseId, lessonId, courseSlug, lessonSlug, les
   furthest.current = Math.max(furthest.current, savedStep);
   const active = lesson.published && !completed;
   useLearningClaim(lesson.published ? { groupId, target: () => ({ activity: "reading", focus: "lesson", courseId, lessonId }) } : null);
+  const phone = useMediaQuery(PHONE_QUERY, undefined, { getInitialValueInEffect: false });
+  const reached = useRef<number | undefined>(undefined);
   const onLineChange = useCallback((index: number) => {
+    reached.current = index;
     const at = steps.findIndex((step) => step.kind === "dialogueTurn" && step.block.id === block.id && step.turnIndex === index);
     if (!active || at <= furthest.current) return;
     furthest.current = at;
@@ -82,10 +95,19 @@ function SceneContent({ groupId, courseId, lessonId, courseSlug, lessonSlug, les
   const advance = () => void navigate({ ...lessonRoute, hash: nextBlock });
   const fallback = lesson.document?.blocks.find((entry) => entry.type === "image");
   const background = scene?.backgroundUrl ?? scene?.locationUrl ?? (fallback?.type === "image" ? fallback.props.url : "");
-  return <WordBookmarkScope resolve={bookmarkTarget}><HovercardDemoContext.Provider value={demo}><SpeechScope resolve={(key) => speech[key] ?? null}>
-    <Conversation blockId={block.id} title={lesson.title} scene={label} intro={intro} turns={readDialogueTurns(block)}
-      background={background} location={scene?.locationUrl ?? undefined} portraits={scene?.portraits ?? {}}
-      lineScenes={scene?.lineScenes.map((line) => ({ scene: line.sceneUrl, mask: line.maskUrl }))}
-      spans={marks.spans.get(block.id)} onLineChange={onLineChange} onContinue={advance} onExit={leave} />
+  const spans = marks.spans.get(block.id);
+  const words = [...new Set(spans?.flat().map((span) => span.wordId))].flatMap((id) => marks.words.get(id) ?? [])
+    .concat(marks.missing.get(block.id) ?? []);
+  return <WordBookmarkScope resolve={bookmarkTarget}><HovercardDemoContext.Provider value={demo}><SpeechScope resolve={resolveSpeech}>
+    {phone
+      ? <DialoguePlayer blockId={block.id} title={lesson.title} scene={label} intro={intro} turns={turns}
+        backdrop={scene?.locationUrl ?? background} background={background} portraits={scene?.portraits ?? {}}
+        lineScenes={scene?.lineScenes.map((line) => ({ scene: line.sceneUrl, mask: line.maskUrl }))} spans={spans} words={words} upNext={upNext}
+        initialLine={reached.current} onLineChange={onLineChange} onContinue={advance} onExit={leave}
+        onShowInLesson={() => void navigate({ ...lessonRoute, hash: block.id })} />
+      : <Conversation blockId={block.id} title={lesson.title} scene={label} intro={intro} turns={turns}
+        background={background} location={scene?.locationUrl ?? undefined} portraits={scene?.portraits ?? {}}
+        lineScenes={scene?.lineScenes.map((line) => ({ scene: line.sceneUrl, mask: line.maskUrl }))}
+        spans={spans} initialLine={reached.current} onLineChange={onLineChange} onContinue={advance} onExit={leave} />}
   </SpeechScope></HovercardDemoContext.Provider></WordBookmarkScope>;
 }

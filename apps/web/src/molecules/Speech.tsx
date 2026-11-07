@@ -95,6 +95,13 @@ export function resumeSpeech() {
   });
 }
 
+// The speed every clip plays at from now on, 1 being normal; the pitch stays.
+export function setSpeechRate(rate: number) {
+  const player = element();
+  player.defaultPlaybackRate = rate;
+  player.playbackRate = rate;
+}
+
 export function stopSpeech() {
   generation += 1;
   queue = [];
