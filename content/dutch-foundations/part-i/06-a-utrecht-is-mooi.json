@@ -106,6 +106,19 @@
       "id": "c774d773-73f4-4901-85da-2fe28a764272"
     },
     {
+      "id": "7cd412bc-825a-497e-b6e5-736bc23f3c60",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Noor points up at the Domtoren while Sofia looks up.",
+        "url": "courses/b7eb68d8-4fcc-4b13-b2ef-e6f87008cb68/lessons/47530bbb-9c13-4def-9955-3c75467670bb/56a57891-98d5-4aa8-85f9-6283dfac502c.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "dialogue",
       "props": {
         "turns": [
@@ -1856,6 +1869,19 @@
         }
       ],
       "id": "6085a66d-f026-46e1-bfd7-fa90958649f5"
+    },
+    {
+      "id": "c7cbcf51-b85e-44ab-9b76-161db1fa5b4b",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia and Noor sit by the Oudegracht canal.",
+        "url": "courses/b7eb68d8-4fcc-4b13-b2ef-e6f87008cb68/lessons/47530bbb-9c13-4def-9955-3c75467670bb/95dca817-375b-4e4d-a841-2931b3a5de96.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "dialogue",

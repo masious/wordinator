@@ -94,6 +94,19 @@
       "id": "a3c7ce75-1843-4611-bd00-d04929eda77c"
     },
     {
+      "id": "96ab91b4-6200-42ca-a965-8804956cb419",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "A wet Sofia meets Henk in the hallway on a rainy evening",
+        "url": "courses/b885c80c-9118-4ce7-80e0-03500c8e05d5/lessons/94d458df-471e-4b8c-ba42-62f2d97a8312/dd946dc8-63b8-4d57-a6cf-5da7180ba52e.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "paragraph",
       "content": [
         "Monday 2 November, six o'clock in the evening. Sofia cycles home from the office in the rain. In the hallway of Kastanjestraat 14 she meets Henk."
@@ -1899,6 +1912,19 @@
       },
       "content": "Seasons: in de lente, in de zomer",
       "id": "ae9a5982-154c-4592-a6d3-012c1728f9b7"
+    },
+    {
+      "id": "d3b4c9b4-ac76-4dd5-9375-63aaad91fafe",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "The same Utrecht canal in spring, summer, autumn and winter",
+        "url": "courses/b885c80c-9118-4ce7-80e0-03500c8e05d5/lessons/94d458df-471e-4b8c-ba42-62f2d97a8312/9511f254-a911-48b4-8a98-926239e9d2fa.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

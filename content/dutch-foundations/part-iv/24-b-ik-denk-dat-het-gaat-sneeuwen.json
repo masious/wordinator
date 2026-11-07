@@ -24,6 +24,19 @@
       "id": "00ca8e9f-dea0-4440-99b0-9ee410fb769c"
     },
     {
+      "id": "922d99ee-e89a-41f0-8ed5-1f88fd6bca0d",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia en Piotr praten met hun docent Nederlands in de bibliotheek.",
+        "url": "courses/4fc355cb-db84-47ce-8fdd-cc0cb761bfef/lessons/0f9dd136-9aa7-43f1-9d0c-bffe7d509ef1/797c82a1-4298-4119-8809-885779957e9f.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "paragraph",
       "content": "Marieke asks the class about life in the Netherlands. The new word allemaal can mean all of you when Marieke speaks to the group.",
       "id": "7fbb697c-4e43-4496-b48b-8119424c9fc1"
@@ -1261,6 +1274,19 @@
       },
       "content": "Goodbye in the hallway",
       "id": "8d276ede-638e-4a3f-831a-503cd65748f3"
+    },
+    {
+      "id": "8792cdba-a1e2-4229-a64f-af54372e9cfa",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia neemt afscheid van Henk en Tijger voor haar kersttrip.",
+        "url": "courses/4fc355cb-db84-47ce-8fdd-cc0cb761bfef/lessons/0f9dd136-9aa7-43f1-9d0c-bffe7d509ef1/93147d33-a715-49e9-b236-f5f649363bd3.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

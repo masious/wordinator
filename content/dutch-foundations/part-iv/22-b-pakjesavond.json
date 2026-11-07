@@ -24,6 +24,19 @@
       "id": "910c9d85-a04e-4eb8-8407-9ad3a186ea4d"
     },
     {
+      "id": "85252184-4d23-4927-9ed1-45bf96244b0e",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Vrienden vieren pakjesavond terwijl Daan een gedicht voorleest.",
+        "url": "courses/4fc355cb-db84-47ce-8fdd-cc0cb761bfef/lessons/43a360c2-126c-4b2c-aa79-ebb2eae25c0c/d2e6602c-3234-4072-afbe-18180d33762d.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "dialogue",
       "props": {
         "turns": [
@@ -592,6 +605,19 @@
       },
       "content": "Story: tea in the kitchen",
       "id": "4db18daf-4c41-4649-8bad-2228d24b492b"
+    },
+    {
+      "id": "eb11cc3e-662e-4859-b350-efa09cdf8911",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia en Lotte maken thee terwijl vrienden in de woonkamer feestvieren.",
+        "url": "courses/4fc355cb-db84-47ce-8fdd-cc0cb761bfef/lessons/43a360c2-126c-4b2c-aa79-ebb2eae25c0c/9368e66d-0ba6-46cc-a4dc-fc18d2a923a0.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "dialogue",

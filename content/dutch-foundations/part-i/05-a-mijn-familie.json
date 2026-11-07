@@ -153,6 +153,19 @@
       "id": "56dfb1fe-ae7e-4307-815b-3f5b53fb9281"
     },
     {
+      "id": "6f8c5f57-52c9-4310-aec6-5591b3179b39",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia laat Noor een foto zien op haar telefoon aan de keukentafel.",
+        "url": "courses/b7eb68d8-4fcc-4b13-b2ef-e6f87008cb68/lessons/616dfccd-4ba2-4f34-b69e-c8c9df4b0bbd/76974209-c808-42b3-85a8-6ac4dd474db8.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "dialogue",
       "props": {
         "turns": [
@@ -1519,6 +1532,19 @@
         }
       ],
       "id": "947d26bf-b497-4991-9654-1cb8e9cd2f5b"
+    },
+    {
+      "id": "7a48bf4a-30f8-40f4-b6df-1db97e552aaf",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Noor laat Sofia een foto zien op haar telefoon; Sofia lacht.",
+        "url": "courses/b7eb68d8-4fcc-4b13-b2ef-e6f87008cb68/lessons/616dfccd-4ba2-4f34-b69e-c8c9df4b0bbd/730ddc9e-ae59-423a-b834-cf254dde9795.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "dialogue",

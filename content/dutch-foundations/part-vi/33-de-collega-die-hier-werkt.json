@@ -29,6 +29,19 @@
       "id": "b4c9c882-7783-45c9-80e5-84914dd7f821"
     },
     {
+      "id": "9f03c55a-f6d6-4ec8-b28e-debd4322e686",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia en Karin bekijken een foto van Daan op een kantoorscherm.",
+        "url": "courses/ec7fb520-dfad-4b9e-af85-7debf4994600/lessons/faea82e8-e635-4ada-9e68-0fd0bb69135c/adc6bd9d-a68d-42cc-b9fa-5d7022d9ecba.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "dialogue",
       "props": {
         "turns": [
@@ -614,6 +627,19 @@
         "level": 2
       },
       "id": "5a954ca3-76f1-4fed-a829-aaf16ec9608e"
+    },
+    {
+      "id": "2202c990-f297-469e-8ef6-cab92503c8bc",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia en Daan zoeken een kaartje naast een computer.",
+        "url": "courses/ec7fb520-dfad-4b9e-af85-7debf4994600/lessons/faea82e8-e635-4ada-9e68-0fd0bb69135c/3de651dc-e459-4ec3-bd83-186e0490c3ca.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "dialogue",

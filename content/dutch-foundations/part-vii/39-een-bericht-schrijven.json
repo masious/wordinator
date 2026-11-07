@@ -24,6 +24,19 @@
       "id": "b9ed1cfb-b060-482c-b6b9-d31e46cc941a"
     },
     {
+      "id": "f7101235-dcb0-4c13-a07c-f6564b10622e",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia en Noor bekijken samen twee berichten aan de keukentafel.",
+        "url": "courses/0aeb92c0-4a9c-45ad-be2f-5f23338027b9/lessons/17a5d675-4926-4edc-9824-390d4e4edb2e/8ccec359-2009-42e8-8a2f-e0889e387cfa.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "paragraph",
       "content": "Sofia writes a short informal note and a formal request. They are model messages for practice, not real events.",
       "id": "b584aefd-c95d-41f5-8a4f-89d3f0c828ed"
@@ -501,6 +514,19 @@
       },
       "content": "A formal request",
       "id": "b151f0dd-9511-4dca-acbb-93595f747982"
+    },
+    {
+      "id": "d55a9b0b-f4bf-43b3-9d9e-cecbbb27cb67",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Een conceptmail met aanhef, korte alinea en afsluiting op een laptop.",
+        "url": "courses/0aeb92c0-4a9c-45ad-be2f-5f23338027b9/lessons/17a5d675-4926-4edc-9824-390d4e4edb2e/2fe26e6a-c9b8-4a7c-86d3-1075b7a4878a.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

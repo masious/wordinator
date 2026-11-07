@@ -96,6 +96,19 @@
       "id": "479727c5-a757-40e5-8de0-4e2b3bac3bf9"
     },
     {
+      "id": "727ca23c-b710-4d5f-8ac2-bd7d012f5cd2",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Noor and Sofia eating breakfast in the kitchen",
+        "url": "courses/cc2bc79f-6a98-4944-81fa-082b17873e62/lessons/d2728460-5e91-4d40-8b09-73b987b1628e/3965c77f-7f17-4f27-b7cd-563ad2a1d356.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "paragraph",
       "content": [
         "Morning in Noor's small kitchen. Noor and Sofia have breakfast together (",
@@ -2251,6 +2264,19 @@
       },
       "content": "Story: Op kantoor",
       "id": "9872d27e-520a-4b4f-bebb-89ae91447bab"
+    },
+    {
+      "id": "65ade296-0802-4a86-ab48-08cfe4883a4e",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Three colleagues talking in a small office.",
+        "url": "courses/cc2bc79f-6a98-4944-81fa-082b17873e62/lessons/d2728460-5e91-4d40-8b09-73b987b1628e/56e1d8dc-7abd-4782-9a7e-6e71eaf7fb34.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

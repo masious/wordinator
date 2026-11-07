@@ -24,6 +24,19 @@
       "id": "e5cc08a3-c1f7-40a6-9bd9-17396e06257d"
     },
     {
+      "id": "61f294d6-264c-442d-b487-e2b470206864",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia leest berichten over wat gasten meenemen naar de housewarming.",
+        "url": "courses/4fc355cb-db84-47ce-8fdd-cc0cb761bfef/lessons/28848928-0874-4a8f-89e8-0e085973a1a1/3043080f-8038-498a-a47e-d99710739c06.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "paragraph",
       "content": "Guests message Sofia to ask what they should bring. She answers politely and keeps the plan simple.",
       "id": "c6051e5e-48d8-4e2f-9a9c-d17190e3fc08"
@@ -502,6 +515,19 @@
       },
       "content": "Story: Henk offers to help",
       "id": "b6dea541-9863-455a-80d3-d9e7cb6d4a84"
+    },
+    {
+      "id": "36d6148a-cb01-4d76-8734-47c17a762cc1",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Henk krijgt Sofia's reservesleutel in de gang.",
+        "url": "courses/4fc355cb-db84-47ce-8fdd-cc0cb761bfef/lessons/28848928-0874-4a8f-89e8-0e085973a1a1/9c2e9b01-4151-4398-a502-3cae52d31b88.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

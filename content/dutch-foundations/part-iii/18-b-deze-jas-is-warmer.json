@@ -34,6 +34,19 @@
       "id": "f77922b2-28f5-4312-8221-29ab5bf6b471"
     },
     {
+      "id": "14f97832-ad77-43b9-9fac-25f700963eb7",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia comparing a black coat and a dark-blue coat in a clothes shop.",
+        "url": "courses/b885c80c-9118-4ce7-80e0-03500c8e05d5/lessons/178c375c-b9cd-4e54-90ed-d3c3c1ca2a05/42ca3324-e27b-4f5e-8f68-cb14aa21d829.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "paragraph",
       "content": "Sofia, Noor and the Verkoopster (shop assistant) are still in the clothes shop in the centre of Utrecht. Before Sofia pays for the dark-blue coat, the Verkoopster shows her a cheaper black coat. Now Sofia must choose.",
       "id": "b1717de4-1e91-4553-b99e-399434abbcf6"
@@ -925,6 +938,19 @@
       },
       "content": "Story: Thuis bij Henk",
       "id": "69afe3ad-dfc6-4b26-a8f6-e134b275f34e"
+    },
+    {
+      "id": "2f28e90d-5201-4830-ae0e-534c3d94dff1",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Henk and his cat greeting Sofia in the hallway, wearing her new dark-blue coat.",
+        "url": "courses/b885c80c-9118-4ce7-80e0-03500c8e05d5/lessons/178c375c-b9cd-4e54-90ed-d3c3c1ca2a05/9a210833-f326-4f8f-a956-0f94d3582059.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

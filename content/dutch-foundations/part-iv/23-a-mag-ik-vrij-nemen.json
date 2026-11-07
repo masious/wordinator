@@ -24,6 +24,19 @@
       "id": "b4497d20-c456-4ede-9923-be8ccbe5ab3b"
     },
     {
+      "id": "03cbfbe2-bb5b-46a0-a9a8-e73eaa1815f7",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia vraagt Karin om vrij tijdens de kerstperiode.",
+        "url": "courses/4fc355cb-db84-47ce-8fdd-cc0cb761bfef/lessons/0bb2860f-98a5-4a2a-8ee9-046af4145f92/7381ca74-5a86-4ccd-90cb-416696687add.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "dialogue",
       "props": {
         "turns": [
@@ -717,6 +730,19 @@
       },
       "content": "Story: at the swimming pool",
       "id": "65a0bbdf-9dc0-424e-91f0-ba2b3ffcce21"
+    },
+    {
+      "id": "3404365f-28c3-46eb-a876-caae4c0762bf",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Een badmeester legt Sofia de regels van het zwembad uit.",
+        "url": "courses/4fc355cb-db84-47ce-8fdd-cc0cb761bfef/lessons/0bb2860f-98a5-4a2a-8ee9-046af4145f92/8adfaf16-9deb-4bbc-9469-f25f462378c5.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "dialogue",

@@ -229,6 +229,19 @@
       "children": []
     },
     {
+      "id": "7d6e2489-88a6-4706-ad4d-854edf80eaa1",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Lichte woonkamer met uitzicht op een zonnig balkon in Utrecht.",
+        "url": "courses/b885c80c-9118-4ce7-80e0-03500c8e05d5/lessons/cbb04fbe-14f4-4b49-bd0a-94257186523d/05e9657e-0ad9-4a81-a420-401280723b08.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "id": "74e429d6-819f-48ca-98a8-b4591369908d",
       "type": "example",
       "props": {
@@ -370,6 +383,19 @@
       "type": "dialogue",
       "props": {
         "turns": "[{\"speaker\": \"A\", \"text\": \"Is er een tuin?\"}, {\"speaker\": \"B\", \"text\": \"Nee, maar er is wel een balkon.\"}, {\"speaker\": \"A\", \"text\": \"Zijn er twee slaapkamers?\"}, {\"speaker\": \"B\", \"text\": \"Ja, er zijn twee slaapkamers.\"}]"
+      },
+      "children": []
+    },
+    {
+      "id": "7005333f-78bd-417e-90c6-23dc4b8874ab",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia bekijkt met Henk haar lichte appartement.",
+        "url": "courses/b885c80c-9118-4ce7-80e0-03500c8e05d5/lessons/cbb04fbe-14f4-4b49-bd0a-94257186523d/5b1a787c-c057-46ad-88a5-7a6cfbe56ff5.jpg",
+        "caption": "",
+        "showPreview": true
       },
       "children": []
     },

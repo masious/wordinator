@@ -96,6 +96,19 @@
       "id": "c2e4b75d-010f-4628-a73f-c591aee1edc5"
     },
     {
+      "id": "ddc90c56-3133-44e8-8d83-54107fb4af4b",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "A second-hand market stall with a white lamp, black mugs and price cards.",
+        "url": "courses/cc2bc79f-6a98-4944-81fa-082b17873e62/lessons/e3edee33-d1d4-4327-94fc-4ee5f37a055e/233817da-88d3-4cfd-9dce-56ceda03153b.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "paragraph",
       "content": [
         "Sofia needs a lamp for her room. At a stall with ",
@@ -1950,6 +1963,19 @@
       },
       "content": "Story: Henk's big news",
       "id": "e3828399-fbf1-4b23-b552-55dd1504e1c9"
+    },
+    {
+      "id": "6354bb55-3417-434b-a1b0-e60b501f2514",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "A cheese seller handing a customer a piece of cheese at a market stall.",
+        "url": "courses/cc2bc79f-6a98-4944-81fa-082b17873e62/lessons/e3edee33-d1d4-4327-94fc-4ee5f37a055e/cd9444ae-bf30-4ba6-a995-20a2d9f65252.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

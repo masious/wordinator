@@ -73,6 +73,19 @@
       "id": "a4cc9bcf-9374-4d45-b561-c34a727ef998"
     },
     {
+      "id": "d8ffd04e-3760-4602-b62f-967365b25fd8",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Two friends talking in a kitchen in the evening.",
+        "url": "courses/b7eb68d8-4fcc-4b13-b2ef-e6f87008cb68/lessons/dc632cc3-539f-4cb5-b913-cbaee0ec27b4/79f7fdc0-7f48-4f07-9317-f5bf1273693a.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "dialogue",
       "props": {
         "turns": [
@@ -2086,6 +2099,19 @@
       "type": "paragraph",
       "content": "Noor makes tea. Now Sofia asks the questions.",
       "id": "c7b36819-46da-4442-a934-27835f8bea2f"
+    },
+    {
+      "id": "779b5c74-862a-49af-a0c5-96ec32c9d649",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Someone pouring tea into two mugs in a kitchen.",
+        "url": "courses/b7eb68d8-4fcc-4b13-b2ef-e6f87008cb68/lessons/dc632cc3-539f-4cb5-b913-cbaee0ec27b4/418a4f73-fe01-4c4c-838b-cdc3a98ab467.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "dialogue",

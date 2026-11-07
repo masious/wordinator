@@ -24,6 +24,19 @@
       "id": "66306ecf-92f9-453e-a985-c7ea05c08e6e"
     },
     {
+      "id": "9b95412d-029a-499a-aa1e-0bfce2bd0c2a",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia en Noor bespreken een wandelroute op een kaart van Utrecht.",
+        "url": "courses/d586e8b0-7d68-4519-bc6e-7fb9dc51ee1b/lessons/f91cda4a-0fe5-4276-9d91-2b28b554ab3c/9ce860d2-d59f-40de-b4c1-c56d2b581b3c.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "dialogue",
       "props": {
         "turns": [

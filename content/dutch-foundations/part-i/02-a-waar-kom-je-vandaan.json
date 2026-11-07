@@ -3,6 +3,19 @@
   "goal": "Ask where someone is from and say where you are from with komen uit; use the singular forms of komen; name countries and cities and say where a city is.",
   "blocks": [
     {
+      "id": "54cb45c7-0eca-4212-9bcb-686ec2c8ce04",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Three colleagues eating lunch together at an office table.",
+        "url": "courses/b7eb68d8-4fcc-4b13-b2ef-e6f87008cb68/lessons/0b7c2f52-c34b-4aea-bbb5-27548b7cd46f/76c52a2d-f0f4-4e91-8bdd-52a01988c06e.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "heading",
       "props": {
         "level": 1
@@ -1750,6 +1763,19 @@
       },
       "content": "Story: Een collega uit België",
       "id": "0252db54-7c92-4a1c-b33b-3f0f73be476b"
+    },
+    {
+      "id": "fd6da701-6aad-4ebe-acf0-e791d5202c1d",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "A man joining colleagues at a lunch table.",
+        "url": "courses/b7eb68d8-4fcc-4b13-b2ef-e6f87008cb68/lessons/0b7c2f52-c34b-4aea-bbb5-27548b7cd46f/ce9d1218-b4c9-405d-8a5a-26c89f792fff.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

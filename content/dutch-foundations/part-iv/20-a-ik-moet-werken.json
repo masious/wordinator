@@ -103,6 +103,19 @@
       "id": "f7ce3e19-3d9a-4684-91ab-a2522a9abe92"
     },
     {
+      "id": "fe7f9c9b-f274-408a-a13b-b883f781e6c5",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Karin bespreekt het werk met twee collega's op kantoor.",
+        "url": "courses/4fc355cb-db84-47ce-8fdd-cc0cb761bfef/lessons/48f7eca1-bb95-4962-95ce-72f023742ca1/737540dd-24d5-4ebd-a92a-1a0929f24c0a.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "paragraph",
       "content": "Karin Smit is Sofia and Daan's teamleider (team leader) at the IT company. On Monday morning she calls a short meeting: the team has a big deadline this week.",
       "id": "0982704d-7e4f-40f2-8918-b336a518cd11"
@@ -1716,6 +1729,19 @@
       },
       "content": "Reading: Daan's weekly plan",
       "id": "53dc1838-3d90-444b-9ceb-1f2e61149124"
+    },
+    {
+      "id": "f5939546-d817-4a5c-82ed-bf60cc98afe4",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Een weekplanning hangt boven een bureau met een laptop.",
+        "url": "courses/4fc355cb-db84-47ce-8fdd-cc0cb761bfef/lessons/48f7eca1-bb95-4962-95ce-72f023742ca1/94966bb6-60da-4f3c-93a2-d8b2818a5e48.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

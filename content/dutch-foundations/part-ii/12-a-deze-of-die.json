@@ -93,6 +93,19 @@
       "id": "6bd8c1c6-839b-4bd6-8d33-6e016a7b2e91"
     },
     {
+      "id": "c4bb5144-5d71-4e22-a5c5-953215612afa",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Henk offers Sofia a piece of cheese at his market stall.",
+        "url": "courses/cc2bc79f-6a98-4944-81fa-082b17873e62/lessons/97b0b235-85b8-451d-a28e-c64b18d2277b/8a664c11-1da5-49fd-b790-f36bd1c26868.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "paragraph",
       "content": [
         "Noor and Sofia stop at Henk's cheese stall (",
@@ -2145,6 +2158,19 @@
       },
       "content": "Story: Bij de bloemenkraam",
       "id": "52075a00-bc4f-4227-8889-4106eff69ae7"
+    },
+    {
+      "id": "906ad169-38f8-4ef6-82f1-7e9dccdbb013",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia and Noor choose a plant and sunflowers at a flower stall.",
+        "url": "courses/cc2bc79f-6a98-4944-81fa-082b17873e62/lessons/97b0b235-85b8-451d-a28e-c64b18d2277b/5776f242-1a5a-4851-9397-88bb9ac7df01.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

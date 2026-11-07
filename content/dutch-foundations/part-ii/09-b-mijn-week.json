@@ -96,6 +96,19 @@
       "id": "26f9c578-4ae2-4ac6-b63c-f4cefb457ebd"
     },
     {
+      "id": "0fb6bef7-ba63-4d23-94f8-3b2d6ad76312",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Two young women comparing their agendas at a kitchen table.",
+        "url": "courses/cc2bc79f-6a98-4944-81fa-082b17873e62/lessons/15e1890a-0f7c-4df8-b1b0-7f42a7ec711f/fda2da04-04ac-4619-9787-b4f522568b6e.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "paragraph",
       "content": [
         "Thursday evening in Noor's kitchen. Noor and Sofia look at their agendas (",
@@ -1809,6 +1822,19 @@
       },
       "content": "Story: Het feest van Daan",
       "id": "373c8a01-1a8a-4a23-b219-5085698586cc"
+    },
+    {
+      "id": "337108f7-8ad2-476b-bb49-9fc75da0b657",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Guests sitting in a circle at a birthday party with coffee and cake.",
+        "url": "courses/cc2bc79f-6a98-4944-81fa-082b17873e62/lessons/15e1890a-0f7c-4df8-b1b0-7f42a7ec711f/614b13ae-d040-4b0a-8660-276dd008a66f.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

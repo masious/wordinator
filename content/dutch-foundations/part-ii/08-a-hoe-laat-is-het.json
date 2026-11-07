@@ -97,6 +97,19 @@
       "id": "d746bd20-165d-461a-898b-78f7f7e747d3"
     },
     {
+      "id": "489c09ed-e094-4f6a-96cc-f1474719d85c",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia running through Utrecht Centraal under a station clock showing 8:35",
+        "url": "courses/cc2bc79f-6a98-4944-81fa-082b17873e62/lessons/7f4e7353-6cc8-423e-9963-779e94c1ffda/d01a9845-8093-450e-b1d8-c40e0bceb474.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "paragraph",
       "content": [
         "On Friday Daan sends the team a message: ",
@@ -915,6 +928,19 @@
       },
       "content": "Minutes around the half hour",
       "id": "f2e181b9-7ea8-454b-bbe2-45c74f9bd8b5"
+    },
+    {
+      "id": "5b2da5b8-aa54-4188-956e-65be69e39e24",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Clock face showing the Dutch time zones over, voor half, half, over half and voor",
+        "url": "courses/cc2bc79f-6a98-4944-81fa-082b17873e62/lessons/7f4e7353-6cc8-423e-9963-779e94c1ffda/7a6a0659-c93b-437a-add8-e49d4f1875dc.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

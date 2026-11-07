@@ -24,6 +24,19 @@
       "id": "513029a0-fdbb-4c34-89b4-7ba28b2c3b2d"
     },
     {
+      "id": "7e3bfdcc-fc7d-4bc0-9dfd-65024d290ef0",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia en Noor praten met thee aan de keukentafel.",
+        "url": "courses/d586e8b0-7d68-4519-bc6e-7fb9dc51ee1b/lessons/6862c0df-e8af-4e09-9e29-d0ea7945be74/3e2b42a7-d780-4c14-8fc7-0cf4f3cced58.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "dialogue",
       "props": {
         "turns": [
@@ -148,6 +161,19 @@
       },
       "content": "The perfect: hebben + past participle",
       "id": "c5daa47b-7062-487c-9edf-4c9e434e9db2"
+    },
+    {
+      "id": "f2b97716-03a6-4bd5-a7e2-34d842f6fcd0",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Een Nederlandse taalles toont hele werkwoorden en voltooide deelwoorden.",
+        "url": "courses/d586e8b0-7d68-4519-bc6e-7fb9dc51ee1b/lessons/6862c0df-e8af-4e09-9e29-d0ea7945be74/0edb7789-c904-4c53-b49c-600498d9049a.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

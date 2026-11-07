@@ -29,6 +29,19 @@
       "id": "2611214a-879e-4aaa-a39b-25f95c3da92b"
     },
     {
+      "id": "e4d3c505-e26b-47f7-a718-9088c0c55680",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia en Noor studeren samen aan een tafel in de bibliotheek.",
+        "url": "courses/ec7fb520-dfad-4b9e-af85-7debf4994600/lessons/83f35487-3c1c-486c-bc40-60f474305fe3/b8ae7d94-82b7-49bc-bb13-24556aba9e85.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "dialogue",
       "props": {
         "turns": [
@@ -358,6 +371,19 @@
       },
       "content": "Put te inside a separable verb",
       "id": "e5aec917-b750-49bc-b061-5355c1eaa21e"
+    },
+    {
+      "id": "c090d98b-a276-4831-9c0c-346c2b984678",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Een schrift toont de Nederlandse combinaties op te zoeken, mee te nemen en op te ruimen.",
+        "url": "courses/ec7fb520-dfad-4b9e-af85-7debf4994600/lessons/83f35487-3c1c-486c-bc40-60f474305fe3/753c163c-bfc7-44fb-84e0-09139ed822c2.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

@@ -29,6 +29,19 @@
       "id": "0be84f8b-f83c-448e-9823-ad4fe4e5aff3"
     },
     {
+      "id": "7f272062-2b83-4aa4-a9e4-689eebb69ed6",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia, Piotr en Marieke zijn in een Nederlandse les in de bibliotheek.",
+        "url": "courses/ec7fb520-dfad-4b9e-af85-7debf4994600/lessons/bb35fd08-6768-489d-9c83-56cf1723b996/556a1dc6-04ca-4660-af09-c0a6952b48fd.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "dialogue",
       "props": {
         "turns": [
@@ -138,6 +151,19 @@
       },
       "content": "Two ways to give a reason",
       "id": "2959e9a7-2252-4010-a4d1-4aa748be01a5"
+    },
+    {
+      "id": "e5e32741-18a4-46ad-9588-3a8d4b7e3475",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Een Nederlands voorbeeld met want en omdat laat twee woordvolgordes zien.",
+        "url": "courses/ec7fb520-dfad-4b9e-af85-7debf4994600/lessons/bb35fd08-6768-489d-9c83-56cf1723b996/9a195291-5bf5-41b1-b401-1058d121432a.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "heading",

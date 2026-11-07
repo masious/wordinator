@@ -12,6 +12,7 @@ Content workspace for the "Dutch Foundations" courses. Lessons are authored as J
 | `*/course.json` | — | Import manifest (course ID, local group/owner, position offset). Part I has none yet: the user must create the Part I course in the app and give its ID first (see [`ledger-part-i.md`](../../docs/content/ledger-part-i.md)). |
 | `tools/lesson.ts` | — | Validator and SQL generator. |
 | `word-marks/`, `tools/word-marks.ts`, `tools/WORD_MARKS.md` | annotators | Where each lesson's new words are used in its text ([word marks](../../docs/courses.md#word-marks)): `dump` gives an annotator its input, `check` validates `word-marks/<lesson file>.json`; the importer stores the resolved marks with the lesson. |
+| `tools/pull-images.ts` | — | **Temporary; delete it once the content synchronization process is finished.** Dry run unless `--write`: puts the image blocks of a database export (`id`, `draft_doc` or `published_doc` rows) into the lesson files, using the placement rules of `preserve-images.ts`. Touches no database. |
 | `tools/normalize.ts` | — | Authoring shorthand → stored document; shared with the web app's dev-only lesson overview prototype. |
 | `illustrations/`, `tools/illustrate.ts` | — | Visual canon, frozen reference sheets and the Azure FLUX.2 [pro] generator for `imageIdeas`; see [`docs/content/illustrations.md`](../../docs/content/illustrations.md). |
 | `tools/sample-lesson.json` | — | Reference showing every supported feature in the authoring shorthand. |
@@ -53,7 +54,7 @@ Blocks follow BlockNote's `{ type, props, content, children }`. The tool fills i
 | `practice` | `props.data`: `{ instruction, passage?, items }`. Plain text only. 1–50 items. |
 | `vocabulary` | "New words". `props.data`: `{ "words": [{ "term", "meaning", "forms"?, "example"?, "note"? }] }`, 1–50 words, plain text. Not a player step: its words join the step of the block directly before it (see `docs/courses.md#words-in-the-player`). IDs are assigned by `check`. Conventions in `docs/content/style-guide.md#new-words`. |
 | `columnList` → `column` | 2–3 columns, top level only, never nested. Any block may sit in a column. `props.width` is a relative ratio (default 1). |
-| `image` | **Not available to agents.** Images must be uploaded through the app. Put ideas in `imageIdeas` instead: `[{ "afterHeading": "…", "description": "…", "alt": "…" }]`. |
+| `image` | **Not available to agents.** Agents never write or move image blocks: put ideas in `imageIdeas` instead: `[{ "afterHeading": "…", "description": "…", "alt": "…" }]`. The files already hold the production images (pulled with `tools/pull-images.ts`), so an import carries them; `props.url` is an R2 key that the API expands from `PUBLIC_MEDIA_BASE_URL`, which `wrangler.jsonc` points at the public bucket, so local dev shows the same images with no copy. |
 
 Inline styles: `bold`, `italic`, `textColor`, `backgroundColor` with palette `default, gray, brown, red, orange, yellow, green, blue, purple, pink`. Links: `http`/`https` only.
 

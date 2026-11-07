@@ -127,6 +127,19 @@
       "id": "64397186-461c-434a-b50e-0f61a524b6e2"
     },
     {
+      "id": "9c6ce87a-2430-4082-8911-315b53ba8580",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Café terrace on the Oudegracht with a waitress taking an order",
+        "url": "courses/cc2bc79f-6a98-4944-81fa-082b17873e62/lessons/40c9dcda-ecfa-454d-8a7c-09e73a86f993/b2679508-2b7e-40fe-b4f1-60e845b07c55.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "paragraph",
       "content": [
         {
@@ -3438,6 +3451,19 @@
       },
       "content": "Reading: De kaart",
       "id": "1055eb71-14d4-4af2-9a36-0fb1355ac351"
+    },
+    {
+      "id": "a0cecd26-1589-4259-ab6b-75255d873766",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Handwritten café menu card next to a coffee with a biscuit",
+        "url": "courses/cc2bc79f-6a98-4944-81fa-082b17873e62/lessons/40c9dcda-ecfa-454d-8a7c-09e73a86f993/404e39c3-f053-4a94-ba9c-8431abdeca69.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "practice",

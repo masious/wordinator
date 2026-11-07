@@ -110,6 +110,19 @@
       "id": "c2275745-ce31-4ac0-baa7-b082ff4958cd"
     },
     {
+      "id": "94632da4-51de-4e3a-b362-91465905288e",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia, Noor and Daan walk on the beach at Zandvoort in the wind",
+        "url": "courses/b885c80c-9118-4ce7-80e0-03500c8e05d5/lessons/80632daf-3d35-4fe1-85fb-7630a0578802/33a804ee-cef5-48f3-be62-5859bb9b3003.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "paragraph",
       "content": [
         "Saturday morning. Sofia, Noor and Daan get off the train at Zandvoort (they changed trains in Haarlem) and walk down to the beach. The sun is out and the sea looks calm."
@@ -1199,6 +1212,19 @@
       },
       "content": "Story: In het strandcafé",
       "id": "46809a56-64b4-404b-9916-16328f7f6619"
+    },
+    {
+      "id": "0194cb9c-1ec2-4758-a1b5-09c93c196b67",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia, Noor and Daan warm up with hot chocolate in a beach café while it rains outside",
+        "url": "courses/b885c80c-9118-4ce7-80e0-03500c8e05d5/lessons/80632daf-3d35-4fe1-85fb-7630a0578802/5631b1d8-215c-48a2-a995-13c7824b32bb.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

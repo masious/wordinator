@@ -98,6 +98,19 @@
       "id": "3a9aedbd-82e5-4bb3-bf9a-9d6fefce9ec7"
     },
     {
+      "id": "0e6a32aa-2a8a-42b4-920b-0e3f81fae84f",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Two colleagues talking at lunch in an office kitchen, a bike outside the window.",
+        "url": "courses/b885c80c-9118-4ce7-80e0-03500c8e05d5/lessons/ea07c13c-f572-4014-9cb6-eefdf769033f/4a05eac2-952d-4018-afad-33b86b40461c.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "paragraph",
       "content": [
         "Wednesday, half past twelve, in the office kitchen. Sofia and Daan eat a boterham. Daan asks how Sofia gets to work."
@@ -1899,6 +1912,19 @@
       },
       "content": "Story: At Ahmed's bike shop",
       "id": "fccd6064-b934-4ff6-b0a5-41eafc0780e5"
+    },
+    {
+      "id": "0bdca84d-9cde-4f3c-ad15-79af2350ef98",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "A bike shop owner showing a black second-hand bike to a young woman.",
+        "url": "courses/b885c80c-9118-4ce7-80e0-03500c8e05d5/lessons/ea07c13c-f572-4014-9cb6-eefdf769033f/c44e320c-fe1d-4e9c-a19a-34c801a2f337.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

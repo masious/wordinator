@@ -45,6 +45,19 @@
       "id": "58aaa998-035e-4d17-b2c8-381acb1c83ed"
     },
     {
+      "id": "b9122705-058e-4f8c-9c19-41ef82456c8e",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Een docent en twee cursisten praten tijdens een avondles in de bibliotheek.",
+        "url": "courses/4fc355cb-db84-47ce-8fdd-cc0cb761bfef/lessons/f9c38b8e-6629-4763-924e-c3a62a6c1d96/38f969de-b847-40a3-bae0-b5f688937328.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "paragraph",
       "content": "Sofia's Dutch teacher is Marieke, de docent. Every Tuesday she teaches a group of cursisten (students in the course), including Sofia and her classmate Piotr. Tonight Marieke asks about hobby's (hobbies) and vrije tijd (free time).",
       "id": "8524ddf6-25c2-4013-930a-288548c417b8"
@@ -1148,6 +1161,19 @@
       "id": "a97bbb04-de33-4a76-b0bf-989828a3fb35"
     },
     {
+      "id": "4053a05d-27d9-478b-a446-4ef0fe6c5927",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Twee cursisten praten bij de fietsenrekken naast de bibliotheek.",
+        "url": "courses/4fc355cb-db84-47ce-8fdd-cc0cb761bfef/lessons/f9c38b8e-6629-4763-924e-c3a62a6c1d96/d2fb2912-0bed-42fb-aca4-ddb22564f273.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "paragraph",
       "content": "After class, Sofia and Piotr walk outside together and keep talking about their free time.",
       "id": "6b7f441d-4556-418f-a4e2-eb0b8598e2ad"
@@ -1678,6 +1704,19 @@
       },
       "content": "Reading: Mijn vrije tijd",
       "id": "5461445c-f3e9-41c5-8510-39c5efb59532"
+    },
+    {
+      "id": "be6a2ca2-12d5-4da1-96a5-27b654ad2926",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Een man met een voetbal en een vrouw met een gitaar thuis.",
+        "url": "courses/4fc355cb-db84-47ce-8fdd-cc0cb761bfef/lessons/f9c38b8e-6629-4763-924e-c3a62a6c1d96/ce46fb6c-2c92-4074-9dac-8bb36fb9d42b.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

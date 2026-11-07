@@ -29,6 +29,19 @@
       "id": "677f5f13-fe54-4652-a92f-c2e67528df99"
     },
     {
+      "id": "723e8078-3a1f-450a-a9e6-17ce107ae902",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia en Noor vergelijken Utrecht, Valencia en Groningen aan tafel.",
+        "url": "courses/ec7fb520-dfad-4b9e-af85-7debf4994600/lessons/81169131-8cf2-4ac2-8454-02ea0e215531/350fa963-5bc7-4491-b125-3e570f60461d.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "dialogue",
       "props": {
         "turns": [
@@ -1692,6 +1705,19 @@
       "type": "numberedListItem",
       "content": "Recycled preference: het liefst means “prefer/like best”.",
       "id": "b1b48ece-9441-4ddd-b9b8-6fa33664d5ad"
+    },
+    {
+      "id": "994250bf-da7f-4c5d-a952-e80278520ef7",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia en Noor vergelijken drie steden in een overzicht met drie kolommen.",
+        "url": "courses/ec7fb520-dfad-4b9e-af85-7debf4994600/lessons/81169131-8cf2-4ac2-8454-02ea0e215531/d4e56728-1521-469c-9c53-3a64469f9793.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     }
   ],
   "imageIdeas": [

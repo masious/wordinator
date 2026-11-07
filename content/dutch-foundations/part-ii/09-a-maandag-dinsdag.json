@@ -110,6 +110,19 @@
       "id": "f343f80f-8a75-42e7-a78f-ae4063716067"
     },
     {
+      "id": "51de10e1-6591-477e-a0d3-57f278f0a592",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia and Noor filling in a paper agenda at the kitchen table.",
+        "url": "courses/cc2bc79f-6a98-4944-81fa-082b17873e62/lessons/d1e01e98-f7f9-4515-bf83-bb7539338584/46ae296f-af29-4835-af10-322f3d15bdde.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "paragraph",
       "content": [
         "Wednesday morning, breakfast in Noor's kitchen. Sofia opens her new agenda."
@@ -2960,6 +2973,19 @@
       },
       "content": "Reading: Sofia's agenda",
       "id": "c7a9b454-a5f2-491e-82ca-a2c1ac4f6719"
+    },
+    {
+      "id": "0c7987e6-df8d-43aa-bd3e-f98045be23ee",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "A handwritten agenda page with dates in September and October.",
+        "url": "courses/cc2bc79f-6a98-4944-81fa-082b17873e62/lessons/d1e01e98-f7f9-4515-bf83-bb7539338584/dd7c776d-2146-47f6-b825-084bda5f1772.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "practice",

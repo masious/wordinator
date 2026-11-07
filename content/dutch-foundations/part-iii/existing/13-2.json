@@ -37,6 +37,19 @@
       "children": []
     },
     {
+      "id": "526d696f-0376-4fe2-9eb8-9149f157ec2f",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Een kleine keuken met twee lichte slaapkamers.",
+        "url": "courses/b885c80c-9118-4ce7-80e0-03500c8e05d5/lessons/f863af43-a458-4cf3-a34b-1443de5ac69b/d346fe87-adf5-4800-8251-535f5c130f0f.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "id": "e5c9f3c0-470e-4f9a-951d-3758a5e3c0cd",
       "type": "vocabulary",
       "props": {
@@ -91,6 +104,19 @@
           "styles": {}
         }
       ],
+      "children": []
+    },
+    {
+      "id": "e70f9265-5af2-4d68-9068-18c966404835",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia en Henk bekijken de woonkamer en het balkon.",
+        "url": "courses/b885c80c-9118-4ce7-80e0-03500c8e05d5/lessons/f863af43-a458-4cf3-a34b-1443de5ac69b/00398e19-e678-41e0-a666-ccbae271bc8b.jpg",
+        "caption": "",
+        "showPreview": true
+      },
       "children": []
     },
     {

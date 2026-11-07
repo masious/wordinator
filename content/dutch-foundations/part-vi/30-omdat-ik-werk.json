@@ -29,6 +29,19 @@
       "id": "892e4b2d-e398-401e-91be-6442377c4847"
     },
     {
+      "id": "8b334632-a451-48f4-b4c7-631252ebad79",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia, Daan en Karin bespreken samen een tekst op kantoor.",
+        "url": "courses/ec7fb520-dfad-4b9e-af85-7debf4994600/lessons/70810a35-716b-40df-8bfa-88564bf8d513/a017c57b-f1de-4117-b820-e09ae4c83cef.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "dialogue",
       "props": {
         "turns": [
@@ -730,6 +743,19 @@
       },
       "content": "Story: a short study break",
       "id": "ef4796ab-e03e-4591-9c54-b60d2f8f7454"
+    },
+    {
+      "id": "e390ba56-44b0-40b1-a2e5-a663affc304d",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia en Daan bekijken samen een Nederlandse tekst tijdens een studiepauze.",
+        "url": "courses/ec7fb520-dfad-4b9e-af85-7debf4994600/lessons/70810a35-716b-40df-8bfa-88564bf8d513/1f5b097c-3937-41a1-b061-86efb6da3838.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "dialogue",

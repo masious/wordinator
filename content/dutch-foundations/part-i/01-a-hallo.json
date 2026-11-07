@@ -81,6 +81,19 @@
       "id": "90f8bcc1-0e4e-46d2-88e3-700eb965c1a0"
     },
     {
+      "id": "7a21ea50-5814-4b22-b32f-da75f683782f",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Noor waving at Sofia, who is holding a suitcase, inside a big train station hall.",
+        "url": "courses/b7eb68d8-4fcc-4b13-b2ef-e6f87008cb68/lessons/6852858d-86e6-441a-ac1b-175877ddf988/610f2437-7e2c-4604-a56c-1da6806ea466.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "paragraph",
       "content": [
         {
@@ -1943,6 +1956,19 @@
       },
       "content": "Story: De buurvrouw",
       "id": "68f878b3-12d2-46f9-ad87-14a1536e08db"
+    },
+    {
+      "id": "0c747d86-caff-4780-afa7-a3622473cf34",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia shaking hands with an elderly neighbour at a front door, with Noor standing beside them.",
+        "url": "courses/b7eb68d8-4fcc-4b13-b2ef-e6f87008cb68/lessons/6852858d-86e6-441a-ac1b-175877ddf988/61f9d2a4-e50d-421d-aa85-246c2d63353e.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

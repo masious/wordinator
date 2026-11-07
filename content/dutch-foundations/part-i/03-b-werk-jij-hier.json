@@ -80,6 +80,19 @@
       "id": "94c682fa-a1e0-46b2-a6c0-33d418a2417e"
     },
     {
+      "id": "a25a3881-d66a-4030-99f2-cbfd70e6e237",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Two colleagues with drinks at a desk in an office, laptop open.",
+        "url": "courses/b7eb68d8-4fcc-4b13-b2ef-e6f87008cb68/lessons/418383d4-5250-452b-9b21-71636eb048ab/78a5a5a4-84c2-42b8-8b5a-a997dd79fb4c.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "dialogue",
       "props": {
         "turns": [
@@ -1937,6 +1950,19 @@
         }
       ],
       "id": "3a98dc4d-0900-4ed3-a06c-4b5eb3b490f4"
+    },
+    {
+      "id": "87f83666-3cdb-4253-872d-4382ffa4ca9b",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Two colleagues chatting at a high table with drinks in an office.",
+        "url": "courses/b7eb68d8-4fcc-4b13-b2ef-e6f87008cb68/lessons/418383d4-5250-452b-9b21-71636eb048ab/22cac173-e099-4dc1-91f3-b00b5aae76c7.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "dialogue",

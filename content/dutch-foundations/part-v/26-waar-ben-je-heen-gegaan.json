@@ -36,6 +36,19 @@
       "id": "f8715a9d-caa0-4270-8e64-96491bc08b08"
     },
     {
+      "id": "317719b9-7ab7-46a4-87bd-eea4f744db95",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia en Noor bekijken samen een kaart van Utrecht.",
+        "url": "courses/d586e8b0-7d68-4519-bc6e-7fb9dc51ee1b/lessons/6f360b93-0a7b-46a2-ba35-b958dfe907f0/f8bc6ccd-a58e-4248-b6d8-3320533d2988.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "dialogue",
       "props": {
         "turns": [

@@ -355,6 +355,19 @@
       "id": "b74ff0bc-e015-40cd-acb5-607553bf3c84"
     },
     {
+      "id": "4b19b9bb-383c-4185-b1e2-ea31078290e4",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Een woonkamer met Nederlandse labels voor plaatsvoorzetsels.",
+        "url": "courses/b885c80c-9118-4ce7-80e0-03500c8e05d5/lessons/934e8e5c-d056-4027-8995-8d40cca1d6b5/4e0b6d37-3ede-4bec-bb4b-ff2292694984.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "paragraph",
       "content": [
         "A preposition of place says where something is: ",
@@ -2291,6 +2304,19 @@
       },
       "content": "Story: Waar is mijn tas?",
       "id": "5e2e53e7-46eb-45cd-8ce0-73bd0ab8dac0"
+    },
+    {
+      "id": "2022e301-6769-4c6a-92af-a73ac359d7b4",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Noor, Sofia en Daan zoeken tussen de verhuisdozen naar een tas.",
+        "url": "courses/b885c80c-9118-4ce7-80e0-03500c8e05d5/lessons/934e8e5c-d056-4027-8995-8d40cca1d6b5/63da407a-db0c-4867-a2fe-bd18b797d4d4.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

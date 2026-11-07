@@ -76,6 +76,19 @@
       "id": "4403e008-407b-4f38-b955-6bb80d50c40f"
     },
     {
+      "id": "d9f8bdfb-199f-4a14-8df1-01dddd1c0898",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia belt 's avonds vanuit haar slaapkamer.",
+        "url": "courses/4fc355cb-db84-47ce-8fdd-cc0cb761bfef/lessons/1d6f379c-c817-4df4-90a7-72556435b24e/97dd8420-9587-4d84-b214-4d300da204ac.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "paragraph",
       "props": {},
       "content": "It is Wednesday evening. Noor calls Sofia about the weekend.",
@@ -811,6 +824,19 @@
       },
       "content": "Story: Thursday evening at the office",
       "id": "3f6c36e8-8dc4-43e6-8ecd-9ea45a9ef0b2"
+    },
+    {
+      "id": "dcc18532-7d6b-4f48-898d-1eb65fffb587",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia en Daan werken samen aan een laptop op kantoor.",
+        "url": "courses/4fc355cb-db84-47ce-8fdd-cc0cb761bfef/lessons/1d6f379c-c817-4df4-90a7-72556435b24e/e3253ef5-c3b2-457b-93cb-0b7f7200516a.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

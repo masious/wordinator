@@ -117,6 +117,19 @@
       "id": "6b20a47d-3d22-4f62-ad96-bb59810c218e"
     },
     {
+      "id": "bb9324c4-df04-4644-afc9-dd6d5fc8aba2",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Vrienden schaatsen samen op een ijsbaan in de winter.",
+        "url": "courses/4fc355cb-db84-47ce-8fdd-cc0cb761bfef/lessons/1968eaee-4d53-48b9-9acc-b4803f493d6c/3e4a867e-302b-4f9e-97b8-453560004d4b.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "paragraph",
       "content": [
         "Sofia has never skated. Daan skates fast and well; Sofia keeps falling. Lotte comes to watch. Sofia meets Fleur for the first time: she is Noor's older sister, back from a year in Australia, and now lives in Sofia's old room at Noor's flat."
@@ -1320,6 +1333,19 @@
       },
       "content": "Story: Warme chocolademelk bij Noor",
       "id": "fa54398a-1ffc-4a4e-84d0-ea526820fa3f"
+    },
+    {
+      "id": "0a15933e-228d-4844-8cf9-274d6e35ae0a",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Drie vrienden drinken warme chocolademelk aan de keukentafel.",
+        "url": "courses/4fc355cb-db84-47ce-8fdd-cc0cb761bfef/lessons/1968eaee-4d53-48b9-9acc-b4803f493d6c/2bf90480-d2ed-498c-a6f0-4ce021368a49.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

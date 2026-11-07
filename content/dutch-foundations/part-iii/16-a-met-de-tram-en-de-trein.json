@@ -89,6 +89,19 @@
       "id": "cb15731f-e11c-4f88-86a9-6e96a661a7ff"
     },
     {
+      "id": "b54a9b5b-4940-4d7e-9a71-f70c7ccb30c5",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Two colleagues meet on a train platform as a train arrives.",
+        "url": "courses/b885c80c-9118-4ce7-80e0-03500c8e05d5/lessons/53a68c4d-4c97-4882-aca7-e17f9a23e674/2ad458c8-5b12-4020-809b-e7f9f9abc1a6.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "paragraph",
       "content": [
         "Tuesday 27 October, 8:12, Utrecht Centraal. Daan is on the platform early, as always. Sofia comes running from the bus."
@@ -2051,6 +2064,19 @@
       },
       "content": "Story: Hebt u een kaartje?",
       "id": "f137cb70-e960-42a2-896c-c64d18993b14"
+    },
+    {
+      "id": "375ad096-3b8e-4901-87a6-b9d9a9f24a44",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "A train conductor checks a passenger's bank card.",
+        "url": "courses/b885c80c-9118-4ce7-80e0-03500c8e05d5/lessons/53a68c4d-4c97-4882-aca7-e17f9a23e674/b0fef53e-38ae-4d5d-bc38-f17236e5aafe.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

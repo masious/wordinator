@@ -80,6 +80,19 @@
       "id": "199a4aa3-ce14-4f9f-a883-27714daae479"
     },
     {
+      "id": "110b2281-0bac-4dac-8e8a-176ee820836b",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia and Noor looking at Sofia's thin clothes in her bedroom.",
+        "url": "courses/b885c80c-9118-4ce7-80e0-03500c8e05d5/lessons/beb9c955-fc41-4eb5-a4a8-50f00367e988/47c0cf27-c5a5-4fe2-9670-f0f0413d35a2.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "dialogue",
       "props": {
         "turns": [
@@ -2030,6 +2043,19 @@
       },
       "content": "Story: In de kledingwinkel",
       "id": "4715e002-2932-4abe-a29d-c008b6ab3ea4"
+    },
+    {
+      "id": "45c4bd52-af36-4c42-b7b7-ad8951a8de61",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia trying on jeans in a clothing shop, with Noor and the shop assistant.",
+        "url": "courses/b885c80c-9118-4ce7-80e0-03500c8e05d5/lessons/beb9c955-fc41-4eb5-a4a8-50f00367e988/dfb5ade7-3f5f-4343-8f3c-cfb9e52fb1d3.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

@@ -82,6 +82,19 @@
       "id": "6bd1c711-2a8d-4b8a-8ac3-6c7b734a0251"
     },
     {
+      "id": "d9892488-34a5-4711-8330-758763a54d42",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Henk and Sofia walk through the shopping street in Lombok.",
+        "url": "courses/b885c80c-9118-4ce7-80e0-03500c8e05d5/lessons/8468b1ee-a942-44a9-855a-998b885467b9/50d295ec-4558-4ec8-9361-066d2f76324d.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "paragraph",
       "content": [
         "Henk knocks on Sofia's door. New words: ",
@@ -1981,6 +1994,19 @@
       },
       "content": "Story: in the library",
       "id": "8f54efbf-894d-4c6b-8a41-474641ae6bbc"
+    },
+    {
+      "id": "099066ad-1079-4536-83f6-73fec6bc4eb4",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia gets a library card at the desk.",
+        "url": "courses/b885c80c-9118-4ce7-80e0-03500c8e05d5/lessons/8468b1ee-a942-44a9-855a-998b885467b9/15bf0899-bdbd-4485-9ad8-5ea3b34db1db.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

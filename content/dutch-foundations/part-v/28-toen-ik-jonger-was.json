@@ -24,6 +24,19 @@
       "id": "acef16c7-459b-49c7-953a-411cd30372df"
     },
     {
+      "id": "76a227ea-23a2-45cc-82bd-6e23ad5f32f7",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia en Noor halen herinneringen op aan scooters en speelplaatsen.",
+        "url": "courses/d586e8b0-7d68-4519-bc6e-7fb9dc51ee1b/lessons/b04dd97b-c66a-4250-b481-85ae993ed774/4793d324-9ab0-4c79-a4fa-c6be836afadf.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "dialogue",
       "props": {
         "turns": [

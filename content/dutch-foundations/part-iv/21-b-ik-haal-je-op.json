@@ -74,6 +74,19 @@
       "id": "3a5c604b-5ec6-4e8d-b8a0-899163903067"
     },
     {
+      "id": "16ba992d-0a72-4cb2-b901-a610054362bc",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia geeft Daan een uitnodiging op kantoor.",
+        "url": "courses/4fc355cb-db84-47ce-8fdd-cc0cb761bfef/lessons/906fa061-53a9-428a-846c-5cf84cdab821/cff4ccf9-70c3-4dbf-8852-162d3ef694e0.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "paragraph",
       "content": "Sofia sends her invitation to Henk, Noor, Fleur, Daan, Lotte, Piotr, Kasia and Ahmed. Daan sees it at the office and answers.",
       "id": "a371be6a-4a1c-4a60-8cbd-f42b53177feb"
@@ -1064,6 +1077,19 @@
       },
       "content": "Story: Sofia phones Piotr",
       "id": "c931108f-9d51-423c-9395-4e9fe94e1150"
+    },
+    {
+      "id": "4c6d2bb4-a74c-4764-aa02-21a38ed0d81d",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia ontmoet Piotr en Kasia bij de bushalte in Lombok.",
+        "url": "courses/4fc355cb-db84-47ce-8fdd-cc0cb761bfef/lessons/906fa061-53a9-428a-846c-5cf84cdab821/df9bba57-9e48-4914-bbb2-bab9225dbaa8.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

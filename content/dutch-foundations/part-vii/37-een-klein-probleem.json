@@ -29,6 +29,19 @@
       "id": "8e661514-21cc-4bfd-a886-715ae8868054"
     },
     {
+      "id": "40201ffc-4c2f-4835-bd90-4f15c80c12be",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia vraagt Ahmed naar een geluid bij haar fiets in de fietsenwinkel.",
+        "url": "courses/0aeb92c0-4a9c-45ad-be2f-5f23338027b9/lessons/b1de9d01-4a70-43ab-8bc3-fab999f3830c/13d9112a-8e61-4489-bb2b-c9d363c7e77c.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "dialogue",
       "props": {
         "turns": [
@@ -547,6 +560,19 @@
       },
       "content": "Who owns it?",
       "id": "0904ab39-8d7e-4003-9054-9a4622763155"
+    },
+    {
+      "id": "27fb1bb3-c070-41a5-92b8-ea5690a76f33",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Henk helpt Sofia sleutels en een fietspomp te herkennen.",
+        "url": "courses/0aeb92c0-4a9c-45ad-be2f-5f23338027b9/lessons/b1de9d01-4a70-43ab-8bc3-fab999f3830c/87b53bb3-d5a7-48ac-9d22-10c13d8321ef.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

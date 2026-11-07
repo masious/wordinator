@@ -83,6 +83,19 @@
       "id": "460b4d21-e83a-472d-90d2-400914297764"
     },
     {
+      "id": "4ed4cbb1-79db-442d-9360-d6c48bb3a250",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "An almost empty fridge with one onion and two tomatoes",
+        "url": "courses/cc2bc79f-6a98-4944-81fa-082b17873e62/lessons/5d6cab20-f1b4-4c4a-96c2-e7fa821411dd/c9ae303b-9fe5-4db1-a8be-902cc7777e33.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "paragraph",
       "content": [
         "Friday, just after five, in Noor's kitchen. Noor and Sofia look in ",
@@ -1770,6 +1783,19 @@
       },
       "content": "Story: In de supermarkt",
       "id": "96eb84cb-7af1-4da5-8dbb-2f8061f50b6c"
+    },
+    {
+      "id": "0b13c313-bc0f-4d12-8583-9a3eddec70a2",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia holds a big loaf; Noor points at small rolls",
+        "url": "courses/cc2bc79f-6a98-4944-81fa-082b17873e62/lessons/5d6cab20-f1b4-4c4a-96c2-e7fa821411dd/60303406-a70a-48c8-8cc8-aac6a99d30fb.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

@@ -110,6 +110,19 @@
       "id": "d1f6702b-e143-4422-9c2a-205db4ca434e"
     },
     {
+      "id": "bfb6b5b8-ee38-4fd8-bbb3-522c854185d4",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Drie vrienden eten samen en bekijken een telefoon.",
+        "url": "courses/4fc355cb-db84-47ce-8fdd-cc0cb761bfef/lessons/09088377-b15c-498b-9d93-a5ea2bdd4597/91d8cd86-d071-4d23-8ac5-df31a677627c.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "paragraph",
       "content": [
         "Sofia, Noor and Fleur are at the table. Noor has an idea."
@@ -1004,6 +1017,19 @@
       },
       "content": "Making something small and friendly: diminutives",
       "id": "c675c4db-602d-40ea-a140-1b5b1497d62e"
+    },
+    {
+      "id": "b2946421-f299-4216-99d3-0e9b24261519",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Pepernoten, een chocoladeletter, een klein pakje en een briefje liggen op tafel.",
+        "url": "courses/4fc355cb-db84-47ce-8fdd-cc0cb761bfef/lessons/09088377-b15c-498b-9d93-a5ea2bdd4597/accb56b4-e63b-4331-9597-6edc7644cedd.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

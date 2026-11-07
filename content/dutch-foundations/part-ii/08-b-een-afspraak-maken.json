@@ -69,6 +69,19 @@
       "id": "bf5bc992-b224-4824-9f97-f8f5b9abf026"
     },
     {
+      "id": "e8af8b5a-1ba3-4777-9208-c849a9e08cf6",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Daan checks his agenda while Sofia waits",
+        "url": "courses/cc2bc79f-6a98-4944-81fa-082b17873e62/lessons/08313990-b69a-462f-a6ec-d7242c2f1379/666b14f2-7d73-4931-b5c6-21093e108cfe.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "dialogue",
       "props": {
         "turns": [
@@ -2189,6 +2202,19 @@
       },
       "content": "Story: Sofia belt de kapper",
       "id": "c3b345ea-7f5e-419f-9019-301396be6a50"
+    },
+    {
+      "id": "57d4314a-1349-40b8-8619-1e840b7f025b",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia phones the hairdresser for an appointment",
+        "url": "courses/cc2bc79f-6a98-4944-81fa-082b17873e62/lessons/08313990-b69a-462f-a6ec-d7242c2f1379/a1330692-c772-4e94-8919-11a64271b74e.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

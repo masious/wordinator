@@ -24,6 +24,19 @@
       "id": "361af608-95c1-405f-96c8-04dcad676edd"
     },
     {
+      "id": "0dc07d93-cad7-47cc-91b4-b2d7cbdaca82",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia en Noor bedenken plannen voor een vrije middag in Utrecht.",
+        "url": "courses/ec7fb520-dfad-4b9e-af85-7debf4994600/lessons/6aeafc17-c280-463c-8596-757cd0b023f3/c6587f39-b46e-4188-88e8-1cba75790d7a.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "dialogue",
       "props": {
         "turns": [
@@ -650,6 +663,19 @@
       },
       "content": "Story: imagining a free afternoon",
       "id": "44096cae-5f84-4c9e-b676-abb1022798bc"
+    },
+    {
+      "id": "e54fa5aa-3653-4d13-b0d9-c2153f2bd754",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia en Noor stellen zich een middag in het park of het zwembad voor.",
+        "url": "courses/ec7fb520-dfad-4b9e-af85-7debf4994600/lessons/6aeafc17-c280-463c-8596-757cd0b023f3/380a6d36-5529-47b2-89a9-148dd2657d50.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "dialogue",

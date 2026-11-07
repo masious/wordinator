@@ -77,6 +77,19 @@
       "id": "87047f81-eacd-46b2-afd3-41b2320c0b29"
     },
     {
+      "id": "1168fca8-1e17-46be-b126-6ec84872d317",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Vrienden delen paella, stamppot, pierogi en kaas tijdens een etentje.",
+        "url": "courses/4fc355cb-db84-47ce-8fdd-cc0cb761bfef/lessons/d6d55f4c-33e9-4e79-84e0-2c1a8516b2ec/d10b4aef-5c4b-4146-937e-0f3fa7291731.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "paragraph",
       "content": "Daan and Lotte arrive together. Henk brings cheese, Daan brings wine, and everyone sits down to eat.",
       "id": "e3a13ff6-53e5-45ee-8041-dd440bb66886"
@@ -882,6 +895,19 @@
       },
       "content": "Story: by the balcony door",
       "id": "19144b00-1823-4337-93d1-2cd844f453a1"
+    },
+    {
+      "id": "7fc22abb-6c08-407b-ba7a-dc7380dc6c08",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Daan, Piotr en Sofia praten bij de balkondeur over het weer.",
+        "url": "courses/4fc355cb-db84-47ce-8fdd-cc0cb761bfef/lessons/d6d55f4c-33e9-4e79-84e0-2c1a8516b2ec/2edbaf82-1fe0-43e3-83ae-f8a366a8ed7e.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

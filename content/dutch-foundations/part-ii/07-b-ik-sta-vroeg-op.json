@@ -103,6 +103,19 @@
       "id": "a5e7abd5-0d12-4838-9128-ad69056a5e00"
     },
     {
+      "id": "237cee14-ab93-4068-b82f-c84e9f2209f2",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Noor and a sleepy Sofia in a messy kitchen",
+        "url": "courses/cc2bc79f-6a98-4944-81fa-082b17873e62/lessons/ba1d8c50-6be9-4d8f-8051-0493584a4453/a1cea4ac-7db6-446a-bf29-549ce26e0839.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "paragraph",
       "content": [
         "Saturday morning in Noor's flat in Utrecht-Oost. Noor has been up for hours. Sofia comes into the kitchen."
@@ -2452,6 +2465,19 @@
       },
       "content": "Story: Kom je mee?",
       "id": "1b12412d-b414-4c09-bf76-d879dc2832b7"
+    },
+    {
+      "id": "35e7dff2-6a4c-4aaf-b71a-d3b807ecf6fd",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia on the phone with Daan",
+        "url": "courses/cc2bc79f-6a98-4944-81fa-082b17873e62/lessons/ba1d8c50-6be9-4d8f-8051-0493584a4453/0f863259-cb4d-42d8-ae40-66a00144dfd8.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

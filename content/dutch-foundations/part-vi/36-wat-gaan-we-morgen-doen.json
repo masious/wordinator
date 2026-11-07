@@ -24,6 +24,19 @@
       "id": "c6d9c97c-a2ca-45d9-80a3-a56302986291"
     },
     {
+      "id": "a15a1224-4b2b-452c-a7a1-4a91b5e466b1",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia en Piotr bekijken na de les een weekrooster.",
+        "url": "courses/ec7fb520-dfad-4b9e-af85-7debf4994600/lessons/8a187161-97b7-496c-a842-c46fbbd084cf/8106442b-50d8-4c9f-883b-1afbf4674b64.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "dialogue",
       "props": {
         "turns": [
@@ -145,6 +158,19 @@
       },
       "content": "Three ways to talk about the future",
       "id": "611726ba-f439-41d6-a569-644480a7dda7"
+    },
+    {
+      "id": "8743a688-4583-4413-aa3b-060310e22c08",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Een Nederlands lesrooster staat naast een schrift en een woordenlijst.",
+        "url": "courses/ec7fb520-dfad-4b9e-af85-7debf4994600/lessons/8a187161-97b7-496c-a842-c46fbbd084cf/8bdb032c-ea87-49f5-808f-7569003b42e2.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "heading",

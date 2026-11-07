@@ -118,6 +118,19 @@
       "id": "2a81820a-28ae-4ce7-97a4-b479c136544a"
     },
     {
+      "id": "1e996f6f-60fc-4534-876d-2adbaaf428b6",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Two young women cooking in a small kitchen with eggs, potatoes, onions and olive oil on the table.",
+        "url": "courses/cc2bc79f-6a98-4944-81fa-082b17873e62/lessons/c4042c2b-0461-4dbf-84a4-3011454ea4a3/938a4e8d-1b42-4f85-baf3-560f07767545.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "paragraph",
       "content": [
         "Saturday morning. Sofia and Noor are in the kitchen with the shopping from yesterday."

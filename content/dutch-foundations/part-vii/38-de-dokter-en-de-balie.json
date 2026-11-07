@@ -24,6 +24,19 @@
       "id": "3c326a6d-e37b-4b32-99d5-db6a47587bab"
     },
     {
+      "id": "4720a01a-e35e-4916-bc1d-61809a75591a",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Marieke begeleidt Sofia en Piotr bij twee rollenspellen in de les.",
+        "url": "courses/0aeb92c0-4a9c-45ad-be2f-5f23338027b9/lessons/30ff6e9c-2baa-4e3d-8dcc-ba290e500784/173a67cf-e3d8-431b-9b2f-8cdcae78b4be.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "dialogue",
       "props": {
         "turns": [

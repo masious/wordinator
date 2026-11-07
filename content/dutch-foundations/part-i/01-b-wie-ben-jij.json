@@ -88,6 +88,19 @@
       "id": "2c20d22c-d319-4132-b0ae-d6a925b7da3c"
     },
     {
+      "id": "dc69c63c-4806-4040-8f7b-80d8afc1be66",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "A team leader shakes a new employee's hand at an office reception desk.",
+        "url": "courses/b7eb68d8-4fcc-4b13-b2ef-e6f87008cb68/lessons/fa32b7b6-5ead-46ca-92d9-5a80ec7c855b/14e52259-7050-4684-a508-1c797d0d8d4e.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "paragraph",
       "content": [
         {
@@ -2092,6 +2105,19 @@
       },
       "content": "Story: Daan",
       "id": "ff307cfb-b4cc-4ad2-a32d-1b6c23154599"
+    },
+    {
+      "id": "6c3d4315-1090-42c9-8f57-cf3eb23df11d",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Two colleagues sitting at a desk with laptops, talking.",
+        "url": "courses/b7eb68d8-4fcc-4b13-b2ef-e6f87008cb68/lessons/fa32b7b6-5ead-46ca-92d9-5a80ec7c855b/970b3d99-e2da-4b9f-806f-929a62829ea0.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

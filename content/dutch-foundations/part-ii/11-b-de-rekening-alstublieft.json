@@ -125,6 +125,19 @@
       "id": "ca40a56d-53df-40d4-9079-82c9e1bd597d"
     },
     {
+      "id": "e43e5667-5136-400f-a5a9-7f530d543c5d",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Four friends at a restaurant table by the window with a waiter",
+        "url": "courses/cc2bc79f-6a98-4944-81fa-082b17873e62/lessons/92d70c1f-828a-48e5-8b10-99eab73d725d/f38c91ad-4f79-4fde-84a4-8ca412bf21c4.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "paragraph",
       "content": [
         "Daan has a reservation for four. The waiter (",
@@ -2162,6 +2175,19 @@
       },
       "content": "Story: Samen of apart?",
       "id": "ede84a6f-2924-43d7-a231-dbff3e394a0f"
+    },
+    {
+      "id": "fa8aab0e-61c2-4acf-bf63-39e33cf816e2",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "The bill and a card machine on a restaurant table",
+        "url": "courses/cc2bc79f-6a98-4944-81fa-082b17873e62/lessons/92d70c1f-828a-48e5-8b10-99eab73d725d/f25242ce-bfce-44d0-8e8d-7cd92f4e29fb.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

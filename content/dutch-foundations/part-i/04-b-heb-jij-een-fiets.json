@@ -125,6 +125,19 @@
       "id": "2b597449-f2f6-47ec-8fe0-c6365125e5af"
     },
     {
+      "id": "695eeac3-d792-4d7f-af4f-b5ccf941407a",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Two friends talking in a kitchen in the evening.",
+        "url": "courses/b7eb68d8-4fcc-4b13-b2ef-e6f87008cb68/lessons/b20ec240-7c3d-411a-9fa6-634295b0929a/89e2b04b-548d-48be-9918-f1a9ca4f8c12.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "dialogue",
       "props": {
         "turns": [
@@ -1670,6 +1683,19 @@
         }
       ],
       "id": "9e6b0434-40a7-4a52-b4e8-2ed3eac06e50"
+    },
+    {
+      "id": "78d2a016-f912-474e-809f-9452a7c2134c",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Two friends chatting in a kitchen, one counting on her fingers.",
+        "url": "courses/b7eb68d8-4fcc-4b13-b2ef-e6f87008cb68/lessons/b20ec240-7c3d-411a-9fa6-634295b0929a/125ecb05-9979-445a-9b8c-edc7325648a8.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "dialogue",

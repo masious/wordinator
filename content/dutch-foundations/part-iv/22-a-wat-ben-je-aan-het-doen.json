@@ -36,6 +36,19 @@
       "id": "239e6d3e-d4b3-44f2-9742-623e97ff471f"
     },
     {
+      "id": "c84cca0c-6dd8-4988-b06f-0002cbe2a16d",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia schrijft een gedicht naast een kartonnen fietsverrassing.",
+        "url": "courses/4fc355cb-db84-47ce-8fdd-cc0cb761bfef/lessons/ce83b982-8974-438e-b3ec-1ebd521a4a9b/77d307b8-8194-4298-853e-a7514a0a1aa6.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "paragraph",
       "content": "Noor calls Sofia in the evening. They talk about their Sinterklaas preparations.",
       "id": "6613fd4d-295f-4c71-a8f8-46920c2ec225"
@@ -698,6 +711,19 @@
       },
       "content": "Story: Henk at the door",
       "id": "2ae48bf3-8db1-4297-8f8c-4788090a1ba7"
+    },
+    {
+      "id": "df1a9bbd-8949-453e-98d1-4b09c03d2ab4",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Henk helpt Sofia een kartonnen fiets te plakken terwijl Tijger in een doos zit.",
+        "url": "courses/4fc355cb-db84-47ce-8fdd-cc0cb761bfef/lessons/ce83b982-8974-438e-b3ec-1ebd521a4a9b/08fc8486-24c3-4fcc-bd61-4327d19677d4.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

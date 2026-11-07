@@ -92,6 +92,19 @@
       "id": "114c07b1-3d3e-4697-a7f4-b22a62f6c271"
     },
     {
+      "id": "365a9adc-a232-49be-be8d-d34f09d340a9",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Els and her granddaughter at the kitchen table with Noor and Sofia.",
+        "url": "courses/b7eb68d8-4fcc-4b13-b2ef-e6f87008cb68/lessons/9a783abe-9dce-4d4e-8da2-69d56f1be019/cba9077b-f423-4224-92c0-cd2457b16c9e.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "dialogue",
       "props": {
         "turns": [
@@ -467,6 +480,19 @@
         }
       ],
       "id": "46694c35-71b4-4d31-bc7d-e34bd78f9916"
+    },
+    {
+      "id": "9b2e0445-0412-4c86-ae5b-bd8f64fb73aa",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Tess quizzing Sofia on de and het at the kitchen table.",
+        "url": "courses/b7eb68d8-4fcc-4b13-b2ef-e6f87008cb68/lessons/9a783abe-9dce-4d4e-8da2-69d56f1be019/b6220d94-82c2-4e74-83de-850491a9c0e8.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "dialogue",

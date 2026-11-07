@@ -24,6 +24,19 @@
       "id": "4e9b7173-2e2e-43d2-994a-45643fca442b"
     },
     {
+      "id": "43422e03-63c0-47a0-b0aa-323435f10f07",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia en Noor bekijken vakantiefoto's met thee thuis.",
+        "url": "courses/d586e8b0-7d68-4519-bc6e-7fb9dc51ee1b/lessons/eadeda2c-c70e-417d-bdf1-ed8cbf181d1d/c60a5b8f-8889-4aa3-bed8-11132f72dc1f.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "dialogue",
       "props": {
         "turns": [
@@ -475,6 +488,19 @@
         "level": 2
       },
       "id": "f2593e2b-a18f-4e3f-943d-de1867fae221"
+    },
+    {
+      "id": "af3c9cdf-7978-4f39-9d60-5ad74dd09f64",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Nederlandse werkwoorden met hun voltooide deelwoorden in een schrift.",
+        "url": "courses/d586e8b0-7d68-4519-bc6e-7fb9dc51ee1b/lessons/eadeda2c-c70e-417d-bdf1-ed8cbf181d1d/5a595628-3777-4b7f-8b34-c33a136c9b98.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "paragraph",

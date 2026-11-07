@@ -82,6 +82,19 @@
       "id": "127462fb-fddb-4433-8464-1b1cc78bb5ac"
     },
     {
+      "id": "792d356b-af56-4e7a-9457-07ac930b85ca",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Two colleagues at an office coffee machine, one holding a book.",
+        "url": "courses/b7eb68d8-4fcc-4b13-b2ef-e6f87008cb68/lessons/6724ef8e-ce0f-4725-b0ae-f87fb46f8c3d/0fa41819-9103-4446-be76-1efe53468b7e.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "dialogue",
       "props": {
         "turns": [
@@ -1114,6 +1127,19 @@
         "Lunchtime. Sofia sits with Karin. The colleague from Antwerpen joins them again."
       ],
       "id": "bf759651-0199-4b73-9e00-f71419ee29d0"
+    },
+    {
+      "id": "427be24d-72b5-48f0-b38c-9e1a1743a58e",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Three colleagues laughing together at a lunch table in an office.",
+        "url": "courses/b7eb68d8-4fcc-4b13-b2ef-e6f87008cb68/lessons/6724ef8e-ce0f-4725-b0ae-f87fb46f8c3d/197d84ac-e626-4a8d-afa9-271a8f90df8f.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "dialogue",

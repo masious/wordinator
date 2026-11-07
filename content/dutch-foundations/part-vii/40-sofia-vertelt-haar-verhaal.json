@@ -55,6 +55,19 @@
       "id": "eee943d2-7669-4743-9fc4-c728ea1a77b9"
     },
     {
+      "id": "dad8ff8b-f37f-49dd-a6d0-9fa7cc319317",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia en Noor bekijken een tijdlijn van september tot januari.",
+        "url": "courses/0aeb92c0-4a9c-45ad-be2f-5f23338027b9/lessons/7e4924ee-d85c-4511-82ea-87685c90c07b/96b938a4-b658-4889-b7b7-a02862bc8a40.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
+    },
+    {
       "type": "dialogue",
       "props": {
         "turns": [
@@ -590,6 +603,19 @@
       },
       "content": "Story: read it aloud",
       "id": "a0eae011-14b0-4ddc-aa86-1f0f357e891f"
+    },
+    {
+      "id": "c70a4194-1d1c-4c26-bffe-e92417cc8383",
+      "type": "image",
+      "props": {
+        "textAlignment": "left",
+        "backgroundColor": "default",
+        "name": "Sofia leest haar verhaal voor terwijl Noor luistert.",
+        "url": "courses/0aeb92c0-4a9c-45ad-be2f-5f23338027b9/lessons/7e4924ee-d85c-4511-82ea-87685c90c07b/00692f39-e710-49be-8e6d-6535fdc1299c.jpg",
+        "caption": "",
+        "showPreview": true
+      },
+      "children": []
     },
     {
       "type": "dialogue",
