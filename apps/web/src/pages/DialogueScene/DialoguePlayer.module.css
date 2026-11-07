@@ -37,6 +37,18 @@
 .mask{mix-blend-mode:multiply}
 /* A line without a scene or a background shows its speaker in the middle of the cover */
 .coverSpeaker{position:absolute;inset:0;width:6rem;height:6rem;margin:auto;font-size:var(--text-3xl)}
+/* The cast over a cover without its own scene: a round portrait low on each side, the speaker's lit, ringed, and named, the other
+   smaller and dimmed; a new speaker on a side fades in */
+.cast{position:absolute;inset:0;pointer-events:none}
+.castMember{position:absolute;bottom:var(--space-3);display:grid;justify-items:center;gap:var(--space-1);width:26%;opacity:0.6;transform:scale(0.8);transform-origin:bottom center;transition:opacity var(--motion-overlay) var(--ease-out),transform var(--motion-overlay) var(--ease-out);animation:fade var(--motion-overlay) var(--ease-out) both}
+.castMember[data-side="start"]{left:var(--space-3)}
+.castMember[data-side="end"]{right:var(--space-3)}
+.castMember[data-speaking]{opacity:1;transform:none}
+.castPortrait{width:100%;height:auto;aspect-ratio:1;font-size:var(--text-2xl);box-shadow:0 0 0 2px color-mix(in srgb,white 40%,transparent),var(--shadow-overlay);backdrop-filter:blur(6px)}
+.castMember[data-speaking] .castPortrait{box-shadow:0 0 0 3px var(--ink),var(--shadow-overlay)}
+.castName{max-width:100%;padding:2px var(--space-2);overflow:hidden;font-size:var(--text-xs);font-weight:var(--weight-semibold);white-space:nowrap;text-overflow:ellipsis;background:color-mix(in srgb,black 45%,transparent);border-radius:var(--radius-pill);backdrop-filter:blur(6px);visibility:hidden}
+.castMember[data-speaking] .castName{visibility:visible}
+.cover[data-cast] .lineBadge{top:var(--space-2);bottom:auto}
 .lineBadge{position:absolute;right:var(--space-2);bottom:var(--space-2);padding:2px var(--space-2);font-family:var(--font-mono);font-size:var(--text-xs);background:color-mix(in srgb,black 45%,transparent);border-radius:var(--radius-pill);backdrop-filter:blur(6px)}
 
 /* The lines under the cover, a column sliding slowly inside a window that fades out at both edges */
@@ -45,7 +57,7 @@
 .stripLine{display:grid;gap:var(--space-2);cursor:pointer;transition:opacity var(--motion-reveal) var(--ease-out)}
 .stripLine[aria-current]{cursor:auto}
 .stripHead{display:flex;align-items:center;gap:var(--space-2)}
-.avatar,.lyricPortrait,.coverSpeaker{flex:none;display:grid;place-items:center;object-fit:cover;font-weight:var(--weight-bold);color:var(--ink);background:color-mix(in srgb,white 16%,transparent);border-radius:var(--radius-pill)}
+.avatar,.lyricPortrait,.coverSpeaker,.castPortrait{flex:none;display:grid;place-items:center;object-fit:cover;font-weight:var(--weight-bold);color:var(--ink);background:color-mix(in srgb,white 16%,transparent);border-radius:var(--radius-pill)}
 .avatar{width:28px;height:28px;font-size:var(--text-sm)}
 .speaker{font-size:var(--text-md);font-weight:var(--weight-semibold);color:var(--ink-muted)}
 .stripText{margin:0;font-size:var(--text-xl);font-weight:var(--weight-bold);line-height:var(--line-title);letter-spacing:-0.01em}
@@ -137,4 +149,4 @@
 
 @keyframes rise{from{opacity:0;transform:translateY(var(--entry-distance))}}
 @keyframes fade{from{opacity:0}}
-@media (prefers-reduced-motion:reduce){.upNext,.full,.sheet,.sheetLayer{animation:none}.art,.lyric,.stripList,.stripLine,.segment>span{transition:none}}
+@media (prefers-reduced-motion:reduce){.upNext,.full,.sheet,.sheetLayer,.castMember{animation:none}.castMember,.art,.lyric,.stripList,.stripLine,.segment>span{transition:none}}

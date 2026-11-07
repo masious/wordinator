@@ -83,6 +83,16 @@ describe("DialoguePlayer", () => {
     expect(onExit).toHaveBeenCalled();
   });
 
+  it("puts the cast over a cover without its own scene, the latest speaker on each side, the one speaking lit", () => {
+    const { container } = renderPlayer({ initialLine: 1 });
+    const members = () => [...container.querySelectorAll("[data-side]")].filter((element) => element.closest("[data-cast]"));
+    expect(members().map((element) => [element.textContent, element.getAttribute("data-side"), element.hasAttribute("data-speaking")]))
+      .toEqual([["OOber", "start", false], ["Daan", "end", true]]);
+    expect(members()[1]!.querySelector("img")).toHaveAttribute("src", "daan.jpg");
+    fireEvent.click(screen.getByRole("button", { name: "Next line" }));
+    expect(members().map((element) => [element.textContent, element.hasAttribute("data-speaking")])).toEqual([["SSofia", true], ["Daan", false]]);
+  });
+
   it("lists the dialogue's new words and hides translations from the menu", () => {
     renderPlayer();
     expect(screen.getByRole("heading", { name: "New words in this dialogue" })).toBeInTheDocument();

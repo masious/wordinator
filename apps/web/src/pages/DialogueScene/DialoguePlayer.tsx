@@ -79,6 +79,11 @@ export function DialoguePlayer({ blockId, title, scene, intro, turns, backdrop, 
   const [durations, setDurations] = useState(() => turns.map((turn) => 0.8 + turn.text.split(" ").length * 0.42));
   const turn = turns[line]!;
   const portrait = (speaker: string) => portraits[speaker.toLowerCase()];
+  // Without its own scene, a line's cover is the location with the cast over it: speakers take sides in the order they first speak,
+  // each side showing the latest of its speakers so far, and the one speaking is lit and named.
+  const speakers = useMemo(() => [...new Set(turns.map((entry) => entry.speaker))], [turns]);
+  const side = (speaker: string) => (speakers.indexOf(speaker) % 2 === 0 ? "start" : "end");
+  const cast = (["start", "end"] as const).flatMap((at) => turns.slice(0, line + 1).reverse().find((entry) => side(entry.speaker) === at)?.speaker ?? []);
   useEffect(() => { onLineChange?.(line); }, [line, onLineChange]);
 
   // Playback is one clip at a time, so a line can repeat and the player can move on by itself: when a clip finishes, the next line
@@ -245,7 +250,7 @@ export function DialoguePlayer({ blockId, title, scene, intro, turns, backdrop, 
           </header>
 
           {view === "cover" ? <>
-            <div className={styles.cover} style={{ viewTransitionName: "cover" }} onPointerDown={onPointerDown} onPointerUp={onPointerUp} onPointerCancel={() => { swipe.current = null; }}>
+            <div className={styles.cover} data-cast={(!lineScenes?.[line]?.scene && Boolean(background)) || undefined} style={{ viewTransitionName: "cover" }} onPointerDown={onPointerDown} onPointerUp={onPointerUp} onPointerCancel={() => { swipe.current = null; }}>
               {turns.map((entry, index) => {
                 const art = lineScenes?.[index];
                 const picture = art?.scene ?? background;
@@ -256,6 +261,16 @@ export function DialoguePlayer({ blockId, title, scene, intro, turns, backdrop, 
                   </div>
                 );
               })}
+              {!lineScenes?.[line]?.scene && background && (
+                <div className={styles.cast} aria-hidden="true">
+                  {cast.map((speaker) => (
+                    <div key={speaker} className={styles.castMember} data-side={side(speaker)} data-speaking={speaker === turn.speaker || undefined}>
+                      <Speaker className={styles.castPortrait} name={speaker} portrait={portrait(speaker)} />
+                      <span className={styles.castName}>{speaker}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
               <span className={styles.lineBadge}>{line + 1} / {turns.length}</span>
             </div>
             <Strip turns={turns} spans={lineSpans} portrait={portrait} line={line} finished={finished} translations={translations} onPick={go} upNext={upNextCard} />
