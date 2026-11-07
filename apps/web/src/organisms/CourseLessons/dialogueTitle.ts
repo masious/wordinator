@@ -10,8 +10,8 @@ export function dialogueTitle(document: LessonDocument, blockId: string): string
   return null;
 }
 
-// The lesson image nearest above a dialogue, else the lesson's first image: the banner's cover when the dialogue has no scene of its own.
-export function dialogueFallbackImage(document: LessonDocument, blockId: string): string | null {
+// The lesson images that can cover a dialogue's banner: the nearest above it, and the lesson's first.
+export function dialogueLessonImages(document: LessonDocument, blockId: string): { above: string | null; first: string | null } {
   let above: string | null = null;
   let first: string | null = null;
   let passed = false;
@@ -21,5 +21,5 @@ export function dialogueFallbackImage(document: LessonDocument, blockId: string)
     first ??= block.props.url;
     if (!passed) above = block.props.url;
   }
-  return above ?? first;
+  return { above, first };
 }
