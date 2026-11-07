@@ -63,6 +63,11 @@ export function DialogueScenePage({ groupId, courseId, lessonId, courseSlug, les
 // playback, keys, and progress saving never run twice; the line reached carries over when a resize swaps them.
 const PHONE_QUERY = "(max-width: 48em)";
 
+// Portrait slots are named by the speaker as authored ("Sofia"); both views look a speaker up by lowercase name.
+export function speakerPortraits(portraits: Readonly<Record<string, string>> | undefined): Record<string, string> {
+  return Object.fromEntries(Object.entries(portraits ?? {}).map(([speaker, url]) => [speaker.trim().toLowerCase(), url]));
+}
+
 function SceneContent({ groupId, courseId, lessonId, courseSlug, lessonSlug, lesson, block, intro, label, nextBlock, upNext, scene, savedStep, completed, client, navigate, language }: {
   groupId: string; courseId: string; lessonId: string; courseSlug: string; lessonSlug: string; lesson: CourseLesson;
   block: LessonBlockOf<"dialogue">; intro: InlineContent[]; label: string | null; nextBlock: string; upNext: string | null; scene: SceneAsset | undefined;
@@ -95,18 +100,19 @@ function SceneContent({ groupId, courseId, lessonId, courseSlug, lessonSlug, les
   const advance = () => void navigate({ ...lessonRoute, hash: nextBlock });
   const fallback = lesson.document?.blocks.find((entry) => entry.type === "image");
   const background = scene?.backgroundUrl ?? scene?.locationUrl ?? (fallback?.type === "image" ? fallback.props.url : "");
+  const portraits = useMemo(() => speakerPortraits(scene?.portraits), [scene]);
   const spans = marks.spans.get(block.id);
   const words = [...new Set(spans?.flat().map((span) => span.wordId))].flatMap((id) => marks.words.get(id) ?? [])
     .concat(marks.missing.get(block.id) ?? []);
   return <WordBookmarkScope resolve={bookmarkTarget}><HovercardDemoContext.Provider value={demo}><SpeechScope resolve={resolveSpeech}>
     {phone
       ? <DialoguePlayer blockId={block.id} title={lesson.title} scene={label} intro={intro} turns={turns}
-        backdrop={scene?.locationUrl ?? background} background={background} portraits={scene?.portraits ?? {}}
+        backdrop={scene?.locationUrl ?? background} background={background} portraits={portraits}
         lineScenes={scene?.lineScenes.map((line) => ({ scene: line.sceneUrl, mask: line.maskUrl }))} spans={spans} words={words} upNext={upNext}
         initialLine={reached.current} onLineChange={onLineChange} onContinue={advance} onExit={leave}
         onShowInLesson={() => void navigate({ ...lessonRoute, hash: block.id })} />
       : <Conversation blockId={block.id} title={lesson.title} scene={label} intro={intro} turns={turns}
-        background={background} location={scene?.locationUrl ?? undefined} portraits={scene?.portraits ?? {}}
+        background={background} location={scene?.locationUrl ?? undefined} portraits={portraits}
         lineScenes={scene?.lineScenes.map((line) => ({ scene: line.sceneUrl, mask: line.maskUrl }))}
         spans={spans} initialLine={reached.current} onLineChange={onLineChange} onContinue={advance} onExit={leave} />}
   </SpeechScope></HovercardDemoContext.Provider></WordBookmarkScope>;
