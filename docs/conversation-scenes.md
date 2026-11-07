@@ -140,7 +140,7 @@ reads the current remote `published_doc` and `draft_doc` cells and checks each d
 the repository content is not assumed to contain every edit. It never writes either lesson document cell or any other
 `course_lessons` column. Remote lesson IDs are resolved by each part's `course.prod.json` course ID and the lesson
 title/document. Existing `dialogue_scene_images` slots and their R2 objects are preserved, even when their contents
-are different from the local art. The script never logs Wrangler output or credentials. Uploads retry with exponential
+are different from the local art. The script never logs Wrangler output or credentials. A manifest row's optional `baseScene` (the location with the cast drawn in) goes up as the dialogue's background scene and its `lineScenes` (`{ scene, mask }` per line) as line scenes and masks. Uploads retry with exponential
 backoff, use deterministic slot keys, and write ownership metadata to `dialogue_scene_images`. The rows are inserted
 only after every upload succeeds, so a rerun after a failure resumes: each key already served at `PUBLIC_MEDIA_BASE_URL`
 (read from `apps/api/wrangler.jsonc`, or `--media-base=`) is skipped, since the key includes a digest of the file:

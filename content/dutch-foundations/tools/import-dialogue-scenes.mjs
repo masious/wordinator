@@ -96,6 +96,8 @@ for (const row of manifest.dialogues) {
     assets.push({ row, lesson, kind, speaker, lineIndex, path, absolute, bytes, digest, extension: extname(absolute).toLowerCase() || ".bin" });
   };
   await add("location", row.generatedAsset);
+  // The location with the whole cast drawn in, which every line scene was edited from; the scene pages use it as the background.
+  await add("scene", row.baseScene);
   for (const [speaker, path] of Object.entries(row.portraitAssets ?? {})) {
     if (!speakers.has(speaker.trim())) errors.push(`${row.blockId}: portrait speaker ${speaker} is not in dialogue`);
     await add("portrait", path, speaker.trim());
