@@ -1,5 +1,5 @@
 import { accountSettingsResponseSchema, apiErrorSchema, courseContributorsResponseSchema, courseRefResponseSchema, courseSpeechCastResponseSchema, coursePageSchema, courseProgressResponseSchema, discussionResponseSchema, lessonProgressResponseSchema, groupShellResponseSchema, invitationResponseSchema, memberDirectoryResponseSchema, membershipAdminResponseSchema, notificationPageSchema, postPageSchema, postResponseSchema, profileResponseSchema, restrictedNotificationPageSchema, sessionResponseSchema, speechRecognitionTokenResponseSchema, type SpeechRecognitionTokenResponse } from "@wordinator/contracts";
-import { courseDetailResponseSchema, courseWordsResponseSchema, lessonResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBatchesResponseSchema, wordBookmarkPageSchema, wordDrillDeckSchema, wordSearchPageSchema, type WordDrillMode, type WordDrillSource } from "@wordinator/contracts/lesson-document";
+import { courseDetailResponseSchema, dialogueScenesResponseSchema, courseWordsResponseSchema, lessonResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBatchesResponseSchema, wordBookmarkPageSchema, wordDrillDeckSchema, wordSearchPageSchema, type WordDrillMode, type WordDrillSource } from "@wordinator/contracts/lesson-document";
 import { lessonAiPracticesResponseSchema, tutorConversationPageSchema, tutorConversationResponseSchema, tutorMessagePageSchema, tutorModelsResponseSchema, tutorProfileResponseSchema, tutorUsageResponseSchema } from "@wordinator/contracts/tutor";
 import { courseDashboardResponseSchema, learningActivityResponseSchema, learningGoalSchema, lessonMetricsResponseSchema, type LearningActivityRange, type LearningActivityResponse, type LearningTimeEntry } from "@wordinator/contracts/learning";
 import { withSentTime } from "./learningActivity";
@@ -261,6 +261,13 @@ export const lessonQueryOptions = (groupId: string, courseId: string, lessonId: 
   queryKey: ["course-lesson", groupId, courseId, lessonId] as const,
   queryFn: () => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/courses/${encodeURIComponent(courseId)}/lessons/${encodeURIComponent(lessonId)}`, lessonResponseSchema),
   retry: false,
+});
+
+// The images of a lesson's dialogues (locations, cast portraits, scenes), read by the dialogue page and the lesson page's banners.
+export const dialogueScenesQueryOptions = (groupId: string, courseId: string, lessonId: string, enabled = true) => queryOptions({
+  queryKey: ["dialogue-scenes", groupId, courseId, lessonId] as const,
+  queryFn: () => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/courses/${encodeURIComponent(courseId)}/lessons/${encodeURIComponent(lessonId)}/dialogue-scenes`, dialogueScenesResponseSchema),
+  enabled,
 });
 
 // The AI practices of a published lesson (C14h, docs/courses.md#ai-practices), read when the lesson page expands them.

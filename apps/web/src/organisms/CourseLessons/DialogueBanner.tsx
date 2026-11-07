@@ -1,16 +1,19 @@
-import { readDialogueTurns, type DialogueScene, type LessonBlockOf } from "@wordinator/contracts/lesson-document";
+import { readDialogueTurns, type LessonBlockOf } from "@wordinator/contracts/lesson-document";
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, MessageCircle, Play } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { dialogueScenesQueryOptions } from "../../api";
 import { speakerPortraits } from "../../pages/DialogueScene/DialogueScene";
 import styles from "./DialogueBanner.module.css";
 
 // A dialogue on the lesson page: the scene as a cover with the cast and a button to the dialogue page, which is the player
 // (docs/courses.md#dialogue-scene-pages). The lines themselves are not shown here.
-export function DialogueBanner({ block, title, scene, courseSlug, lessonSlug }: {
-  block: LessonBlockOf<"dialogue">; title: string; scene: DialogueScene | undefined; courseSlug: string; lessonSlug: string;
+export function DialogueBanner({ block, title, groupId, courseId, lessonId, courseSlug, lessonSlug }: {
+  block: LessonBlockOf<"dialogue">; title: string; groupId: string; courseId: string; lessonId: string; courseSlug: string; lessonSlug: string;
 }) {
   const { t } = useTranslation();
+  const scene = useQuery(dialogueScenesQueryOptions(groupId, courseId, lessonId)).data?.scenes.find((entry) => entry.blockId === block.id);
   const turns = readDialogueTurns(block);
   const speakers = [...new Set(turns.map((turn) => turn.speaker))];
   const portraits = speakerPortraits(scene?.portraits);

@@ -231,7 +231,7 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
       {!lesson.document && <p className={styles.preview}>{t("courses.lessons.draftPreview")}</p>}
       <LessonDocument document={document} anchored vocabulary={false} renderAfterBlock={renderAfterBlock} renderHeadingBadge={renderHeadingBadge}
         renderDialogueBanner={lesson.document && !gate ? (block) => <DialogueBanner block={block} title={dialogueTitle(lesson.document!, block.id) ?? lesson.title}
-          scene={lesson.dialogueScenes?.find((entry) => entry.blockId === block.id)} courseSlug={scope.courseSlug} lessonSlug={lesson.slug} /> : undefined}
+          groupId={scope.groupId} courseId={scope.courseId} lessonId={lesson.id} courseSlug={scope.courseSlug} lessonSlug={lesson.slug} /> : undefined}
         renderShare={share ? (block) => <ShareButton piece={block.type === "example" ? { kind: "example", block } : { kind: "dialogue", block }}
           label={t(`lessonShares.shareNamed.${block.type}`)} /> : undefined}
         renderPractice={(block) =>

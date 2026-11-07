@@ -4,7 +4,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { useCallback, useMemo, useRef, type CSSProperties } from "react";
 import { useTranslation } from "react-i18next";
-import { apiRequest, courseProgressQueryOptions, lessonQueryOptions, sessionQueryOptions } from "../../api";
+import { courseProgressQueryOptions, dialogueScenesQueryOptions, lessonQueryOptions, sessionQueryOptions } from "../../api";
 import { useLearningClaim } from "../../learningTime";
 import { lessonSpeech, SpeechScope } from "../../molecules/Speech";
 import { lessonSteps } from "../../organisms/CourseLessons/LessonPlayer";
@@ -15,7 +15,6 @@ import { markLesson } from "../TempHovercard/lessonWords";
 import { HovercardDemoContext, type HovercardDemo } from "../TempHovercard/WordHovercard";
 import { Conversation } from "../TempConv/Conversation";
 import { DialoguePlayer } from "./DialoguePlayer";
-import { dialogueScenesResponseSchema } from "@wordinator/contracts/lesson-document";
 
 const toneStyle = { "--hc-tone": "var(--color-action)", "--hc-on-tone": "var(--color-action-text)" } as CSSProperties;
 
@@ -28,11 +27,7 @@ export function DialogueScenePage({ groupId, courseId, lessonId, courseSlug, les
   const session = useQuery(sessionQueryOptions());
   const lesson = useQuery(lessonQueryOptions(groupId, courseId, lessonId));
   const progress = useQuery(courseProgressQueryOptions(groupId, courseId));
-  const images = useQuery({
-    queryKey: ["dialogue-scenes", groupId, courseId, lessonId] as const,
-    queryFn: () => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/courses/${encodeURIComponent(courseId)}/lessons/${encodeURIComponent(lessonId)}/dialogue-scenes`, dialogueScenesResponseSchema),
-    enabled: Boolean(lesson.data?.lesson),
-  });
+  const images = useQuery(dialogueScenesQueryOptions(groupId, courseId, lessonId, Boolean(lesson.data?.lesson)));
   if (session.isPending || lesson.isPending || progress.isPending || images.isPending) return <LoadingState label={t("courses.conversationScene.loading")} />;
   if (!lesson.data?.lesson || !progress.data || images.isError) return <ErrorState title={t("courses.conversationScene.unavailable")} />;
   const data = lesson.data.lesson;
