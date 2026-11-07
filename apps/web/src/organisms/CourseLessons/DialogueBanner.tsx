@@ -9,15 +9,15 @@ import styles from "./DialogueBanner.module.css";
 
 // A dialogue on the lesson page: the scene as a cover with the cast and a button to the dialogue page, which is the player
 // (docs/courses.md#dialogue-scene-pages). The lines themselves are not shown here.
-export function DialogueBanner({ block, title, groupId, courseId, lessonId, courseSlug, lessonSlug }: {
-  block: LessonBlockOf<"dialogue">; title: string; groupId: string; courseId: string; lessonId: string; courseSlug: string; lessonSlug: string;
+export function DialogueBanner({ block, title, fallback, groupId, courseId, lessonId, courseSlug, lessonSlug }: {
+  block: LessonBlockOf<"dialogue">; title: string; fallback: string | null; groupId: string; courseId: string; lessonId: string; courseSlug: string; lessonSlug: string;
 }) {
   const { t } = useTranslation();
   const scene = useQuery(dialogueScenesQueryOptions(groupId, courseId, lessonId)).data?.scenes.find((entry) => entry.blockId === block.id);
   const turns = readDialogueTurns(block);
   const speakers = [...new Set(turns.map((turn) => turn.speaker))];
   const portraits = speakerPortraits(scene?.portraits);
-  const cover = scene?.backgroundUrl ?? scene?.locationUrl ?? null;
+  const cover = scene?.backgroundUrl ?? scene?.locationUrl ?? fallback;
   return <Link className={styles.banner} data-cover={cover ? "image" : "plain"}
     to="/courses/$courseSlug/lessons/$lessonSlug/dialogues/$blockId" params={{ courseSlug, lessonSlug, blockId: block.id }}>
     {cover && <img className={styles.image} src={cover} alt="" />}

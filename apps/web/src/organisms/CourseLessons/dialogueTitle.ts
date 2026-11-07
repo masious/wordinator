@@ -9,3 +9,17 @@ export function dialogueTitle(document: LessonDocument, blockId: string): string
   }
   return null;
 }
+
+// The lesson image nearest above a dialogue, else the lesson's first image: the banner's cover when the dialogue has no scene of its own.
+export function dialogueFallbackImage(document: LessonDocument, blockId: string): string | null {
+  let above: string | null = null;
+  let first: string | null = null;
+  let passed = false;
+  for (const { block } of walkLessonBlocks(document.blocks)) {
+    if (block.id === blockId) passed = true;
+    if (block.type !== "image") continue;
+    first ??= block.props.url;
+    if (!passed) above = block.props.url;
+  }
+  return above ?? first;
+}

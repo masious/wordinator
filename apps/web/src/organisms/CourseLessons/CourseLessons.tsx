@@ -28,7 +28,7 @@ import { CourseErrorMessage } from "./CourseErrorMessage";
 import { LessonResetAction } from "./CourseProgress";
 import { LessonActions } from "./LessonActions";
 import { DialogueBanner } from "./DialogueBanner";
-import { dialogueTitle } from "./dialogueTitle";
+import { dialogueFallbackImage, dialogueTitle } from "./dialogueTitle";
 import { lessonSteps, playableDocument } from "./LessonPlayer";
 import styles from "./CourseLessons.module.css";
 import { LessonReadingProgress, type ReadingTracking, saveLessonPosition, useResumeScroll } from "./LessonReadingProgress";
@@ -231,6 +231,7 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
       {!lesson.document && <p className={styles.preview}>{t("courses.lessons.draftPreview")}</p>}
       <LessonDocument document={document} anchored vocabulary={false} renderAfterBlock={renderAfterBlock} renderHeadingBadge={renderHeadingBadge}
         renderDialogueBanner={lesson.document && !gate ? (block) => <DialogueBanner block={block} title={dialogueTitle(lesson.document!, block.id) ?? lesson.title}
+          fallback={dialogueFallbackImage(lesson.document!, block.id)}
           groupId={scope.groupId} courseId={scope.courseId} lessonId={lesson.id} courseSlug={scope.courseSlug} lessonSlug={lesson.slug} /> : undefined}
         renderShare={share ? (block) => <ShareButton piece={block.type === "example" ? { kind: "example", block } : { kind: "dialogue", block }}
           label={t(`lessonShares.shareNamed.${block.type}`)} /> : undefined}
